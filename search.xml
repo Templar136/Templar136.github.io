@@ -1,75 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>02-01-系统核心模块</title>
-    <url>/2021/04/15/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/</url>
-    <content><![CDATA[<h1 id="系统-核心-模块"><a href="#系统-核心-模块" class="headerlink" title="系统(核心)模块"></a>系统(核心)模块</h1><h2 id="1-fs模块"><a href="#1-fs模块" class="headerlink" title="1.fs模块"></a>1.fs模块</h2><p>文件系统file system模块</p>
-<h3 id="1-1-fs-read-方法"><a href="#1-1-fs-read-方法" class="headerlink" title="1.1 fs.read()方法"></a>1.1 fs.read()方法</h3><p>读取文件数据方法</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.read(<span class="string">&quot;文件路径/文件名&quot;</span>[,<span class="string">&quot;文件编码格式&quot;</span>],callback)</span><br></pre></td></tr></table></figure>
-
-<p>文件路径：文件存放路径</p>
-<span id="more"></span>
-
-<p>文件编码格式：utf-8等</p>
-<p>callback回调函数：</p>
-<ul>
-<li>有两个参数err和data<ul>
-<li>err错误对象<ul>
-<li>如果读取出错则err为错误对象</li>
-<li>如果正确则err为null</li>
-</ul>
-</li>
-<li>data文件数据<ul>
-<li>默认以二进制数串的16进制形式保存</li>
-<li>如果指定了”文件编码格式“就按照编码格式输出</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以二进制数串的16进制表示文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以utf-8编码格式打印文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415211208528.png" alt="image-20210415211208528"></p>
-<h3 id="1-2-插入-Nodejs中的回调函数callback"><a href="#1-2-插入-Nodejs中的回调函数callback" class="headerlink" title="1.2(插入)Nodejs中的回调函数callback"></a>1.2(插入)Nodejs中的回调函数callback</h3><p>Nodejs中所有API的回调函数的第一个参数一定是err</p>
-<ul>
-<li>在发生错误时err为错误对象</li>
-<li>正确执行时err为null</li>
-</ul>
-<p>所以Nodejs中的回调函数又被称为错误优先的回调函数</p>
-<h3 id="1-3-fs-writeFile-方法"><a href="#1-3-fs-writeFile-方法" class="headerlink" title="1.3 fs.writeFile()方法"></a>1.3 fs.writeFile()方法</h3><p>写入文件方法</p>
-<p>文件不存在时会自动创建</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.writeFile(<span class="string">&#x27;文件路径/文件名&#x27;</span>,<span class="string">&#x27;写入的数据&#x27;</span>,callback)</span><br></pre></td></tr></table></figure>
-
-<p>应用场景</p>
-<p>​    程序运行报错时，自动将报错信息写入错误日志(一个文件)中</p>
-<p>示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.writeFile(<span class="string">&#x27;./fs.writeFile.txt&#x27;</span>,<span class="string">&#x27;写入fs.writeFile.txt中的数据&#x27;</span>,<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err!==<span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;写入失败&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;写入成功&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212815487.png" alt="image-20210415212815487"></p>
-<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212837679.png" alt="image-20210415212837679"></p>
-<h2 id="2-path模块"><a href="#2-path模块" class="headerlink" title="2. path模块"></a>2. path模块</h2><p>路径操作</p>
-<h3 id="2-1为什么要进行路径拼接"><a href="#2-1为什么要进行路径拼接" class="headerlink" title="2.1为什么要进行路径拼接"></a>2.1为什么要进行路径拼接</h3><p>不同操作系统的路径分隔符不同</p>
-<ul>
-<li>window使用 / 或 \</li>
-<li>Linux只能使用 /</li>
-</ul>
-<p>Nodejs写的代码可能要在不同的操作系统上使用，所以要明确使用什么路径分隔符</p>
-<h3 id="2-2-path-join"><a href="#2-2-path-join" class="headerlink" title="2.2 path.join()"></a>2.2 path.join()</h3><p>路径拼接API</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">path.join(<span class="string">&#x27;路径&#x27;</span>,<span class="string">&#x27;路径&#x27;</span>,...)</span><br></pre></td></tr></table></figure>
-
-<p>这个API会自动检测当前系统并使用合适的分隔符</p>
-<p>返回拼接之后的结果</p>
-<p>示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//当前是windows系统，采用&#x27;\&#x27;作为分隔符</span></span><br><span class="line"><span class="comment">//输出a\b\c.txt</span></span><br><span class="line"><span class="built_in">console</span>.log(path.join(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c.txt&#x27;</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415220350958.png" alt="image-20210415220350958"></p>
-]]></content>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>01-什么是Node</title>
     <url>/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/</url>
     <content><![CDATA[<h1 id="1-Node-js介绍"><a href="#1-Node-js介绍" class="headerlink" title="1.Node.js介绍"></a>1.Node.js介绍</h1><h2 id="1-1学习Node-js的目的"><a href="#1-1学习Node-js的目的" class="headerlink" title="1.1学习Node.js的目的"></a>1.1学习Node.js的目的</h2><ul>
@@ -239,6 +170,127 @@
       </tags>
   </entry>
   <entry>
+    <title>02-01-系统核心模块</title>
+    <url>/2021/04/15/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<h1 id="系统-核心-模块"><a href="#系统-核心-模块" class="headerlink" title="系统(核心)模块"></a>系统(核心)模块</h1><h2 id="1-fs模块"><a href="#1-fs模块" class="headerlink" title="1.fs模块"></a>1.fs模块</h2><p>文件系统file system模块</p>
+<h3 id="1-1-fs-read-方法"><a href="#1-1-fs-read-方法" class="headerlink" title="1.1 fs.read()方法"></a>1.1 fs.read()方法</h3><p>读取文件数据方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.read(<span class="string">&quot;文件路径/文件名&quot;</span>[,<span class="string">&quot;文件编码格式&quot;</span>],callback)</span><br></pre></td></tr></table></figure>
+
+<p>文件路径：文件存放路径</p>
+<span id="more"></span>
+
+<p>文件编码格式：utf-8等</p>
+<p>callback回调函数：</p>
+<ul>
+<li>有两个参数err和data<ul>
+<li>err错误对象<ul>
+<li>如果读取出错则err为错误对象</li>
+<li>如果正确则err为null</li>
+</ul>
+</li>
+<li>data文件数据<ul>
+<li>默认以二进制数串的16进制形式保存</li>
+<li>如果指定了”文件编码格式“就按照编码格式输出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以二进制数串的16进制表示文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以utf-8编码格式打印文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415211208528.png" alt="image-20210415211208528"></p>
+<h3 id="1-2-插入-Nodejs中的回调函数callback"><a href="#1-2-插入-Nodejs中的回调函数callback" class="headerlink" title="1.2(插入)Nodejs中的回调函数callback"></a>1.2(插入)Nodejs中的回调函数callback</h3><p>Nodejs中所有API的回调函数的第一个参数一定是err</p>
+<ul>
+<li>在发生错误时err为错误对象</li>
+<li>正确执行时err为null</li>
+</ul>
+<p>所以Nodejs中的回调函数又被称为错误优先的回调函数</p>
+<h3 id="1-3-fs-writeFile-方法"><a href="#1-3-fs-writeFile-方法" class="headerlink" title="1.3 fs.writeFile()方法"></a>1.3 fs.writeFile()方法</h3><p>写入文件方法</p>
+<p>文件不存在时会自动创建</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.writeFile(<span class="string">&#x27;文件路径/文件名&#x27;</span>,<span class="string">&#x27;写入的数据&#x27;</span>,callback)</span><br></pre></td></tr></table></figure>
+
+<p>应用场景</p>
+<p>​    程序运行报错时，自动将报错信息写入错误日志(一个文件)中</p>
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.writeFile(<span class="string">&#x27;./fs.writeFile.txt&#x27;</span>,<span class="string">&#x27;写入fs.writeFile.txt中的数据&#x27;</span>,<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err!==<span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;写入失败&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;写入成功&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212815487.png" alt="image-20210415212815487"></p>
+<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212837679.png" alt="image-20210415212837679"></p>
+<h2 id="2-path模块"><a href="#2-path模块" class="headerlink" title="2. path模块"></a>2. path模块</h2><p>路径操作</p>
+<h3 id="2-1为什么要进行路径拼接"><a href="#2-1为什么要进行路径拼接" class="headerlink" title="2.1为什么要进行路径拼接"></a>2.1为什么要进行路径拼接</h3><p>不同操作系统的路径分隔符不同</p>
+<ul>
+<li>window使用 / 或 \</li>
+<li>Linux只能使用 /</li>
+</ul>
+<p>Nodejs写的代码可能要在不同的操作系统上使用，所以要明确使用什么路径分隔符</p>
+<h3 id="2-2-path-join"><a href="#2-2-path-join" class="headerlink" title="2.2 path.join()"></a>2.2 path.join()</h3><p>路径拼接API</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">path.join(<span class="string">&#x27;路径&#x27;</span>,<span class="string">&#x27;路径&#x27;</span>,...)</span><br></pre></td></tr></table></figure>
+
+<p>这个API会自动检测当前系统并使用合适的分隔符</p>
+<p>返回拼接之后的结果</p>
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//当前是windows系统，采用&#x27;\&#x27;作为分隔符</span></span><br><span class="line"><span class="comment">//输出a\b\c.txt</span></span><br><span class="line"><span class="built_in">console</span>.log(path.join(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c.txt&#x27;</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415220350958.png" alt="image-20210415220350958"></p>
+]]></content>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>04-http核心模块构建简单WEB服务器</title>
+    <url>/2021/04/13/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="1-http核心模块构建简单WEB服务器"><a href="#1-http核心模块构建简单WEB服务器" class="headerlink" title="1.http核心模块构建简单WEB服务器"></a>1.http核心模块构建简单WEB服务器</h1><span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1搭建服务器时的IP和端口号简单解释"><a href="#1-1搭建服务器时的IP和端口号简单解释" class="headerlink" title="1.1搭建服务器时的IP和端口号简单解释"></a>1.1搭建服务器时的IP和端口号简单解释</h2><p>在端口3000上打开服务器</p>
+<p>IP标识一台计算机</p>
+<p>端口标识一个应用程序</p>
+<p>IP:端口号 可以<strong>唯一标识一台计算机上的一个应用程序</strong></p>
+<p>这里localhost:3000即为本机上的由<code>nodejs</code>搭建的服务器应用程序</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.listen(3000,function()&#123;  </span><br><span class="line">    console.log(&quot;服务器启动成功，可以通过http:&#x2F;&#x2F;127.0.0.1&#x2F;3000&#x2F;访问&quot;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-2中文乱码的解决方法"><a href="#1-2中文乱码的解决方法" class="headerlink" title="1.2中文乱码的解决方法"></a>1.2中文乱码的解决方法</h2><p>​    加上头部让浏览器明确以utf-8编码格式解析</p>
+<ul>
+<li><p>第一种方法</p>
+<p>通过meta元数据声明当前文本的编码格式为utf-8</p>
+<p>加上<code>response.write(&#39;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;/head&gt;&#39;);</code></p>
+</li>
+<li><p>第二种方法</p>
+<p>加上<code>response.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
+<p><strong>不同响应内容对应的响应类型是不一样的</strong> 例如text/plain 或 text/html</p>
+<p>第二种方法加上的头部可以在浏览器中查看</p>
+<p>F12 Network下查看</p>
+<p><img src="/images/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202501529.png" alt="image-20210412202501529"></p>
+<p><img src="/images/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202544524.png" alt="image-20210412202544524"></p>
+</li>
+</ul>
+<h2 id="1-3-setHeader-方法"><a href="#1-3-setHeader-方法" class="headerlink" title="1.3 setHeader()方法"></a>1.3 setHeader()方法</h2><p>在响应头部添加响应类型字段</p>
+<p><code>res.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
+<ul>
+<li><p>Content-Type，<strong>响应内容类型</strong></p>
+<ul>
+<li><p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
+</li>
+<li><p>text/plain，为响应数据的格式，text/plain为普通文本，响应的数据会被当作<strong>普通文本</strong>处理(html标签也会被当作普通文本)</p>
+</li>
+<li><p>text/html，为<strong>html文本</strong>，响应数据中的<strong>html标签会被浏览器自动识别并解释执行</strong></p>
+</li>
+</ul>
+</li>
+<li><p>charset=utf-8，指明返回的数据是utf-8格式编码，解决中文乱码问题 </p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>02-nodejs中JavaScript的模块化</title>
     <url>/2021/04/13/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="Nodejs的模块化"><a href="#Nodejs的模块化" class="headerlink" title="Nodejs的模块化"></a>Nodejs的模块化</h1><h2 id="1-浏览器JavaScript开发弊端"><a href="#1-浏览器JavaScript开发弊端" class="headerlink" title="1.浏览器JavaScript开发弊端"></a>1.浏览器JavaScript开发弊端</h2><p>浏览器JavaScript在使用时存在两大问题</p>
@@ -365,58 +417,6 @@
 <p><img src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412120622983.png" alt="image-20210412120622983"></p>
 <p><strong>同理</strong></p>
 <p><strong>fs和http等核心模块加载后就可以使用其中导出的方法如fs.readFile()等</strong></p>
-]]></content>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>04-http核心模块构建简单WEB服务器</title>
-    <url>/2021/04/13/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="1-http核心模块构建简单WEB服务器"><a href="#1-http核心模块构建简单WEB服务器" class="headerlink" title="1.http核心模块构建简单WEB服务器"></a>1.http核心模块构建简单WEB服务器</h1><span id="more"></span>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-1搭建服务器时的IP和端口号简单解释"><a href="#1-1搭建服务器时的IP和端口号简单解释" class="headerlink" title="1.1搭建服务器时的IP和端口号简单解释"></a>1.1搭建服务器时的IP和端口号简单解释</h2><p>在端口3000上打开服务器</p>
-<p>IP标识一台计算机</p>
-<p>端口标识一个应用程序</p>
-<p>IP:端口号 可以<strong>唯一标识一台计算机上的一个应用程序</strong></p>
-<p>这里localhost:3000即为本机上的由<code>nodejs</code>搭建的服务器应用程序</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.listen(3000,function()&#123;  </span><br><span class="line">    console.log(&quot;服务器启动成功，可以通过http:&#x2F;&#x2F;127.0.0.1&#x2F;3000&#x2F;访问&quot;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="1-2中文乱码的解决方法"><a href="#1-2中文乱码的解决方法" class="headerlink" title="1.2中文乱码的解决方法"></a>1.2中文乱码的解决方法</h2><p>​    加上头部让浏览器明确以utf-8编码格式解析</p>
-<ul>
-<li><p>第一种方法</p>
-<p>通过meta元数据声明当前文本的编码格式为utf-8</p>
-<p>加上<code>response.write(&#39;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;/head&gt;&#39;);</code></p>
-</li>
-<li><p>第二种方法</p>
-<p>加上<code>response.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
-<p><strong>不同响应内容对应的响应类型是不一样的</strong> 例如text/plain 或 text/html</p>
-<p>第二种方法加上的头部可以在浏览器中查看</p>
-<p>F12 Network下查看</p>
-<p><img src="/images/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202501529.png" alt="image-20210412202501529"></p>
-<p><img src="/images/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202544524.png" alt="image-20210412202544524"></p>
-</li>
-</ul>
-<h2 id="1-3-setHeader-方法"><a href="#1-3-setHeader-方法" class="headerlink" title="1.3 setHeader()方法"></a>1.3 setHeader()方法</h2><p>在响应头部添加响应类型字段</p>
-<p><code>res.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
-<ul>
-<li><p>Content-Type，<strong>响应内容类型</strong></p>
-<ul>
-<li><p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
-</li>
-<li><p>text/plain，为响应数据的格式，text/plain为普通文本，响应的数据会被当作<strong>普通文本</strong>处理(html标签也会被当作普通文本)</p>
-</li>
-<li><p>text/html，为<strong>html文本</strong>，响应数据中的<strong>html标签会被浏览器自动识别并解释执行</strong></p>
-</li>
-</ul>
-</li>
-<li><p>charset=utf-8，指明返回的数据是utf-8格式编码，解决中文乱码问题 </p>
-</li>
-</ul>
 ]]></content>
       <tags>
         <tag>Nodejs</tag>
