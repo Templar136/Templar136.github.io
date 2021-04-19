@@ -21,20 +21,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1.Node.js介绍1.1学习Node.js的目的 用来操作使用WEB后台服务器(能够实现同样功能的后台语言还有java、python、php等)  了解后台服务器才能更好的与后端开发人员协同开发  生态系统活跃，有许多开源库可以使用  前端开发工具大多基于Node开发  学习Node.js实际上就是在学习WEB服务器开发">
+  <meta name="description" content="第三方模块1.第三方模块 nodemonnodemon是命令行工具，辅助项目开发 在Node.js中，每次修改文件都需要重新执行文件，比较繁琐 nodemon可以在保存时自动执行文件 1.2使用 安装  npm install nodemon -g  命令行工具全局安装使用 -g    使用  在命令行工具中使用nodemon替代node执行nodejs文件     执行完文件后会将命令行窗口挂起">
 <meta property="og:type" content="article">
-<meta property="og:title" content="01-什么是Node">
-<meta property="og:url" content="http://example.com/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/index.html">
+<meta property="og:title" content="02-02-第三方模块">
+<meta property="og:url" content="http://example.com/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/index.html">
 <meta property="og:site_name" content="杨骁的博客">
-<meta property="og:description" content="1.Node.js介绍1.1学习Node.js的目的 用来操作使用WEB后台服务器(能够实现同样功能的后台语言还有java、python、php等)  了解后台服务器才能更好的与后端开发人员协同开发  生态系统活跃，有许多开源库可以使用  前端开发工具大多基于Node开发  学习Node.js实际上就是在学习WEB服务器开发">
+<meta property="og:description" content="第三方模块1.第三方模块 nodemonnodemon是命令行工具，辅助项目开发 在Node.js中，每次修改文件都需要重新执行文件，比较繁琐 nodemon可以在保存时自动执行文件 1.2使用 安装  npm install nodemon -g  命令行工具全局安装使用 -g    使用  在命令行工具中使用nodemon替代node执行nodejs文件     执行完文件后会将命令行窗口挂起">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-13T12:56:26.000Z">
-<meta property="article:modified_time" content="2021-04-15T11:19:10.939Z">
+<meta property="og:image" content="http://example.com/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png">
+<meta property="og:image" content="http://example.com/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png">
+<meta property="og:image" content="http://example.com/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png">
+<meta property="article:published_time" content="2021-04-19T02:44:33.000Z">
+<meta property="article:modified_time" content="2021-04-19T03:37:12.275Z">
 <meta property="article:author" content="杨骁">
 <meta property="article:tag" content="Nodejs">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png">
 
-<link rel="canonical" href="http://example.com/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/">
+<link rel="canonical" href="http://example.com/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/">
 
 
 <script id="page-configurations">
@@ -47,7 +51,7 @@
   };
 </script>
 
-  <title>01-什么是Node | 杨骁的博客</title>
+  <title>02-02-第三方模块 | 杨骁的博客</title>
   
 
 
@@ -190,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -203,7 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          01-什么是Node
+          02-02-第三方模块
         </h1>
 
         <div class="post-meta">
@@ -212,16 +216,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-04-13 20:56:26" itemprop="dateCreated datePublished" datetime="2021-04-13T20:56:26+08:00">2021-04-13</time>
+              <time title="创建时间：2021-04-19 10:44:33 / 修改时间：11:37:12" itemprop="dateCreated datePublished" datetime="2021-04-19T10:44:33+08:00">2021-04-19</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 19:19:10" itemprop="dateModified" datetime="2021-04-15T19:19:10+08:00">2021-04-15</time>
-              </span>
 
           
 
@@ -234,167 +232,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-Node-js介绍"><a href="#1-Node-js介绍" class="headerlink" title="1.Node.js介绍"></a>1.Node.js介绍</h1><h2 id="1-1学习Node-js的目的"><a href="#1-1学习Node-js的目的" class="headerlink" title="1.1学习Node.js的目的"></a>1.1学习Node.js的目的</h2><ul>
-<li><p>用来<strong>操作使用WEB后台服务器</strong>(能够实现同样功能的后台语言还有java、python、php等)</p>
-</li>
-<li><p>了解后台服务器才能更好的与后端开发人员协同开发</p>
-</li>
-<li><p>生态系统活跃，有许多开源库可以使用</p>
-</li>
-<li><p>前端开发工具大多基于Node开发</p>
-</li>
-<li><p>学习Node.js实际上就是在学习<strong>WEB服务器开发</strong></p>
-</li>
-</ul>
-<span id="more"></span>
-
-<h2 id="1-2什么是Node-js"><a href="#1-2什么是Node-js" class="headerlink" title="1.2什么是Node.js"></a>1.2什么是Node.js</h2><p>Node.js官网<a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-<p>官网对于Node.js的描述：</p>
+        <h1 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h1><h2 id="1-第三方模块-nodemon"><a href="#1-第三方模块-nodemon" class="headerlink" title="1.第三方模块 nodemon"></a>1.第三方模块 nodemon</h2><p>nodemon是命令行工具，辅助项目开发</p>
+<p>在Node.js中，每次修改文件都需要重新执行文件，比较繁琐</p>
+<p>nodemon可以在保存时自动执行文件</p>
+<h3 id="1-2使用"><a href="#1-2使用" class="headerlink" title="1.2使用"></a>1.2使用</h3><ul>
+<li><p>安装</p>
 <ul>
-<li><p>Node.js® is a JavaScript runtime built on <a target="_blank" rel="noopener" href="https://v8.dev/">Chrome’s V8 JavaScript engine</a>.</p>
+<li><p><code>npm install nodemon -g</code></p>
+</li>
+<li><p>命令行工具全局安装使用 -g</p>
+</li>
+</ul>
+</li>
+<li><p>使用</p>
 <ul>
-<li><p>Node.js是一个基于Chrome V8引擎的<strong>javaScript运行环境</strong></p>
+<li>在命令行工具中使用<code>nodemon</code>替代<code>node</code>执行nodejs文件</li>
+</ul>
 </li>
-<li><p>基于Chrome V8引擎</p>
+</ul>
+<p><img src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png" alt="image-20210419110644336"></p>
+<p>执行完文件后会将命令行窗口挂起，等待执行的文件保存，保存文件后会<strong>自动执行文件</strong>，使用Ctrl+C可以退出nodemon</p>
+<p>现在在文件中添加一个输出后保存，效果如下</p>
+<p><img src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png" alt="image-20210419111005039"></p>
+<h2 id="2-第三方模块nrm"><a href="#2-第三方模块nrm" class="headerlink" title="2.第三方模块nrm"></a>2.第三方模块nrm</h2><p>nrm(npm registry manager)：npm下载地址切换工具</p>
+<p>npm默认下载地址在国外，下载速度较慢，经常断线</p>
+<p>nrm可以将下载地址切换为为国内的服务器</p>
 <ul>
-<li>代码只是具有特定格式的字符串</li>
-<li>引擎可以帮我们去解释执行这些代码</li>
-<li>Google Chrome 的V8引擎是当前公认的解释执行JavaScript最快的</li>
-<li>Node.js的作者把Google Chrome的<strong>V8引擎移植出来</strong>，开发了一个<strong>独立的JavaScript运行环境</strong></li>
+<li>如阿里巴巴就有这样的服务器，每隔10分钟与官方的node服务器同步一次</li>
+<li>使用国内服务器就可以加快下载速度，与使用官方服务器下载的包是一样的</li>
+</ul>
+<h3 id="2-1下载使用"><a href="#2-1下载使用" class="headerlink" title="2.1下载使用"></a>2.1下载使用</h3><ol>
+<li><code>npm install nrm -g </code>   全局安装</li>
+<li>使用nrm ls 查询可用下载地址列表<ul>
+<li>npm为国外官方下载地址</li>
+<li>带*号的是当前选择的下载地址</li>
 </ul>
 </li>
-<li><p>Node.js<strong>不是一门语言</strong></p>
-</li>
-<li><p>Node.js<strong>不是库、不是框架</strong></p>
-</li>
-<li><p>Node.js可以解析执行JavaScript代码</p>
-</li>
-<li><p>以前只有浏览器可以解释执行JavaScript代码</p>
-</li>
-<li><p>现在Node.js可以使JavaScript脱离浏览器解释执行</p>
-</li>
-<li><p>浏览器中的JavaScript</p>
-<ul>
-<li>ECMAScript(基本的语法)</li>
-<li>DOM</li>
-<li>BOM</li>
-<li>DOM和BOM是浏览器给JavaScript提供的API</li>
+<li>切换npm下载地址为国内服务器 <code>nrm use 下载地址名称</code><ul>
+<li>这里选择阿里巴巴的taobao</li>
 </ul>
 </li>
-<li><p>Node.js中的JavaScript</p>
-<ul>
-<li><p><strong>不同于原来浏览器中的JavaScript</strong></p>
-</li>
-<li><p><strong>没有DOM、BOM</strong></p>
-</li>
-<li><p>由<strong>ECMAScript</strong>以及Node环境提供的一些<strong>附加API</strong>组成</p>
-</li>
-<li><p>Node.js这个JavaScript运行环境为JavaScript提供了一些服务器级别的操作API(应用编程接口)</p>
-<ul>
-<li>例如文件读写</li>
-<li>网络服务构建</li>
-<li>网络通信</li>
-<li>http服务器等</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Node.js uses an event-driven,non-blocking I/O model that makes it lightweight and efficient.</p>
-<ul>
-<li><p>Node.js的<strong>特性</strong></p>
-</li>
-<li><p>1、event-driven 事件驱动</p>
-</li>
-<li><p>2、non-blocking I/O model 无阻塞的I/O模组 (异步)</p>
-</li>
-<li><p>lightweight and efficient 轻量化和高效的</p>
-</li>
-</ul>
-</li>
-<li><p>Node.js’ package ecosystem,npm,is the largest ecosystem of open source libraries in the world.</p>
-<ul>
-<li>Node.js包生态系统——npm，是世界上最大的开源库生态系统</li>
-<li>绝大多数JavaScript相关的包(第三方包等)都存放在npm上，为了让开发人员更方便的下载使用</li>
-<li>例如使用 <code>npm install jquery</code>就可以下载jQuery的npm包</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-3Node-js能做什么"><a href="#1-3Node-js能做什么" class="headerlink" title="1.3Node.js能做什么"></a>1.3Node.js能做什么</h2><ul>
-<li>WEB服务器后台</li>
-<li>命令行工具<ul>
-<li>npm(Node开发)</li>
-<li>git(C语言开发)</li>
-<li>hexo(Node开发)</li>
-<li>。。。</li>
-</ul>
-</li>
-<li>对于前端工程师来说，接触Node最多的就是它的命令行工具<ul>
-<li>主要是使用别人开发的第三方命令行工具<ul>
-<li>webpack</li>
-<li>gulp</li>
-<li>。。。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-4学习资源"><a href="#1-4学习资源" class="headerlink" title="1.4学习资源"></a>1.4学习资源</h2><ul>
-<li><p>《深入浅出Node.js》</p>
-<ul>
-<li>作者：朴(piao)灵</li>
-<li>偏理论、没有实例性内容</li>
-<li>对于理解底层原理有帮助</li>
-<li>结合其他实例来学习更好</li>
-</ul>
-</li>
-<li><p>《Node.js权威指南》</p>
-<ul>
-<li>API讲解</li>
-<li>没有实例</li>
-</ul>
-</li>
-<li><p>CNODE社区：<a target="_blank" rel="noopener" href="https://cnodejs.org/">https://cnodejs.org</a></p>
-<ul>
-<li>其中新手入门有一些参考资料</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-5学习Node-js得到什么"><a href="#1-5学习Node-js得到什么" class="headerlink" title="1.5学习Node.js得到什么"></a>1.5学习Node.js得到什么</h2><ul>
-<li><p>操作使用WEB服务器后台</p>
-</li>
-<li><p>B/S编程模型</p>
-<ul>
-<li>Browser-Server 浏览器-服务器模型</li>
-<li>back-end 后端</li>
-<li>任何服务器端技术这种B/S编程模型都是一样的</li>
-</ul>
-</li>
-<li><p>Node只是作为我们学习这种B/S编程模型的工具</p>
-</li>
-<li><p>模块化编程</p>
-<ul>
-<li>Node中可以像 <code>@import()</code>一样引用加载JavaScript脚本文件</li>
-</ul>
-</li>
-<li><p>Node常用API</p>
-</li>
-<li><p>异步编程</p>
-<ul>
-<li>promise</li>
-<li>回调函数</li>
-<li>async</li>
-<li>generator</li>
-</ul>
-</li>
-<li><p>Express Web开发框架</p>
-</li>
-<li><p>ES6(穿插讲解)</p>
-</li>
-<li><p>为以后学习Vue，React，angular前端框架打基础</p>
-</li>
-</ul>
+</ol>
+<p><img src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png" alt="image-20210419113538099"></p>
 
     </div>
 
@@ -413,13 +292,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/04/13/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="prev" title="02-nodejs中JavaScript的模块化">
-      <i class="fa fa-chevron-left"></i> 02-nodejs中JavaScript的模块化
+    <a href="/2021/04/15/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/" rel="prev" title="02-01-系统核心模块">
+      <i class="fa fa-chevron-left"></i> 02-01-系统核心模块
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/04/13/04-http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="next" title="04-http核心模块构建简单WEB服务器">
-      04-http核心模块构建简单WEB服务器 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -478,7 +354,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Node-js%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">1.Node.js介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1%E5%AD%A6%E4%B9%A0Node-js%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.1学习Node.js的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2%E4%BB%80%E4%B9%88%E6%98%AFNode-js"><span class="nav-number">1.2.</span> <span class="nav-text">1.2什么是Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3Node-js%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">1.3Node.js能做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="nav-number">1.4.</span> <span class="nav-text">1.4学习资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5%E5%AD%A6%E4%B9%A0Node-js%E5%BE%97%E5%88%B0%E4%BB%80%E4%B9%88"><span class="nav-number">1.5.</span> <span class="nav-text">1.5学习Node.js得到什么</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">第三方模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97-nodemon"><span class="nav-number">1.1.</span> <span class="nav-text">1.第三方模块 nodemon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.2使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97nrm"><span class="nav-number">1.2.</span> <span class="nav-text">2.第三方模块nrm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E4%B8%8B%E8%BD%BD%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1下载使用</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

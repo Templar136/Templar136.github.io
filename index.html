@@ -186,6 +186,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">02-02-第三方模块</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-19 10:44:33 / 修改时间：11:37:12" itemprop="dateCreated datePublished" datetime="2021-04-19T10:44:33+08:00">2021-04-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h1><h2 id="1-第三方模块-nodemon"><a href="#1-第三方模块-nodemon" class="headerlink" title="1.第三方模块 nodemon"></a>1.第三方模块 nodemon</h2><p>nodemon是命令行工具，辅助项目开发</p>
+<p>在Node.js中，每次修改文件都需要重新执行文件，比较繁琐</p>
+<p>nodemon可以在保存时自动执行文件</p>
+<h3 id="1-2使用"><a href="#1-2使用" class="headerlink" title="1.2使用"></a>1.2使用</h3><ul>
+<li><p>安装</p>
+<ul>
+<li><p><code>npm install nodemon -g</code></p>
+</li>
+<li><p>命令行工具全局安装使用 -g</p>
+</li>
+</ul>
+</li>
+<li><p>使用</p>
+<ul>
+<li>在命令行工具中使用<code>nodemon</code>替代<code>node</code>执行nodejs文件</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png" alt="image-20210419110644336"></p>
+<p>执行完文件后会将命令行窗口挂起，等待执行的文件保存，保存文件后会<strong>自动执行文件</strong>，使用Ctrl+C可以退出nodemon</p>
+<p>现在在文件中添加一个输出后保存，效果如下</p>
+<p><img src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png" alt="image-20210419111005039"></p>
+<h2 id="2-第三方模块nrm"><a href="#2-第三方模块nrm" class="headerlink" title="2.第三方模块nrm"></a>2.第三方模块nrm</h2><p>nrm(npm registry manager)：npm下载地址切换工具</p>
+<p>npm默认下载地址在国外，下载速度较慢，经常断线</p>
+<p>nrm可以将下载地址切换为为国内的服务器</p>
+<ul>
+<li>如阿里巴巴就有这样的服务器，每隔10分钟与官方的node服务器同步一次</li>
+<li>使用国内服务器就可以加快下载速度，与使用官方服务器下载的包是一样的</li>
+</ul>
+<h3 id="2-1下载使用"><a href="#2-1下载使用" class="headerlink" title="2.1下载使用"></a>2.1下载使用</h3><ol>
+<li><code>npm install nrm -g </code>   全局安装</li>
+<li>使用nrm ls 查询可用下载地址列表<ul>
+<li>npm为国外官方下载地址</li>
+<li>带*号的是当前选择的下载地址</li>
+</ul>
+</li>
+<li>切换npm下载地址为国内服务器 <code>nrm use 下载地址名称</code><ul>
+<li>这里选择阿里巴巴的taobao</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png" alt="image-20210419113538099"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -209,10 +309,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-15 20:54:22 / 修改时间：22:43:02" itemprop="dateCreated datePublished" datetime="2021-04-15T20:54:22+08:00">2021-04-15</time>
+              <time title="创建时间：2021-04-15 20:54:22" itemprop="dateCreated datePublished" datetime="2021-04-15T20:54:22+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-16 11:41:55" itemprop="dateModified" datetime="2021-04-16T11:41:55+08:00">2021-04-16</time>
+              </span>
 
           
 
@@ -514,7 +620,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 22:47:02" itemprop="dateModified" datetime="2021-04-15T22:47:02+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-19 10:41:46" itemprop="dateModified" datetime="2021-04-19T10:41:46+08:00">2021-04-19</time>
               </span>
 
           
@@ -630,7 +736,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
