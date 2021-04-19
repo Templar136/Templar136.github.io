@@ -18,7 +18,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Nodejs的模块化1.浏览器JavaScript开发弊端浏览器JavaScript在使用时存在两大问题  文件依赖 通过script标签引入的多个js文件的依赖关系不明确，查找依赖关系不便   命名冲突 浏览器JavaScript通过script引入的多个js文件是完全开放的，例如a.js里声明的变量可以在b.js中访问 如果在后续引入的js文件中声明了一个之前引入的js文件中已有的变量，就会导">
@@ -347,7 +347,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;b.js被执行了&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <p>执行a.js文件后输出结果为</p>
-<p><img src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412112221108.png" alt="image-20210412112221108"></p>
+<p><img data-src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412112221108.png" alt="image-20210412112221108"></p>
 <h3 id="4-1Nodejs中没有全局作用域，只有模块作用域"><a href="#4-1Nodejs中没有全局作用域，只有模块作用域" class="headerlink" title="4.1Nodejs中没有全局作用域，只有模块作用域"></a>4.1Nodejs中没有全局作用域，只有模块作用域</h3><ul>
 <li><p>模块作用域</p>
 <ul>
@@ -368,7 +368,7 @@
 
 <p>运行a.js结果</p>
 <p><code>console.log(foo);</code>执行结果为aaa</p>
-<p><img src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412113217274.png" alt="image-20210412113217274"></p>
+<p><img data-src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412113217274.png" alt="image-20210412113217274"></p>
 <h3 id="4-2模块之间怎样通信"><a href="#4-2模块之间怎样通信" class="headerlink" title="4.2模块之间怎样通信"></a>4.2模块之间怎样通信</h3><ul>
 <li><p>模块作用域默认是半封闭</p>
 </li>
@@ -392,7 +392,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//b.js文件</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x,y</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> age=<span class="number">18</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将需要导出的属性和方法挂载在exports对象下</span></span><br><span class="line"><span class="built_in">exports</span>.age=age;</span><br><span class="line"><span class="built_in">exports</span>.add=add;</span><br></pre></td></tr></table></figure>
 
 <p>执行a.js结果为</p>
-<p><img src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412120622983.png" alt="image-20210412120622983"></p>
+<p><img data-src="/images/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/image-20210412120622983.png" alt="image-20210412120622983"></p>
 <p><strong>同理</strong></p>
 <p><strong>fs和http等核心模块加载后就可以使用其中导出的方法如fs.readFile()等</strong></p>
 
@@ -551,6 +551,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
