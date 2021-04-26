@@ -687,6 +687,37 @@
 <center>ES6转换并压缩后文件</center>
 
 <p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425180011653.png" alt="image-20210425180011653"></p>
+<h4 id="1-4文件拷背"><a href="#1-4文件拷背" class="headerlink" title="1.4文件拷背"></a>1.4文件拷背</h4><p>代码</p>
+<ul>
+<li>此处/*代表匹配一级的所有文件和目录<ul>
+<li>若使用images/*来匹配images/a/b.jpg ，则<strong>只能匹配到images/a这个文件夹</strong>，不会匹配到b.jpg</li>
+<li>此时匹配获取文件后输出的images/a文件夹是空的</li>
+</ul>
+</li>
+<li>lib/**/*代表匹配lib文件夹下的所有目录<strong>及其子目录</strong>中的文件<ul>
+<li>**代表匹配所有目录及其子目录</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将剩下的images文件夹和lib文件夹拷贝到dist文件夹下</span></span><br><span class="line">gulp.task(<span class="string">&#x27;copy&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/images/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/images&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/lib/**/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/lib&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5一次执行多个任务"><a href="#1-5一次执行多个任务" class="headerlink" title="1.5一次执行多个任务"></a>1.5一次执行多个任务</h4><p>代码</p>
+<p>执行default任务时依次执行后面数组中的每个任务</p>
+<ul>
+<li><strong>gulp4.0及更高版本</strong>需要使用<code>gulp.parallel(&#39;任务名&#39;,&#39;任务名&#39;,...)</code>来执行多个任务</li>
+<li>gulp4.0之前的版本可以使用<code>gulp.task(&#39;default&#39;,[&#39;任务名&#39;,&#39;任务名&#39;,...])</code>来执行多个任务</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>,gulp.parallel(<span class="string">&#x27;htmlmin&#x27;</span>,<span class="string">&#x27;cssmin&#x27;</span>,<span class="string">&#x27;jsmin&#x27;</span>,<span class="string">&#x27;copy&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在命令行中执行gulp命令，gulp会自动在gulpfile.js文件中寻找名为default的任务并执行</li>
+<li>在命令行中执行<code>gulp</code>相当于执行<code>gulp default</code></li>
+</ul>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112637572.png" alt="image-20210426112637572"></p>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112702650.png" alt="image-20210426112702650"></p>
+<ul>
+<li>此时只需执行default任务就可以执行项目中所有的任务</li>
+</ul>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -788,6 +819,254 @@
 <p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200745087.png" alt="image-20210414200745087"></p>
 <p>URL为/login时</p>
 <p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200823281.png" alt="image-20210414200823281"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>04-node_modules文件夹的问题</title>
+    <url>/2021/04/26/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="node-modules文件夹的问题"><a href="#node-modules文件夹的问题" class="headerlink" title="node_modules文件夹的问题"></a>node_modules文件夹的问题</h1><ul>
+<li>文件夹下的文件过多过碎，<strong>拷贝项目时速度慢</strong></li>
+<li>复杂的<strong>模块依赖关系</strong>以及<strong>模块的版本号</strong>需要被记录，避免拷贝后模块版本号不同而导致运行报错</li>
+</ul>
+<h2 id="1-package-json文件"><a href="#1-package-json文件" class="headerlink" title="1.package.json文件"></a>1.package.json文件</h2><ul>
+<li><strong>拷贝项目给他人时不需要拷贝node_modules文件夹，只需要拷贝package.json文件</strong></li>
+<li>package.json项目描述文件会记录当前项目依赖的第三方模块及其版本号和项目名称等一系列项目信息</li>
+<li>别人根据package.json文件就可以下载对应的依赖第三方模块</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="创建package-json文件"><a href="#创建package-json文件" class="headerlink" title="创建package.json文件"></a>创建package.json文件</h3><p><strong>1.使用<code>npm init -y</code>命令在项目根目录下生成package.json文件</strong></p>
+<ul>
+<li><code>npm init</code> 命令执行时会询问要填写的项目基本信息，如项目名称，版本等</li>
+<li><code>npm init -y</code>   <strong>-y</strong>  即意味着所有询问的信息全部采用默认值</li>
+</ul>
+<center>创建package.json文件</center>
+
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426115738307.png" alt="image-20210426115738307"></p>
+<ul>
+<li>main ：项目的主模块</li>
+<li>script：命令别名</li>
+<li>keywords：项目关键字</li>
+<li>author：作者</li>
+<li>license：协议，ISC是开放源代码协议</li>
+</ul>
+<p><strong>2.创建好package.json文件后，使用npm命令下载第三方模块时，该模块的版本号等信息就会被自动记录在package.json文件中</strong></p>
+<p>此处使用<code>npm install formidable mime</code>命令下载两个模块</p>
+<p>package.json文件中的license字段下新增independencies字段</p>
+<p>该字段中就保存了项目依赖的模块名字与版本信息</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426120400050.png" alt="image-20210426120400050"></p>
+<h2 id="2-别人拿到拷贝的package-json文件如何使用"><a href="#2-别人拿到拷贝的package-json文件如何使用" class="headerlink" title="2.别人拿到拷贝的package.json文件如何使用"></a>2.别人拿到拷贝的package.json文件如何使用</h2><ul>
+<li>在项目根目录下执行<code>npm Install</code>命令</li>
+<li>npm会在项目根目录下找到package.json文件中的independencies字段</li>
+<li>将其中的依赖模块<strong>自动按版本号进行下载</strong></li>
+<li>下载完毕后根目录下会自动生成node_modules文件夹，其中就存放着下载的依赖模块</li>
+</ul>
+<h2 id="3-项目-开发依赖"><a href="#3-项目-开发依赖" class="headerlink" title="3.项目/开发依赖"></a>3.项目/开发依赖</h2><ul>
+<li>项目依赖：即开发和上线运行都需要的第三方模块</li>
+<li>开发依赖：只在开发过程需要，在<strong>上线运行时不需要</strong>的第三方模块</li>
+</ul>
+<p>安装npm包时</p>
+<ul>
+<li>使用<code>npm install 包名</code>，此时安装的包信息自动添加到package.json文件中的<strong>independencies字段</strong>，属于<strong>项目依赖</strong></li>
+<li>使用 <code>npm install 包名 --save-dev</code> ，此时安装的包信息添加到package.json文件中的<strong>devDependencies字段</strong>，属于<strong>开发依赖</strong></li>
+</ul>
+<p>例如gulp第三发模块就是<strong>开发依赖</strong>，只在开发阶段使用。</p>
+<p>使用 <code>npm install gulp --save-dev</code>安装后，package.json文件如下</p>
+<p>在<strong>devDependencies字段</strong>中出现gulp的模块名和版本信息</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426195127018.png" alt="image-20210426195127018"></p>
+<p>根据package.json文件安装依赖时</p>
+<ul>
+<li>使用 <code>npm install</code>命令会安装package.json文件中<strong>所有的依赖</strong>，包括项目和开发依赖</li>
+<li>使用 <code>npm install --production</code>命令只会安装package.json文件中的<strong>项目依赖</strong>，即<strong>independencies字段</strong>中的第三方模块</li>
+</ul>
+<h2 id="4-package-lock-json文件"><a href="#4-package-lock-json文件" class="headerlink" title="4.package-lock.json文件"></a>4.package-lock.json文件</h2><p><strong>记录模块与模块之间复杂的依赖关系</strong></p>
+<p>下载模块时在目录下<strong>自动生成</strong>package-lock.json文件</p>
+<p>详细记录了包的信息，如下载地址、版本和依赖关系等</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426200058484.png" alt="image-20210426200058484"></p>
+<h3 id="package-lock-json文件的作用"><a href="#package-lock-json文件的作用" class="headerlink" title="package-lock.json文件的作用"></a>package-lock.json文件的作用</h3><ul>
+<li>详细记录了包的版本等信息，确保再次下载时不会下载错误的版本</li>
+<li>加快下载速度，文件中记录了包的下载地址及项目依赖的第三方包的树状结构，重新下载时不需要做额外工作</li>
+</ul>
+<h2 id="5-package-json中scripts字段的作用"><a href="#5-package-json中scripts字段的作用" class="headerlink" title="5.package.json中scripts字段的作用"></a>5.package.json中scripts字段的作用</h2><p>scripts字段可以给常用的较长的命令起别名，提升开发效率</p>
+<p>使用别名执行命令：<code>npm run &quot;别名&quot;</code></p>
+<p>例如 <code>nodemon a.js</code> 这个命令经常执行</p>
+<p>可以在scripts字段中添加以下代码</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426200608237.png" alt="image-20210426200608237"></p>
+<p>即给<code>nodemon a.js</code>这个命令起了一个别名 build</p>
+<p>之后可以使用 <code>npm run build</code>命令来代替<code>nodemon a.js</code>命令</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>05-nodejs中的模块加载机制</title>
+    <url>/2021/04/26/05-nodejs%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="nodejs中的模块加载机制"><a href="#nodejs中的模块加载机制" class="headerlink" title="nodejs中的模块加载机制"></a>nodejs中的模块加载机制</h1><p>nodejs使用<code>require(&#39;&#39;)</code>方法来加载模块，参数即为模块名或者路径</p>
+<h2 id="require-查找模块"><a href="#require-查找模块" class="headerlink" title="require()查找模块"></a>require()查找模块</h2><h3 id="1-拥有完整路径-有路径但没有模块后缀"><a href="#1-拥有完整路径-有路径但没有模块后缀" class="headerlink" title="1.拥有完整路径/有路径但没有模块后缀"></a>1.拥有完整路径/有路径但没有模块后缀</h3><p>1.如果<code>require(&#39;模块&#39;)</code>参数中使用完整路径，则直接按照路径引入，找不到文件则报错</p>
+<ul>
+<li>例如 <code>require(&#39;./find.js&#39;)</code></li>
+<li>完整模块路径可以是<strong>相对/绝对路径</strong></li>
+<li>此时执行<code>require(&#39;./find.js&#39;)</code>代码时，会在相应的目录下找对应的find.js文件引入执行</li>
+</ul>
+<span id="more"></span>
+
+<p>2.如果参数中模块后缀省略，先找相应的同名js文件，再找同名的文件夹</p>
+<ul>
+<li>例如 <code>require(&#39;./find&#39;)</code></li>
+<li>先找对应目录下的find.js文件</li>
+<li>找不到就找同名的find文件夹</li>
+</ul>
+<p>3.如果找到同名文件夹则引入执行文件夹中的<strong>index.js模块</strong></p>
+<ul>
+<li>找不到同名文件夹则报错</li>
+</ul>
+<p>4.如果文件夹中没有index.js模块，就会找当前文件夹(与参数中模块同名的文件夹)下的package.json文件,并引入执行其中main字段的主/入口模块</p>
+<p>5.如果没有指定的入口模块或者入口模块找不到，则报错</p>
+<h3 id="2-没有路径且没有后缀"><a href="#2-没有路径且没有后缀" class="headerlink" title="2.没有路径且没有后缀"></a>2.没有路径且没有后缀</h3><p>例如：<code>require(&#39;find&#39;)</code></p>
+<p>1.nodejs先假设find模块为系统模块，在系统模块中查找</p>
+<p>2.系统模块查找不到就进入当前目录的node_modules文件夹中</p>
+<p>3.在node_modules文件夹中首先查找同名js文件</p>
+<p>4.查找不到同名文件则查找同名文件夹(find文件夹)</p>
+<p>5.引入执行同名文件夹(find文件夹)中的index.js模块</p>
+<p>6.如果没有index.js模块，则查看当前文件夹(find文件夹)下的package.json文件中main字段指示的入口模块</p>
+<p>7.引入执行package.json文件中main字段指示的入口模块</p>
+<p>8.若没有main字段，或者入口模块找不到则报错</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>06-服务器端基本概念</title>
+    <url>/2021/04/26/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h1 id="服务器端基本概念"><a href="#服务器端基本概念" class="headerlink" title="服务器端基本概念"></a>服务器端基本概念</h1><h2 id="1-URL"><a href="#1-URL" class="headerlink" title="1.URL"></a>1.URL</h2><p><strong>URL：统一资源定位符，标识internet网上资源的一种编码方式</strong></p>
+<p>使用URL可以唯一标识网络上的一个资源</p>
+<p>URL组成：</p>
+<ul>
+<li><strong>传输协议</strong>://<strong>服务器IP或域名:端口号</strong>/<strong>资源所在位置的标识</strong></li>
+<li>例如: <code>http://www.baidu.com/news/a.html</code></li>
+<li>即使用http协议访问域名为<code>www.baidu.com</code>，端口号为默认80的这个web服务器上的news文件夹下的a.html文件</li>
+<li>http：超文本传输协议，一种发布和接收html文件的方法</li>
+<li>IP或域名可以找到网络上的一台服务器，端口则代表这台服务器上的应用程序提供的服务，http默认端口为80</li>
+<li>资源所在位置标识：<strong>不一定是服务器上资源的路径</strong>，请求提交给服务器后，服务器可以根据位置标识做出其他的操作，服务器给客户端返回什么资源是服务器自身决定的</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="2-开发过程客户端和服务端说明"><a href="#2-开发过程客户端和服务端说明" class="headerlink" title="2.开发过程客户端和服务端说明"></a>2.开发过程客户端和服务端说明</h2><p>开发过程中，客户端和服务端使用同一台电脑，即开发人员的电脑</p>
+<p>开发人员电脑上的<strong>浏览器</strong>即为<strong>客户端</strong></p>
+<p>开发人员电脑上的Node可以编写服务器，可以作为<strong>服务端</strong>，即软件层面的服务器</p>
+<p>本机域名：localhost</p>
+<p>本机IP：127.0.0.1</p>
+<p>使用本机IP/域名就可以使用本机的客户端访问本机的服务端</p>
+<h2 id="3-nodejs构建简单web服务器"><a href="#3-nodejs构建简单web服务器" class="headerlink" title="3.nodejs构建简单web服务器"></a>3.nodejs构建简单web服务器</h2><p>server.js文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    <span class="comment">//也可以直接使用end()返回响应数据</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>请求处理函数中接收两个参数</p>
+<ul>
+<li>Request   请求对象：获取客户端的一些请求信息，例如请求路径等</li>
+<li>Response  响应对象：用来给客户端发送响应信息<ul>
+<li>第一个<code>response.end()</code>执行完后，服务器就已经结束响应</li>
+<li>后面代码中的<code>response.end()</code>将不再向浏览器响应数据</li>
+</ul>
+</li>
+</ul>
+<p>node执行这个文件</p>
+<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213253506.png" alt="image-20210426213253506"></p>
+<p>浏览器访问结果</p>
+<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213340606.png" alt="image-20210426213340606"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>07-HTTP协议</title>
+    <url>/2021/04/26/07-HTTP%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="1-HTTP协议概念"><a href="#1-HTTP协议概念" class="headerlink" title="1.HTTP协议概念"></a>1.HTTP协议概念</h2><p>HTTP(Hyper Text Transfer Protocol)：超文本传输协议,规定如何从服务器传输超文本文件(HTML文件)到浏览器，基于浏览器-服务器(B-S)架构工作，是客户端和服务器请求和应答的标准</p>
+<p>超文本(HTML)：在文本中不仅仅能包含文字，还可以包含音频视频图像等资源</p>
+<h2 id="2-报文"><a href="#2-报文" class="headerlink" title="2.报文"></a>2.报文</h2><p>HTTP<strong>请求和响应的数据块</strong>被称为报文，包括要传送的数据和一些附加信息，并且遵守规定好的格式</p>
+<p><strong>请求报文</strong>：浏览器发给服务器的HTTP请求报文</p>
+<p><strong>响应报文</strong>：服务器发给浏览器的HTTP响应报文</p>
+<span id="more"></span>
+
+<center>利用浏览器的开发者工具可以看到浏览器和服务器进行通信的请求和响应报文</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214103527.png" alt="image-20210426214103527"></p>
+<p>Network选项卡可以看到当前浏览器和服务器之间的通信情况</p>
+<p>下面的localhost和favicon.ico即为浏览器向服务器发送的两个HTTP请求</p>
+<ul>
+<li>localhost即为我们输出网址回车后发出的请求</li>
+<li>favicon.ico为浏览器默认的请求，请求该网页的标识小图标</li>
+</ul>
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214318773.png" alt="image-20210426214318773"></p>
+<center>点击请求可以看到更详细的信息</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214439234.png" alt="image-20210426214439234"></p>
+<p>Headers选项卡展示了请求和响应的头部等信息，General中显示了请求和响应中的重要信息</p>
+<ul>
+<li>报文头部中的信息以<code>:</code>分隔的键值对表示，键值对之间使用 <code>,</code>分隔</li>
+</ul>
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426222733888.png" alt="image-20210426222733888"></p>
+<p>Response中则展示了服务器实际响应的数据</p>
+<h3 id="1-请求报文"><a href="#1-请求报文" class="headerlink" title="1.请求报文"></a>1.请求报文</h3><h4 id="1-请求方式-Request-Method"><a href="#1-请求方式-Request-Method" class="headerlink" title="1.请求方式(Request Method)"></a>1.请求方式(Request Method)</h4><ul>
+<li><strong>GET</strong>: 一般用来获取数据，也可以向服务器发送少量数据(发送的数据大小有限制)，但是不安全</li>
+<li><strong>POST</strong>: 一般用来向服务器发送数据(可以发送大量数据)，网站的一般逻辑操作也使用POST方法，POST方法比GET方法安全性高</li>
+</ul>
+<p><strong>例如：直接在浏览器输入网址访问服务器默认发送的是GET请求</strong></p>
+<p>服务器端可以获取浏览器的请求方式</p>
+<p><code>request.method</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取请求方式 在服务器后输出</span></span><br><span class="line"><span class="built_in">console</span>.log(request.method);</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426215848666.png" alt="image-20210426215848666"></p>
+<p>使用浏览器输入网址访问服务器</p>
+<p>服务器后台输出两个GET，代表localhost请求和favicon.ico请求均为GET请求</p>
+<br>
+
+<p><strong>例如：html文件中表格form提交时可以指定提交方式，指定为POST即使用POST方式请求</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">       action:提交到哪个服务器</span></span><br><span class="line"><span class="comment">       method：提交采用什么方式</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:3000&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<center>服务器后台显示</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426220411454.png" alt="image-20210426220411454"></p>
+<p>此处第一次表格提交为POST请求，第二次请求页面小图标favicon.ico为GET请求</p>
+<p><strong>服务器可以根据对同一网址的不同请求方式做出不同响应</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//当请求方式为GET时</span></span><br><span class="line"><span class="keyword">if</span>(request.method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&quot;GET&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(request.method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&quot;POST&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会根据请求方式不同，给浏览器响应不同的数据</p>
+<p>例如：直接按网址访问服务器会响应’GET’，点击表单提交按钮访问服务器会响应’POST’</p>
+<h4 id="2-请求URL"><a href="#2-请求URL" class="headerlink" title="2.请求URL"></a>2.请求URL</h4><p><code>request.url</code>获取浏览器请求URL中从 ‘/‘ 开始的资源标识符</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取请求URL根据请求URL返回不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(request.url == <span class="string">&#x27;/index&#x27;</span>|| request.url == <span class="string">&#x27;/&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (request.url == <span class="string">&#x27;/list&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;404NotFound!&#x27;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当请求地址为<code>http://localhost:3000</code>时，浏览器给服务器发送的请求会自动在url末尾加上 ‘/‘ </li>
+<li>实际发送的url为<code>http://localhost:3000/</code>，所以服务器request.url获取的值都是以 ‘/‘ 开头的</li>
+</ul>
+<h4 id="3-请求头部Headers"><a href="#3-请求头部Headers" class="headerlink" title="3.请求头部Headers"></a>3.请求头部Headers</h4><p><code>request.headers</code> 获取请求报文的请求头</p>
+<p><code>request.headers[&#39;字段名&#39;]</code>获取请求头中特定字段的值</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将请求头信息在后台输出</span></span><br><span class="line"><span class="built_in">console</span>.log(request.headers);</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426223953815.png" alt="image-20210426223953815"></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回请求头中&#x27;accept&#x27;字段的值</span></span><br><span class="line"><span class="built_in">console</span>.log(request.headers[<span class="string">&#x27;accept&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426224158174.png" alt="image-20210426224158174"></p>
 ]]></content>
       <categories>
         <category>前后端交互</category>

@@ -35,8 +35,10 @@
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425173744670.png">
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425175329969.png">
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425180011653.png">
+<meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112637572.png">
+<meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112702650.png">
 <meta property="article:published_time" content="2021-04-19T12:08:17.000Z">
-<meta property="article:modified_time" content="2021-04-25T10:02:58.320Z">
+<meta property="article:modified_time" content="2021-04-26T14:51:56.586Z">
 <meta property="article:author" content="杨骁">
 <meta property="article:tag" content="Nodejs">
 <meta property="article:tag" content="Gulp">
@@ -230,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-25 18:02:58" itemprop="dateModified" datetime="2021-04-25T18:02:58+08:00">2021-04-25</time>
+                <time title="修改时间：2021-04-26 22:51:56" itemprop="dateModified" datetime="2021-04-26T22:51:56+08:00">2021-04-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -363,6 +365,37 @@
 <center>ES6转换并压缩后文件</center>
 
 <p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425180011653.png" alt="image-20210425180011653"></p>
+<h4 id="1-4文件拷背"><a href="#1-4文件拷背" class="headerlink" title="1.4文件拷背"></a>1.4文件拷背</h4><p>代码</p>
+<ul>
+<li>此处/*代表匹配一级的所有文件和目录<ul>
+<li>若使用images/*来匹配images/a/b.jpg ，则<strong>只能匹配到images/a这个文件夹</strong>，不会匹配到b.jpg</li>
+<li>此时匹配获取文件后输出的images/a文件夹是空的</li>
+</ul>
+</li>
+<li>lib/**/*代表匹配lib文件夹下的所有目录<strong>及其子目录</strong>中的文件<ul>
+<li>**代表匹配所有目录及其子目录</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将剩下的images文件夹和lib文件夹拷贝到dist文件夹下</span></span><br><span class="line">gulp.task(<span class="string">&#x27;copy&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/images/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/images&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/lib/**/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/lib&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5一次执行多个任务"><a href="#1-5一次执行多个任务" class="headerlink" title="1.5一次执行多个任务"></a>1.5一次执行多个任务</h4><p>代码</p>
+<p>执行default任务时依次执行后面数组中的每个任务</p>
+<ul>
+<li><strong>gulp4.0及更高版本</strong>需要使用<code>gulp.parallel(&#39;任务名&#39;,&#39;任务名&#39;,...)</code>来执行多个任务</li>
+<li>gulp4.0之前的版本可以使用<code>gulp.task(&#39;default&#39;,[&#39;任务名&#39;,&#39;任务名&#39;,...])</code>来执行多个任务</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>,gulp.parallel(<span class="string">&#x27;htmlmin&#x27;</span>,<span class="string">&#x27;cssmin&#x27;</span>,<span class="string">&#x27;jsmin&#x27;</span>,<span class="string">&#x27;copy&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在命令行中执行gulp命令，gulp会自动在gulpfile.js文件中寻找名为default的任务并执行</li>
+<li>在命令行中执行<code>gulp</code>相当于执行<code>gulp default</code></li>
+</ul>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112637572.png" alt="image-20210426112637572"></p>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112702650.png" alt="image-20210426112702650"></p>
+<ul>
+<li>此时只需执行default任务就可以执行项目中所有的任务</li>
+</ul>
 
     </div>
 
@@ -386,7 +419,10 @@
     <a href="/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/" rel="prev" title="02-02-第三方模块">
       <i class="fa fa-chevron-left"></i> 02-02-第三方模块
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/26/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/" rel="next" title="04-node_modules文件夹的问题">
+      04-node_modules文件夹的问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -445,7 +481,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gulp%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97"><span class="nav-text">Gulp第三方模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gulp%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-text">Gulp的插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Gulp%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="nav-text">1.Gulp插件使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1HTML%E6%93%8D%E4%BD%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.1HTML操作插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-html%E6%96%87%E4%BB%B6%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9%E4%BB%BB%E5%8A%A1"><span class="nav-text">1.html文件代码压缩任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%8F%90%E5%8F%96html%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E4%BB%A3%E7%A0%81"><span class="nav-text">2.提取html文件中的公共代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-CSS%E5%92%8Cless%E6%93%8D%E4%BD%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.2 CSS和less操作插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-less%E8%AF%AD%E6%B3%95%E8%BD%AC%E6%8D%A2"><span class="nav-text">1.less语法转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-css%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9"><span class="nav-text">2.css代码压缩</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3JS%E6%93%8D%E4%BD%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.3JS操作插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-ES6%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2"><span class="nav-text">1.ES6代码转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-js%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9"><span class="nav-text">2.js代码压缩</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gulp%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97"><span class="nav-text">Gulp第三方模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gulp%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-text">Gulp的插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Gulp%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8"><span class="nav-text">1.Gulp插件使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1HTML%E6%93%8D%E4%BD%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.1HTML操作插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-html%E6%96%87%E4%BB%B6%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9%E4%BB%BB%E5%8A%A1"><span class="nav-text">1.html文件代码压缩任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%8F%90%E5%8F%96html%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E4%BB%A3%E7%A0%81"><span class="nav-text">2.提取html文件中的公共代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-CSS%E5%92%8Cless%E6%93%8D%E4%BD%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.2 CSS和less操作插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-less%E8%AF%AD%E6%B3%95%E8%BD%AC%E6%8D%A2"><span class="nav-text">1.less语法转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-css%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9"><span class="nav-text">2.css代码压缩</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3JS%E6%93%8D%E4%BD%9C%E6%8F%92%E4%BB%B6"><span class="nav-text">1.3JS操作插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-ES6%E4%BB%A3%E7%A0%81%E8%BD%AC%E6%8D%A2"><span class="nav-text">1.ES6代码转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-js%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9"><span class="nav-text">2.js代码压缩</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4%E6%96%87%E4%BB%B6%E6%8B%B7%E8%83%8C"><span class="nav-text">1.4文件拷背</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5%E4%B8%80%E6%AC%A1%E6%89%A7%E8%A1%8C%E5%A4%9A%E4%B8%AA%E4%BB%BB%E5%8A%A1"><span class="nav-text">1.5一次执行多个任务</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -461,7 +497,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
