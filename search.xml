@@ -1167,12 +1167,249 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入queryString模块转换请求参数格式</span></span><br><span class="line"><span class="keyword">const</span> queryString = <span class="built_in">require</span>(<span class="string">&#x27;querystring&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//将字符串格式的请求参数转换为对象格式并在后台输出</span></span><br><span class="line"><span class="comment">//此代码写在request对象的end事件中</span></span><br><span class="line"><span class="built_in">console</span>.log(queryString.parse(datasum));</span><br></pre></td></tr></table></figure>
 
 <p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427225733016.png" alt="image-20210427225733016"></p>
+<h3 id="2-路由"><a href="#2-路由" class="headerlink" title="2.路由"></a>2.路由</h3><p>路由是指客户端<strong>请求地址</strong>与服务端<strong>程序代码</strong>的对应关系</p>
+<p>简单来说即客户端请求什么，服务器响应什么</p>
+<p>例如：</p>
+<ul>
+<li>客户端请求<code>http://localhost:3000/index.html</code>，服务端返回index.html</li>
+<li>对于普不同的请求方式GET和POST，服务器也可以根据请求方式做出不同的响应</li>
+</ul>
+<h3 id="3-静态资源"><a href="#3-静态资源" class="headerlink" title="3.静态资源"></a>3.静态资源</h3><p>服务器端不需要处理，可以直接响应给客户端的资源被称为静态资源，例如CSS,JS,HTML文件</p>
+<p>静态资源响应的例子：</p>
+<p><strong>URL中的资源标识符不一定要写服务器端资源的路径</strong></p>
+<ul>
+<li>服务器端可以获取资源标识符后自己指定资源地址</li>
+<li>此处就使用了字符串拼接<code>path.join</code>自己指定public文件夹下的静态资源</li>
+</ul>
+<br>
+
+<p><strong>响应文件时需要在响应头中指定内容类型</strong><code>content-type</code></p>
+<ul>
+<li>在高级浏览器中即使不指定内容类型也可以正常解析文件，但一些浏览器可能发生错误</li>
+<li>html文件通过<code>readFile()</code>方法获取，html文件中<strong>从外部引入的CSS等文件</strong>也是通过<code>readFile()</code>方法获取</li>
+<li>在设置响应头中的<code>content-type</code>时，需要<strong>得知当前获取的文件类型</strong><ul>
+<li>可以使用<strong>第三方模块mime</strong></li>
+<li>mime模块的<code>getTaype(&quot;资源路径&quot;)</code>方法可以根据资源路径返回对应的文件类型</li>
+<li>使用获取的文件类型设置<code>content-type</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> url=<span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="comment">//引入第三方模块MIME 根据路径获取文件类型</span></span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">&#x27;mime&#x27;</span>)</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//获取请求资源的标识符</span></span><br><span class="line">    <span class="keyword">let</span> pathname = url.parse(req.url).pathname</span><br><span class="line">    <span class="comment">//拼接路径</span></span><br><span class="line">    <span class="keyword">let</span> filepath = path.join(__dirname,<span class="string">&#x27;public&#x27;</span>+pathname)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> type = mime.getType(filepath)</span><br><span class="line">    <span class="comment">//获取对应文件</span></span><br><span class="line">    fs.readFile(filepath,<span class="function">(<span class="params">err,data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(err != <span class="literal">null</span>)&#123;</span><br><span class="line">            res.writeHead(<span class="number">404</span>,&#123;</span><br><span class="line">                <span class="string">&#x27;content-type&#x27;</span>:<span class="string">&#x27;text/plain;charset=utf-8&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            res.end(<span class="string">&#x27;文件找不到&#x27;</span>)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.writeHead(<span class="number">200</span>,&#123;</span><br><span class="line">                <span class="string">&#x27;content-type&#x27;</span>:type</span><br><span class="line">            &#125;)</span><br><span class="line">            res.end(data)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>此处使用<code>http://localhost:3000/default.html</code>访问服务器的静态资源如下</p>
+<ul>
+<li>此处的URI：/default.html并不是资源在服务器路径</li>
+<li>URI：统一资源<strong>标识符</strong></li>
+<li>URL：统一资源<strong>定位符</strong></li>
+</ul>
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210428195929316.png" alt="image-20210428195929316"></p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
       </categories>
       <tags>
         <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>08-node中的同步异步API</title>
+    <url>/2021/04/28/08-node%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5API/</url>
+    <content><![CDATA[<h1 id="node中的同步和异步API"><a href="#node中的同步和异步API" class="headerlink" title="node中的同步和异步API"></a>node中的同步和异步API</h1><p>nodejs中的API，拿到他们执行结果的方式有两种</p>
+<ul>
+<li>通过<strong>返回值</strong>的方式得到API执行结果<ul>
+<li>比如<code>path.join()</code>等API</li>
+</ul>
+</li>
+<li>通过<strong>函数</strong>的方式得到API执行结果<ul>
+<li>比如<code>fs.readFile()</code> API，这个API执行的结果在其第二个参数<strong>回调函数中的data参数中</strong></li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<br>
+
+<p>由此引出同步和异步API</p>
+<ul>
+<li><strong>同步API</strong>：按顺序执行，只有上一个API执行完毕，下一个API才开始执行</li>
+<li><strong>异步API</strong>：异步API的执行不会阻塞后续其他代码的执行 ，<strong>async</strong>即为异步</li>
+</ul>
+<p>例如下面这段代码执行结果为先输出before，再输出after，等待2s后再输出last</p>
+<p>这里的<code>setTimeout()</code> API就是异步API，不会阻塞后续代码执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;before&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;last&#x27;</span>)</span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;after&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="同步异步API的区别"><a href="#同步异步API的区别" class="headerlink" title="同步异步API的区别"></a>同步异步API的区别</h2><h3 id="1-获取执行结果"><a href="#1-获取执行结果" class="headerlink" title="1.获取执行结果"></a>1.获取执行结果</h3><ul>
+<li><p>同步API可以通过<strong>返回值</strong>拿到API执行的结果</p>
+</li>
+<li><p>异步API不能通过返回值拿到API执行结果，可以通过<strong>回调函数的方式</strong>得到执行结果</p>
+</li>
+</ul>
+<p><strong>同步API</strong></p>
+<p>通过返回值拿到结果 30</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">x,y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> datasum = sum(<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line"><span class="comment">//输出30</span></span><br><span class="line"><span class="built_in">console</span>.log(datasum);</span><br></pre></td></tr></table></figure>
+
+<p><strong>异步API</strong></p>
+<p>res输出为undefined</p>
+<p>执行到定时器时因为定时器为异步API，不会阻塞下面代码的执行，所以早在2s前，msg函数就已经默认返回undefined，此时res输出为undefined，而2s后定时器中的函数才执行</p>
+<p>异步API的执行结果<strong>不能通过返回值得到</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">msg</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">name</span>:<span class="string">&quot;yang&quot;</span>&#125;</span><br><span class="line">    &#125;,<span class="number">2000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> res = msg()</span><br><span class="line"><span class="comment">//输出undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(res);</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><strong>异步API的执行结果可以通过回调函数得到</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">msg</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        callback(&#123;<span class="attr">name</span>:<span class="string">&quot;yang&quot;</span>&#125;) </span><br><span class="line">    &#125;,<span class="number">2000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">msg(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//输出对象&#123;name:&#x27;yang&#x27;&#125;</span></span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过给msg函数使用回调函数将异步API的执行结果作为参数传递给回调函数，然后在回调函数中处理异步API的结果</p>
+<br>
+
+<h3 id="2-执行顺序"><a href="#2-执行顺序" class="headerlink" title="2.执行顺序"></a>2.执行顺序</h3><p><strong>同步API</strong></p>
+<p>同步API按代码编写顺序执行，上一个API执行完毕，下一个API才开始执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;循环后代码&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>对于上述代码，由于是同步API，会先输出0-99999这100000个数字，然后再输出”循环后代码”</p>
+<p><strong>异步API</strong></p>
+<p>异步API不会阻塞后续代码执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;开始&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;2s&quot;</span>);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;0s&quot;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;结束&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>对于上述代码，两个定时器为异步API，不会阻塞后续代码执行</p>
+<p>最后结果为：</p>
+<ul>
+<li><p>“开始”</p>
+</li>
+<li><p>“结束”</p>
+</li>
+<li><p>“0s”</p>
+</li>
+<li><p>“2s”</p>
+</li>
+</ul>
+<p><strong>异步API执行机制</strong>：</p>
+<ul>
+<li><p>首先执行所有的同步代码，碰到异步代码就先放入<strong>异步任务队列</strong>中(只放入，不执行)</p>
+</li>
+<li><p>当所有同步代码执行完毕后，开始执行异步任务队列中的异步代码</p>
+<ul>
+<li>在此处例子中，执行异步代码创建两个定时器，一个定时0s，一个定时2s，并将他们的回调函数放入<strong>回调函数队列</strong>中等待执行</li>
+</ul>
+</li>
+<li><p>异步代码执行完毕后进入回调函数队列，待满足条件时将回调函数队列中的回调函数<strong>调入同步代码执行区</strong>执行</p>
+<ul>
+<li>经过0s时执行0s定时器的回调函数先输出”0s”</li>
+<li>经过2s时再执行2s定时器的回调函数再输出”2s”</li>
+</ul>
+</li>
+<li><p>接着执行<strong>事件循环(eventloop)机制</strong>：循环等待直到有新的异步任务添加到异步任务队列中时，继续执行异步代码</p>
+</li>
+</ul>
+<p><img data-src="/images/08-node%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5API/image-20210428213248420.png" alt="image-20210428213248420"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JS执行机制(同步异步)</title>
+    <url>/2021/04/13/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/</url>
+    <content><![CDATA[<h1 id="JS执行机制"><a href="#JS执行机制" class="headerlink" title="JS执行机制"></a>JS执行机制</h1><h2 id="1-JS是单线程"><a href="#1-JS是单线程" class="headerlink" title="1.JS是单线程"></a>1.JS是单线程</h2><ul>
+<li>JavaScript语言的一大特点就是<strong>单线程</strong>，同一时间只能做一件事。</li>
+</ul>
+<p>这是因为JavaScript诞生的目的所致——JavaScript是为了处理页面中用户的交互，以及操作DOM而诞生的。</p>
+<p>我们对一个DOM元素进行操作时，<strong>不能同时进行多种操作</strong>，而只能先添加，再修改，然后删除。</p>
+<ul>
+<li>单线程意味着任务需要排队，前一个任务结束，后一个任务才开始。这样如果JS的执行时间过长就会导致页面渲染不连贯。导致页面渲染呈现阻塞的感觉。</li>
+</ul>
+<h2 id="2-同步和异步"><a href="#2-同步和异步" class="headerlink" title="2.同步和异步"></a>2.同步和异步</h2><ul>
+<li>为了解决JS单线程导致的任务排队问题，利用多核CPU的计算能力，H5提出了Web Worker标准，允许JavaScript脚本<strong>创建多个线程</strong>。于是JS中出现了<strong>同步</strong>和<strong>异步</strong>。</li>
+</ul>
+<p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210408185914871.png" alt="image-20210408185914871"></p>
+<p>上面这段代码按照单线程的思路：先输出1 等待1s后输出2 再输出3，如果定时器等待时间过长就会出现渲染阻塞的感觉。</p>
+<p>而允许JavaScript创建多个线程后，输出顺序变成了先输出1和3，等待1s后再输出2</p>
+<ul>
+<li>同步异步的<strong>本质区别</strong>：各个流程的执行顺序不同。</li>
+</ul>
+<h3 id="2-1同步"><a href="#2-1同步" class="headerlink" title="2.1同步"></a>2.1同步</h3><ul>
+<li>同步：<strong>前一个任务执行完毕再开始执行下一个任务</strong>，程序的执行顺序与任务的排列顺序是一致的、同步的。</li>
+</ul>
+<h3 id="2-2异步"><a href="#2-2异步" class="headerlink" title="2.2异步"></a>2.2异步</h3><ul>
+<li>异步：同时可以执行多个任务，下一个任务不必等待上一个任务执行完。</li>
+</ul>
+<h3 id="2-3同步任务和异步任务"><a href="#2-3同步任务和异步任务" class="headerlink" title="2.3同步任务和异步任务"></a>2.3同步任务和异步任务</h3><ul>
+<li><p>同步任务：同步任务都在<strong>主线程</strong>上执行，形成一个执行栈</p>
+</li>
+<li><p>异步任务：JS的异步是通过回调函数实现的</p>
+<ul>
+<li>常见的异步任务有以下几类</li>
+</ul>
+<ol>
+<li><strong>普通事件</strong>中的回调函数，如click、resize等事件中的回调函数</li>
+<li><strong>资源加载</strong>中的回调函数，如load、error等事件中的回调函数</li>
+<li><strong>定时器</strong>中的回调函数，如setTimeout、setInterval等定时器中的回调函数</li>
+</ol>
+<ul>
+<li>异步任务相关的<strong>回调函数</strong>添加到<strong>回调函数队列</strong>(消息队列)中</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210408205300165.png" alt="image-20210408205300165"></p>
+<p>上图的<code>console.log(1)</code>和<code>console.log(2)</code>都是<strong>同步任务</strong></p>
+<p>定时器setTimeout()属于<strong>异步任务</strong></p>
+<p>定时器中的回调函数即<code>function()&#123;console.log(3)&#125;</code> 要在<strong>异步任务队列</strong>中的定时器代码被执行时加入<strong>回调函数队列</strong></p>
+<p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210428214905524.png" alt="image-20210428214905524"></p>
+<h3 id="2-4JS执行机制"><a href="#2-4JS执行机制" class="headerlink" title="2.4JS执行机制"></a>2.4JS执行机制</h3><ol>
+<li><p>先按顺序执行代码，<strong>同步任务放入同步代码执行区中执行</strong></p>
+</li>
+<li><p>将遇到的异步任务放入异步代码执行区中，此时<strong>不执行异步任务</strong>(等待同步任务执行完后开始执行)</p>
+<ul>
+<li>此处将setTimeout定时器代码放入异步代码执行区中</li>
+<li>然后继续执行下面的同步任务</li>
+</ul>
+</li>
+<li><p>一旦同步代码执行区中的同步任务执行完毕后，系统就会进入异步代码执行区开始执行异步任务</p>
+<ul>
+<li>此处设定0s的定时器并将回调函数放入回调函数队列中</li>
+</ul>
+</li>
+<li><p>当回调函数队列中的回调函数满足条件后就调入同步代码执行区执行</p>
+<ul>
+<li>此处经过0s后将<code>console.log(3)</code>回调函数调入同步代码执行区执行</li>
+</ul>
+</li>
+<li><p>当前同步任务和异步任务都执行完毕后，通过<strong>事件循环</strong>继续查看任务队列，若有新的异步任务就继续执行</p>
+<p>上图的输出次序为1、2、3</p>
+</li>
+</ol>
+<ul>
+<li><strong>事件循环</strong>(event loop)：同步代码执行区不断的重复获取任务、执行任务、再获取任务、再执行，这种循环<strong>机制</strong>被称为事件循环</li>
+</ul>
+<h4 id="2-4-1有多个异步任务时的执行机制"><a href="#2-4-1有多个异步任务时的执行机制" class="headerlink" title="2.4.1有多个异步任务时的执行机制"></a>2.4.1有多个异步任务时的执行机制</h4><p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210428215837351.png" alt="image-20210428215837351"></p>
+<p>此时有两个同步任务</p>
+<ol>
+<li>console.log(1);</li>
+<li>console.log(2);</li>
+</ol>
+<p>两个异步任务</p>
+<ol>
+<li>onclick</li>
+<li>setTimeout</li>
+</ol>
+<ul>
+<li>第1个异步任务的回调函数只有当<strong>点击事件发生时</strong>，才被调入同步代码执行区执行</li>
+<li>第2个异步任务的回调函数，<strong>等经过3s后</strong>才被调入同步任务执行区执行</li>
+<li>这两个异步任务的回调函数<strong>执行顺序取决于点击事件发生的时间</strong></li>
+<li>同步代码执行区中的同步任务执行完后，会通过事件循环不断地查看异步代码执行区是否有新的异步任务，有就继续执行异步任务。<ul>
+<li>例如在当前所有同步、异步任务执行完毕后，又触发了一次点击事件，此时通过事件循环发现任务队列中有一个等待的异步任务，就将这个异步任务的回调函数放入回调函数队列中并直接调入同步代码执行区执行。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
 </search>
