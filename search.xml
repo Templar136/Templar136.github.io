@@ -1340,6 +1340,8 @@
 <ul>
 <li>单线程意味着任务需要排队，前一个任务结束，后一个任务才开始。这样如果JS的执行时间过长就会导致页面渲染不连贯。导致页面渲染呈现阻塞的感觉。</li>
 </ul>
+<span id="more"></span>
+
 <h2 id="2-同步和异步"><a href="#2-同步和异步" class="headerlink" title="2.同步和异步"></a>2.同步和异步</h2><ul>
 <li>为了解决JS单线程导致的任务排队问题，利用多核CPU的计算能力，H5提出了Web Worker标准，允许JavaScript脚本<strong>创建多个线程</strong>。于是JS中出现了<strong>同步</strong>和<strong>异步</strong>。</li>
 </ul>

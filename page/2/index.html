@@ -380,7 +380,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 22:18:48" itemprop="dateModified" datetime="2021-04-28T22:18:48+08:00">2021-04-28</time>
+                <time title="修改时间：2021-05-06 22:30:44" itemprop="dateModified" datetime="2021-05-06T22:30:44+08:00">2021-05-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -411,90 +411,14 @@
 <ul>
 <li>单线程意味着任务需要排队，前一个任务结束，后一个任务才开始。这样如果JS的执行时间过长就会导致页面渲染不连贯。导致页面渲染呈现阻塞的感觉。</li>
 </ul>
-<h2 id="2-同步和异步"><a href="#2-同步和异步" class="headerlink" title="2.同步和异步"></a>2.同步和异步</h2><ul>
-<li>为了解决JS单线程导致的任务排队问题，利用多核CPU的计算能力，H5提出了Web Worker标准，允许JavaScript脚本<strong>创建多个线程</strong>。于是JS中出现了<strong>同步</strong>和<strong>异步</strong>。</li>
-</ul>
-<p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210408185914871.png" alt="image-20210408185914871"></p>
-<p>上面这段代码按照单线程的思路：先输出1 等待1s后输出2 再输出3，如果定时器等待时间过长就会出现渲染阻塞的感觉。</p>
-<p>而允许JavaScript创建多个线程后，输出顺序变成了先输出1和3，等待1s后再输出2</p>
-<ul>
-<li>同步异步的<strong>本质区别</strong>：各个流程的执行顺序不同。</li>
-</ul>
-<h3 id="2-1同步"><a href="#2-1同步" class="headerlink" title="2.1同步"></a>2.1同步</h3><ul>
-<li>同步：<strong>前一个任务执行完毕再开始执行下一个任务</strong>，程序的执行顺序与任务的排列顺序是一致的、同步的。</li>
-</ul>
-<h3 id="2-2异步"><a href="#2-2异步" class="headerlink" title="2.2异步"></a>2.2异步</h3><ul>
-<li>异步：同时可以执行多个任务，下一个任务不必等待上一个任务执行完。</li>
-</ul>
-<h3 id="2-3同步任务和异步任务"><a href="#2-3同步任务和异步任务" class="headerlink" title="2.3同步任务和异步任务"></a>2.3同步任务和异步任务</h3><ul>
-<li><p>同步任务：同步任务都在<strong>主线程</strong>上执行，形成一个执行栈</p>
-</li>
-<li><p>异步任务：JS的异步是通过回调函数实现的</p>
-<ul>
-<li>常见的异步任务有以下几类</li>
-</ul>
-<ol>
-<li><strong>普通事件</strong>中的回调函数，如click、resize等事件中的回调函数</li>
-<li><strong>资源加载</strong>中的回调函数，如load、error等事件中的回调函数</li>
-<li><strong>定时器</strong>中的回调函数，如setTimeout、setInterval等定时器中的回调函数</li>
-</ol>
-<ul>
-<li>异步任务相关的<strong>回调函数</strong>添加到<strong>回调函数队列</strong>(消息队列)中</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210408205300165.png" alt="image-20210408205300165"></p>
-<p>上图的<code>console.log(1)</code>和<code>console.log(2)</code>都是<strong>同步任务</strong></p>
-<p>定时器setTimeout()属于<strong>异步任务</strong></p>
-<p>定时器中的回调函数即<code>function()&#123;console.log(3)&#125;</code> 要在<strong>异步任务队列</strong>中的定时器代码被执行时加入<strong>回调函数队列</strong></p>
-<p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210428214905524.png" alt="image-20210428214905524"></p>
-<h3 id="2-4JS执行机制"><a href="#2-4JS执行机制" class="headerlink" title="2.4JS执行机制"></a>2.4JS执行机制</h3><ol>
-<li><p>先按顺序执行代码，<strong>同步任务放入同步代码执行区中执行</strong></p>
-</li>
-<li><p>将遇到的异步任务放入异步代码执行区中，此时<strong>不执行异步任务</strong>(等待同步任务执行完后开始执行)</p>
-<ul>
-<li>此处将setTimeout定时器代码放入异步代码执行区中</li>
-<li>然后继续执行下面的同步任务</li>
-</ul>
-</li>
-<li><p>一旦同步代码执行区中的同步任务执行完毕后，系统就会进入异步代码执行区开始执行异步任务</p>
-<ul>
-<li>此处设定0s的定时器并将回调函数放入回调函数队列中</li>
-</ul>
-</li>
-<li><p>当回调函数队列中的回调函数满足条件后就调入同步代码执行区执行</p>
-<ul>
-<li>此处经过0s后将<code>console.log(3)</code>回调函数调入同步代码执行区执行</li>
-</ul>
-</li>
-<li><p>当前同步任务和异步任务都执行完毕后，通过<strong>事件循环</strong>继续查看任务队列，若有新的异步任务就继续执行</p>
-<p>上图的输出次序为1、2、3</p>
-</li>
-</ol>
-<ul>
-<li><strong>事件循环</strong>(event loop)：同步代码执行区不断的重复获取任务、执行任务、再获取任务、再执行，这种循环<strong>机制</strong>被称为事件循环</li>
-</ul>
-<h4 id="2-4-1有多个异步任务时的执行机制"><a href="#2-4-1有多个异步任务时的执行机制" class="headerlink" title="2.4.1有多个异步任务时的执行机制"></a>2.4.1有多个异步任务时的执行机制</h4><p><img data-src="/images/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/image-20210428215837351.png" alt="image-20210428215837351"></p>
-<p>此时有两个同步任务</p>
-<ol>
-<li>console.log(1);</li>
-<li>console.log(2);</li>
-</ol>
-<p>两个异步任务</p>
-<ol>
-<li>onclick</li>
-<li>setTimeout</li>
-</ol>
-<ul>
-<li>第1个异步任务的回调函数只有当<strong>点击事件发生时</strong>，才被调入同步代码执行区执行</li>
-<li>第2个异步任务的回调函数，<strong>等经过3s后</strong>才被调入同步任务执行区执行</li>
-<li>这两个异步任务的回调函数<strong>执行顺序取决于点击事件发生的时间</strong></li>
-<li>同步代码执行区中的同步任务执行完后，会通过事件循环不断地查看异步代码执行区是否有新的异步任务，有就继续执行异步任务。<ul>
-<li>例如在当前所有同步、异步任务执行完毕后，又触发了一次点击事件，此时通过事件循环发现任务队列中有一个等待的异步任务，就将这个异步任务的回调函数放入回调函数队列中并直接调入同步代码执行区执行。</li>
-</ul>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/13/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
