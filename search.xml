@@ -1302,6 +1302,25 @@
 </li>
 </ul>
 <p><img data-src="/images/08-node%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5API/image-20210428213248420.png" alt="image-20210428213248420"></p>
+<h2 id="nodejs中的常见异步API"><a href="#nodejs中的常见异步API" class="headerlink" title="nodejs中的常见异步API"></a>nodejs中的常见异步API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//打开文件是异步API</span></span><br><span class="line">fs.readFile(<span class="string">&#x27;./demo.txt&#x27;</span>,<span class="function">(<span class="params">err,data</span>) =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//事件处理函数也是异步API</span></span><br><span class="line"><span class="keyword">var</span> server = http.creatServer();</span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>上述两个异步API执行的结果只能通过<strong>回调函数</strong>获取</p>
+<p>异步API不会阻塞后续代码的执行</p>
+<br>
+
+<h2 id="后续代码需要使用前面异步API的执行结果"><a href="#后续代码需要使用前面异步API的执行结果" class="headerlink" title="后续代码需要使用前面异步API的执行结果"></a>后续代码需要使用前面异步API的执行结果</h2><p>如果异步API后面代码的执行需要使用前面异步API的结果，但是实际后续代码执行时前面的异步API还没有执行，如何解决这个问题?</p>
+<ul>
+<li>可以将<strong>后续代码写在异步API的回调函数中</strong></li>
+</ul>
+<p>例如：需要依次打开三个文件，可以使用回调函数嵌套的方式完成</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err , data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1);</span><br><span class="line">    <span class="comment">//嵌套在上一个readFile API的回调函数中</span></span><br><span class="line">    fs.readFile(<span class="string">&#x27;./2.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err , data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2);</span><br><span class="line">        fs.readFile(<span class="string">&#x27;./3.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err , data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/08-node%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5API/image-20210506201909805.png" alt="image-20210506201909805"></p>
+<p>使用这种方式可以解决后续代码使用前面异步API的执行结果的问题</p>
+<p>但是会引入<strong>新的问题</strong>：嵌套层数过多导致<strong>维护困难</strong></p>
+<p>回调嵌套回调被称为<strong>回调地狱</strong></p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -1410,6 +1429,122 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>10-ES7异步函数</title>
+    <url>/2021/05/06/10-ES7%E5%BC%82%E6%AD%A5%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="ES7异步函数"><a href="#ES7异步函数" class="headerlink" title="ES7异步函数"></a>ES7异步函数</h1><p>在09-promise对象中，学习到使用promise对象可以对异步编程语法进行<strong>改进</strong></p>
+<ul>
+<li>可以将异步API的执行和结果处理分离</li>
+<li>可以解决异步API回调函数嵌套的<strong>维护困难</strong>和<strong>回调地狱</strong>问题</li>
+</ul>
+<p>但是promise对象在处理较多的需要顺序执行的异步API时<strong>仍然比较繁琐</strong></p>
+<span id="more"></span>
+
+<ul>
+<li>需要使用promise对象将每一个异步API包裹起来</li>
+<li>需要使用函数将每一个promise对象包裹以实现顺序调用</li>
+<li>获取异步API<strong>结果</strong>和<strong>错误信息</strong>时还要在promise对象中使用resolve和reject两个参数函数<ul>
+<li>并在promise对象外部使用promise.then 和 promise.catch 两个方法进行接收</li>
+</ul>
+</li>
+<li>这使得代码比较臃肿繁琐</li>
+</ul>
+<p>在ES7中定义的<strong>异步函数</strong>可以在实现promise对象功能的基础上使得代码更加的简洁明了</p>
+<h2 id="异步函数"><a href="#异步函数" class="headerlink" title="异步函数"></a>异步函数</h2><p>异步函数实际上就是基于promise对象，将一些比较繁琐的promise方法进行了封装</p>
+<p>然后开放一些简单的关键字代替这些繁琐的操作</p>
+<br>
+
+<p><strong>异步函数是异步编程语法的终极解决方案，它可以将异步代码写成同步的形式，消除代码的回调函数嵌套。</strong></p>
+<h2 id="异步函数使用"><a href="#异步函数使用" class="headerlink" title="异步函数使用"></a>异步函数使用</h2><h3 id="在普通函数的前面加上async，即可创建异步函数"><a href="#在普通函数的前面加上async，即可创建异步函数" class="headerlink" title="在普通函数的前面加上async，即可创建异步函数"></a>在普通函数的前面加上<code>async</code>，即可创建异步函数</h3><p>async即异步的意思</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//fn()函数即为一个异步函数</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="number">123</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(fn());</span><br><span class="line">fn().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="异步函数的默认返回值为一个promise对象"><a href="#异步函数的默认返回值为一个promise对象" class="headerlink" title="异步函数的默认返回值为一个promise对象"></a>异步函数的默认返回值为一个<strong>promise对象</strong></h3><p>在异步函数中使用return进行结果的返回</p>
+<p><code>console.log(fn());</code>返回的结果如下</p>
+<p><img data-src="/images/10-ES7%E5%BC%82%E6%AD%A5%E5%87%BD%E6%95%B0/image-20210506214213554.png" alt="image-20210506214213554"></p>
+<p>将123包裹在promise对象中进行返回</p>
+<p>此处异步函数的<strong>return 即替代了promise对象的resolve函数</strong></p>
+<br>
+
+<p>可以使用promise对象的then()方法获取执行结果</p>
+<p>即使用<code>fn().then()</code>方法，输出123</p>
+<br>
+
+<h3 id="异步函数使用throw抛出错误信息"><a href="#异步函数使用throw抛出错误信息" class="headerlink" title="异步函数使用throw抛出错误信息"></a>异步函数使用throw抛出错误信息</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">throw</span> <span class="string">&#x27;错误&#x27;</span></span><br><span class="line">     <span class="keyword">return</span> <span class="number">123</span></span><br><span class="line">&#125;</span><br><span class="line">fn().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>使用promise对象的<strong>catch方法</strong>即可获取错误信息<code>&#39;错误&#39;</code></p>
+<p>此处throw语句后的return语句不再生效</p>
+<p><strong>throw即替代了promise对象中的reject函数</strong></p>
+<br>
+
+<h3 id="异步函数的await关键字"><a href="#异步函数的await关键字" class="headerlink" title="异步函数的await关键字"></a>异步函数的await关键字</h3><ul>
+<li>他只能出现在异步函数中</li>
+<li>await promise可以<strong>暂停异步函数的执行</strong>，等待promise对象返回结果后再继续执行</li>
+<li>await可以<strong>直接获取promise对象中的异步数据</strong>，代替了then方法</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">p1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;p1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">p2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;p2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">p3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;p3&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> r1=<span class="keyword">await</span> p1()</span><br><span class="line">    <span class="comment">//r1即为&#x27;p1&#x27;</span></span><br><span class="line">    <span class="built_in">console</span>.log(r1);</span><br><span class="line">    <span class="keyword">let</span> r2=<span class="keyword">await</span> p2()</span><br><span class="line">    <span class="built_in">console</span>.log(r2);</span><br><span class="line">    <span class="keyword">let</span> r3=<span class="keyword">await</span> p3()</span><br><span class="line">    <span class="built_in">console</span>.log(r3);</span><br><span class="line">&#125;</span><br><span class="line">run()</span><br></pre></td></tr></table></figure>
+
+<p>此处有三个异步函数p1()，p2()，p3()需要顺序执行</p>
+<p>将三个函数放入run()异步函数中加上await关键字执行</p>
+<p>只有当p1()函数执行后的promise对象返回结果后，代码才继续执行</p>
+<p>同时可以利用await关键字直接获取返回的promise对象中的异步数据</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>09-promise对象</title>
+    <url>/2021/05/06/09-promise%E5%AF%B9%E8%B1%A1/</url>
+    <content><![CDATA[<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>promise出现的目的是解决nodejs中异步编程中<a href="08-node%E3%80%82%E3%80%82%E3%80%82">回调地狱</a>的问题。</p>
+<p>promise并<strong>没有提供新的功能</strong>，它是一种异步编程<strong>语法上的改进</strong></p>
+<p>可以将异步API的<strong>执行</strong>和<strong>结果的处理</strong>进行分离</p>
+<p>promise是一种构造函数，使用时需要new 生成对象实例</p>
+<span id="more"></span>
+
+<br>
+
+<h2 id="Promise基本使用"><a href="#Promise基本使用" class="headerlink" title="Promise基本使用"></a>Promise基本使用</h2><p>new Promise()中传入匿名函数<code>(resolve,reject) =&gt; &#123;&#125;</code></p>
+<p>匿名函数的两个参数resolve，reject</p>
+<ul>
+<li>resolve 函数：当异步API执行成功时调用这个函数</li>
+<li>reject函数：异步API执行失败时调用这个函数</li>
+</ul>
+<p>在匿名函数<code>(resolve,reject) =&gt; &#123;&#125;</code>中书写异步API代码</p>
+<ul>
+<li>在匿名函数中完成异步API的执行</li>
+<li>利用resolve和reject这两个参数函数，在Promise实例对象外部处理异步API的结果</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建Promise实例对象</span></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve , reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//匿名函数中书写异步API代码</span></span><br><span class="line">    fs.readFile(<span class="string">&#x27;./1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err , data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(err != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//文件打开失败调用reject函数</span></span><br><span class="line">            reject(err);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            resolve(data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//在Promise实例对象外部处理异步API的结果</span></span><br><span class="line"><span class="comment">//在promise实例对象内部调用resolve函数即为调用promise.then()中的匿名函数，参数传递给then()中的匿名函数</span></span><br><span class="line">promise.then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//调用reject函数即为调用下面promise.catch()中的匿名函数，此处使用了链式编程省略了promise</span></span><br><span class="line">.catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="Promise解决回调地狱"><a href="#Promise解决回调地狱" class="headerlink" title="Promise解决回调地狱"></a>Promise解决回调地狱</h2><ul>
+<li><p>使用三个Promise对象包裹需要顺序执行的三个打开文件的异步API</p>
+</li>
+<li><p>将三个Promise对象分别用函数包裹保证执行时按函数调用的顺序执行</p>
+</li>
+<li><p>在使用<code>promise.then()</code>处理异步API结果时</p>
+<ul>
+<li>```js<br>p1().then((data) =&gt; {<pre><code>console.log(data)
+return p2();
+</code></pre>
+})<br>.then((data) =&gt; {})<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  - 上面第一个&#96;p1().then()&#96;方法中的&#96;return p2()&#96;，会使**下一个链式编程的then方法变为p2().then**</span><br><span class="line"></span><br><span class="line">  - 即第二个链式编程的then()处理的是**第二个promise对象中的异步API**</span><br><span class="line"></span><br><span class="line">  - 第三个链式编程的then()同理，处理的是**第三个promise对象中的异步API**</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;js</span><br><span class="line">const fs &#x3D; require(&#39;fs&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;使用函数包裹Promise对象，保证执行时按函数调用的顺序执行</span><br><span class="line">function p1() &#123;</span><br><span class="line">    return new Promise((resolve,reject) &#x3D;&gt; &#123;</span><br><span class="line">        fs.readFile(&#39;.&#x2F;1.txt&#39;,&#39;utf8&#39;,(err,data) &#x3D;&gt; &#123;</span><br><span class="line">            resolve(data)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function p2() &#123;</span><br><span class="line">    return new Promise((resolve,reject) &#x3D;&gt; &#123;</span><br><span class="line">        fs.readFile(&#39;.&#x2F;2.txt&#39;,&#39;utf8&#39;,(err,data) &#x3D;&gt; &#123;</span><br><span class="line">            resolve(data)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function p3() &#123;</span><br><span class="line">    return new Promise((resolve,reject) &#x3D;&gt; &#123;</span><br><span class="line">        fs.readFile(&#39;.&#x2F;3.txt&#39;,&#39;utf8&#39;,(err,data) &#x3D;&gt; &#123;</span><br><span class="line">            resolve(data)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;p1()的返回值即为第一个promise对象</span><br><span class="line">p1().then((data) &#x3D;&gt; &#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">    &#x2F;&#x2F;此处return p2()，下一个链式编程的then方法即为p2()的返回值的then方法</span><br><span class="line">    return p2()</span><br><span class="line">&#125;)</span><br><span class="line">&#x2F;&#x2F;此处即为p2().then()方法</span><br><span class="line">.then((data) &#x3D;&gt; &#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">    return p3()</span><br><span class="line">&#125;)</span><br><span class="line">.then((data) &#x3D;&gt; &#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/09-promise%E5%AF%B9%E8%B1%A1/image-20210506211329533.png" alt="image-20210506211329533"></p>
+<p>输出结果即为顺序的1 2 3</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
       </tags>
   </entry>
 </search>
