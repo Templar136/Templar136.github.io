@@ -1454,12 +1454,12 @@
 <li>这使得代码比较臃肿繁琐</li>
 </ul>
 <p>在ES7中定义的<strong>异步函数</strong>可以在实现promise对象功能的基础上使得代码更加的简洁明了</p>
-<h2 id="异步函数"><a href="#异步函数" class="headerlink" title="异步函数"></a>异步函数</h2><p>异步函数实际上就是基于promise对象，将一些比较繁琐的promise方法进行了封装</p>
+<h2 id="1-异步函数"><a href="#1-异步函数" class="headerlink" title="1.异步函数"></a>1.异步函数</h2><p>异步函数实际上就是基于promise对象，将一些比较繁琐的promise方法进行了封装</p>
 <p>然后开放一些简单的关键字代替这些繁琐的操作</p>
 <br>
 
 <p><strong>异步函数是异步编程语法的终极解决方案，它可以将异步代码写成同步的形式，消除代码的回调函数嵌套。</strong></p>
-<h2 id="异步函数使用"><a href="#异步函数使用" class="headerlink" title="异步函数使用"></a>异步函数使用</h2><h3 id="在普通函数的前面加上async，即可创建异步函数"><a href="#在普通函数的前面加上async，即可创建异步函数" class="headerlink" title="在普通函数的前面加上async，即可创建异步函数"></a>在普通函数的前面加上<code>async</code>，即可创建异步函数</h3><p>async即异步的意思</p>
+<h2 id="2-异步函数使用"><a href="#2-异步函数使用" class="headerlink" title="2.异步函数使用"></a>2.异步函数使用</h2><h3 id="在普通函数的前面加上async，即可创建异步函数"><a href="#在普通函数的前面加上async，即可创建异步函数" class="headerlink" title="在普通函数的前面加上async，即可创建异步函数"></a>在普通函数的前面加上<code>async</code>，即可创建异步函数</h3><p>async即异步的意思</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//fn()函数即为一个异步函数</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="number">123</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(fn());</span><br><span class="line">fn().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <h3 id="异步函数的默认返回值为一个promise对象"><a href="#异步函数的默认返回值为一个promise对象" class="headerlink" title="异步函数的默认返回值为一个promise对象"></a>异步函数的默认返回值为一个<strong>promise对象</strong></h3><p>在异步函数中使用return进行结果的返回</p>
@@ -1491,6 +1491,23 @@
 <p>将三个函数放入run()异步函数中加上await关键字执行</p>
 <p>只有当p1()函数执行后的promise对象返回结果后，代码才继续执行</p>
 <p>同时可以利用await关键字直接获取返回的promise对象中的异步数据</p>
+<br>
+
+<h2 id="3-异步函数在nodejs中的应用"><a href="#3-异步函数在nodejs中的应用" class="headerlink" title="3.异步函数在nodejs中的应用"></a>3.异步函数在nodejs中的应用</h2><p>nodejs中的异步API使用<strong>回调函数</strong>来获取执行结果</p>
+<p>因为使用回调函数获取结果，所以<strong>不能使用异步函数中的await关键字</strong></p>
+<ul>
+<li>await关键字后必须跟一个promise对象</li>
+</ul>
+<br>
+
+<h3 id="util核心模块的promisify方法"><a href="#util核心模块的promisify方法" class="headerlink" title="util核心模块的promisify方法"></a><code>util</code>核心模块的promisify方法</h3><p>nodejs核心模块util的promisify方法可以<strong>改造异步API</strong></p>
+<ul>
+<li>在原异步API的基础上，产生一个新的异步API</li>
+<li>新的异步API将执行结果包裹在promise对象中返回</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//引入util模块的promisify方法</span></span><br><span class="line"><span class="keyword">var</span> promisify = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>).promisify</span><br><span class="line"></span><br><span class="line"><span class="comment">//将要改造的异步API包裹在promisify方法中，形成一个新的异步API</span></span><br><span class="line"><span class="keyword">var</span> readFile = promisify(fs.readFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用新异步API</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">let</span> r1 = <span class="keyword">await</span> readFile(<span class="string">&#x27;./1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">console</span>.log(r1);</span><br><span class="line">&#125;</span><br><span class="line">run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>readFile</code> 即为基于<code>fs.readFile</code>改造后的新异步API</p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -1502,7 +1519,7 @@
   <entry>
     <title>09-promise对象</title>
     <url>/2021/05/06/09-promise%E5%AF%B9%E8%B1%A1/</url>
-    <content><![CDATA[<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>promise出现的目的是解决nodejs中异步编程中<a href="08-node%E3%80%82%E3%80%82%E3%80%82">回调地狱</a>的问题。</p>
+    <content><![CDATA[<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>promise对象出现的目的是解决nodejs中异步编程中<a href="08-node%E3%80%82%E3%80%82%E3%80%82">回调地狱</a>的问题。</p>
 <p>promise并<strong>没有提供新的功能</strong>，它是一种异步编程<strong>语法上的改进</strong></p>
 <p>可以将异步API的<strong>执行</strong>和<strong>结果的处理</strong>进行分离</p>
 <p>promise是一种构造函数，使用时需要new 生成对象实例</p>
@@ -1541,6 +1558,323 @@ return p2();
 </ul>
 <p><img data-src="/images/09-promise%E5%AF%B9%E8%B1%A1/image-20210506211329533.png" alt="image-20210506211329533"></p>
 <p>输出结果即为顺序的1 2 3</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>12-数据库相关概念</title>
+    <url>/2021/05/11/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h1 id="数据库相关概念"><a href="#数据库相关概念" class="headerlink" title="数据库相关概念"></a>数据库相关概念</h1><h2 id="1-使用MongoDB数据库"><a href="#1-使用MongoDB数据库" class="headerlink" title="1.使用MongoDB数据库"></a>1.使用MongoDB数据库</h2><p>MongoDB数据库<strong>可以使用js语法操作</strong>，前端开发人员更容易上手学习</p>
+<p>其他的数据库如MySQL、SQLServer等，都可以使用与它们契合度更高的语言进行操作</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511201521744.png" alt="image-20210511201521744"></p>
+<span id="more"></span>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511201756252.png" alt="image-20210511201756252"></p>
+<ul>
+<li><p>此处页面中的admin和api等都是database</p>
+<ul>
+<li>Mongedb数据库软件中有三个默认的数据库：<strong>config，admin，local</strong></li>
+</ul>
+</li>
+<li><p>roles是collection，一组数据的集合</p>
+</li>
+<li><p>右边显示的三条数据即为roles这个集合中的具体数据——<strong>文档document</strong></p>
+<ul>
+<li>每个文档实际上就是一个<strong>JSON对象</strong></li>
+</ul>
+</li>
+<li><p>此处显示的文档中有三个<strong>字段field</strong></p>
+</li>
+</ul>
+<h2 id="2-Nodejs操作数据库"><a href="#2-Nodejs操作数据库" class="headerlink" title="2.Nodejs操作数据库"></a>2.Nodejs操作数据库</h2><p>nodejs操作数据库需要第三方模块 <strong>mongoose模块</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//安装第三方模块</span></span><br><span class="line">npm install mongoose</span><br><span class="line"></span><br><span class="line"><span class="comment">//引入mongoose模块</span></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1打开数据库"><a href="#2-1打开数据库" class="headerlink" title="2.1打开数据库"></a>2.1打开数据库</h3><p>Mongodb数据库软件在安装时选择<strong>作为服务</strong>安装</p>
+<p>可以直接通过打开服务的方式打开Mongodb数据库软件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">net start mongodb<span class="comment">//打开数据库</span></span><br><span class="line">net stop mongodb<span class="comment">//关闭数据库</span></span><br></pre></td></tr></table></figure>
+
+<p>以管理员身份在CMD中开启关闭服务</p>
+<h3 id="2-2数据库连接"><a href="#2-2数据库连接" class="headerlink" title="2.2数据库连接"></a>2.2数据库连接</h3><p>nodejs使用mongoose模块的<code>connect()</code>方法连接数据库</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line">mongoose.connect(<span class="string">&#x27;mongodb://localhost/test&#x27;</span>)</span><br><span class="line">    .then(<span class="built_in">console</span>.log(<span class="string">&#x27;数据库开启成功&#x27;</span>))</span><br><span class="line">    .catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;数据库开启失败&#x27;</span>,err))</span><br></pre></td></tr></table></figure>
+
+<p>connect()方法返回一个<strong>promise对象</strong>，使用promise对象的**then()<strong>和</strong>catch()**方法接收结果和处理错误</p>
+<p>connect()方法的参数为一个URL</p>
+<ul>
+<li>这个URL使用mongodb作为协议名</li>
+<li>localhost即为主机的名字(IP/域名)，此处因为数据库运行在本机所以使用localhost</li>
+<li>/test即为数据库名字(mongodb数据库会<strong>自动创建不存在的数据库</strong>，所以不需要显式的创建数据库)</li>
+</ul>
+<center>运行这个js文件显示如下</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511205146851.png" alt="image-20210511205146851"></p>
+<p>将<code>&#123;useNewUrlParser:true,useUnifiedTopology:true&#125;</code>作为connect()方法的第二个参数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mongoose.connect(<span class="string">&#x27;mongodb://localhost/test&#x27;</span>,&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span> ,<span class="attr">useUnifiedTopology</span>: <span class="literal">true</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511205344686.png" alt="image-20210511205344686"></p>
+<h3 id="2-3创建数据库"><a href="#2-3创建数据库" class="headerlink" title="2.3创建数据库"></a>2.3创建数据库</h3><p>MongoDB中不需要显式的创建数据库，<strong>不存在的数据库会被自动创建</strong></p>
+<h3 id="2-4数据库的增添"><a href="#2-4数据库的增添" class="headerlink" title="2.4数据库的增添"></a>2.4数据库的增添</h3><h4 id="2-4-1创建集合"><a href="#2-4-1创建集合" class="headerlink" title="2.4.1创建集合"></a>2.4.1创建集合</h4><p>创建集合分两步</p>
+<ul>
+<li>1.设定集合规则</li>
+<li>2.应用集合规则创建集合</li>
+</ul>
+<p><strong>设定集合规则</strong></p>
+<p>使用<code>mongoose.Schema()</code><strong>构造函数</strong>创建实例对象来设定集合规则</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//构造函数传入一个JSON对象做为参数</span></span><br><span class="line"><span class="comment">//JSON对象中的属性即为文档中字段的名字和类型</span></span><br><span class="line"><span class="keyword">const</span> courseSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    name:<span class="built_in">String</span>,</span><br><span class="line">    teacher:<span class="built_in">String</span>,</span><br><span class="line">    isPublished:<span class="built_in">Boolean</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>创建的集合中的文档有三个字段</p>
+<ul>
+<li>name字段，数据类型为String</li>
+<li>teacher字段，数据类型为String</li>
+<li>isPublished字段，数据类型为Boolean</li>
+</ul>
+<p><strong>创建集合</strong></p>
+<p>使用<code>mongoose.model()</code>方法创建集合</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//第一个参数为集合名称</span></span><br><span class="line">    <span class="comment">//集合名称首字母大写</span></span><br><span class="line">    <span class="comment">//集合在数据库中实际的名称为courses</span></span><br><span class="line"><span class="comment">//第二个参数为应用的集合规则</span></span><br><span class="line"><span class="keyword">const</span> Course = mongoose.model(<span class="string">&#x27;Course&#x27;</span>,courseSchema);</span><br></pre></td></tr></table></figure>
+
+<p>集合名称为Course，在数据库中实际创建的集合名称为<strong>courses</strong></p>
+<p> <code>mongoose.model()</code>方法返回当前集合的构造函数</p>
+<p>即上述代码的Course即为<strong>集合的构造函数</strong></p>
+<p>集合的构造函数中的方法可以操作集合</p>
+<p><strong>创建的新数据库如果没有文档数据，MongoDB中是不会创建这个数据库的，compass可视化软件中自然也看不到新数据库</strong></p>
+<h4 id="2-4-2创建文档"><a href="#2-4-2创建文档" class="headerlink" title="2.4.2创建文档"></a>2.4.2创建文档</h4><p>创建文档向集合中插入数据分两步</p>
+<ul>
+<li>创建集合实例，写入新文档的数据</li>
+<li>调用集合实例对象的save方法将文档保存在数据库中</li>
+</ul>
+<br>
+
+<p><strong>创建集合实例</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建集合的实例对象</span></span><br><span class="line"><span class="comment">//作为参数的JSON对象的属性即为文档中的字段和值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> courseDoc = <span class="keyword">new</span> Course(&#123;</span><br><span class="line">  name : <span class="string">&#x27;Node.js&#x27;</span>,</span><br><span class="line">  teacher:<span class="string">&#x27;黑马讲师&#x27;</span>,</span><br><span class="line">  isPublished: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>创建了一个集合实例(<strong>文档</strong>)</p>
+<ul>
+<li><p>name字段值为：’Node.js’</p>
+</li>
+<li><p>teacher字段值为：’黑马讲师’</p>
+</li>
+<li><p>isPublished字段值为：true</p>
+<br></li>
+</ul>
+<p><strong>将集合保存到数据库</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//保存数据到数据库</span></span><br><span class="line">courseDoc.save()</span><br></pre></td></tr></table></figure>
+
+<p>调用创建的集合实例的save方法将新建的文档保存到数据库</p>
+<br>
+
+<center>在compass可视化软件中查看</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511214047191.png" alt="image-20210511214047191"></p>
+<p>test数据库下的courses集合中有一个文档</p>
+<p>_id字段是MongoDB数据库为每一个文档自动添加的唯一标识ID，类型为ObjectId</p>
+<h4 id="2-4-3创建文档的另一种方式"><a href="#2-4-3创建文档的另一种方式" class="headerlink" title="2.4.3创建文档的另一种方式"></a>2.4.3创建文档的另一种方式</h4><p>使用集合构造函数的create()方法创建文档</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用集合构造函数的creat方法创建文档</span></span><br><span class="line"><span class="comment">//第一个参数为新建文档数据的JSON对象表示</span></span><br><span class="line"><span class="comment">//第二个参数为回调函数</span></span><br><span class="line">Course.create(&#123;<span class="attr">name</span>:<span class="string">&#x27;Javascript&#x27;</span>, <span class="attr">teacher</span>:<span class="string">&#x27;黑马讲师&#x27;</span>,<span class="attr">isPublished</span>:<span class="literal">false</span>&#125;, <span class="function">(<span class="params">err,data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>成功添加文档</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511215734414.png" alt="image-20210511215734414"></p>
+<br>
+
+<h5 id="Nodejs中对数据库的所有操作都是异步操作"><a href="#Nodejs中对数据库的所有操作都是异步操作" class="headerlink" title="Nodejs中对数据库的所有操作都是异步操作"></a>Nodejs中对数据库的所有操作都是异步操作</h5><ul>
+<li><p>包括连接数据库，创建数据库和创建文档都是<strong>异步API</strong></p>
+</li>
+<li><p>其中返回promise对象的异步API可以应用<strong>异步函数</strong>编程的方法</p>
+<br></li>
+</ul>
+<p>create()方法获取异步API结果的方式有两种</p>
+<ul>
+<li><p>利用<strong>回调函数</strong>得到，形如上述2.4.3代码</p>
+</li>
+<li><p>create()方法返回<strong>promise对象</strong>，使用promise对象的then()和catch()方法获取结果和处理错误信息</p>
+<br></li>
+</ul>
+<p><strong>利用create()方法返回的promise对象来获取异步API结果</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用promise对象获取异步API的结果</span></span><br><span class="line"><span class="comment">//链式编程</span></span><br><span class="line">Course.create(&#123;<span class="attr">name</span>:<span class="string">&#x27;Javascript123&#x27;</span>, <span class="attr">teacher</span>:<span class="string">&#x27;黑马讲师&#x27;</span>,<span class="attr">isPublished</span>:<span class="literal">false</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br><span class="line">    .catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.log(err))</span><br></pre></td></tr></table></figure>
+
+<center>后台返回数据</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511220815270.png" alt="image-20210511220815270"></p>
+<center>compass显示</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511220907741.png" alt="image-20210511220907741"></p>
+<h4 id="2-4-4MongoDB数据库导入数据"><a href="#2-4-4MongoDB数据库导入数据" class="headerlink" title="2.4.4MongoDB数据库导入数据"></a>2.4.4MongoDB数据库导入数据</h4><p>使用MongoDB提供的<code>mongoimport</code>命令导入文件中数据</p>
+<p><code>mongoimport -d &#39;数据库名称&#39; -c &#39;集合名称&#39; --file &#39;要导入的文件路径&#39;</code></p>
+<p><code>mongoimport -d &#39;数据库名称&#39; -c &#39;集合名称&#39; --jsonArray &#39;要导入的文件路径&#39;</code></p>
+<br>
+
+<p>因为mongoimport.exe这个文件路径不在系统环境变量的路径中</p>
+<p><strong>需要我们手动添加文件的路径</strong></p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511231654210.png" alt="image-20210511231654210"></p>
+<p>我在本机MongoDB安装目录下的bin文件夹中没有找到mongoimport.exe这个文件</p>
+<p>所以在<a href="https://www.mongodb.com/try/download/database-tools?tck=docs_databasetools">MongoDB官网下载Tools</a></p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511231935779.png" alt="image-20210511231935779"></p>
+<p>将压缩包中的<code>命令.exe</code>文件复制到环境变量设置的目录下，就可以使用这些命令</p>
+<br>
+
+<p><strong>导入user.json文件中的数据</strong></p>
+<p>此处test数据库中不存在users集合</p>
+<p>使用mongoimport命令会<strong>自动创建users集合</strong></p>
+<ul>
+<li>集合规则根据json文件中的json对象设置</li>
+</ul>
+<p>此处json文件中是一个包含三个json对象作为元素的数组</p>
+<ul>
+<li>所以使用<code>--jsonArray</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mongoimport -d test -c users --jsonArray .\要导入的文件\user.json</span><br></pre></td></tr></table></figure>
+
+<center>.json文件内容</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511233918423.png" alt="image-20210511233918423"></p>
+<center>导入成功</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511234355272.png" alt="image-20210511234355272"></p>
+<center>compass软件</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511234514655.png" alt="image-20210511234514655"></p>
+<p>test数据库下自动创建users集合并写入3个文档</p>
+<br>
+
+<p><strong>当json文件中存放单个json对象时，导入命令如下</strong></p>
+<p>使用–file</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mongoimport -d test -c users --file .\要导入的文件\user.json</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511234828596.png" alt="image-20210511234828596"></p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511234837217.png" alt="image-20210511234837217"></p>
+<br>
+
+<h3 id="2-5数据库的查询"><a href="#2-5数据库的查询" class="headerlink" title="2.5数据库的查询"></a>2.5数据库的查询</h3><p>查询文档两种方式：</p>
+<ul>
+<li>使用集合构造函数的<strong>find()方法</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Course为集合的构造函数</span></span><br><span class="line"><span class="keyword">const</span> Course = mongoose.model(<span class="string">&#x27;Course&#x27;</span>,courseSchema);<span class="comment">//courses</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//查询集合中所有的文档(当find方法没有参数时)</span></span><br><span class="line">Course.find().then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>find()方法<strong>默认返回promise对象</strong></p>
+<p>promise对象的then方法接收的<strong>查询结果为一个数组</strong></p>
+<p>数组中的元素为查询到的文档的JSON对象表示，当查询不到任何文档时返回空数组</p>
+<p>find()方法使用<strong>一个JSON对象作为参数</strong>，json对象中属性即为查找条件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Course.find(&#123;<span class="attr">name</span>: <span class="string">&quot;Javascript&quot;</span>&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p><code>&#123;name: &quot;Javascript&quot;&#125;</code>即为查找name字段值为Javascript的文档</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512213042106.png" alt="image-20210512213042106"></p>
+<br>
+
+<ul>
+<li><p>使用集合构造函数的<strong>findOne()方法</strong></p>
+<ul>
+<li><p>findOne()方法<strong>查询结果为一个JSON对象</strong>，而find()方法<strong>查询结果为一个包含0或多个JSON对象的数组</strong></p>
+</li>
+<li><p>findOne()方法和find()方法都默认返回promise对象，使用promise对象的then方法获取执行结果</p>
+</li>
+<li><p>findOne()方法和find()方法的参数设置格式相同</p>
+</li>
+<li><p>当findOne()方法<strong>没有参数时</strong>返回集合中的第一个文档的JSON对象</p>
+</li>
+<li><p><strong>有参数时</strong>会返回满足参数条件的第一个文档的JSON对象</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Course.findOne(&#123;<span class="attr">name</span>: <span class="string">&quot;Javascript123&quot;</span>&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512213745252.png" alt="image-20210512213745252"></p>
+<br>
+
+<h4 id="2-5-1按范围查询"><a href="#2-5-1按范围查询" class="headerlink" title="2.5.1按范围查询"></a>2.5.1按范围查询</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">User.find(&#123;<span class="attr">age</span>:&#123;<span class="attr">$gt</span>:<span class="number">21</span>,<span class="attr">$lt</span>:<span class="number">23</span>&#125;&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>将作为find()方法参数的JSON对象中的<strong>属性值改为表示匹配信息JSON的对象</strong></p>
+<p><code>&#123;age:&#123;$gt:21,$lt:23&#125;&#125;</code></p>
+<ul>
+<li>$gt代表大于</li>
+<li>$lt代表小于</li>
+</ul>
+<p>表示匹配age字段值大于21，小于23的文档</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512221148976.png" alt="image-20210512221148976"></p>
+<br>
+
+<h4 id="2-5-2按匹配包含查询"><a href="#2-5-2按匹配包含查询" class="headerlink" title="2.5.2按匹配包含查询"></a>2.5.2按匹配包含查询</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">User.find(&#123;<span class="attr">hobbies</span>:&#123;<span class="attr">$in</span>:[<span class="string">&#x27;篮球&#x27;</span>]&#125;&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p><code>&#123;hobbies:&#123;$in:[&#39;篮球&#39;]&#125;&#125;</code></p>
+<p>匹配hobbies字段中包含篮球的文档，数组中可以填写多个包含项</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512221742490.png" alt="image-20210512221742490"></p>
+<br>
+
+<h4 id="2-5-3选择查询的字段"><a href="#2-5-3选择查询的字段" class="headerlink" title="2.5.3选择查询的字段"></a>2.5.3选择查询的字段</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">User.find().select(<span class="string">&quot;name age&quot;</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>对find()方法<strong>返回的promise对象使用select()方法</strong>选择要查询的字段名</p>
+<ul>
+<li><p>_id字段是每次查询时默认要查询的字段</p>
+</li>
+<li><p>在select方法的参数字段名前加<code>-</code>意味着查询时不显示这个字段</p>
+</li>
+<li><p><code>select(&quot;name age -_id&quot;)</code>即意味着查询name，age字段，不查询_id字段</p>
+</li>
+</ul>
+<p><code>&quot;name age&quot;</code>要查询的字段名作为select方法的参数，字段名用空格隔开</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222153159.png" alt="image-20210512222153159"></p>
+<br>
+
+<h4 id="2-5-4对查询结果按照某字段排序"><a href="#2-5-4对查询结果按照某字段排序" class="headerlink" title="2.5.4对查询结果按照某字段排序"></a>2.5.4对查询结果按照某字段排序</h4><p>查询商品的信息时会使用排序</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">User.find().sort(<span class="string">&quot;age&quot;</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>对find()方法<strong>返回的promise对象使用sort()方法</strong>进行排序</p>
+<ul>
+<li>按照sort()方法的参数填写的字段名排序<ul>
+<li>字段名前加<code>-</code>即意为降序排序</li>
+<li>不加<code>-</code>即意为升序排序</li>
+</ul>
+</li>
+</ul>
+<center>按年龄升序排序</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222459529.png" alt="image-20210512222459529"></p>
+<br>
+
+<center>年龄降序排序</center>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">User.find().sort(<span class="string">&quot;-age&quot;</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222552276.png" alt="image-20210512222552276"></p>
+<br>
+
+<h4 id="2-5-5查询时跳过数据，限制查询数量"><a href="#2-5-5查询时跳过数据，限制查询数量" class="headerlink" title="2.5.5查询时跳过数据，限制查询数量"></a>2.5.5查询时跳过数据，限制查询数量</h4><p>limit()和skip()方法结合使用可以实现分页功能</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//跳过第1条文档，查询最多2条文档</span></span><br><span class="line">User.find().skip(<span class="number">1</span>).limit(<span class="number">2</span>).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>对find()方法<strong>返回的promise对象</strong></p>
+<ul>
+<li>使用skip()方法设置<strong>跳过多少条数据</strong></li>
+<li>使用limit()方法设置<strong>最多查询多少条数据</strong></li>
+</ul>
+<center>总共四条数据，跳过一条查询两条</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222941101.png" alt="image-20210512222941101"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Mongodb数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>11-nodejs全局对象global</title>
+    <url>/2021/05/10/11-nodejs%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1global/</url>
+    <content><![CDATA[<h1 id="nodejs全局对象global"><a href="#nodejs全局对象global" class="headerlink" title="nodejs全局对象global"></a>nodejs全局对象global</h1><p>浏览器BOM中的全局对象是<strong>window</strong></p>
+<p>Node中全局对象是<strong>global</strong></p>
+<p>Node全局对象global有许多和window对象相同的方法</p>
+<p>使用global对象的方法可以省略global</p>
+<ul>
+<li>console.log() 在控制台输出</li>
+<li>setTimeout() 设置定时器(定时触发一次)</li>
+<li>clearTimeout() 清除定时器</li>
+<li>setInterval() 设置定时器(每经过设定的时间就触发)</li>
+<li>等等</li>
+</ul>
 ]]></content>
       <categories>
         <category>前后端交互</category>
