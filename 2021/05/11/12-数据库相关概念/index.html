@@ -51,8 +51,18 @@
 <meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222459529.png">
 <meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222552276.png">
 <meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222941101.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210513224626695.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517212114554.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517212203837.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517212536168.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517214350607.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517214658740.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517215346089.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517215830774.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517220251295.png">
+<meta property="og:image" content="http://example.com/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517224430291.png">
 <meta property="article:published_time" content="2021-05-11T12:14:17.000Z">
-<meta property="article:modified_time" content="2021-05-12T14:44:08.941Z">
+<meta property="article:modified_time" content="2021-05-17T14:53:12.291Z">
 <meta property="article:author" content="杨骁">
 <meta property="article:tag" content="Nodejs">
 <meta property="article:tag" content="Mongodb数据库">
@@ -246,7 +256,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-12 22:44:08" itemprop="dateModified" datetime="2021-05-12T22:44:08+08:00">2021-05-12</time>
+                <time title="修改时间：2021-05-17 22:53:12" itemprop="dateModified" datetime="2021-05-17T22:53:12+08:00">2021-05-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -552,6 +562,156 @@
 <center>总共四条数据，跳过一条查询两条</center>
 
 <p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210512222941101.png" alt="image-20210512222941101"></p>
+<br>
+
+<h3 id="2-6数据库文档的删除"><a href="#2-6数据库文档的删除" class="headerlink" title="2.6数据库文档的删除"></a>2.6数据库文档的删除</h3><h4 id="2-6-1删除单个文档"><a href="#2-6-1删除单个文档" class="headerlink" title="2.6.1删除单个文档"></a>2.6.1删除单个文档</h4><p>使用集合构造函数的findOneAndDelete()方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查找并删除匹配的第一条文档</span></span><br><span class="line">User.findOneAndDelete(&#123;<span class="attr">_id</span>:<span class="string">&#x27;609bdfc298ed4e560fe78266&#x27;</span>&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查找并删除<strong>匹配的第一条文档</strong></li>
+<li>此例删除_id字段为’609bdfc298ed4e560fe78266’的文档</li>
+<li>result为被删除文档的<strong>JSON对象</strong></li>
+<li>参数为空则会删除集合中的第一个元素</li>
+</ul>
+<br>
+
+<h4 id="2-6-2删除多个文档"><a href="#2-6-2删除多个文档" class="headerlink" title="2.6.2删除多个文档"></a>2.6.2删除多个文档</h4><p>使用集合构造函数的deleteMany()方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.deleteMany(&#123;<span class="attr">hobbies</span>:&#123;<span class="attr">$in</span>:<span class="string">&#x27;足球&#x27;</span>&#125;&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一次删除满足条件的所有文档</li>
+<li>本例删除所有hobbies字段中<strong>包含’足球’的文档</strong></li>
+<li>参数为空时会<strong>删除集合中所有文档</strong></li>
+<li>result为一个对象，包含<strong>三个属性</strong><ul>
+<li>ok: 1，值为1即表示删除成功</li>
+<li>n: 2，2即表示删除了两个文档</li>
+<li>deleteCount：2，删除计数为2</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210513224626695.png" alt="image-20210513224626695"></p>
+<br>
+
+<h3 id="2-7数据库文档修改"><a href="#2-7数据库文档修改" class="headerlink" title="2.7数据库文档修改"></a>2.7数据库文档修改</h3><h4 id="2-7-1修改单个文档"><a href="#2-7-1修改单个文档" class="headerlink" title="2.7.1修改单个文档"></a>2.7.1修改单个文档</h4><p>使用集合构造函数的<code>updateOne()</code>方法</p>
+<ul>
+<li>updateOne(‘查询条件’,’要修改的值’)</li>
+<li>只能修改一个匹配文档</li>
+<li>返回promise对象</li>
+<li>执行结果result为一个对象</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.updateOne(&#123;<span class="attr">name</span>:<span class="string">&quot;杨启明&quot;</span>&#125;,&#123;<span class="attr">name</span>:<span class="string">&quot;杨启明1&quot;</span>&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>找到name字段值为杨启明的文档，修改其name字段值为杨启明1</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517212114554.png" alt="image-20210517212114554"></p>
+<center>上图红框即为result表示的对象</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517212203837.png" alt="image-20210517212203837"></p>
+<h4 id="2-7-2修改多个文档"><a href="#2-7-2修改多个文档" class="headerlink" title="2.7.2修改多个文档"></a>2.7.2修改多个文档</h4><p>集合构造函数的updateMany()方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.updateMany(&#123;&#125;,&#123;<span class="attr">age</span>:<span class="number">18</span>&#125;).then(<span class="function"><span class="params">result</span> =&gt;</span> <span class="built_in">console</span>.log(result))</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数为空对象即为修改集合中的所有文档</p>
+<p>将集合中所有文档中的age字段值改为18</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517212536168.png" alt="image-20210517212536168"></p>
+<br>
+
+<h3 id="2-8Mongoose验证"><a href="#2-8Mongoose验证" class="headerlink" title="2.8Mongoose验证"></a>2.8Mongoose验证</h3><p>Mongoose在创建集合规则时可以<strong>为文档的字段设定验证条件</strong>，不满足验证条件的文档在存入数据库时会报错</p>
+<p>字段的验证条件在<strong>设定集合规则</strong>时指定</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    <span class="comment">//name:&#123;&#125; JSON对象中写name字段的具体验证要求</span></span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-8-1-required规则"><a href="#2-8-1-required规则" class="headerlink" title="2.8.1 required规则"></a>2.8.1 required规则</h4><p>required规则取值可以有两种</p>
+<ul>
+<li>boolean值</li>
+<li>数组(数组中可以自定义报错信息)</li>
+</ul>
+<p><strong>1.require规则值为boolean值</strong></p>
+<p><code>required:true</code>代表该字段是必须的(mongoose默认规定字段可以为空)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将一个空文档存入数据库</span></span><br><span class="line">Post.create(&#123;&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517214350607.png" alt="image-20210517214350607"></p>
+<center>红框报错，name字段是必须的</center>
+
+<br>
+
+<p><strong>当没有设置required字段为true时</strong></p>
+<p>将空文档存入数据库也不会报错</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517214658740.png" alt="image-20210517214658740"></p>
+<center>红框即为存入的空文档</center>
+
+<br>
+
+<p><strong>2.required规则值为数组</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    <span class="comment">//name:&#123;&#125; JSON对象中写name字段的具体验证要求</span></span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        <span class="comment">//required规则值为数组</span></span><br><span class="line">        required:[</span><br><span class="line">            <span class="literal">true</span>,</span><br><span class="line">            <span class="string">&#x27;请填入必填项标题&#x27;</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>数组第一个元素为是否为必填项</p>
+<p>第二个参数为报错信息</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517215346089.png" alt="image-20210517215346089"></p>
+<center>报错信息变为'请填入必填项标题'</center>
+
+<h4 id="2-8-2-字段长度限制"><a href="#2-8-2-字段长度限制" class="headerlink" title="2.8.2 字段长度限制"></a>2.8.2 字段长度限制</h4><p><strong>针对于type为String的字段值</strong></p>
+<p><strong>minlength</strong>规则：限制最小长度</p>
+<p><strong>maxlength</strong>规则：限制最大长度</p>
+<p>同样规则值可以为数组，第二个元素为报错信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    <span class="comment">//name:&#123;&#125; JSON对象中写name字段的具体验证要求</span></span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:[</span><br><span class="line">            <span class="literal">true</span>,</span><br><span class="line">            <span class="string">&#x27;请填入必填项标题&#x27;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="comment">//最小长度为2</span></span><br><span class="line">        minlength:[<span class="number">2</span>,<span class="string">&#x27;输入值小于最小长度2&#x27;</span>],</span><br><span class="line">        <span class="comment">//最大长度为5</span></span><br><span class="line">        maxlength:[<span class="number">5</span>,<span class="string">&#x27;输入值大于最大长度5&#x27;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建一个文档name字段值为&#x27;helloworld&#x27;，并存入数据库</span></span><br><span class="line">Post.create(&#123;<span class="attr">name</span>:<span class="string">&#x27;helloworld&#x27;</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517215830774.png" alt="image-20210517215830774"></p>
+<center>长度大于5报错</center>
+
+<br>
+
+<h4 id="2-8-3-trim规则"><a href="#2-8-3-trim规则" class="headerlink" title="2.8.3 trim规则"></a>2.8.3 trim规则</h4><p>trim：规定是否去除字符串两边多余的空格</p>
+<p>trim规则的值为boolean值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    <span class="comment">//name:&#123;&#125; JSON对象中写name字段的具体验证要求</span></span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:[</span><br><span class="line">            <span class="literal">true</span>,</span><br><span class="line">            <span class="string">&#x27;请填入必填项标题&#x27;</span></span><br><span class="line">        ],</span><br><span class="line">        minlength:[<span class="number">2</span>,<span class="string">&#x27;输入值小于最小长度2&#x27;</span>],</span><br><span class="line">        maxlength:[<span class="number">5</span>,<span class="string">&#x27;输入值大于最大长度5&#x27;</span>],</span><br><span class="line">        trim:<span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//name字段值为&#x27;   a bc  &#x27;</span></span><br><span class="line">Post.create(&#123;<span class="attr">name</span>:<span class="string">&#x27;   a bc  &#x27;</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+
+<p>代码中设置name字段值为’       a bc   ‘</p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517220251295.png" alt="image-20210517220251295"></p>
+<center>消除多余空格后的文档数据</center>
+
+<br>
+
+<h4 id="2-8-4数值大小限制"><a href="#2-8-4数值大小限制" class="headerlink" title="2.8.4数值大小限制"></a>2.8.4数值大小限制</h4><p>针对于type为Number的字段值</p>
+<p>min：最小数值</p>
+<p>max：最大数值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age:&#123;</span><br><span class="line">       type:<span class="built_in">Number</span>,</span><br><span class="line">       <span class="comment">//数值最小值  Number类型</span></span><br><span class="line">       min:<span class="number">18</span>,</span><br><span class="line">       <span class="comment">//数值最大值</span></span><br><span class="line">       max:<span class="number">70</span>,</span><br><span class="line">   &#125;,</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="2-8-5默认值设置"><a href="#2-8-5默认值设置" class="headerlink" title="2.8.5默认值设置"></a>2.8.5默认值设置</h4><p>使用<strong>default</strong>设置字段默认值，在没有显式创建这个字段时，字段会使用默认值创建</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">publishDate:&#123;</span><br><span class="line"></span><br><span class="line">    type:<span class="built_in">Date</span>,</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:<span class="built_in">Date</span>.now</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>publishDate字段的默认值为当前时间</p>
+<p>Date内置对象的now属性可以获取当前时间</p>
+<br>
+
+<h4 id="2-8-6枚举设置"><a href="#2-8-6枚举设置" class="headerlink" title="2.8.6枚举设置"></a>2.8.6枚举设置</h4><p>使用enmu设置字段<strong>可选的值</strong>，字段的值<strong>不在enmu设定的值中会报错</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">category:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        <span class="comment">//枚举值(该字段可选的值)</span></span><br><span class="line">        enum:[<span class="string">&#x27;小说&#x27;</span>,<span class="string">&#x27;散文&#x27;</span>,<span class="string">&#x27;说明文&#x27;</span>]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>category字段的可选值为小说、散文和说明文</p>
+<br>
+
+<h4 id="2-8-7自定义验证规则"><a href="#2-8-7自定义验证规则" class="headerlink" title="*2.8.7自定义验证规则"></a>*2.8.7自定义验证规则</h4><p>validate：自定义规则,为一个JSON对象</p>
+<p>validator：自定义规则验证函数，是validate的元素</p>
+<ul>
+<li>返回boolean值</li>
+<li>true代表验证成功，false代表失败</li>
+<li>v即为要验证的字段值</li>
+</ul>
+<p>message：自定义报错信息，是validate的元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">author:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        <span class="comment">//自定义验证规则</span></span><br><span class="line">        validate:&#123;</span><br><span class="line">            <span class="comment">//进行验证的函数</span></span><br><span class="line">            validator:<span class="function"><span class="params">v</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">//返回boolean值</span></span><br><span class="line">                <span class="comment">//true代表验证成功，false代表失败</span></span><br><span class="line">                <span class="comment">//v即为要验证的字段值</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment">//v的值小于4即验证通过</span></span><br><span class="line">                <span class="keyword">return</span> v &amp;&amp; v.length&lt;<span class="number">4</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">//自定义规则报错信息</span></span><br><span class="line">            message:<span class="string">&#x27;不满足作者字段验证条件&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Post.create(&#123;<span class="attr">name</span>:<span class="string">&#x27;01&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>,<span class="attr">category</span>:<span class="string">&#x27;小说&#x27;</span>,<span class="attr">author</span>:<span class="string">&#x27;abc&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line">  .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+
+<center>创建并保存包含4个字段的文档</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210517224430291.png" alt="image-20210517224430291"></p>
+<center>保存成功</center>
+
+<ul>
+<li>name字段：必填项验证</li>
+<li>age字段：数值大小验证</li>
+<li>category字段：enmu枚举验证</li>
+<li>author字段：自定义验证(长度小于4)</li>
+<li>publishDate字段：没有显式创建，使用默认值自动创建</li>
+</ul>
 
     </div>
 
@@ -634,7 +794,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">数据库相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">1.使用MongoDB数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Nodejs%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.Nodejs操作数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.1打开数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="nav-text">2.2数据库连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.3创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A2%9E%E6%B7%BB"><span class="nav-text">2.4数据库的增添</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1%E5%88%9B%E5%BB%BA%E9%9B%86%E5%90%88"><span class="nav-text">2.4.1创建集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3"><span class="nav-text">2.4.2创建文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">2.4.3创建文档的另一种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Nodejs%E4%B8%AD%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%89%80%E6%9C%89%E6%93%8D%E4%BD%9C%E9%83%BD%E6%98%AF%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C"><span class="nav-text">Nodejs中对数据库的所有操作都是异步操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-4MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-text">2.4.4MongoDB数据库导入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-text">2.5数据库的查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-1%E6%8C%89%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="nav-text">2.5.1按范围查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-2%E6%8C%89%E5%8C%B9%E9%85%8D%E5%8C%85%E5%90%AB%E6%9F%A5%E8%AF%A2"><span class="nav-text">2.5.2按匹配包含查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-3%E9%80%89%E6%8B%A9%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">2.5.3选择查询的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-4%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8C%89%E7%85%A7%E6%9F%90%E5%AD%97%E6%AE%B5%E6%8E%92%E5%BA%8F"><span class="nav-text">2.5.4对查询结果按照某字段排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-5%E6%9F%A5%E8%AF%A2%E6%97%B6%E8%B7%B3%E8%BF%87%E6%95%B0%E6%8D%AE%EF%BC%8C%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E6%95%B0%E9%87%8F"><span class="nav-text">2.5.5查询时跳过数据，限制查询数量</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-text">数据库相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">1.使用MongoDB数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Nodejs%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.Nodejs操作数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E6%89%93%E5%BC%80%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.1打开数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="nav-text">2.2数据库连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.3创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A2%9E%E6%B7%BB"><span class="nav-text">2.4数据库的增添</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1%E5%88%9B%E5%BB%BA%E9%9B%86%E5%90%88"><span class="nav-text">2.4.1创建集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3"><span class="nav-text">2.4.2创建文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-text">2.4.3创建文档的另一种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Nodejs%E4%B8%AD%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%89%80%E6%9C%89%E6%93%8D%E4%BD%9C%E9%83%BD%E6%98%AF%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C"><span class="nav-text">Nodejs中对数据库的所有操作都是异步操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-4MongoDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-text">2.4.4MongoDB数据库导入数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-text">2.5数据库的查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-1%E6%8C%89%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="nav-text">2.5.1按范围查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-2%E6%8C%89%E5%8C%B9%E9%85%8D%E5%8C%85%E5%90%AB%E6%9F%A5%E8%AF%A2"><span class="nav-text">2.5.2按匹配包含查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-3%E9%80%89%E6%8B%A9%E6%9F%A5%E8%AF%A2%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-text">2.5.3选择查询的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-4%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8C%89%E7%85%A7%E6%9F%90%E5%AD%97%E6%AE%B5%E6%8E%92%E5%BA%8F"><span class="nav-text">2.5.4对查询结果按照某字段排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-5%E6%9F%A5%E8%AF%A2%E6%97%B6%E8%B7%B3%E8%BF%87%E6%95%B0%E6%8D%AE%EF%BC%8C%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E6%95%B0%E9%87%8F"><span class="nav-text">2.5.5查询时跳过数据，限制查询数量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E6%A1%A3%E7%9A%84%E5%88%A0%E9%99%A4"><span class="nav-text">2.6数据库文档的删除</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1%E5%88%A0%E9%99%A4%E5%8D%95%E4%B8%AA%E6%96%87%E6%A1%A3"><span class="nav-text">2.6.1删除单个文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2%E5%88%A0%E9%99%A4%E5%A4%9A%E4%B8%AA%E6%96%87%E6%A1%A3"><span class="nav-text">2.6.2删除多个文档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E6%A1%A3%E4%BF%AE%E6%94%B9"><span class="nav-text">2.7数据库文档修改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-1%E4%BF%AE%E6%94%B9%E5%8D%95%E4%B8%AA%E6%96%87%E6%A1%A3"><span class="nav-text">2.7.1修改单个文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-2%E4%BF%AE%E6%94%B9%E5%A4%9A%E4%B8%AA%E6%96%87%E6%A1%A3"><span class="nav-text">2.7.2修改多个文档</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8Mongoose%E9%AA%8C%E8%AF%81"><span class="nav-text">2.8Mongoose验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-1-required%E8%A7%84%E5%88%99"><span class="nav-text">2.8.1 required规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-2-%E5%AD%97%E6%AE%B5%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6"><span class="nav-text">2.8.2 字段长度限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-3-trim%E8%A7%84%E5%88%99"><span class="nav-text">2.8.3 trim规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-4%E6%95%B0%E5%80%BC%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6"><span class="nav-text">2.8.4数值大小限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-5%E9%BB%98%E8%AE%A4%E5%80%BC%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.8.5默认值设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-6%E6%9E%9A%E4%B8%BE%E8%AE%BE%E7%BD%AE"><span class="nav-text">2.8.6枚举设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-8-7%E8%87%AA%E5%AE%9A%E4%B9%89%E9%AA%8C%E8%AF%81%E8%A7%84%E5%88%99"><span class="nav-text">*2.8.7自定义验证规则</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
