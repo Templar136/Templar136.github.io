@@ -1976,6 +1976,11 @@ return p2();
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">category:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        <span class="comment">//枚举值(该字段可选的值)</span></span><br><span class="line">        enum:[<span class="string">&#x27;小说&#x27;</span>,<span class="string">&#x27;散文&#x27;</span>,<span class="string">&#x27;说明文&#x27;</span>]</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
 
 <p>category字段的可选值为小说、散文和说明文</p>
+<p>enum属性的值也可以是一个对象</p>
+<p>values：可选的值数组</p>
+<p>message：自定义错误信息</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">enum:&#123;</span><br><span class="line">            values: [<span class="string">&#x27;小说&#x27;</span>,<span class="string">&#x27;散文&#x27;</span>,<span class="string">&#x27;说明文&#x27;</span>],</span><br><span class="line">            message: <span class="string">&#x27;不在可选范围内&#x27;</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
 <br>
 
 <h4 id="2-8-7自定义验证规则"><a href="#2-8-7自定义验证规则" class="headerlink" title="*2.8.7自定义验证规则"></a>*2.8.7自定义验证规则</h4><p>validate：自定义规则,为一个JSON对象</p>
@@ -2002,6 +2007,64 @@ return p2();
 <li>author字段：自定义验证(长度小于4)</li>
 <li>publishDate字段：没有显式创建，使用默认值自动创建</li>
 </ul>
+<br>
+
+<h4 id="2-8-8通过代码获得错误信息"><a href="#2-8-8通过代码获得错误信息" class="headerlink" title="2.8.8通过代码获得错误信息"></a>2.8.8通过代码获得错误信息</h4><p>集合构造函数的create()方法返回<strong>promise对象</strong></p>
+<p>可以使用promise的<strong>then方法</strong>获取执行结果</p>
+<p>可以使用promise的<strong>catch方法</strong>获取错误信息</p>
+<ul>
+<li>catch获取的错误信息以对象的形式返回</li>
+</ul>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210518205149772.png" alt="image-20210518205149772"></p>
+<center>catch方法返回的对象</center>
+
+<p>具体错误信息提示放在错误对象的errors属性中</p>
+<p>如果有多个错误，例如：category字段和author字段都错误</p>
+<p>errors中就会嵌套两个相应的错误字段对象</p>
+<p>错误字段对象下的properties对象中的message属性存放的就是定义的message错误信息</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Post.create(&#123;<span class="attr">name</span>:<span class="string">&#x27;01&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>,<span class="attr">category</span>:<span class="string">&#x27;小说1&#x27;</span>,<span class="attr">author</span>:<span class="string">&#x27;abcde&#x27;</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br><span class="line">    .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    	<span class="comment">//获取错误对象下的errors属性</span></span><br><span class="line">        <span class="keyword">var</span> errin = err.errors</span><br><span class="line">        <span class="comment">//循环每个错误字段对象(categoty和author对象)取其properties对象中的message属性</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> errin)</span><br><span class="line">        	<span class="built_in">console</span>.log(errin[i].properties.message);</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210518212854641.png" alt="image-20210518212854641"></p>
+<center>取得的message错误信息</center>
+
+<br>
+
+<h3 id="2-9集合关联"><a href="#2-9集合关联" class="headerlink" title="2.9集合关联"></a>2.9集合关联</h3><p>有时数据库的两个集合存在关联</p>
+<p>例如<strong>posts文章集合</strong>中文档有一个字段是作者<strong>author</strong></p>
+<p><strong>users用户集合</strong>中的用户信息即为<strong>作者信息</strong></p>
+<p>在查询posts集合中文档的<strong>作者author信息</strong>时，就需要<strong>关联users集合</strong></p>
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210518220527147.png" alt="image-20210518220527147"></p>
+<center>关联时在posts集合文档的author字段存入users集合文档的_id</center>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//设定user集合规则</span></span><br><span class="line"><span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    name:<span class="built_in">String</span>,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//设定post集合规则</span></span><br><span class="line"><span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    title:<span class="built_in">String</span>,</span><br><span class="line">    author:&#123;</span><br><span class="line">        type:mongoose.Schema.Types.ObjectId,</span><br><span class="line">        ref:<span class="string">&#x27;User&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>创建两个集合</center>
+
+<br>
+
+<h4 id="2-9-1使用字段设置关联信息"><a href="#2-9-1使用字段设置关联信息" class="headerlink" title="2.9.1使用字段设置关联信息"></a>2.9.1使用字段设置关联信息</h4><p>posts集合的author字段关联users集合</p>
+<ul>
+<li><p>author字段的<strong>值类型</strong>为<code>mongoose.Schema.Types.ObjectId</code>，即为文档**_id字段的类型**</p>
+</li>
+<li><p>ref属性的值为<strong>与本集合关联的集合的构造函数</strong>，此处与posts集合关联的集合为users集合(User为users集合构造函数)</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">author:&#123;</span><br><span class="line">        type:mongoose.Schema.Types.ObjectId,</span><br><span class="line">        ref:<span class="string">&#x27;User&#x27;</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<center>红框即为关联的user集合文档的_id字段值</center>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210518220222814.png" alt="image-20210518220222814"></p>
+<center>右侧为user集合中的文档</center>
+
+<h4 id="2-9-2-populate-方法查询关联字段信息"><a href="#2-9-2-populate-方法查询关联字段信息" class="headerlink" title="2.9.2 populate()方法查询关联字段信息"></a>2.9.2 populate()方法查询关联字段信息</h4><p>此时posts集合文档中的author字段存储的是users集合中文档的_id值，不方便查看作者信息</p>
+<p>使用populate()方法<strong>在查询文档时将关联字段的信息一并查询出来</strong></p>
+<ul>
+<li>参数即为用来设置关联信息的字段author</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Post.find().populate(<span class="string">&#x27;author&#x27;</span>).then(<span class="function"><span class="params">data</span> =&gt;</span> <span class="built_in">console</span>.log(data))</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210518221746819.png" alt="image-20210518221746819"></p>
+<p>此时查询出的posts集合中的文档<strong>author字段值为 关联的users集合中对应文档的JSON对象</strong>，方便查看</p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
