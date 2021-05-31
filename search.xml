@@ -2297,7 +2297,7 @@ return p2();
   <entry>
     <title>14-模板引擎基础</title>
     <url>/2021/05/31/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/#more">13-用户信息增删改查实例</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
+    <content><![CDATA[<h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="https://templar136.github.io/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/">13-用户信息增删改查实例</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
 <p>这种方式比较<strong>繁琐</strong>，而且<strong>难以维护</strong></p>
 <p>使用模板引擎可以简化操作，便于维护</p>
 <p><strong>模板引擎</strong></p>
