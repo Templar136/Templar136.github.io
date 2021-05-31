@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-05-31 20:12:17 / 修改时间：21:56:21" itemprop="dateCreated datePublished" datetime="2021-05-31T20:12:17+08:00">2021-05-31</time>
+              <time title="创建时间：2021-05-31 20:12:17 / 修改时间：22:08:33" itemprop="dateCreated datePublished" datetime="2021-05-31T20:12:17+08:00">2021-05-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,7 +235,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B">13</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
+          <h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/#more">13-用户信息增删改查实例</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
 <p>这种方式比较<strong>繁琐</strong>，而且<strong>难以维护</strong></p>
 <p>使用模板引擎可以简化操作，便于维护</p>
 <p><strong>模板引擎</strong></p>
@@ -243,102 +243,14 @@
 <li>实际上是nodejs的<strong>第三方模块</strong></li>
 <li>主要用于字符串拼接，便于维护</li>
 </ul>
-<h2 id="1-模板引擎art-template"><a href="#1-模板引擎art-template" class="headerlink" title="1.模板引擎art-template"></a>1.模板引擎art-template</h2><p>art-template是腾讯公司的模板引擎，应用广泛</p>
-<h3 id="1-1安装art-template模板引擎"><a href="#1-1安装art-template模板引擎" class="headerlink" title="1.1安装art-template模板引擎"></a>1.1安装art-template模板引擎</h3><p><code>npm install art-template</code></p>
-<h3 id="1-2使用art-template"><a href="#1-2使用art-template" class="headerlink" title="1.2使用art-template"></a>1.2使用art-template</h3><p>引入模板引擎第三方模块</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> template = <span class="built_in">require</span>(<span class="string">&#x27;art-template&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>返回的template为一个方法</p>
-<p><code>const html = template(&quot;模板的路径&quot;,&quot;待拼接的数据&quot;)</code></p>
-<ul>
-<li><p>模板的路径：模板存放的<strong>绝对路径</strong></p>
-<ul>
-<li>模板一般存放在<a href="%E7%BA%A6%E5%AE%9A%E4%BF%97%E6%88%90%E7%9A%84%E5%90%8D%E5%AD%97">views文件夹</a>中，模板文件的后缀一般为.art</li>
-<li>如果要拼接html模板，则在.art文件中写入html代码</li>
-</ul>
-</li>
-<li><p>待拼接的数据：<strong>对象格式</strong>的数据</p>
-</li>
-<li><p>html变量保存拼接完成后的html代码</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拼接路径 __dirname:当前文件所在目录</span></span><br><span class="line"><span class="keyword">let</span> viewpath = path.join(__dirname,<span class="string">&#x27;views&#x27;</span>,<span class="string">&#x27;index.art&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//保存拼接后的html代码</span></span><br><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    name:<span class="string">&quot;yang&quot;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line"><span class="built_in">console</span>.log(html);</span><br></pre></td></tr></table></figure>
-
-<center>app.js代码</center>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;name&#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;age&#125;&#125;&lt;/span&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
-<center>Index.art代码</center>
-
-<p>在index.art模板文件中使用<code>&#123;&#123;"属性名"&#125;&#125;</code>将template方法中<code>待拼接的数据</code>拼接到html代码中</p>
-<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210531203434078.png" alt="拼接完成后打印html变量"></p>
-<p>待拼接的数据已经拼接到html代码中</p>
-<br>
-
-<h2 id="2-模板引擎art-template语法"><a href="#2-模板引擎art-template语法" class="headerlink" title="2.模板引擎art-template语法"></a>2.模板引擎art-template语法</h2><p>art-template支持两种语法：<strong>标准语法</strong> 和 <strong>原始语法</strong></p>
-<ul>
-<li>标准语法：让模板更易读写</li>
-<li>原始语法：具有强大的逻辑处理能力</li>
-</ul>
-<p>标准语法：</p>
-<p>原始语法：&lt;%= 数据 %&gt;</p>
-<p>原始语法的格式类似于<strong>JSP表达式</strong></p>
-<h3 id="2-1输出"><a href="#2-1输出" class="headerlink" title="2.1输出"></a>2.1输出</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 标准语法 --&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123;name&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123;<span class="number">1</span> + <span class="number">1</span>&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123;<span class="number">1</span> + <span class="number">1</span> == <span class="number">2</span> ? <span class="string">&quot;正确&quot;</span> : <span class="string">&quot;错误&quot;</span>&#125;&#125;&lt;/p&gt;</span><br><span class="line">    </span><br><span class="line">&lt;!-- 原始语法 --&gt;</span><br><span class="line">&lt;p&gt;&lt;%= name %&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;%= <span class="number">1</span>+<span class="number">1</span> %&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;%= <span class="number">1</span>?<span class="string">&quot;正确&quot;</span>:<span class="string">&quot;错误&quot;</span> %&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>数据可以是template方法<strong>第二个参数中的数据</strong></p>
-</li>
-<li><p>可以是<strong>数字</strong>和<strong>普通字符串</strong></p>
-</li>
-<li><p>可以<strong>使用运算符操作</strong></p>
-</li>
-</ul>
-<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210531205514506.png" alt="拼接后的html代码"></p>
-<br>
-
-<h3 id="2-2原文输出"><a href="#2-2原文输出" class="headerlink" title="2.2原文输出"></a>2.2原文输出</h3><h4 id="2-2-1-模板引擎默认将HTML标签当作普通字符串拼接"><a href="#2-2-1-模板引擎默认将HTML标签当作普通字符串拼接" class="headerlink" title="2.2.1 模板引擎默认将HTML标签当作普通字符串拼接"></a>2.2.1 模板引擎默认将HTML标签当作普通字符串拼接</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    name:<span class="string">&quot;yang&quot;</span>,</span><br><span class="line">    age:<span class="number">20</span>,</span><br><span class="line">    content:<span class="string">&quot;&lt;h1&gt;你好&lt;/h1&gt;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<center>01.js</center>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;&#123;content&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;%= content %&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<center>01.art</center>
-
-<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210531210107038.png" alt="拼接后代码"></p>
-<p>输出的html代码中h1标签被当作普通字符串输出</p>
-<p>浏览器不会解析这个h1标签</p>
-<br>
-
-<h4 id="2-2-2原文输出解析HTML标签"><a href="#2-2-2原文输出解析HTML标签" class="headerlink" title="2.2.2原文输出解析HTML标签"></a>2.2.2原文输出解析HTML标签</h4><p>如果数据中带HTML标签，可以使用原文输出的方式来解析标签</p>
-<p>标准语法：<code>&#123;&#123; @数据 &#125;&#125;</code></p>
-<p>原始语法：<code>&lt;%- 数据 %&gt;</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;&#123;&#123;@content&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;%- content %&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-<p>此时输出html代码如下</p>
-<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210531211207051.png" alt="输出html代码"></p>
-<p>此时拼接的HTML代码中的h1标签<strong>会被浏览器自动解析</strong></p>
-<br>
-
-<h3 id="2-3条件判断"><a href="#2-3条件判断" class="headerlink" title="2.3条件判断"></a>2.3条件判断</h3><p>模板中可以根据条件决定显示哪块HTML代码</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--    标准语法	--&gt;</span></span><br><span class="line">    &#123;&#123;if 条件&#125;&#125;...&#123;&#123;/if&#125;&#125;</span><br><span class="line">    &#123;&#123;if 条件&#125;&#125;...&#123;&#123;else if 条件&#125;&#125;...&#123;&#123;/if&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--    原始语法	--&gt;</span></span><br><span class="line">	&lt;% if (value) &#123; %&gt;...&lt;% &#125; %&gt;</span><br><span class="line">	&lt;% if (value) &#123; %&gt;...&lt;% &#125; else if (value) &#123; %&gt;...&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>标准语法</strong>：将判断条件语句写在<code>&#123;&#123;&#125;&#125;`中，两个`&#123;&#123;&#125;&#125;</code>中的…即为满足条件时显示的HTML代码，以<code>&#123;&#123;/if&#125;&#125;</code>结束</p>
-<p><strong>原始语法</strong>：将判断条件语句写在<code>&lt;% %&gt;</code>中，…即为满足条件时显示的HTML代码</p>
-<ul>
-<li>原始语法格式的<code>&lt;% %&gt;</code><strong>类似于</strong>JSP中的java代码块</li>
-<li>在模板的<code>&lt;% %&gt;</code>中可以写<strong>任何原生js代码</strong></li>
-</ul>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;if age&gt;18&#125;&#125;</span><br><span class="line">    年龄大于18</span><br><span class="line">&#123;&#123;else if age &lt; 15&#125;&#125;</span><br><span class="line">    年龄小于15</span><br><span class="line">&#123;&#123;/if&#125;&#125;</span><br><span class="line"></span><br><span class="line">&lt;% if (age&gt;18) &#123; %&gt;</span><br><span class="line">    年龄大于18</span><br><span class="line">&lt;% &#125; else if (age &lt; 15) &#123; %&gt;</span><br><span class="line">    年龄小于15</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
-
-<center>03.art</center>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    name:<span class="string">&quot;yang&quot;</span>,</span><br><span class="line">    age:<span class="number">20</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<center>03.js</center>
-
-<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210531214406700.png" alt="03.js运行后输出HTML代码"></p>
-<p>20大于18，输出<code>年龄大于18</code></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/05/31/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -388,7 +300,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-31 20:12:34" itemprop="dateModified" datetime="2021-05-31T20:12:34+08:00">2021-05-31</time>
+                <time title="修改时间：2021-05-31 22:08:57" itemprop="dateModified" datetime="2021-05-31T22:08:57+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -412,188 +324,14 @@
 
       
           <h1 id="用户信息增删改查实例"><a href="#用户信息增删改查实例" class="headerlink" title="用户信息增删改查实例"></a>用户信息增删改查实例</h1><h2 id="项目目的"><a href="#项目目的" class="headerlink" title="项目目的"></a>项目目的</h2><p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210524204826501.png" alt="image-20210524204826501"></p>
-<h2 id="1-搭建网站服务器"><a href="#1-搭建网站服务器" class="headerlink" title="1.搭建网站服务器"></a>1.搭建网站服务器</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入http模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">const</span> server = http.createServer()</span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器请求事件</span></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>, <span class="keyword">async</span> (req,res) =&gt; &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听端口</span></span><br><span class="line">server.listen(<span class="string">&#x27;3000&#x27;</span>,<span class="function">() =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器开启成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="2-连接数据库，创建用户集合-users"><a href="#2-连接数据库，创建用户集合-users" class="headerlink" title="2.连接数据库，创建用户集合(users)"></a>2.连接数据库，创建用户集合(users)</h2><p>这部分采用模块化的编程思想：</p>
-<p>​    将连接数据库代码写在<strong>index.js模块</strong>中</p>
-<p>​    将创建用户集合代码写在<strong>user.js模块</strong>中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入mongoose模块</span></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.connect(<span class="string">&#x27;mongodb://localhost/user09&#x27;</span>,&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span> ,<span class="attr">useUnifiedTopology</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">&#x27;数据库连接成功&#x27;</span>)&#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">&#x27;数据库连接失败&#x27;</span>,err)&#125;)</span><br></pre></td></tr></table></figure>
-
-<center>index.js代码</center>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建集合规则</span></span><br><span class="line"><span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:<span class="literal">true</span>,</span><br><span class="line">        minlength:<span class="number">2</span>,</span><br><span class="line">        maxlength:<span class="number">5</span></span><br><span class="line">    &#125;,</span><br><span class="line">    age:&#123;</span><br><span class="line">        type:<span class="built_in">Number</span>,</span><br><span class="line">        min:<span class="number">18</span>,</span><br><span class="line">        max:<span class="number">80</span></span><br><span class="line">    &#125;,</span><br><span class="line">    password: <span class="built_in">String</span>,</span><br><span class="line">    email:<span class="built_in">String</span>,</span><br><span class="line">    <span class="comment">//代表值为一个数组，元素为String类型</span></span><br><span class="line">    hobbies:[<span class="built_in">String</span>]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建集合</span></span><br><span class="line"><span class="keyword">const</span> User = mongoose.model(<span class="string">&#x27;User&#x27;</span>,userSchema)</span><br><span class="line"></span><br><span class="line"><span class="comment">//导出集合构造函数User供server.js使用</span></span><br><span class="line"><span class="built_in">module</span>.exports = User</span><br></pre></td></tr></table></figure>
-
-<center>user.js代码</center>
-
-<br>
-
-<h2 id="3-客户端访问-list时，将所有用户信息查询出来"><a href="#3-客户端访问-list时，将所有用户信息查询出来" class="headerlink" title="3.客户端访问/list时，将所有用户信息查询出来"></a>3.客户端访问/list时，将所有用户信息查询出来</h2><p>此处因为还没有学习express模板，所以采用<strong>直接在server.js文件中进行字符串拼接</strong>的方式给客户端响应数据</p>
-<p>在<code>server.on()</code>函数中书写代码</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此代码在server.on()函数下书写</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//请求方式</span></span><br><span class="line"><span class="keyword">const</span> method = req.method</span><br><span class="line"><span class="comment">//请求地址和请求参数获取</span></span><br><span class="line"><span class="keyword">const</span> &#123; pathname,query &#125; = url.parse(req.url,<span class="literal">true</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span>(method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname == <span class="string">&#x27;/list&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> users = <span class="keyword">await</span> User.find()</span><br><span class="line">            <span class="keyword">let</span> list = <span class="string">`</span></span><br><span class="line"><span class="string">            &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">            &lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;head&gt;</span></span><br><span class="line"><span class="string">                &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;title&gt;用户列表&lt;/title&gt;</span></span><br><span class="line"><span class="string">                &lt;style&gt;css样式省略&lt;/style&gt;</span></span><br><span class="line"><span class="string">            &lt;/head&gt;</span></span><br><span class="line"><span class="string">            &lt;body&gt;</span></span><br><span class="line"><span class="string">                &lt;div&gt;</span></span><br><span class="line"><span class="string">                    &lt;span&gt;&lt;a href=&quot;http://localhost:3000/add&quot;&gt;添加用户&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                    &lt;br/&gt;</span></span><br><span class="line"><span class="string">                    &lt;br&gt;</span></span><br><span class="line"><span class="string">                    &lt;table border=&quot;1&quot; cellspacing=&quot;0&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;tr&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;姓名&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;年龄&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;email&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;爱好&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;操作&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;/tr&gt;</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
-
-<center>代码块1</center>
-
-<ul>
-<li><p>上述代码块中使用<code>let users = await User.find()</code>代码将users集合中所有文档提取出来存入users数组</p>
-</li>
-<li><p>使用list变量进行响应的html代码数据拼接</p>
-</li>
-<li><p>html代码放在<strong>模板字符串</strong>中(``中)</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">users.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">               list+=<span class="string">`</span></span><br><span class="line"><span class="string">               &lt;tr&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.name&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.age&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.email&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;</span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">               <span class="comment">//爱好信息添加</span></span><br><span class="line">               item.hobbies.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">                   list+=<span class="string">`</span></span><br><span class="line"><span class="string">                   <span class="subst">$&#123;item&#125;</span></span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">               &#125;)</span><br><span class="line">               </span><br><span class="line">               list+=<span class="string">`</span></span><br><span class="line"><span class="string">                   &lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt; </span></span><br><span class="line"><span class="string">                       &lt;span class=&quot;del&quot;&gt;&lt;a href=&quot;/del?id=<span class="subst">$&#123;item._id&#125;</span>&quot;&gt;删除&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                       &lt;span class=&quot;change&quot;&gt;&lt;a href=&quot;/modify?id=<span class="subst">$&#123;item._id&#125;</span>&quot;&gt;修改&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                   &lt;/td&gt;</span></span><br><span class="line"><span class="string">               &lt;/tr&gt;</span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">           &#125;)</span><br><span class="line">           </span><br><span class="line">           list+=<span class="string">` &lt;/table&gt;</span></span><br><span class="line"><span class="string">           &lt;/body&gt;</span></span><br><span class="line"><span class="string">           &lt;/html&gt;`</span></span><br><span class="line">           res.end(list);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-<center>代码块2</center>
-
-<p>代码块2接着代码块1</p>
-<ul>
-<li>使用users的<code>forEach()</code>方法<strong>遍历数组中所有的文档</strong><ul>
-<li>按照每一个文档的信息生成表格中的一行</li>
-<li>每一个item即为一个文档的JSON对象</li>
-</ul>
-</li>
-<li>对于文档的hobbies字段(hobbies字段为一个数组)<ul>
-<li>使用hobbies.forEach()方法<strong>遍历每一个爱好</strong>并添加到表格中</li>
-</ul>
-</li>
-<li>最后添加删除和修改两个按钮<ul>
-<li>按钮提前设置好超链接</li>
-<li>为修改和删除跳转做准备</li>
-</ul>
-</li>
-<li><code>res.end(list)</code>语句将list变量存储的html代码响应给客户端</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525214248992.png" alt="将每一个文档信息生成为表格的一行(/list页面)"></p>
-<br>
-
-<h2 id="4-添加用户功能-访问-add"><a href="#4-添加用户功能-访问-add" class="headerlink" title="4.添加用户功能(访问/add)"></a>4.添加用户功能(访问/add)</h2><ul>
-<li><p>用户可以通过直接访问<code>localhost:3000/add</code>的方式访问添加用户页面</p>
-</li>
-<li><p>还可以点击/list页面上的添加用户按钮跳转到/add页面进行添加用户操作</p>
-<ul>
-<li>代码段1中已经设置好添加按钮的跳转路径</li>
-</ul>
-</li>
-<li><p>上述两种访问/add页面的方式<strong>均为GET请求方式</strong></p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(pathname == <span class="string">&#x27;/add&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> add=<span class="string">`</span></span><br><span class="line"><span class="string">            &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">            &lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;head&gt;</span></span><br><span class="line"><span class="string">                &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;title&gt;添加用户&lt;/title&gt;</span></span><br><span class="line"><span class="string">                &lt;style&gt;</span></span><br><span class="line"><span class="string">                    div&#123;</span></span><br><span class="line"><span class="string">                        margin: 0 auto;</span></span><br><span class="line"><span class="string">                        width: 1000px;</span></span><br><span class="line"><span class="string">                    &#125;</span></span><br><span class="line"><span class="string">                &lt;/style&gt;</span></span><br><span class="line"><span class="string">            &lt;/head&gt;</span></span><br><span class="line"><span class="string">            &lt;body&gt;</span></span><br><span class="line"><span class="string">                &lt;div&gt;</span></span><br><span class="line"><span class="string">                    &lt;h3&gt;添加用户&lt;/h3&gt;</span></span><br><span class="line"><span class="string">                    &lt;form action=&quot;/add&quot; method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;用户名：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;密码：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;年龄：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;age&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;email：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;span&gt;爱好:&lt;/span&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;吃饭&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;吃饭&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;睡觉&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;睡觉&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;打豆豆&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;打豆豆&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;写代码&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;写代码&quot;&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;/form&gt;</span></span><br><span class="line"><span class="string">                &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;/body&gt;</span></span><br><span class="line"><span class="string">            &lt;/html&gt;</span></span><br><span class="line"><span class="string">            `</span></span><br><span class="line">            res.end(add)</span><br></pre></td></tr></table></figure>
-
-<center>代码段3</center>
-
-<p>将添加用户的表单信息以POST方式提交给localhost:3000/add</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/add&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>/add 即为 localhost:3000/add</p>
-<p>/add 的 ‘/‘即为服务器URL：localhost:3000/</p>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525215640354.png" alt="添加用户页面如下"></p>
-<br>
-
-<p><strong>服务器端接收到URL为localhost:3000/add的POST请求</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//本代码段代码在server.on()函数下</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname == <span class="string">&#x27;/add&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> formData = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">            <span class="comment">//请求参数传送触发</span></span><br><span class="line">            req.on(<span class="string">&#x27;data&#x27;</span>,<span class="function"><span class="params">param</span> =&gt;</span> &#123;</span><br><span class="line">                formData+=param</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment">//请求参数传送完毕触发</span></span><br><span class="line">            req.on(<span class="string">&#x27;end&#x27;</span>,<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">                <span class="keyword">let</span> userinf = queryString.parse(formData)</span><br><span class="line">                <span class="keyword">await</span> User.create(userinf)</span><br><span class="line">                <span class="comment">//请求重定向到</span></span><br><span class="line">                res.writeHead(<span class="number">301</span>,&#123;</span><br><span class="line">                    Location:<span class="string">&#x27;/list&#x27;</span></span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="comment">//重定向完 结束本次响应</span></span><br><span class="line">                res.end()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-
-<center>代码块4</center>
-
-<ul>
-<li><p>使用formData变量接收POST请求参数</p>
-<ul>
-<li>使用queryString模块的parse方法将字符串格式的formData变量转换为<strong>JSON对象格式的userinf变量</strong></li>
-<li>/add页面中input标签的<strong>name属性</strong>与数据库文档中的<strong>相应字段名</strong>统一<ul>
-<li>这样接收的请求参数转换为JSON对象后就可以直接添加到数据库</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>调用User集合构造函数的create()方法将新用户信息(userinf变量)添加到数据库</p>
-</li>
-<li><p>在异步函数中使用await关键字<strong>等待异步API返回结果后再继续执行</strong></p>
-<ul>
-<li><p><code>req.on(&#39;end&#39;,async ()=&gt;&#123;&#125;)</code>方法的回调函数使用async关键字变为异步函数</p>
-</li>
-<li><p><code>await User.create(userinf)</code></p>
-</li>
-<li><p>如果不等待，<strong>可能后续的响应操作会先于创建文档执行</strong></p>
-</li>
-</ul>
-</li>
-<li><p>响应时将请求重定向到/list页面</p>
-<ul>
-<li>直接从/list页面查看添加用户的结果</li>
-</ul>
-</li>
-</ul>
-<br>
-
-<h2 id="5-修改用户信息功能-modify"><a href="#5-修改用户信息功能-modify" class="headerlink" title="5.修改用户信息功能(/modify)"></a>5.修改用户信息功能(/modify)</h2><ul>
-<li><p>通过/list页面的修改按钮进入修改页面</p>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525221836885.png" alt="修改按钮"></p>
-</li>
-<li><p>/modify页面在/add页面的基础上修改而来</p>
-</li>
-<li><p>点击哪一个用户信息的修改按钮，跳转到的修改页面就会呈现对应用户的信息</p>
-</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525221743719.png" alt="点击张三用户信息的修改按钮后跳转"></p>
-<ul>
-<li>跳转页面显示对应用户的信息是<strong>通过传递相应用户信息文档的_id字段值</strong>实现的</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525222016451.png" alt="数据库中张三信息文档的_id"></p>
-<ul>
-<li>在响应给客户端的/list页面的html代码中<ul>
-<li>将_id字段的值放入修改按钮的<strong>a标签</strong>中</li>
-<li>_id字段的值作为<strong>GET请求的请求参数</strong>传递给服务器</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525222621352.png" alt="点击修改按钮时_id的值传递给服务器"></p>
-<ul>
-<li><p>服务器端从接收到的请求参数中提取_id值，并将相应用户的信息填入文本框中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取JSON对象格式的请求参数</span></span><br><span class="line"><span class="keyword">let</span> reqinf = url.parse(req.url,<span class="literal">true</span>).query</span><br><span class="line"><span class="comment">//在数据库中查找相应用户信息文档</span></span><br><span class="line"><span class="keyword">let</span> user=<span class="keyword">await</span> User.findOne(&#123;<span class="attr">_id</span>:reqinf.id&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//在修改页面的单行文本输入框中填入相应用户的信息</span></span><br><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> value=$&#123;user.name&#125; name=<span class="string">&quot;name&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>效果如上图</p>
-</li>
-<li><p>修改页面的表单提交时以POST方式发送请求给/modify</p>
-<ul>
-<li>同样将_id字段值当作请求参数传递给服务端</li>
-<li>以便服务端根据_id值更新数据库信息</li>
-<li>POST方式的请求也可以使用GET请求方式的方法来传递请求参数(放在地址栏中)</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/modify?id=$&#123;user._id&#125;&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>服务器端接收到POST请求时将根据_id值更新对应用户信息文档</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用await关键字等待异步API返回结果后再接着执行</span></span><br><span class="line"><span class="keyword">await</span> User.updateOne(&#123;<span class="attr">_id</span>:reqinf.id&#125;,userinf)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>更新数据库文档信息后请求重定向到/list页面<ul>
-<li>直接在/list页面体现修改结果</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525224319251.png" alt="将张三修改为张三123"></p>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525224343590.png" alt="修改后结果"></p>
-<br>
-
-<h2 id="6-删除用户信息功能-del"><a href="#6-删除用户信息功能-del" class="headerlink" title="6.删除用户信息功能(/del)"></a>6.删除用户信息功能(/del)</h2><ul>
-<li>通过/list页面的删除按钮进入删除页面</li>
-<li>点击相应数据行的删除按钮会将该文档的_id字段值作为GET请求参数发送给服务器</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;del&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/del?id=$&#123;item._id&#125;&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-
-<p>发送到<a target="_blank" rel="noopener" href="http://localhost:3000/del">http://localhost:3000/del</a></p>
-<ul>
-<li>服务器接收到请求后</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(pathname == <span class="string">&#x27;/del&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">await</span> User.findOneAndDelete(&#123;<span class="attr">_id</span>:query.id&#125;)</span><br><span class="line">            res.writeHead(<span class="number">301</span>,&#123;</span><br><span class="line">                Location:<span class="string">&#x27;/list&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            res.end()</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>调用<strong>集合构造函数的findOneAndDelete()方法</strong>按照_id字段值删除数据库中相应文档</p>
-<p>然后将请求重定向到/list页面，在/list页面就可以看到删除后的效果</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -643,7 +381,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-18 22:34:55" itemprop="dateModified" datetime="2021-05-18T22:34:55+08:00">2021-05-18</time>
+                <time title="修改时间：2021-05-31 22:09:30" itemprop="dateModified" datetime="2021-05-31T22:09:30+08:00">2021-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">

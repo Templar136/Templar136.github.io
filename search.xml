@@ -2102,6 +2102,8 @@ return p2();
     <title>13-数据库相关概念</title>
     <url>/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/</url>
     <content><![CDATA[<h1 id="用户信息增删改查实例"><a href="#用户信息增删改查实例" class="headerlink" title="用户信息增删改查实例"></a>用户信息增删改查实例</h1><h2 id="项目目的"><a href="#项目目的" class="headerlink" title="项目目的"></a>项目目的</h2><p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210524204826501.png" alt="image-20210524204826501"></p>
+<span id="more"></span>
+
 <h2 id="1-搭建网站服务器"><a href="#1-搭建网站服务器" class="headerlink" title="1.搭建网站服务器"></a>1.搭建网站服务器</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入http模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">const</span> server = http.createServer()</span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器请求事件</span></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>, <span class="keyword">async</span> (req,res) =&gt; &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听端口</span></span><br><span class="line">server.listen(<span class="string">&#x27;3000&#x27;</span>,<span class="function">() =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器开启成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <br>
@@ -2275,7 +2277,7 @@ return p2();
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;del&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/del?id=$&#123;item._id&#125;&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/span&gt;</span><br></pre></td></tr></table></figure>
 
-<p>发送到<a href="http://localhost:3000/del">http://localhost:3000/del</a></p>
+<p>发送到<code>http://localhost:3000/del</code></p>
 <ul>
 <li>服务器接收到请求后</li>
 </ul>
@@ -2295,7 +2297,7 @@ return p2();
   <entry>
     <title>14-模板引擎基础</title>
     <url>/2021/05/31/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B">13</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
+    <content><![CDATA[<h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/#more">13-用户信息增删改查实例</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
 <p>这种方式比较<strong>繁琐</strong>，而且<strong>难以维护</strong></p>
 <p>使用模板引擎可以简化操作，便于维护</p>
 <p><strong>模板引擎</strong></p>
@@ -2303,6 +2305,8 @@ return p2();
 <li>实际上是nodejs的<strong>第三方模块</strong></li>
 <li>主要用于字符串拼接，便于维护</li>
 </ul>
+<span id="more"></span>
+
 <h2 id="1-模板引擎art-template"><a href="#1-模板引擎art-template" class="headerlink" title="1.模板引擎art-template"></a>1.模板引擎art-template</h2><p>art-template是腾讯公司的模板引擎，应用广泛</p>
 <h3 id="1-1安装art-template模板引擎"><a href="#1-1安装art-template模板引擎" class="headerlink" title="1.1安装art-template模板引擎"></a>1.1安装art-template模板引擎</h3><p><code>npm install art-template</code></p>
 <h3 id="1-2使用art-template"><a href="#1-2使用art-template" class="headerlink" title="1.2使用art-template"></a>1.2使用art-template</h3><p>引入模板引擎第三方模块</p>
@@ -2313,7 +2317,7 @@ return p2();
 <ul>
 <li><p>模板的路径：模板存放的<strong>绝对路径</strong></p>
 <ul>
-<li>模板一般存放在<a href="%E7%BA%A6%E5%AE%9A%E4%BF%97%E6%88%90%E7%9A%84%E5%90%8D%E5%AD%97">views文件夹</a>中，模板文件的后缀一般为.art</li>
+<li>模板一般存放在views文件夹(views是约定俗成的命名)中，模板文件的后缀一般为.art</li>
 <li>如果要拼接html模板，则在.art文件中写入html代码</li>
 </ul>
 </li>
