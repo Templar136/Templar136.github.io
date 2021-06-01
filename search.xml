@@ -2297,13 +2297,13 @@ return p2();
   <entry>
     <title>14-模板引擎基础</title>
     <url>/2021/05/31/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="https://templar136.github.io/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/">13-用户信息增删改查实例</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>代码拼接</strong></p>
+    <content><![CDATA[<h1 id="模板引擎基础"><a href="#模板引擎基础" class="headerlink" title="模板引擎基础"></a>模板引擎基础</h1><p>文章<a href="https://templar136.github.io/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/">13-用户信息增删改查实例</a>中服务器响应html代码的方式为直接在服务器代码中进行<strong>字符串拼接</strong></p>
 <p>这种方式比较<strong>繁琐</strong>，而且<strong>难以维护</strong></p>
 <p>使用模板引擎可以简化操作，便于维护</p>
 <p><strong>模板引擎</strong></p>
 <ul>
 <li>实际上是nodejs的<strong>第三方模块</strong></li>
-<li>主要用于字符串拼接，便于维护</li>
+<li>主要用于提高字符串拼接的效率，便于维护</li>
 </ul>
 <span id="more"></span>
 
@@ -2402,6 +2402,91 @@ return p2();
 
 <p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210531214406700.png" alt="03.js运行后输出HTML代码"></p>
 <p>20大于18，输出<code>年龄大于18</code></p>
+<br>
+
+<h3 id="2-4循环"><a href="#2-4循环" class="headerlink" title="2.4循环"></a>2.4循环</h3><p>当template()方法的第二个参数中有存放在数组中的数据时，就需要通过循环依次拿出数组中的数据</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">/标准语法</span><br><span class="line">&#123;&#123;each 数据&#125;&#125;</span><br><span class="line">       &#123;&#123;$index&#125;&#125;</span><br><span class="line">       &#123;&#123;$value&#125;&#125;</span><br><span class="line">&#123;&#123;/each&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据：要循环输出的数组</p>
+<p>$index：每次循环的索引，从0开始</p>
+<p>$value：每次循环的数据(数组中的元素)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//原始语法</span></span><br><span class="line">&lt;% <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; 数据.length; i++) &#123; %&gt;</span><br><span class="line">   &lt;%= 数据[i].属性名 %&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>数据：要循环输出的数组</p>
+<p>数据[i]：即为数组中的第i个元素</p>
+<p>数据[i].属性名：数组中元素的属性(元素为对象)</p>
+<p>&lt;% %&gt;标签中写的为原生js的循环语句</p>
+<p>通过原始语法的输出标签&lt;%= %&gt;进行输出</p>
+<br>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    users:[</span><br><span class="line">        &#123;</span><br><span class="line">            name:<span class="string">&quot;张三&quot;</span>,</span><br><span class="line">            age:<span class="number">20</span>,</span><br><span class="line">            sex:<span class="string">&quot;男&quot;</span></span><br><span class="line">        &#125;,&#123;</span><br><span class="line">            name:<span class="string">&quot;李四&quot;</span>,</span><br><span class="line">            age:<span class="number">18</span>,</span><br><span class="line">            sex:<span class="string">&quot;女&quot;</span></span><br><span class="line">        &#125;,&#123;</span><br><span class="line">            name:<span class="string">&quot;王五&quot;</span>,</span><br><span class="line">            age:<span class="number">22</span>,</span><br><span class="line">            sex:<span class="string">&quot;男&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>04.js</center>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">//标准语法</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    &#123;&#123;each users&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            &#123;&#123;$index&#125;&#125;</span><br><span class="line">            &#123;&#123;$value.name&#125;&#125;</span><br><span class="line">            &#123;&#123;$value.age&#125;&#125;</span><br><span class="line">            &#123;&#123;$value.sex&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    &#123;&#123;/each&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//原始语法</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    &lt;% for(var i = 0; i &lt; users.length; i++) &#123; %&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">            &lt;%= i %&gt;</span><br><span class="line">            &lt;%= users[i].name %&gt;</span><br><span class="line">            &lt;%= users[i].age %&gt;</span><br><span class="line">            &lt;%= users[i].sex %&gt;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    &lt;% &#125; %&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<center>04.art</center>
+
+<p>使用循环在ul标签中根据数组元素的个数生成li标签并在li标签中显示数组元素的属性</p>
+<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210601211958346.png" alt="循环语句执行结果"></p>
+<br>
+
+<h3 id="2-5子模版"><a href="#2-5子模版" class="headerlink" title="2.5子模版"></a>2.5子模版</h3><p>通常一个网站的数个网页有公共的头部和底部，将这些公共代码提取出来后，可以使用模板引擎的<strong>子模版语法</strong>将这些公共代码在所有需要的网页中进行引入。</p>
+<p><strong>标准语法</strong>：</p>
+<p>子模版语法使用单标签，没有结束标签</p>
+<p>标准语法的include 是关键字</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123;include <span class="string">&#x27;公共代码模板文件的相对路径&#x27;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>原始语法</strong>：</p>
+<p>原始语法的include是方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;% include(<span class="string">&#x27;公共代码模板文件的相对路径&#x27;</span>)%&gt;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;&#123;include &#x27;./05common/header.art&#x27;&#125;&#125;</span><br><span class="line">&lt;% include(&#x27;./05common/header.art&#x27;)%&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;&#123;include &#x27;./05common/footer.art&#x27;&#125;&#125;</span><br><span class="line">&lt;% include(&#x27;./05common/footer.art&#x27;)%&gt;</span><br></pre></td></tr></table></figure>
+
+<center>05.art</center>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//header.art文件</span></span><br><span class="line">这是头部</span><br><span class="line"></span><br><span class="line"><span class="comment">//footer.art文件</span></span><br><span class="line">这是底部</span><br><span class="line"></span><br><span class="line"><span class="comment">//05.js文件</span></span><br><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    msg:<span class="string">&quot;子模版演示&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210601213402446.png" alt="引入公共代码模板文件header.art和footer.art"></p>
+<br>
+
+<h3 id="2-6模板继承"><a href="#2-6模板继承" class="headerlink" title="2.6模板继承"></a>2.6模板继承</h3><ul>
+<li><p>在网页中不仅只有头部和底部属于公共代码，页面的HTML骨架(html,body标签等)也属于公共代码</p>
+</li>
+<li><p>可以<strong>将HTML骨架也提取为公共代码模板文件</strong>，然后通过<strong>模板继承</strong>的方式引入HTML骨架</p>
+</li>
+<li><p>不同的页面继承HTML骨架后需要<strong>对骨架进行差异化修改</strong></p>
+</li>
+</ul>
+<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210601221400538.png" alt="模板继承和引入/包含子模版"></p>
+<h4 id="HTML骨架模板的差异化修改"><a href="#HTML骨架模板的差异化修改" class="headerlink" title="HTML骨架模板的差异化修改"></a>HTML骨架模板的差异化修改</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML骨架模板 --&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>&#123;&#123;block &#x27;title&#x27;&#125;&#125;&#123;&#123;/block&#125;&#125;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    &#123;&#123;block &#x27;link&#x27;&#125;&#125;&#123;&#123;/block&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    &#123;&#123;block &#x27;content&#x27;&#125;&#125;&#123;&#123;/block&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<center>HTML骨架文件layout.art</center>
+
+<p>差异化修改需要用到<strong>双标签block</strong></p>
+<p>将block标签放在骨架模板的各个位置，后续页面进行继承时就可以<strong>替换这些block标签</strong>以达到<strong>差异化修改</strong>的目的</p>
+<p><code>&#123;&#123;block '名字'&#125;&#125;&#123;&#123;/block&#125;&#125;</code></p>
+<p>名字：自定义的每个block的<strong>标识</strong>，继承骨架的页面可以通过名字对block标签进行替换</p>
+<br>
+
+<h4 id="继承HTML骨架文件并替换block标签"><a href="#继承HTML骨架文件并替换block标签" class="headerlink" title="继承HTML骨架文件并替换block标签"></a>继承HTML骨架文件并替换block标签</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">//继承骨架</span><br><span class="line">&#123;&#123;extend &#x27;./common/layout.art&#x27;&#125;&#125;</span><br><span class="line"></span><br><span class="line">//替换相应block标签</span><br><span class="line">&#123;&#123;block &#x27;title&#x27;&#125;&#125;首页&#123;&#123;/block&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&#123;block &#x27;link&#x27;&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;main.css&quot;</span>&gt;</span></span><br><span class="line">&#123;&#123;/block&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&#123;block &#x27;content&#x27;&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;&#123;/block&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<center>继承HTML骨架的06.art</center>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    msg:<span class="string">&quot;模版继承演示&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>06.js</center>
+
+<p><strong>继承骨架文件</strong></p>
+<p><code>&#123;&#123;extend 'HTML骨架文件的路径'&#125;&#125;</code></p>
+<p><strong>替换block标签</strong></p>
+<p><code>&#123;&#123;block '名字'&#125;&#125;...&#123;&#123;/block&#125;&#125;</code></p>
+<p>使用名字定位要替换的block标签</p>
+<p>…代表的内容将替换骨架中的相应block标签</p>
+<p><img data-src="/images/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/image-20210601220333675.png" alt="继承骨架模板并差异化修改"></p>
+<p>红框即为block标签被替换后的效果</p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
