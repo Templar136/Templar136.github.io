@@ -21,12 +21,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Gulp第三方模块Gulp的插件Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种  gulp.src()：获取任务要处理的文件 gulp.dest()：输出文件 gulp.task()：建立gulp任务 gulp.watch()：监控文件变化">
+  <meta name="description" content="Gulp第三方模块Gulp的基础介绍在02-02第三方模块文章中 Gulp的插件Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种  gulp.src()：获取任务要处理的文件 gulp.dest()：输出文件 gulp.task()：建立gulp任务 gulp.watch()：监控文件变化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="03-第三方模块Gulp">
 <meta property="og:url" content="http://example.com/2021/04/19/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/index.html">
 <meta property="og:site_name" content="杨骁的博客">
-<meta property="og:description" content="Gulp第三方模块Gulp的插件Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种  gulp.src()：获取任务要处理的文件 gulp.dest()：输出文件 gulp.task()：建立gulp任务 gulp.watch()：监控文件变化">
+<meta property="og:description" content="Gulp第三方模块Gulp的基础介绍在02-02第三方模块文章中 Gulp的插件Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种  gulp.src()：获取任务要处理的文件 gulp.dest()：输出文件 gulp.task()：建立gulp任务 gulp.watch()：监控文件变化">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210419212228699.png">
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210419213419546.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112637572.png">
 <meta property="og:image" content="http://example.com/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112702650.png">
 <meta property="article:published_time" content="2021-04-19T12:08:17.000Z">
-<meta property="article:modified_time" content="2021-04-26T14:51:56.586Z">
+<meta property="article:modified_time" content="2021-06-09T15:25:34.000Z">
 <meta property="article:author" content="杨骁">
 <meta property="article:tag" content="Nodejs">
 <meta property="article:tag" content="Gulp">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-26 22:51:56" itemprop="dateModified" datetime="2021-04-26T22:51:56+08:00">2021-04-26</time>
+                <time title="修改时间：2021-06-09 23:25:34" itemprop="dateModified" datetime="2021-06-09T23:25:34+08:00">2021-06-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,7 +255,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Gulp第三方模块"><a href="#Gulp第三方模块" class="headerlink" title="Gulp第三方模块"></a>Gulp第三方模块</h1><h2 id="Gulp的插件"><a href="#Gulp的插件" class="headerlink" title="Gulp的插件"></a>Gulp的插件</h2><p>Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种</p>
+        <h1 id="Gulp第三方模块"><a href="#Gulp第三方模块" class="headerlink" title="Gulp第三方模块"></a>Gulp第三方模块</h1><p>Gulp的基础介绍在<strong>02-02第三方模块</strong>文章中</p>
+<h2 id="Gulp的插件"><a href="#Gulp的插件" class="headerlink" title="Gulp的插件"></a>Gulp的插件</h2><p>Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种</p>
 <ul>
 <li>gulp.src()：获取任务要处理的文件</li>
 <li>gulp.dest()：输出文件</li>
@@ -307,14 +308,14 @@
 <li>提取公共代码</li>
 </ul>
 <p>在src文件夹下创建common文件夹，文件夹中创建header.html用来存放两个html的公共代码</p>
-<p>将公共代码即头部框架剪切到header.html文件中，删除html文件中的公共代码(后面通过header.html引回)</p>
+<p>将公共代码即头部框架剪切到header.html文件中，删除html文件中的公共代码(<strong>后面通过header.html引回</strong>)</p>
 <p>在gulpfile.js中引入模块插件</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fileinclude = <span class="built_in">require</span>(<span class="string">&#x27;gulp-file-include&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>gulpfile.js的任务代码，两个功能(提取代码，压缩html)合并为一个任务</p>
 <p>任务中使用插件方法<code>fileinclude()</code></p>
 <p>具体插件使用方法<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/gulp-file-include">gulp-file-include</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.压缩html文件代码任务</span></span><br><span class="line"><span class="comment">//2.抽取html文件的公共代码</span></span><br><span class="line"><span class="comment">//在压缩前先提取公共代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;htmlmin&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//&#x27;*&#x27;匹配所有html文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.html&#x27;</span>)</span><br><span class="line">    <span class="comment">//使用插件抽取公共代码</span></span><br><span class="line">    .pipe(fileinclude())</span><br><span class="line">    <span class="comment">//使用插件的方法压缩html文件</span></span><br><span class="line">    .pipe(htmlmin(&#123; <span class="attr">collapseWhitespace</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.压缩html文件代码任务</span></span><br><span class="line"><span class="comment">//2.抽取html文件的公共代码</span></span><br><span class="line"><span class="comment">//在压缩前先引回提取的公共代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;htmlmin&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//&#x27;*&#x27;匹配所有html文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.html&#x27;</span>)</span><br><span class="line">    <span class="comment">//使用插件引回提取的公共代码</span></span><br><span class="line">    .pipe(fileinclude())</span><br><span class="line">    <span class="comment">//使用插件的方法压缩html文件</span></span><br><span class="line">    .pipe(htmlmin(&#123; <span class="attr">collapseWhitespace</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>在html文件中使用<code>@@include(&#39;./common/header.html&#39;)</code> ， 将公共代码引回文件中</p>
 <p>gulpfile.js文件中的任务使用了<code>fileinclude()</code>插件方法后，才能在html文件中使用<code>@@include(&#39;公共代码文件路径&#39;)</code></p>
@@ -497,7 +498,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
