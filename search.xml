@@ -107,6 +107,134 @@
       </tags>
   </entry>
   <entry>
+    <title>02-02-第三方模块</title>
+    <url>/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<h1 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h1><p><a href="https://www.npmjs.com/">npmjs.com</a>: 第三方模块的存储和分发仓库</p>
+<h2 id="1-第三方模块-nodemon"><a href="#1-第三方模块-nodemon" class="headerlink" title="1.第三方模块 nodemon"></a>1.第三方模块 nodemon</h2><p>nodemon是命令行工具，辅助项目开发</p>
+<p>在Node.js中，每次修改文件都需要重新执行文件，比较繁琐</p>
+<p>nodemon可以在保存时自动执行文件</p>
+<span id="more"></span>
+
+<h3 id="1-2使用"><a href="#1-2使用" class="headerlink" title="1.2使用"></a>1.2使用</h3><ul>
+<li><p>安装</p>
+<ul>
+<li><p><code>npm install nodemon -g</code></p>
+</li>
+<li><p>命令行工具全局安装使用 -g</p>
+</li>
+</ul>
+</li>
+<li><p>使用</p>
+<ul>
+<li>在命令行工具中使用<code>nodemon</code>替代<code>node</code>执行nodejs文件</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png" alt="image-20210419110644336"></p>
+<p>执行完文件后会将命令行窗口挂起，等待执行的文件保存，保存文件后会<strong>自动执行文件</strong>，使用Ctrl+C可以退出nodemon</p>
+<p>现在在文件中添加一个输出后保存，效果如下</p>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png" alt="image-20210419111005039"></p>
+<h2 id="2-第三方模块nrm"><a href="#2-第三方模块nrm" class="headerlink" title="2.第三方模块nrm"></a>2.第三方模块nrm</h2><p>nrm(npm registry manager)：npm下载地址切换工具</p>
+<p>npm默认下载地址在国外，下载速度较慢，经常断线</p>
+<p>nrm可以将下载地址切换为为国内的服务器</p>
+<ul>
+<li>如阿里巴巴就有这样的服务器，每隔10分钟与官方的node服务器同步一次</li>
+<li>使用国内服务器就可以加快下载速度，与使用官方服务器下载的包是一样的</li>
+</ul>
+<h3 id="2-1下载使用"><a href="#2-1下载使用" class="headerlink" title="2.1下载使用"></a>2.1下载使用</h3><ol>
+<li><code>npm install nrm -g </code>   全局安装</li>
+<li>使用nrm ls 查询可用下载地址列表<ul>
+<li>npm为国外官方下载地址</li>
+<li>带*号的是当前选择的下载地址</li>
+</ul>
+</li>
+<li>切换npm下载地址为国内服务器 <code>nrm use 下载地址名称</code><ul>
+<li>这里选择阿里巴巴的taobao</li>
+</ul>
+</li>
+</ol>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png" alt="image-20210419113538099"></p>
+<h2 id="3-第三方模块Gulp"><a href="#3-第三方模块Gulp" class="headerlink" title="3.第三方模块Gulp"></a>3.第三方模块Gulp</h2><p>gulp是一种基于Node平台开发的前端构建工具</p>
+<p>可以将机械化的操作编写成任务，在执行时只需要在命令行输入编写好的命令任务就可以。</p>
+<p>机器代替手工，加开效率</p>
+<h4 id="3-1Gulp能做什么"><a href="#3-1Gulp能做什么" class="headerlink" title="3.1Gulp能做什么"></a>3.1Gulp能做什么</h4><ul>
+<li>项目上线时，HTML，CSS，JS代码压缩合并</li>
+<li>语法转换(es6转es5，less转css等)</li>
+<li>公共文件抽离(修改时只需要修改抽离的文件)</li>
+<li>修改文件浏览器自动刷新(之前修改完需要手动刷新)</li>
+</ul>
+<h4 id="3-2使用Gulp"><a href="#3-2使用Gulp" class="headerlink" title="3.2使用Gulp"></a>3.2使用Gulp</h4><p>下载</p>
+<p><code>npm install gulp</code>下载<strong>库文件</strong>，库文件是本地安装，只有当前项目能用</p>
+<p>使用</p>
+<ol>
+<li>在项目根目录下新建gulpfile.js文件(文件名不能随意更改)</li>
+<li>重构项目的文件夹结构，src目录下放置源代码文件，dist目录放置构建后的文件</li>
+<li>在gulpfile.js中编写任务</li>
+<li>在命令行工具中执行gulp任务</li>
+</ol>
+<h4 id="3-3Gulp提供了哪些编写任务的API"><a href="#3-3Gulp提供了哪些编写任务的API" class="headerlink" title="3.3Gulp提供了哪些编写任务的API"></a>3.3Gulp提供了哪些编写任务的API</h4><ul>
+<li>gulp.src()：获取任务要处理的文件</li>
+<li>gulp.dest()：输出文件</li>
+<li>gulp.task()：建立gulp任务</li>
+<li>gulp.watch()：监控文件变化</li>
+</ul>
+<h4 id="3-4第一个gulp任务"><a href="#3-4第一个gulp任务" class="headerlink" title="3.4第一个gulp任务"></a>3.4第一个gulp任务</h4><p>gulp任务写在gulpfile.js文件中</p>
+<p><strong>1.使用 <code>gulp.task(&#39;任务名&#39;,callback</code>)  创建任务</strong></p>
+<ul>
+<li>两个参数<ul>
+<li>任务名，标识任务时使用</li>
+<li>回调函数，执行任务就是执行这个函数</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.完成复制文件的操作</strong></p>
+<ul>
+<li>使用 <code>gulp.src(&#39;文件路径/文件名&#39;)</code> 获取文件</li>
+<li>在   <code>.pipe()</code> 中写处理代码 </li>
+<li><code>.pipe(gulp.dest(&#39;路径/文件名&#39;))</code> 这里将base.css这个文件复制到<code>dist/css</code>文件夹下(css文件夹会自动创建)</li>
+</ul>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419193029547.png" alt="image-20210419193029547"></p>
+<p><strong>3.执行这个gulp任务需要用到与gulp库文件同名的gulp命令行工具</strong></p>
+<p>执行的不是gulpfile.js这个文件，而是文件中的 ‘first’ 任务</p>
+<p>所以需要使用gulp命令行工具</p>
+<p>1.安装gulp命令行工具</p>
+<p><code>npm install gulp-cli -g</code>    命令行工具全局安装</p>
+<p>2.使用gulp命令执行gulp任务</p>
+<p><code>gulp first</code>  即执行了名为first的任务</p>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419194002502.png" alt="image-20210419194002502"></p>
+<ul>
+<li><p>输出了<code>我的第一个gulp任务</code></p>
+</li>
+<li><p>接着在 <code>./dist/css</code>文件夹下也发现了复制的base.css文件</p>
+</li>
+<li><p>执行成功</p>
+</li>
+<li><p>Using gulpfile代表使用了gulpfile.js文件</p>
+</li>
+<li><p>Starting ‘first’ 开始执行first任务</p>
+</li>
+</ul>
+<p><strong>但是在执行时出现了两行红字</strong></p>
+<ul>
+<li>因为任务可能包含异步代码，所以必须在任务完成执行时发出信号（“异步完成”）。</li>
+</ul>
+<p>在“Gulp3.x”中，你可以不做这个就离开。如果您没有显式地发出异步完成的信号，那么Gulp只会假定您的任务是同步的，</p>
+<p>并且一旦您的任务函数返回，它就完成了。<strong>Gulp4.x在这方面更严格。你必须明确地发出任务完成的信号。</strong></p>
+<p>这里我是用的gulp版本为4.0.2，需要明确发出任务完成的信号。</p>
+<p><strong>解决办法</strong></p>
+<p>在callback回调函数中使用一个done形参，在函数内部的最后加上<code>done()</code> 来标识<strong>异步任务结束</strong></p>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419195502159.png" alt="image-20210419195502159"></p>
+<p>此时不再报错</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>01-什么是Node</title>
     <url>/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/</url>
     <content><![CDATA[<h1 id="1-Node-js介绍"><a href="#1-Node-js介绍" class="headerlink" title="1.Node.js介绍"></a>1.Node.js介绍</h1><h2 id="1-1学习Node-js的目的"><a href="#1-1学习Node-js的目的" class="headerlink" title="1.1学习Node.js的目的"></a>1.1学习Node.js的目的</h2><ul>
@@ -276,134 +404,6 @@
       </categories>
       <tags>
         <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>02-02-第三方模块</title>
-    <url>/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/</url>
-    <content><![CDATA[<h1 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h1><p><a href="https://www.npmjs.com/">npmjs.com</a>: 第三方模块的存储和分发仓库</p>
-<h2 id="1-第三方模块-nodemon"><a href="#1-第三方模块-nodemon" class="headerlink" title="1.第三方模块 nodemon"></a>1.第三方模块 nodemon</h2><p>nodemon是命令行工具，辅助项目开发</p>
-<p>在Node.js中，每次修改文件都需要重新执行文件，比较繁琐</p>
-<p>nodemon可以在保存时自动执行文件</p>
-<span id="more"></span>
-
-<h3 id="1-2使用"><a href="#1-2使用" class="headerlink" title="1.2使用"></a>1.2使用</h3><ul>
-<li><p>安装</p>
-<ul>
-<li><p><code>npm install nodemon -g</code></p>
-</li>
-<li><p>命令行工具全局安装使用 -g</p>
-</li>
-</ul>
-</li>
-<li><p>使用</p>
-<ul>
-<li>在命令行工具中使用<code>nodemon</code>替代<code>node</code>执行nodejs文件</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png" alt="image-20210419110644336"></p>
-<p>执行完文件后会将命令行窗口挂起，等待执行的文件保存，保存文件后会<strong>自动执行文件</strong>，使用Ctrl+C可以退出nodemon</p>
-<p>现在在文件中添加一个输出后保存，效果如下</p>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png" alt="image-20210419111005039"></p>
-<h2 id="2-第三方模块nrm"><a href="#2-第三方模块nrm" class="headerlink" title="2.第三方模块nrm"></a>2.第三方模块nrm</h2><p>nrm(npm registry manager)：npm下载地址切换工具</p>
-<p>npm默认下载地址在国外，下载速度较慢，经常断线</p>
-<p>nrm可以将下载地址切换为为国内的服务器</p>
-<ul>
-<li>如阿里巴巴就有这样的服务器，每隔10分钟与官方的node服务器同步一次</li>
-<li>使用国内服务器就可以加快下载速度，与使用官方服务器下载的包是一样的</li>
-</ul>
-<h3 id="2-1下载使用"><a href="#2-1下载使用" class="headerlink" title="2.1下载使用"></a>2.1下载使用</h3><ol>
-<li><code>npm install nrm -g </code>   全局安装</li>
-<li>使用nrm ls 查询可用下载地址列表<ul>
-<li>npm为国外官方下载地址</li>
-<li>带*号的是当前选择的下载地址</li>
-</ul>
-</li>
-<li>切换npm下载地址为国内服务器 <code>nrm use 下载地址名称</code><ul>
-<li>这里选择阿里巴巴的taobao</li>
-</ul>
-</li>
-</ol>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png" alt="image-20210419113538099"></p>
-<h2 id="3-第三方模块Gulp"><a href="#3-第三方模块Gulp" class="headerlink" title="3.第三方模块Gulp"></a>3.第三方模块Gulp</h2><p>gulp是一种基于Node平台开发的前端构建工具</p>
-<p>可以将机械化的操作编写成任务，在执行时只需要在命令行输入编写好的命令任务就可以。</p>
-<p>机器代替手工，加开效率</p>
-<h4 id="3-1Gulp能做什么"><a href="#3-1Gulp能做什么" class="headerlink" title="3.1Gulp能做什么"></a>3.1Gulp能做什么</h4><ul>
-<li>项目上线时，HTML，CSS，JS代码压缩合并</li>
-<li>语法转换(es6转es5，less转css等)</li>
-<li>公共文件抽离(修改时只需要修改抽离的文件)</li>
-<li>修改文件浏览器自动刷新(之前修改完需要手动刷新)</li>
-</ul>
-<h4 id="3-2使用Gulp"><a href="#3-2使用Gulp" class="headerlink" title="3.2使用Gulp"></a>3.2使用Gulp</h4><p>下载</p>
-<p><code>npm install gulp</code>下载<strong>库文件</strong>，库文件是本地安装，只有当前项目能用</p>
-<p>使用</p>
-<ol>
-<li>在项目根目录下新建gulpfile.js文件(文件名不能随意更改)</li>
-<li>重构项目的文件夹结构，src目录下放置源代码文件，dist目录放置构建后的文件</li>
-<li>在gulpfile.js中编写任务</li>
-<li>在命令行工具中执行gulp任务</li>
-</ol>
-<h4 id="3-3Gulp提供了哪些编写任务的API"><a href="#3-3Gulp提供了哪些编写任务的API" class="headerlink" title="3.3Gulp提供了哪些编写任务的API"></a>3.3Gulp提供了哪些编写任务的API</h4><ul>
-<li>gulp.src()：获取任务要处理的文件</li>
-<li>gulp.dest()：输出文件</li>
-<li>gulp.task()：建立gulp任务</li>
-<li>gulp.watch()：监控文件变化</li>
-</ul>
-<h4 id="3-4第一个gulp任务"><a href="#3-4第一个gulp任务" class="headerlink" title="3.4第一个gulp任务"></a>3.4第一个gulp任务</h4><p>gulp任务写在gulpfile.js文件中</p>
-<p><strong>1.使用 <code>gulp.task(&#39;任务名&#39;,callback</code>)  创建任务</strong></p>
-<ul>
-<li>两个参数<ul>
-<li>任务名，标识任务时使用</li>
-<li>回调函数，执行任务就是执行这个函数</li>
-</ul>
-</li>
-</ul>
-<p><strong>2.完成复制文件的操作</strong></p>
-<ul>
-<li>使用 <code>gulp.src(&#39;文件路径/文件名&#39;)</code> 获取文件</li>
-<li>在   <code>.pipe()</code> 中写处理代码 </li>
-<li><code>.pipe(gulp.dest(&#39;路径/文件名&#39;))</code> 这里将base.css这个文件复制到<code>dist/css</code>文件夹下(css文件夹会自动创建)</li>
-</ul>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419193029547.png" alt="image-20210419193029547"></p>
-<p><strong>3.执行这个gulp任务需要用到与gulp库文件同名的gulp命令行工具</strong></p>
-<p>执行的不是gulpfile.js这个文件，而是文件中的 ‘first’ 任务</p>
-<p>所以需要使用gulp命令行工具</p>
-<p>1.安装gulp命令行工具</p>
-<p><code>npm install gulp-cli -g</code>    命令行工具全局安装</p>
-<p>2.使用gulp命令执行gulp任务</p>
-<p><code>gulp first</code>  即执行了名为first的任务</p>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419194002502.png" alt="image-20210419194002502"></p>
-<ul>
-<li><p>输出了<code>我的第一个gulp任务</code></p>
-</li>
-<li><p>接着在 <code>./dist/css</code>文件夹下也发现了复制的base.css文件</p>
-</li>
-<li><p>执行成功</p>
-</li>
-<li><p>Using gulpfile代表使用了gulpfile.js文件</p>
-</li>
-<li><p>Starting ‘first’ 开始执行first任务</p>
-</li>
-</ul>
-<p><strong>但是在执行时出现了两行红字</strong></p>
-<ul>
-<li>因为任务可能包含异步代码，所以必须在任务完成执行时发出信号（“异步完成”）。</li>
-</ul>
-<p>在“Gulp3.x”中，你可以不做这个就离开。如果您没有显式地发出异步完成的信号，那么Gulp只会假定您的任务是同步的，</p>
-<p>并且一旦您的任务函数返回，它就完成了。<strong>Gulp4.x在这方面更严格。你必须明确地发出任务完成的信号。</strong></p>
-<p>这里我是用的gulp版本为4.0.2，需要明确发出任务完成的信号。</p>
-<p><strong>解决办法</strong></p>
-<p>在callback回调函数中使用一个done形参，在函数内部的最后加上<code>done()</code> 来标识<strong>异步任务结束</strong></p>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419195502159.png" alt="image-20210419195502159"></p>
-<p>此时不再报错</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-        <tag>Gulp</tag>
       </tags>
   </entry>
   <entry>
@@ -729,6 +729,268 @@
       </tags>
   </entry>
   <entry>
+    <title>07-HTTP协议</title>
+    <url>/2021/04/26/07-HTTP%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="1-HTTP协议概念"><a href="#1-HTTP协议概念" class="headerlink" title="1.HTTP协议概念"></a>1.HTTP协议概念</h2><p>HTTP(Hyper Text Transfer Protocol)：超文本传输协议,规定如何从服务器传输超文本文件(HTML文件)到浏览器，基于浏览器-服务器(B-S)架构工作，是客户端和服务器请求和应答的标准</p>
+<p>超文本(HTML)：在文本中不仅仅能包含文字，还可以包含音频视频图像等资源</p>
+<h2 id="2-报文"><a href="#2-报文" class="headerlink" title="2.报文"></a>2.报文</h2><p>HTTP<strong>请求和响应的数据块</strong>被称为报文，包括要传送的数据和一些附加信息，并且遵守规定好的格式</p>
+<p><strong>请求报文</strong>：浏览器发给服务器的HTTP请求报文</p>
+<p><strong>响应报文</strong>：服务器发给浏览器的HTTP响应报文</p>
+<span id="more"></span>
+
+<center>利用浏览器的开发者工具可以看到浏览器和服务器进行通信的请求和响应报文</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214103527.png" alt="image-20210426214103527"></p>
+<p>Network选项卡可以看到当前浏览器和服务器之间的通信情况</p>
+<p>下面的localhost和favicon.ico即为浏览器向服务器发送的两个HTTP请求</p>
+<ul>
+<li>localhost即为我们输出网址回车后发出的请求</li>
+<li>favicon.ico为浏览器默认的请求，请求该网页的标识小图标</li>
+</ul>
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214318773.png" alt="image-20210426214318773"></p>
+<center>点击请求可以看到更详细的信息</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214439234.png" alt="image-20210426214439234"></p>
+<p>Headers选项卡展示了请求和响应的头部等信息，General中显示了请求和响应中的重要信息</p>
+<ul>
+<li>报文头部中的信息以<code>:</code>分隔的键值对表示，键值对之间使用 <code>,</code>分隔</li>
+</ul>
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426222733888.png" alt="image-20210426222733888"></p>
+<p>Response中则展示了服务器实际响应的数据</p>
+<h3 id="1-请求报文"><a href="#1-请求报文" class="headerlink" title="1.请求报文"></a>1.请求报文</h3><h4 id="1-请求方式-Request-Method"><a href="#1-请求方式-Request-Method" class="headerlink" title="1.请求方式(Request Method)"></a>1.请求方式(Request Method)</h4><ul>
+<li><strong>GET</strong>: 一般用来获取数据，也可以向服务器发送少量数据(发送的数据大小有限制)，但是不安全</li>
+<li><strong>POST</strong>: 一般用来向服务器发送数据(可以发送大量数据)，网站的一般逻辑操作也使用POST方法，POST方法比GET方法安全性高</li>
+</ul>
+<p><strong>例如：直接在浏览器输入网址访问服务器默认发送的是GET请求</strong></p>
+<p>服务器端可以获取浏览器的请求方式</p>
+<p><code>request.method</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取请求方式 在服务器后输出</span></span><br><span class="line"><span class="built_in">console</span>.log(request.method);</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426215848666.png" alt="image-20210426215848666"></p>
+<p>使用浏览器输入网址访问服务器</p>
+<p>服务器后台输出两个GET，代表localhost请求和favicon.ico请求均为GET请求</p>
+<br>
+
+<p><strong>例如：html文件中表格form提交时可以指定提交方式，指定为POST即使用POST方式请求</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">       action:提交到哪个服务器</span></span><br><span class="line"><span class="comment">       method：提交采用什么方式</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:3000&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<center>服务器后台显示</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426220411454.png" alt="image-20210426220411454"></p>
+<p>此处第一次表格提交为POST请求，第二次请求页面小图标favicon.ico为GET请求</p>
+<p><strong>服务器可以根据对同一网址的不同请求方式做出不同响应</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//当请求方式为GET时</span></span><br><span class="line"><span class="keyword">if</span>(request.method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&quot;GET&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(request.method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&quot;POST&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码会根据请求方式不同，给浏览器响应不同的数据</p>
+<p>例如：直接按网址访问服务器会响应’GET’，点击表单提交按钮访问服务器会响应’POST’</p>
+<h4 id="2-请求URL"><a href="#2-请求URL" class="headerlink" title="2.请求URL"></a>2.请求URL</h4><p><code>request.url</code>获取浏览器请求URL中从 ‘/‘ 开始的资源标识符</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取请求URL根据请求URL返回不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(request.url == <span class="string">&#x27;/index&#x27;</span>|| request.url == <span class="string">&#x27;/&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (request.url == <span class="string">&#x27;/list&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;404NotFound!&#x27;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当请求地址为<code>http://localhost:3000</code>时，浏览器给服务器发送的请求会自动在url末尾加上 ‘/‘ </li>
+<li>实际发送的url为<code>http://localhost:3000/</code>，所以服务器request.url获取的值都是以 ‘/‘ 开头的</li>
+</ul>
+<h4 id="3-请求头部Headers"><a href="#3-请求头部Headers" class="headerlink" title="3.请求头部Headers"></a>3.请求头部Headers</h4><p><code>request.headers</code> 获取请求报文的请求头</p>
+<p><code>request.headers[&#39;字段名&#39;]</code>获取请求头中特定字段的值</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将请求头信息在后台输出</span></span><br><span class="line"><span class="built_in">console</span>.log(request.headers);</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426223953815.png" alt="image-20210426223953815"></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回请求头中&#x27;accept&#x27;字段的值</span></span><br><span class="line"><span class="built_in">console</span>.log(request.headers[<span class="string">&#x27;accept&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426224158174.png" alt="image-20210426224158174"></p>
+<br>
+
+<h3 id="2-响应报文"><a href="#2-响应报文" class="headerlink" title="2.响应报文"></a>2.响应报文</h3><h4 id="1-HTTP状态码"><a href="#1-HTTP状态码" class="headerlink" title="1.HTTP状态码"></a>1.HTTP状态码</h4><ul>
+<li>200 OK 代表请求成功</li>
+<li>300 重定向</li>
+<li>404 请求资源没找到</li>
+<li>500 服务器端错误(服务器代码报错等)</li>
+<li>400 客户端请求有语法错误等</li>
+</ul>
+<p>在浏览器开发者工具中可以看到HTTP响应的状态码</p>
+<p>在服务器端可以使用<code>response.writeHead(HTTP状态码)</code> 指定响应时的状态码</p>
+<p>如设置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">response.writeHead(<span class="number">200</span>)</span><br></pre></td></tr></table></figure>
+
+<p>服务器返回的响应报文中HTTP状态码就为200 OK</p>
+<h4 id="2-内容类型"><a href="#2-内容类型" class="headerlink" title="2.内容类型"></a>2.内容类型</h4><p>响应数据时需要设定响应数据的类型，以便浏览器根据数据类型对返回的数据进行解析</p>
+<ul>
+<li>text/plain    纯文本 (默认的内容类型，不指定时默认纯文本) </li>
+<li>text/html    html文本(浏览器自动解析其中的html代码)</li>
+<li>text/css       css文本</li>
+<li>application/javascript   javascript文本</li>
+<li>application/json   json文本</li>
+<li>image/jpeg     .jpeg格式的图片</li>
+</ul>
+<p>使用如下代码设置内容类型</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">response.writeHead(HTTP状态码,&#123;</span><br><span class="line">	<span class="string">&#x27;content-type&#x27;</span>:<span class="string">&#x27;text/plain;charset=utf-8&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>charset=utf-8</code>代表指明响应给浏览器的数据的编码格式，utf-8编码可以解析中文</p>
+<h2 id="3-HTTP请求与响应处理"><a href="#3-HTTP请求与响应处理" class="headerlink" title="3.HTTP请求与响应处理"></a>3.HTTP请求与响应处理</h2><h3 id="1-请求参数"><a href="#1-请求参数" class="headerlink" title="1.请求参数"></a>1.请求参数</h3><p>客户端向服务端发送请求时，有时需要<strong>向服务端传递一些数据</strong>，这些数据通过<strong>请求参数的方式</strong>传递到服务端，例如登陆操作</p>
+<h4 id="1-GET请求参数"><a href="#1-GET请求参数" class="headerlink" title="1.GET请求参数"></a>1.GET请求参数</h4><p>参数被放置在浏览器地址栏(URL)中，例如<strong><code>http://localhost:3000/?name=yang&amp;age=20</code></strong></p>
+<p>这里的<code>name=yang&amp;age=20</code>就为请求参数</p>
+<ul>
+<li>请求参数使用<code>?</code>与URL隔开</li>
+<li>请求参数中的不同参数使用<code>&amp;</code>分隔</li>
+<li>请求参数以键值对的形式表示如： <code>name=yang</code>，键值之间使用<code>=</code>分隔</li>
+</ul>
+<h5 id="1-服务端如何获取GET请求参数"><a href="#1-服务端如何获取GET请求参数" class="headerlink" title="1.服务端如何获取GET请求参数"></a>1.服务端如何获取GET请求参数</h5><p>使用<code>request.url</code>可以获取请求URL，如果有请求参数，res.url会一并获取请求参数</p>
+<center>获取的请求URL(带请求参数)</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427214415414.png" alt="image-20210427214415414"></p>
+<ul>
+<li>可以通过字符串截取的方式获得？后的请求参数</li>
+<li>node中内置了<strong>url系统模块</strong>，可以用来处理请求URL和请求参数</li>
+</ul>
+<br>
+
+<p>url模块中的<code>url.parse(&#39;URL&#39;)</code>方法可以将URL的详细信息以对象的形式返回</p>
+<p><strong>url.parse()</strong></p>
+<ul>
+<li>第一个参数为请求URL</li>
+<li>第二个参数为true/false<ul>
+<li>true意为<strong>将请求参数解析为对象形式</strong>(返回的URL对象的query属性为一个对象)</li>
+<li>false意为请求参数以字符串返回(query属性为一个字符串)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> url=<span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"><span class="comment">//获取url后以对象形式返回并在后台输出</span></span><br><span class="line"><span class="built_in">console</span>.log(url.parse(request.url));</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427215213302.png" alt="image-20210427215213302"></p>
+<p>query属性为<strong>字符串形式的请求参数</strong></p>
+<br>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(url.parse(request.url,<span class="literal">true</span>));</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427220107218.png" alt="image-20210427220107218"></p>
+<p>query属性为<strong>对象形式的请求参数</strong></p>
+<p>使用如下代码即可获取请求参数中的数据</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> query = url.parse(request.url,<span class="literal">true</span>).query</span><br><span class="line">    <span class="built_in">console</span>.log(query.name);</span><br><span class="line">    <span class="built_in">console</span>.log(query.age);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-URL中加入请求参数后判断请求的资源标识符"><a href="#2-URL中加入请求参数后判断请求的资源标识符" class="headerlink" title="2.URL中加入请求参数后判断请求的资源标识符"></a>2.URL中加入请求参数后判断请求的资源标识符</h5><p>URL中加入请求参数后原来使用<code>request.url</code>判断请求资源标识符的方法需要修改</p>
+<p><code>url.parse()</code>返回的对象中的<strong>pathname属性</strong>即为不带请求参数的请求资源标识符</p>
+<p>使用ES6对象解构的方式获得query和pathname</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;query,pathname&#125; = url.parse(request.url,<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<p>使用pathname判断请求资源标识符就可以解决这个问题</p>
+<h4 id="2-POST请求参数"><a href="#2-POST请求参数" class="headerlink" title="2.POST请求参数"></a>2.POST请求参数</h4><p>一般在<strong>提交表单时</strong>请求参数使用POST方式发送</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:3000&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>POST方式的请求参数放在<strong>请求报文中</strong>，不在URL中</p>
+<p>POST和GET方式的请求参数格式是<strong>一样</strong>的</p>
+<p>表单中请求参数的名字写在<code>input</code>标签中，如<code>name=&quot;username&quot;</code></p>
+<p><code>&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;</code></p>
+<center>POST请求，请求报文中的请求参数，浏览器开发者工具查看</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427222838580.png" alt="image-20210427222838580"></p>
+<h5 id="1-服务端获取POST请求参数"><a href="#1-服务端获取POST请求参数" class="headerlink" title="1.服务端获取POST请求参数"></a>1.服务端获取POST请求参数</h5><p>POST请求参数通过request对象的事件接收</p>
+<ul>
+<li>data事件  当请求参数传递时触发(POST请求传递的数据理论上可以<strong>无限制</strong>，服务端可能需要<strong>分批接收</strong>)</li>
+<li>end事件   当请求参数传递完毕时触发</li>
+<li>request的data和end事件注册写在<strong>服务器的request请求事件中</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//创建变量接收POST请求参数</span></span><br><span class="line">    <span class="keyword">let</span> datasum=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="comment">//data事件注册 params参数即为传来的参数</span></span><br><span class="line">    request.on(<span class="string">&#x27;data&#x27;</span>, <span class="function"><span class="params">params</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//可能分批接收，所以使用+=接收所有数据</span></span><br><span class="line">        datasum+=params</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//end事件注册</span></span><br><span class="line">    request.on(<span class="string">&#x27;end&#x27;</span>,<span class="function"><span class="params">params</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(datasum);</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    response.end(<span class="string">&quot;ok&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>将传来的数据在后台输出如下</center>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427225303155.png" alt="image-20210427225303155"></p>
+<br>
+
+<h5 id="2-将获取的字符串格式的POST请求参数转换为对象格式"><a href="#2-将获取的字符串格式的POST请求参数转换为对象格式" class="headerlink" title="2.将获取的字符串格式的POST请求参数转换为对象格式"></a>2.将获取的字符串格式的POST请求参数转换为对象格式</h5><p>使用node系统模块<code>queryString</code>的<code>parse()</code>方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入queryString模块转换请求参数格式</span></span><br><span class="line"><span class="keyword">const</span> queryString = <span class="built_in">require</span>(<span class="string">&#x27;querystring&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//将字符串格式的请求参数转换为对象格式并在后台输出</span></span><br><span class="line"><span class="comment">//此代码写在request对象的end事件中</span></span><br><span class="line"><span class="built_in">console</span>.log(queryString.parse(datasum));</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427225733016.png" alt="image-20210427225733016"></p>
+<h3 id="2-路由"><a href="#2-路由" class="headerlink" title="2.路由"></a>2.路由</h3><p>路由是指客户端<strong>请求地址</strong>与服务端<strong>程序代码</strong>的对应关系</p>
+<p>简单来说即客户端请求什么，服务器响应什么</p>
+<p>例如：</p>
+<ul>
+<li>客户端请求<code>http://localhost:3000/index.html</code>，服务端返回index.html</li>
+<li>对于普不同的请求方式GET和POST，服务器也可以根据请求方式做出不同的响应</li>
+</ul>
+<h3 id="3-静态资源"><a href="#3-静态资源" class="headerlink" title="3.静态资源"></a>3.静态资源</h3><p>服务器端不需要处理，可以直接响应给客户端的资源被称为静态资源，例如CSS,JS,HTML文件</p>
+<p>静态资源响应的例子：</p>
+<p><strong>URL中的资源标识符不一定要写服务器端资源的路径</strong></p>
+<ul>
+<li>服务器端可以获取资源标识符后自己指定资源地址</li>
+<li>此处就使用了字符串拼接<code>path.join</code>自己指定public文件夹下的静态资源</li>
+</ul>
+<br>
+
+<p><strong>响应文件时需要在响应头中指定内容类型</strong><code>content-type</code></p>
+<ul>
+<li>在高级浏览器中即使不指定内容类型也可以正常解析文件，但一些浏览器可能发生错误</li>
+<li>html文件通过<code>readFile()</code>方法获取，html文件中<strong>从外部引入的CSS等文件</strong>也是通过<code>readFile()</code>方法获取</li>
+<li>在设置响应头中的<code>content-type</code>时，需要<strong>得知当前获取的文件类型</strong><ul>
+<li>可以使用<strong>第三方模块mime</strong></li>
+<li>mime模块的<code>getTaype(&quot;资源路径&quot;)</code>方法可以根据资源路径返回对应的文件类型</li>
+<li>使用获取的文件类型设置<code>content-type</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> url=<span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="comment">//引入第三方模块MIME 根据路径获取文件类型</span></span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">&#x27;mime&#x27;</span>)</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//获取请求资源的标识符</span></span><br><span class="line">    <span class="keyword">let</span> pathname = url.parse(req.url).pathname</span><br><span class="line">    <span class="comment">//拼接路径</span></span><br><span class="line">    <span class="keyword">let</span> filepath = path.join(__dirname,<span class="string">&#x27;public&#x27;</span>+pathname)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> type = mime.getType(filepath)</span><br><span class="line">    <span class="comment">//获取对应文件</span></span><br><span class="line">    fs.readFile(filepath,<span class="function">(<span class="params">err,data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(err != <span class="literal">null</span>)&#123;</span><br><span class="line">            res.writeHead(<span class="number">404</span>,&#123;</span><br><span class="line">                <span class="string">&#x27;content-type&#x27;</span>:<span class="string">&#x27;text/plain;charset=utf-8&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            res.end(<span class="string">&#x27;文件找不到&#x27;</span>)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.writeHead(<span class="number">200</span>,&#123;</span><br><span class="line">                <span class="string">&#x27;content-type&#x27;</span>:type</span><br><span class="line">            &#125;)</span><br><span class="line">            res.end(data)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>此处使用<code>http://localhost:3000/default.html</code>访问服务器的静态资源如下</p>
+<ul>
+<li>此处的URI：/default.html并不是资源在服务器路径</li>
+<li>URI：统一资源<strong>标识符</strong></li>
+<li>URL：统一资源<strong>定位符</strong></li>
+</ul>
+<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210428195929316.png" alt="image-20210428195929316"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>06-服务器端基本概念</title>
+    <url>/2021/04/26/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h1 id="服务器端基本概念"><a href="#服务器端基本概念" class="headerlink" title="服务器端基本概念"></a>服务器端基本概念</h1><h2 id="1-URL"><a href="#1-URL" class="headerlink" title="1.URL"></a>1.URL</h2><p><strong>URL：统一资源定位符，标识internet网上资源的一种编码方式</strong></p>
+<p>使用URL可以唯一标识网络上的一个资源</p>
+<p>URL组成：</p>
+<ul>
+<li><strong>传输协议</strong>://<strong>服务器IP或域名:端口号</strong>/<strong>资源所在位置的标识</strong></li>
+<li>例如: <code>http://www.baidu.com/news/a.html</code></li>
+<li>即使用http协议访问域名为<code>www.baidu.com</code>，端口号为默认80的这个web服务器上的news文件夹下的a.html文件</li>
+<li>http：超文本传输协议，一种发布和接收html文件的方法</li>
+<li>IP或域名可以找到网络上的一台服务器，端口则代表这台服务器上的应用程序提供的服务，http默认端口为80</li>
+<li>资源所在位置标识：<strong>不一定是服务器上资源的路径</strong>，请求提交给服务器后，服务器可以根据位置标识做出其他的操作，服务器给客户端返回什么资源是服务器自身决定的</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="2-开发过程客户端和服务端说明"><a href="#2-开发过程客户端和服务端说明" class="headerlink" title="2.开发过程客户端和服务端说明"></a>2.开发过程客户端和服务端说明</h2><p>开发过程中，客户端和服务端使用同一台电脑，即开发人员的电脑</p>
+<p>开发人员电脑上的<strong>浏览器</strong>即为<strong>客户端</strong></p>
+<p>开发人员电脑上的Node可以编写服务器，可以作为<strong>服务端</strong>，即软件层面的服务器</p>
+<p>本机域名：localhost</p>
+<p>本机IP：127.0.0.1</p>
+<p>使用本机IP/域名就可以使用本机的客户端访问本机的服务端</p>
+<h2 id="3-nodejs构建简单web服务器"><a href="#3-nodejs构建简单web服务器" class="headerlink" title="3.nodejs构建简单web服务器"></a>3.nodejs构建简单web服务器</h2><p>server.js文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    <span class="comment">//也可以直接使用end()返回响应数据</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>请求处理函数中接收两个参数</p>
+<ul>
+<li>Request   请求对象：获取客户端的一些请求信息，例如请求路径等</li>
+<li>Response  响应对象：用来给客户端发送响应信息<ul>
+<li>第一个<code>response.end()</code>执行完后，服务器就已经结束响应</li>
+<li>后面代码中的<code>response.end()</code>将不再向浏览器响应数据</li>
+</ul>
+</li>
+</ul>
+<p>node执行这个文件</p>
+<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213253506.png" alt="image-20210426213253506"></p>
+<p>浏览器访问结果</p>
+<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213340606.png" alt="image-20210426213340606"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>04-node_modules文件夹的问题</title>
     <url>/2021/04/26/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h1 id="node-modules文件夹的问题"><a href="#node-modules文件夹的问题" class="headerlink" title="node_modules文件夹的问题"></a>node_modules文件夹的问题</h1><ul>
@@ -808,52 +1070,6 @@
       <tags>
         <tag>Nodejs</tag>
         <tag>Gulp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>06-服务器端基本概念</title>
-    <url>/2021/04/26/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h1 id="服务器端基本概念"><a href="#服务器端基本概念" class="headerlink" title="服务器端基本概念"></a>服务器端基本概念</h1><h2 id="1-URL"><a href="#1-URL" class="headerlink" title="1.URL"></a>1.URL</h2><p><strong>URL：统一资源定位符，标识internet网上资源的一种编码方式</strong></p>
-<p>使用URL可以唯一标识网络上的一个资源</p>
-<p>URL组成：</p>
-<ul>
-<li><strong>传输协议</strong>://<strong>服务器IP或域名:端口号</strong>/<strong>资源所在位置的标识</strong></li>
-<li>例如: <code>http://www.baidu.com/news/a.html</code></li>
-<li>即使用http协议访问域名为<code>www.baidu.com</code>，端口号为默认80的这个web服务器上的news文件夹下的a.html文件</li>
-<li>http：超文本传输协议，一种发布和接收html文件的方法</li>
-<li>IP或域名可以找到网络上的一台服务器，端口则代表这台服务器上的应用程序提供的服务，http默认端口为80</li>
-<li>资源所在位置标识：<strong>不一定是服务器上资源的路径</strong>，请求提交给服务器后，服务器可以根据位置标识做出其他的操作，服务器给客户端返回什么资源是服务器自身决定的</li>
-</ul>
-<span id="more"></span>
-
-<h2 id="2-开发过程客户端和服务端说明"><a href="#2-开发过程客户端和服务端说明" class="headerlink" title="2.开发过程客户端和服务端说明"></a>2.开发过程客户端和服务端说明</h2><p>开发过程中，客户端和服务端使用同一台电脑，即开发人员的电脑</p>
-<p>开发人员电脑上的<strong>浏览器</strong>即为<strong>客户端</strong></p>
-<p>开发人员电脑上的Node可以编写服务器，可以作为<strong>服务端</strong>，即软件层面的服务器</p>
-<p>本机域名：localhost</p>
-<p>本机IP：127.0.0.1</p>
-<p>使用本机IP/域名就可以使用本机的客户端访问本机的服务端</p>
-<h2 id="3-nodejs构建简单web服务器"><a href="#3-nodejs构建简单web服务器" class="headerlink" title="3.nodejs构建简单web服务器"></a>3.nodejs构建简单web服务器</h2><p>server.js文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    <span class="comment">//也可以直接使用end()返回响应数据</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>请求处理函数中接收两个参数</p>
-<ul>
-<li>Request   请求对象：获取客户端的一些请求信息，例如请求路径等</li>
-<li>Response  响应对象：用来给客户端发送响应信息<ul>
-<li>第一个<code>response.end()</code>执行完后，服务器就已经结束响应</li>
-<li>后面代码中的<code>response.end()</code>将不再向浏览器响应数据</li>
-</ul>
-</li>
-</ul>
-<p>node执行这个文件</p>
-<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213253506.png" alt="image-20210426213253506"></p>
-<p>浏览器访问结果</p>
-<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213340606.png" alt="image-20210426213340606"></p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
       </tags>
   </entry>
   <entry>
@@ -975,6 +1191,48 @@
       </tags>
   </entry>
   <entry>
+    <title>05-nodejs中的模块加载机制</title>
+    <url>/2021/04/26/05-nodejs%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="nodejs中的模块加载机制"><a href="#nodejs中的模块加载机制" class="headerlink" title="nodejs中的模块加载机制"></a>nodejs中的模块加载机制</h1><p>nodejs使用<code>require(&#39;&#39;)</code>方法来加载模块，参数即为模块名或者路径</p>
+<h2 id="require-查找模块"><a href="#require-查找模块" class="headerlink" title="require()查找模块"></a>require()查找模块</h2><h3 id="1-拥有完整路径-有路径但没有模块后缀"><a href="#1-拥有完整路径-有路径但没有模块后缀" class="headerlink" title="1.拥有完整路径/有路径但没有模块后缀"></a>1.拥有完整路径/有路径但没有模块后缀</h3><p>1.如果<code>require(&#39;模块&#39;)</code>参数中使用完整路径，则直接按照路径引入，找不到文件则报错</p>
+<ul>
+<li>例如 <code>require(&#39;./find.js&#39;)</code></li>
+<li>完整模块路径可以是<strong>相对/绝对路径</strong></li>
+<li>此时执行<code>require(&#39;./find.js&#39;)</code>代码时，会在相应的目录下找对应的find.js文件引入执行</li>
+</ul>
+<span id="more"></span>
+
+<p>2.如果参数中模块后缀省略，先找相应的同名js文件，再找同名的文件夹</p>
+<ul>
+<li>例如 <code>require(&#39;./find&#39;)</code></li>
+<li>先找对应目录下的find.js文件</li>
+<li>找不到就找同名的find文件夹</li>
+</ul>
+<p>3.如果找到同名文件夹则引入执行文件夹中的<strong>index.js模块</strong></p>
+<ul>
+<li>找不到同名文件夹则报错</li>
+</ul>
+<p>4.如果文件夹中没有index.js模块，就会找当前文件夹(与参数中模块同名的文件夹)下的package.json文件,并引入执行其中main字段的主/入口模块</p>
+<p>5.如果没有指定的入口模块或者入口模块找不到，则报错</p>
+<h3 id="2-没有路径且没有后缀"><a href="#2-没有路径且没有后缀" class="headerlink" title="2.没有路径且没有后缀"></a>2.没有路径且没有后缀</h3><p>例如：<code>require(&#39;find&#39;)</code></p>
+<p>1.nodejs先假设find模块为系统模块，在系统模块中查找</p>
+<p>2.系统模块查找不到就进入当前目录的node_modules文件夹中</p>
+<p>3.在node_modules文件夹中首先查找同名js文件</p>
+<p>4.查找不到同名文件则查找同名文件夹(find文件夹)</p>
+<p>5.引入执行同名文件夹(find文件夹)中的index.js模块</p>
+<p>6.如果没有index.js模块，则查看当前文件夹(find文件夹)下的package.json文件中main字段指示的入口模块</p>
+<p>7.引入执行package.json文件中main字段指示的入口模块</p>
+<p>8.若没有main字段，或者入口模块找不到则报错</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>09-promise对象</title>
     <url>/2021/05/06/09-promise%E5%AF%B9%E8%B1%A1/</url>
     <content><![CDATA[<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>promise对象出现的目的是解决nodejs中异步编程中<a href="08-node%E3%80%82%E3%80%82%E3%80%82">回调地狱</a>的问题。</p>
@@ -1025,45 +1283,25 @@ return p2();
       </tags>
   </entry>
   <entry>
-    <title>05-nodejs中的模块加载机制</title>
-    <url>/2021/04/26/05-nodejs%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h1 id="nodejs中的模块加载机制"><a href="#nodejs中的模块加载机制" class="headerlink" title="nodejs中的模块加载机制"></a>nodejs中的模块加载机制</h1><p>nodejs使用<code>require(&#39;&#39;)</code>方法来加载模块，参数即为模块名或者路径</p>
-<h2 id="require-查找模块"><a href="#require-查找模块" class="headerlink" title="require()查找模块"></a>require()查找模块</h2><h3 id="1-拥有完整路径-有路径但没有模块后缀"><a href="#1-拥有完整路径-有路径但没有模块后缀" class="headerlink" title="1.拥有完整路径/有路径但没有模块后缀"></a>1.拥有完整路径/有路径但没有模块后缀</h3><p>1.如果<code>require(&#39;模块&#39;)</code>参数中使用完整路径，则直接按照路径引入，找不到文件则报错</p>
+    <title>11-nodejs全局对象global</title>
+    <url>/2021/05/10/11-nodejs%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1global/</url>
+    <content><![CDATA[<h1 id="nodejs全局对象global"><a href="#nodejs全局对象global" class="headerlink" title="nodejs全局对象global"></a>nodejs全局对象global</h1><p>浏览器BOM中的全局对象是<strong>window</strong></p>
+<p>Node中全局对象是<strong>global</strong></p>
+<p>Node全局对象global有许多和window对象相同的方法</p>
+<p>使用global对象的方法可以省略global</p>
 <ul>
-<li>例如 <code>require(&#39;./find.js&#39;)</code></li>
-<li>完整模块路径可以是<strong>相对/绝对路径</strong></li>
-<li>此时执行<code>require(&#39;./find.js&#39;)</code>代码时，会在相应的目录下找对应的find.js文件引入执行</li>
+<li>console.log() 在控制台输出</li>
+<li>setTimeout() 设置定时器(定时触发一次)</li>
+<li>clearTimeout() 清除定时器</li>
+<li>setInterval() 设置定时器(每经过设定的时间就触发)</li>
+<li>等等</li>
 </ul>
-<span id="more"></span>
-
-<p>2.如果参数中模块后缀省略，先找相应的同名js文件，再找同名的文件夹</p>
-<ul>
-<li>例如 <code>require(&#39;./find&#39;)</code></li>
-<li>先找对应目录下的find.js文件</li>
-<li>找不到就找同名的find文件夹</li>
-</ul>
-<p>3.如果找到同名文件夹则引入执行文件夹中的<strong>index.js模块</strong></p>
-<ul>
-<li>找不到同名文件夹则报错</li>
-</ul>
-<p>4.如果文件夹中没有index.js模块，就会找当前文件夹(与参数中模块同名的文件夹)下的package.json文件,并引入执行其中main字段的主/入口模块</p>
-<p>5.如果没有指定的入口模块或者入口模块找不到，则报错</p>
-<h3 id="2-没有路径且没有后缀"><a href="#2-没有路径且没有后缀" class="headerlink" title="2.没有路径且没有后缀"></a>2.没有路径且没有后缀</h3><p>例如：<code>require(&#39;find&#39;)</code></p>
-<p>1.nodejs先假设find模块为系统模块，在系统模块中查找</p>
-<p>2.系统模块查找不到就进入当前目录的node_modules文件夹中</p>
-<p>3.在node_modules文件夹中首先查找同名js文件</p>
-<p>4.查找不到同名文件则查找同名文件夹(find文件夹)</p>
-<p>5.引入执行同名文件夹(find文件夹)中的index.js模块</p>
-<p>6.如果没有index.js模块，则查看当前文件夹(find文件夹)下的package.json文件中main字段指示的入口模块</p>
-<p>7.引入执行package.json文件中main字段指示的入口模块</p>
-<p>8.若没有main字段，或者入口模块找不到则报错</p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
       </categories>
       <tags>
         <tag>Nodejs</tag>
-        <tag>Gulp</tag>
       </tags>
   </entry>
   <entry>
@@ -1147,224 +1385,6 @@ return p2();
       </categories>
       <tags>
         <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>11-nodejs全局对象global</title>
-    <url>/2021/05/10/11-nodejs%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1global/</url>
-    <content><![CDATA[<h1 id="nodejs全局对象global"><a href="#nodejs全局对象global" class="headerlink" title="nodejs全局对象global"></a>nodejs全局对象global</h1><p>浏览器BOM中的全局对象是<strong>window</strong></p>
-<p>Node中全局对象是<strong>global</strong></p>
-<p>Node全局对象global有许多和window对象相同的方法</p>
-<p>使用global对象的方法可以省略global</p>
-<ul>
-<li>console.log() 在控制台输出</li>
-<li>setTimeout() 设置定时器(定时触发一次)</li>
-<li>clearTimeout() 清除定时器</li>
-<li>setInterval() 设置定时器(每经过设定的时间就触发)</li>
-<li>等等</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>13-用户信息增删改查实例</title>
-    <url>/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/</url>
-    <content><![CDATA[<h1 id="用户信息增删改查实例"><a href="#用户信息增删改查实例" class="headerlink" title="用户信息增删改查实例"></a>用户信息增删改查实例</h1><h2 id="项目目的"><a href="#项目目的" class="headerlink" title="项目目的"></a>项目目的</h2><p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210524204826501.png" alt="image-20210524204826501"></p>
-<span id="more"></span>
-
-<h2 id="1-搭建网站服务器"><a href="#1-搭建网站服务器" class="headerlink" title="1.搭建网站服务器"></a>1.搭建网站服务器</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入http模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">const</span> server = http.createServer()</span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器请求事件</span></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>, <span class="keyword">async</span> (req,res) =&gt; &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听端口</span></span><br><span class="line">server.listen(<span class="string">&#x27;3000&#x27;</span>,<span class="function">() =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器开启成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h2 id="2-连接数据库，创建用户集合-users"><a href="#2-连接数据库，创建用户集合-users" class="headerlink" title="2.连接数据库，创建用户集合(users)"></a>2.连接数据库，创建用户集合(users)</h2><p>这部分采用模块化的编程思想：</p>
-<p>​    将连接数据库代码写在<strong>index.js模块</strong>中</p>
-<p>​    将创建用户集合代码写在<strong>user.js模块</strong>中</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入mongoose模块</span></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.connect(<span class="string">&#x27;mongodb://localhost/user09&#x27;</span>,&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span> ,<span class="attr">useUnifiedTopology</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">&#x27;数据库连接成功&#x27;</span>)&#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">&#x27;数据库连接失败&#x27;</span>,err)&#125;)</span><br></pre></td></tr></table></figure>
-
-<center>index.js代码</center>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建集合规则</span></span><br><span class="line"><span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:<span class="literal">true</span>,</span><br><span class="line">        minlength:<span class="number">2</span>,</span><br><span class="line">        maxlength:<span class="number">5</span></span><br><span class="line">    &#125;,</span><br><span class="line">    age:&#123;</span><br><span class="line">        type:<span class="built_in">Number</span>,</span><br><span class="line">        min:<span class="number">18</span>,</span><br><span class="line">        max:<span class="number">80</span></span><br><span class="line">    &#125;,</span><br><span class="line">    password: <span class="built_in">String</span>,</span><br><span class="line">    email:<span class="built_in">String</span>,</span><br><span class="line">    <span class="comment">//代表值为一个数组，元素为String类型</span></span><br><span class="line">    hobbies:[<span class="built_in">String</span>]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建集合</span></span><br><span class="line"><span class="keyword">const</span> User = mongoose.model(<span class="string">&#x27;User&#x27;</span>,userSchema)</span><br><span class="line"></span><br><span class="line"><span class="comment">//导出集合构造函数User供server.js使用</span></span><br><span class="line"><span class="built_in">module</span>.exports = User</span><br></pre></td></tr></table></figure>
-
-<center>user.js代码</center>
-
-<br>
-
-<h2 id="3-客户端访问-list时，将所有用户信息查询出来"><a href="#3-客户端访问-list时，将所有用户信息查询出来" class="headerlink" title="3.客户端访问/list时，将所有用户信息查询出来"></a>3.客户端访问/list时，将所有用户信息查询出来</h2><p>此处因为还没有学习模板引擎，所以采用<strong>直接在server.js文件中进行字符串拼接</strong>的方式给客户端响应数据</p>
-<p>在<code>server.on()</code>函数中书写代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//此代码在server.on()函数下书写</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//请求方式</span></span><br><span class="line"><span class="keyword">const</span> method = req.method</span><br><span class="line"><span class="comment">//请求地址和请求参数获取</span></span><br><span class="line"><span class="keyword">const</span> &#123; pathname,query &#125; = url.parse(req.url,<span class="literal">true</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span>(method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname == <span class="string">&#x27;/list&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> users = <span class="keyword">await</span> User.find()</span><br><span class="line">            <span class="keyword">let</span> list = <span class="string">`</span></span><br><span class="line"><span class="string">            &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">            &lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;head&gt;</span></span><br><span class="line"><span class="string">                &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;title&gt;用户列表&lt;/title&gt;</span></span><br><span class="line"><span class="string">                &lt;style&gt;css样式省略&lt;/style&gt;</span></span><br><span class="line"><span class="string">            &lt;/head&gt;</span></span><br><span class="line"><span class="string">            &lt;body&gt;</span></span><br><span class="line"><span class="string">                &lt;div&gt;</span></span><br><span class="line"><span class="string">                    &lt;span&gt;&lt;a href=&quot;http://localhost:3000/add&quot;&gt;添加用户&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                    &lt;br/&gt;</span></span><br><span class="line"><span class="string">                    &lt;br&gt;</span></span><br><span class="line"><span class="string">                    &lt;table border=&quot;1&quot; cellspacing=&quot;0&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;tr&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;姓名&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;年龄&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;email&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;爱好&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;操作&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;/tr&gt;</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
-
-<center>代码块1</center>
-
-<ul>
-<li><p>上述代码块中使用<code>let users = await User.find()</code>代码将users集合中所有文档提取出来存入users数组</p>
-</li>
-<li><p>使用list变量进行响应的html代码数据拼接</p>
-</li>
-<li><p>html代码放在<strong>模板字符串</strong>中(``中)</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">users.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">               list+=<span class="string">`</span></span><br><span class="line"><span class="string">               &lt;tr&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.name&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.age&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.email&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;</span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">               <span class="comment">//爱好信息添加</span></span><br><span class="line">               item.hobbies.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">                   list+=<span class="string">`</span></span><br><span class="line"><span class="string">                   <span class="subst">$&#123;item&#125;</span></span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">               &#125;)</span><br><span class="line">               </span><br><span class="line">               list+=<span class="string">`</span></span><br><span class="line"><span class="string">                   &lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt; </span></span><br><span class="line"><span class="string">                       &lt;span class=&quot;del&quot;&gt;&lt;a href=&quot;/del?id=<span class="subst">$&#123;item._id&#125;</span>&quot;&gt;删除&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                       &lt;span class=&quot;change&quot;&gt;&lt;a href=&quot;/modify?id=<span class="subst">$&#123;item._id&#125;</span>&quot;&gt;修改&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                   &lt;/td&gt;</span></span><br><span class="line"><span class="string">               &lt;/tr&gt;</span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">           &#125;)</span><br><span class="line">           </span><br><span class="line">           list+=<span class="string">` &lt;/table&gt;</span></span><br><span class="line"><span class="string">           &lt;/body&gt;</span></span><br><span class="line"><span class="string">           &lt;/html&gt;`</span></span><br><span class="line">           res.end(list);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
-
-<center>代码块2</center>
-
-<p>代码块2接着代码块1</p>
-<ul>
-<li>使用users的<code>forEach()</code>方法<strong>遍历数组中所有的文档</strong><ul>
-<li>按照每一个文档的信息生成表格中的一行</li>
-<li>每一个item即为一个文档的JSON对象</li>
-</ul>
-</li>
-<li>对于文档的hobbies字段(hobbies字段为一个数组)<ul>
-<li>使用hobbies.forEach()方法<strong>遍历每一个爱好</strong>并添加到表格中</li>
-</ul>
-</li>
-<li>最后添加删除和修改两个按钮<ul>
-<li>按钮提前设置好超链接</li>
-<li>为修改和删除跳转做准备</li>
-</ul>
-</li>
-<li><code>res.end(list)</code>语句将list变量存储的html代码响应给客户端</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525214248992.png" alt="将每一个文档信息生成为表格的一行(/list页面)"></p>
-<br>
-
-<h2 id="4-添加用户功能-访问-add"><a href="#4-添加用户功能-访问-add" class="headerlink" title="4.添加用户功能(访问/add)"></a>4.添加用户功能(访问/add)</h2><ul>
-<li><p>用户可以通过直接访问<code>localhost:3000/add</code>的方式访问添加用户页面</p>
-</li>
-<li><p>还可以点击/list页面上的添加用户按钮跳转到/add页面进行添加用户操作</p>
-<ul>
-<li>代码段1中已经设置好添加按钮的跳转路径</li>
-</ul>
-</li>
-<li><p>上述两种访问/add页面的方式<strong>均为GET请求方式</strong></p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(pathname == <span class="string">&#x27;/add&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> add=<span class="string">`</span></span><br><span class="line"><span class="string">            &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">            &lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;head&gt;</span></span><br><span class="line"><span class="string">                &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;title&gt;添加用户&lt;/title&gt;</span></span><br><span class="line"><span class="string">                &lt;style&gt;</span></span><br><span class="line"><span class="string">                    div&#123;</span></span><br><span class="line"><span class="string">                        margin: 0 auto;</span></span><br><span class="line"><span class="string">                        width: 1000px;</span></span><br><span class="line"><span class="string">                    &#125;</span></span><br><span class="line"><span class="string">                &lt;/style&gt;</span></span><br><span class="line"><span class="string">            &lt;/head&gt;</span></span><br><span class="line"><span class="string">            &lt;body&gt;</span></span><br><span class="line"><span class="string">                &lt;div&gt;</span></span><br><span class="line"><span class="string">                    &lt;h3&gt;添加用户&lt;/h3&gt;</span></span><br><span class="line"><span class="string">                    &lt;form action=&quot;/add&quot; method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;用户名：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;密码：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;年龄：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;age&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;email：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;span&gt;爱好:&lt;/span&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;吃饭&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;吃饭&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;睡觉&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;睡觉&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;打豆豆&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;打豆豆&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;写代码&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;写代码&quot;&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;/form&gt;</span></span><br><span class="line"><span class="string">                &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;/body&gt;</span></span><br><span class="line"><span class="string">            &lt;/html&gt;</span></span><br><span class="line"><span class="string">            `</span></span><br><span class="line">            res.end(add)</span><br></pre></td></tr></table></figure>
-
-<center>代码段3</center>
-
-<p>将添加用户的表单信息以POST方式提交给localhost:3000/add</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/add&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>/add 即为 localhost:3000/add</p>
-<p>/add 的 ‘/‘即为服务器URL：localhost:3000/</p>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525215640354.png" alt="添加用户页面如下"></p>
-<br>
-
-<p><strong>服务器端接收到URL为localhost:3000/add的POST请求</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//本代码段代码在server.on()函数下</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname == <span class="string">&#x27;/add&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> formData = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">            <span class="comment">//请求参数传送触发</span></span><br><span class="line">            req.on(<span class="string">&#x27;data&#x27;</span>,<span class="function"><span class="params">param</span> =&gt;</span> &#123;</span><br><span class="line">                formData+=param</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment">//请求参数传送完毕触发</span></span><br><span class="line">            req.on(<span class="string">&#x27;end&#x27;</span>,<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">                <span class="keyword">let</span> userinf = queryString.parse(formData)</span><br><span class="line">                <span class="keyword">await</span> User.create(userinf)</span><br><span class="line">                <span class="comment">//请求重定向到</span></span><br><span class="line">                res.writeHead(<span class="number">301</span>,&#123;</span><br><span class="line">                    Location:<span class="string">&#x27;/list&#x27;</span></span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="comment">//重定向完 结束本次响应</span></span><br><span class="line">                res.end()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-
-<center>代码块4</center>
-
-<ul>
-<li><p>使用formData变量接收POST请求参数</p>
-<ul>
-<li>使用queryString模块的parse方法将字符串格式的formData变量转换为<strong>JSON对象格式的userinf变量</strong></li>
-<li>/add页面中input标签的<strong>name属性</strong>与数据库文档中的<strong>相应字段名</strong>统一<ul>
-<li>这样接收的请求参数转换为JSON对象后就可以直接添加到数据库</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>调用User集合构造函数的create()方法将新用户信息(userinf变量)添加到数据库</p>
-</li>
-<li><p>在异步函数中使用await关键字<strong>等待异步API返回结果后再继续执行</strong></p>
-<ul>
-<li><p><code>req.on(&#39;end&#39;,async ()=&gt;&#123;&#125;)</code>方法的回调函数使用async关键字变为异步函数</p>
-</li>
-<li><p><code>await User.create(userinf)</code></p>
-</li>
-<li><p>如果不等待，<strong>可能后续的响应操作会先于创建文档执行</strong></p>
-</li>
-</ul>
-</li>
-<li><p>响应时将请求重定向到/list页面</p>
-<ul>
-<li>直接从/list页面查看添加用户的结果</li>
-</ul>
-</li>
-</ul>
-<br>
-
-<h2 id="5-修改用户信息功能-modify"><a href="#5-修改用户信息功能-modify" class="headerlink" title="5.修改用户信息功能(/modify)"></a>5.修改用户信息功能(/modify)</h2><ul>
-<li><p>通过/list页面的修改按钮进入修改页面</p>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525221836885.png" alt="修改按钮"></p>
-</li>
-<li><p>/modify页面在/add页面的基础上修改而来</p>
-</li>
-<li><p>点击哪一个用户信息的修改按钮，跳转到的修改页面就会呈现对应用户的信息</p>
-</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525221743719.png" alt="点击张三用户信息的修改按钮后跳转"></p>
-<ul>
-<li>跳转页面显示对应用户的信息是<strong>通过传递相应用户信息文档的_id字段值</strong>实现的</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525222016451.png" alt="数据库中张三信息文档的_id"></p>
-<ul>
-<li>在响应给客户端的/list页面的html代码中<ul>
-<li>将_id字段的值放入修改按钮的<strong>a标签</strong>中</li>
-<li>_id字段的值作为<strong>GET请求的请求参数</strong>传递给服务器</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525222621352.png" alt="点击修改按钮时_id的值传递给服务器"></p>
-<ul>
-<li><p>服务器端从接收到的请求参数中提取_id值，并将相应用户的信息填入文本框中</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取JSON对象格式的请求参数</span></span><br><span class="line"><span class="keyword">let</span> reqinf = url.parse(req.url,<span class="literal">true</span>).query</span><br><span class="line"><span class="comment">//在数据库中查找相应用户信息文档</span></span><br><span class="line"><span class="keyword">let</span> user=<span class="keyword">await</span> User.findOne(&#123;<span class="attr">_id</span>:reqinf.id&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//在修改页面的单行文本输入框中填入相应用户的信息</span></span><br><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> value=$&#123;user.name&#125; name=<span class="string">&quot;name&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>效果如上图</p>
-</li>
-<li><p>修改页面的表单提交时以POST方式发送请求给/modify</p>
-<ul>
-<li>同样将_id字段值当作请求参数传递给服务端</li>
-<li>以便服务端根据_id值更新数据库信息</li>
-<li>POST方式的请求也可以使用GET请求方式的方法来传递请求参数(放在地址栏中)</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/modify?id=$&#123;user._id&#125;&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>服务器端接收到POST请求时将根据_id值更新对应用户信息文档</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用await关键字等待异步API返回结果后再接着执行</span></span><br><span class="line"><span class="keyword">await</span> User.updateOne(&#123;<span class="attr">_id</span>:reqinf.id&#125;,userinf)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>更新数据库文档信息后请求重定向到/list页面<ul>
-<li>直接在/list页面体现修改结果</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525224319251.png" alt="将张三修改为张三123"></p>
-<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525224343590.png" alt="修改后结果"></p>
-<br>
-
-<h2 id="6-删除用户信息功能-del"><a href="#6-删除用户信息功能-del" class="headerlink" title="6.删除用户信息功能(/del)"></a>6.删除用户信息功能(/del)</h2><ul>
-<li>通过/list页面的删除按钮进入删除页面</li>
-<li>点击相应数据行的删除按钮会将该文档的_id字段值作为GET请求参数发送给服务器</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;del&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/del?id=$&#123;item._id&#125;&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-
-<p>发送到<code>http://localhost:3000/del</code></p>
-<ul>
-<li>服务器接收到请求后</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(pathname == <span class="string">&#x27;/del&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">await</span> User.findOneAndDelete(&#123;<span class="attr">_id</span>:query.id&#125;)</span><br><span class="line">            res.writeHead(<span class="number">301</span>,&#123;</span><br><span class="line">                Location:<span class="string">&#x27;/list&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            res.end()</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>调用<strong>集合构造函数的findOneAndDelete()方法</strong>按照_id字段值删除数据库中相应文档</p>
-<p>然后将请求重定向到/list页面，在/list页面就可以看到删除后的效果</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-        <tag>Mongodb数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -1614,6 +1634,302 @@ return p2();
       </tags>
   </entry>
   <entry>
+    <title>13-用户信息增删改查实例</title>
+    <url>/2021/05/24/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/</url>
+    <content><![CDATA[<h1 id="用户信息增删改查实例"><a href="#用户信息增删改查实例" class="headerlink" title="用户信息增删改查实例"></a>用户信息增删改查实例</h1><h2 id="项目目的"><a href="#项目目的" class="headerlink" title="项目目的"></a>项目目的</h2><p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210524204826501.png" alt="image-20210524204826501"></p>
+<span id="more"></span>
+
+<h2 id="1-搭建网站服务器"><a href="#1-搭建网站服务器" class="headerlink" title="1.搭建网站服务器"></a>1.搭建网站服务器</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入http模块</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">const</span> server = http.createServer()</span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器请求事件</span></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>, <span class="keyword">async</span> (req,res) =&gt; &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听端口</span></span><br><span class="line">server.listen(<span class="string">&#x27;3000&#x27;</span>,<span class="function">() =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器开启成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="2-连接数据库，创建用户集合-users"><a href="#2-连接数据库，创建用户集合-users" class="headerlink" title="2.连接数据库，创建用户集合(users)"></a>2.连接数据库，创建用户集合(users)</h2><p>这部分采用模块化的编程思想：</p>
+<p>​    将连接数据库代码写在<strong>index.js模块</strong>中</p>
+<p>​    将创建用户集合代码写在<strong>user.js模块</strong>中</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入mongoose模块</span></span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">mongoose.connect(<span class="string">&#x27;mongodb://localhost/user09&#x27;</span>,&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span> ,<span class="attr">useUnifiedTopology</span>: <span class="literal">true</span>&#125;)</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">&#x27;数据库连接成功&#x27;</span>)&#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;<span class="built_in">console</span>.log(<span class="string">&#x27;数据库连接失败&#x27;</span>,err)&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>index.js代码</center>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&#x27;mongoose&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建集合规则</span></span><br><span class="line"><span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    name:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:<span class="literal">true</span>,</span><br><span class="line">        minlength:<span class="number">2</span>,</span><br><span class="line">        maxlength:<span class="number">5</span></span><br><span class="line">    &#125;,</span><br><span class="line">    age:&#123;</span><br><span class="line">        type:<span class="built_in">Number</span>,</span><br><span class="line">        min:<span class="number">18</span>,</span><br><span class="line">        max:<span class="number">80</span></span><br><span class="line">    &#125;,</span><br><span class="line">    password: <span class="built_in">String</span>,</span><br><span class="line">    email:<span class="built_in">String</span>,</span><br><span class="line">    <span class="comment">//代表值为一个数组，元素为String类型</span></span><br><span class="line">    hobbies:[<span class="built_in">String</span>]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建集合</span></span><br><span class="line"><span class="keyword">const</span> User = mongoose.model(<span class="string">&#x27;User&#x27;</span>,userSchema)</span><br><span class="line"></span><br><span class="line"><span class="comment">//导出集合构造函数User供server.js使用</span></span><br><span class="line"><span class="built_in">module</span>.exports = User</span><br></pre></td></tr></table></figure>
+
+<center>user.js代码</center>
+
+<br>
+
+<h2 id="3-客户端访问-list时，将所有用户信息查询出来"><a href="#3-客户端访问-list时，将所有用户信息查询出来" class="headerlink" title="3.客户端访问/list时，将所有用户信息查询出来"></a>3.客户端访问/list时，将所有用户信息查询出来</h2><p>此处因为还没有学习模板引擎，所以采用<strong>直接在server.js文件中进行字符串拼接</strong>的方式给客户端响应数据</p>
+<p>在<code>server.on()</code>函数中书写代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//此代码在server.on()函数下书写</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//请求方式</span></span><br><span class="line"><span class="keyword">const</span> method = req.method</span><br><span class="line"><span class="comment">//请求地址和请求参数获取</span></span><br><span class="line"><span class="keyword">const</span> &#123; pathname,query &#125; = url.parse(req.url,<span class="literal">true</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span>(method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname == <span class="string">&#x27;/list&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> users = <span class="keyword">await</span> User.find()</span><br><span class="line">            <span class="keyword">let</span> list = <span class="string">`</span></span><br><span class="line"><span class="string">            &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">            &lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;head&gt;</span></span><br><span class="line"><span class="string">                &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;title&gt;用户列表&lt;/title&gt;</span></span><br><span class="line"><span class="string">                &lt;style&gt;css样式省略&lt;/style&gt;</span></span><br><span class="line"><span class="string">            &lt;/head&gt;</span></span><br><span class="line"><span class="string">            &lt;body&gt;</span></span><br><span class="line"><span class="string">                &lt;div&gt;</span></span><br><span class="line"><span class="string">                    &lt;span&gt;&lt;a href=&quot;http://localhost:3000/add&quot;&gt;添加用户&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                    &lt;br/&gt;</span></span><br><span class="line"><span class="string">                    &lt;br&gt;</span></span><br><span class="line"><span class="string">                    &lt;table border=&quot;1&quot; cellspacing=&quot;0&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;tr&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;姓名&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;年龄&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;email&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;爱好&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;操作&lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;/tr&gt;</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<center>代码块1</center>
+
+<ul>
+<li><p>上述代码块中使用<code>let users = await User.find()</code>代码将users集合中所有文档提取出来存入users数组</p>
+</li>
+<li><p>使用list变量进行响应的html代码数据拼接</p>
+</li>
+<li><p>html代码放在<strong>模板字符串</strong>中(``中)</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">users.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">               list+=<span class="string">`</span></span><br><span class="line"><span class="string">               &lt;tr&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.name&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.age&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;<span class="subst">$&#123;item.email&#125;</span>&lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt;</span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">               <span class="comment">//爱好信息添加</span></span><br><span class="line">               item.hobbies.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">                   list+=<span class="string">`</span></span><br><span class="line"><span class="string">                   <span class="subst">$&#123;item&#125;</span></span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">               &#125;)</span><br><span class="line">               </span><br><span class="line">               list+=<span class="string">`</span></span><br><span class="line"><span class="string">                   &lt;/td&gt;</span></span><br><span class="line"><span class="string">                   &lt;td&gt; </span></span><br><span class="line"><span class="string">                       &lt;span class=&quot;del&quot;&gt;&lt;a href=&quot;/del?id=<span class="subst">$&#123;item._id&#125;</span>&quot;&gt;删除&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                       &lt;span class=&quot;change&quot;&gt;&lt;a href=&quot;/modify?id=<span class="subst">$&#123;item._id&#125;</span>&quot;&gt;修改&lt;/a&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                   &lt;/td&gt;</span></span><br><span class="line"><span class="string">               &lt;/tr&gt;</span></span><br><span class="line"><span class="string">               `</span></span><br><span class="line">           &#125;)</span><br><span class="line">           </span><br><span class="line">           list+=<span class="string">` &lt;/table&gt;</span></span><br><span class="line"><span class="string">           &lt;/body&gt;</span></span><br><span class="line"><span class="string">           &lt;/html&gt;`</span></span><br><span class="line">           res.end(list);</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<center>代码块2</center>
+
+<p>代码块2接着代码块1</p>
+<ul>
+<li>使用users的<code>forEach()</code>方法<strong>遍历数组中所有的文档</strong><ul>
+<li>按照每一个文档的信息生成表格中的一行</li>
+<li>每一个item即为一个文档的JSON对象</li>
+</ul>
+</li>
+<li>对于文档的hobbies字段(hobbies字段为一个数组)<ul>
+<li>使用hobbies.forEach()方法<strong>遍历每一个爱好</strong>并添加到表格中</li>
+</ul>
+</li>
+<li>最后添加删除和修改两个按钮<ul>
+<li>按钮提前设置好超链接</li>
+<li>为修改和删除跳转做准备</li>
+</ul>
+</li>
+<li><code>res.end(list)</code>语句将list变量存储的html代码响应给客户端</li>
+</ul>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525214248992.png" alt="将每一个文档信息生成为表格的一行(/list页面)"></p>
+<br>
+
+<h2 id="4-添加用户功能-访问-add"><a href="#4-添加用户功能-访问-add" class="headerlink" title="4.添加用户功能(访问/add)"></a>4.添加用户功能(访问/add)</h2><ul>
+<li><p>用户可以通过直接访问<code>localhost:3000/add</code>的方式访问添加用户页面</p>
+</li>
+<li><p>还可以点击/list页面上的添加用户按钮跳转到/add页面进行添加用户操作</p>
+<ul>
+<li>代码段1中已经设置好添加按钮的跳转路径</li>
+</ul>
+</li>
+<li><p>上述两种访问/add页面的方式<strong>均为GET请求方式</strong></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(pathname == <span class="string">&#x27;/add&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> add=<span class="string">`</span></span><br><span class="line"><span class="string">            &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">            &lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;head&gt;</span></span><br><span class="line"><span class="string">                &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;title&gt;添加用户&lt;/title&gt;</span></span><br><span class="line"><span class="string">                &lt;style&gt;</span></span><br><span class="line"><span class="string">                    div&#123;</span></span><br><span class="line"><span class="string">                        margin: 0 auto;</span></span><br><span class="line"><span class="string">                        width: 1000px;</span></span><br><span class="line"><span class="string">                    &#125;</span></span><br><span class="line"><span class="string">                &lt;/style&gt;</span></span><br><span class="line"><span class="string">            &lt;/head&gt;</span></span><br><span class="line"><span class="string">            &lt;body&gt;</span></span><br><span class="line"><span class="string">                &lt;div&gt;</span></span><br><span class="line"><span class="string">                    &lt;h3&gt;添加用户&lt;/h3&gt;</span></span><br><span class="line"><span class="string">                    &lt;form action=&quot;/add&quot; method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;用户名：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;密码：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;年龄：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;age&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label&gt;email：&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;text&quot; name=&quot;email&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;span&gt;爱好:&lt;/span&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;吃饭&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;吃饭&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;睡觉&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;睡觉&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;打豆豆&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;打豆豆&quot;&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;&quot;&gt;写代码&lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;checkbox&quot; name=&quot;hobbies&quot; value=&quot;写代码&quot;&gt;&lt;br&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;/form&gt;</span></span><br><span class="line"><span class="string">                &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;/body&gt;</span></span><br><span class="line"><span class="string">            &lt;/html&gt;</span></span><br><span class="line"><span class="string">            `</span></span><br><span class="line">            res.end(add)</span><br></pre></td></tr></table></figure>
+
+<center>代码段3</center>
+
+<p>将添加用户的表单信息以POST方式提交给localhost:3000/add</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/add&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>/add 即为 localhost:3000/add</p>
+<p>/add 的 ‘/‘即为服务器URL：localhost:3000/</p>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525215640354.png" alt="添加用户页面如下"></p>
+<br>
+
+<p><strong>服务器端接收到URL为localhost:3000/add的POST请求</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//本代码段代码在server.on()函数下</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname == <span class="string">&#x27;/add&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">let</span> formData = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">            <span class="comment">//请求参数传送触发</span></span><br><span class="line">            req.on(<span class="string">&#x27;data&#x27;</span>,<span class="function"><span class="params">param</span> =&gt;</span> &#123;</span><br><span class="line">                formData+=param</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment">//请求参数传送完毕触发</span></span><br><span class="line">            req.on(<span class="string">&#x27;end&#x27;</span>,<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">                <span class="keyword">let</span> userinf = queryString.parse(formData)</span><br><span class="line">                <span class="keyword">await</span> User.create(userinf)</span><br><span class="line">                <span class="comment">//请求重定向到</span></span><br><span class="line">                res.writeHead(<span class="number">301</span>,&#123;</span><br><span class="line">                    Location:<span class="string">&#x27;/list&#x27;</span></span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="comment">//重定向完 结束本次响应</span></span><br><span class="line">                res.end()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<center>代码块4</center>
+
+<ul>
+<li><p>使用formData变量接收POST请求参数</p>
+<ul>
+<li>使用queryString模块的parse方法将字符串格式的formData变量转换为<strong>JSON对象格式的userinf变量</strong></li>
+<li>/add页面中input标签的<strong>name属性</strong>与数据库文档中的<strong>相应字段名</strong>统一<ul>
+<li>这样接收的请求参数转换为JSON对象后就可以直接添加到数据库</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>调用User集合构造函数的create()方法将新用户信息(userinf变量)添加到数据库</p>
+</li>
+<li><p>在异步函数中使用await关键字<strong>等待异步API返回结果后再继续执行</strong></p>
+<ul>
+<li><p><code>req.on(&#39;end&#39;,async ()=&gt;&#123;&#125;)</code>方法的回调函数使用async关键字变为异步函数</p>
+</li>
+<li><p><code>await User.create(userinf)</code></p>
+</li>
+<li><p>如果不等待，<strong>可能后续的响应操作会先于创建文档执行</strong></p>
+</li>
+</ul>
+</li>
+<li><p>响应时将请求重定向到/list页面</p>
+<ul>
+<li>直接从/list页面查看添加用户的结果</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h2 id="5-修改用户信息功能-modify"><a href="#5-修改用户信息功能-modify" class="headerlink" title="5.修改用户信息功能(/modify)"></a>5.修改用户信息功能(/modify)</h2><ul>
+<li><p>通过/list页面的修改按钮进入修改页面</p>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525221836885.png" alt="修改按钮"></p>
+</li>
+<li><p>/modify页面在/add页面的基础上修改而来</p>
+</li>
+<li><p>点击哪一个用户信息的修改按钮，跳转到的修改页面就会呈现对应用户的信息</p>
+</li>
+</ul>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525221743719.png" alt="点击张三用户信息的修改按钮后跳转"></p>
+<ul>
+<li>跳转页面显示对应用户的信息是<strong>通过传递相应用户信息文档的_id字段值</strong>实现的</li>
+</ul>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525222016451.png" alt="数据库中张三信息文档的_id"></p>
+<ul>
+<li>在响应给客户端的/list页面的html代码中<ul>
+<li>将_id字段的值放入修改按钮的<strong>a标签</strong>中</li>
+<li>_id字段的值作为<strong>GET请求的请求参数</strong>传递给服务器</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525222621352.png" alt="点击修改按钮时_id的值传递给服务器"></p>
+<ul>
+<li><p>服务器端从接收到的请求参数中提取_id值，并将相应用户的信息填入文本框中</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取JSON对象格式的请求参数</span></span><br><span class="line"><span class="keyword">let</span> reqinf = url.parse(req.url,<span class="literal">true</span>).query</span><br><span class="line"><span class="comment">//在数据库中查找相应用户信息文档</span></span><br><span class="line"><span class="keyword">let</span> user=<span class="keyword">await</span> User.findOne(&#123;<span class="attr">_id</span>:reqinf.id&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//在修改页面的单行文本输入框中填入相应用户的信息</span></span><br><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> value=$&#123;user.name&#125; name=<span class="string">&quot;name&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>效果如上图</p>
+</li>
+<li><p>修改页面的表单提交时以POST方式发送请求给/modify</p>
+<ul>
+<li>同样将_id字段值当作请求参数传递给服务端</li>
+<li>以便服务端根据_id值更新数据库信息</li>
+<li>POST方式的请求也可以使用GET请求方式的方法来传递请求参数(放在地址栏中)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/modify?id=$&#123;user._id&#125;&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>服务器端接收到POST请求时将根据_id值更新对应用户信息文档</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用await关键字等待异步API返回结果后再接着执行</span></span><br><span class="line"><span class="keyword">await</span> User.updateOne(&#123;<span class="attr">_id</span>:reqinf.id&#125;,userinf)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>更新数据库文档信息后请求重定向到/list页面<ul>
+<li>直接在/list页面体现修改结果</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525224319251.png" alt="将张三修改为张三123"></p>
+<p><img data-src="/images/13-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E5%AE%9E%E4%BE%8B/image-20210525224343590.png" alt="修改后结果"></p>
+<br>
+
+<h2 id="6-删除用户信息功能-del"><a href="#6-删除用户信息功能-del" class="headerlink" title="6.删除用户信息功能(/del)"></a>6.删除用户信息功能(/del)</h2><ul>
+<li>通过/list页面的删除按钮进入删除页面</li>
+<li>点击相应数据行的删除按钮会将该文档的_id字段值作为GET请求参数发送给服务器</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;del&quot;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/del?id=$&#123;item._id&#125;&quot;</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<p>发送到<code>http://localhost:3000/del</code></p>
+<ul>
+<li>服务器接收到请求后</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(pathname == <span class="string">&#x27;/del&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">await</span> User.findOneAndDelete(&#123;<span class="attr">_id</span>:query.id&#125;)</span><br><span class="line">            res.writeHead(<span class="number">301</span>,&#123;</span><br><span class="line">                Location:<span class="string">&#x27;/list&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            res.end()</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用<strong>集合构造函数的findOneAndDelete()方法</strong>按照_id字段值删除数据库中相应文档</p>
+<p>然后将请求重定向到/list页面，在/list页面就可以看到删除后的效果</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Mongodb数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>http核心模块构建简单WEB服务器</title>
+    <url>/2021/04/13/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="1-http核心模块构建简单WEB服务器"><a href="#1-http核心模块构建简单WEB服务器" class="headerlink" title="1.http核心模块构建简单WEB服务器"></a>1.http核心模块构建简单WEB服务器</h1><span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1搭建服务器时的IP和端口号简单解释"><a href="#1-1搭建服务器时的IP和端口号简单解释" class="headerlink" title="1.1搭建服务器时的IP和端口号简单解释"></a>1.1搭建服务器时的IP和端口号简单解释</h2><p>在端口3000上打开服务器</p>
+<p>IP标识一台计算机</p>
+<p>端口标识一个应用程序</p>
+<p>IP:端口号 可以<strong>唯一标识一台计算机上的一个应用程序</strong></p>
+<p>这里localhost:3000即为本机上的由<code>nodejs</code>搭建的服务器应用程序</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.listen(3000,function()&#123;  </span><br><span class="line">    console.log(&quot;服务器启动成功，可以通过http:&#x2F;&#x2F;127.0.0.1&#x2F;3000&#x2F;访问&quot;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-2中文乱码的解决方法"><a href="#1-2中文乱码的解决方法" class="headerlink" title="1.2中文乱码的解决方法"></a>1.2中文乱码的解决方法</h2><p>​    加上头部让浏览器明确以utf-8编码格式解析</p>
+<ul>
+<li><p>第一种方法</p>
+<p>通过meta元数据声明当前文本的编码格式为utf-8</p>
+<p>加上<code>response.write(&#39;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;/head&gt;&#39;);</code></p>
+</li>
+<li><p>第二种方法</p>
+<p>加上<code>response.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
+<p><strong>不同响应内容对应的响应类型是不一样的</strong> 例如text/plain 或 text/html</p>
+<p>第二种方法加上的头部可以在浏览器中查看</p>
+<p>F12 Network下查看</p>
+<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202501529.png" alt="image-20210412202501529"></p>
+<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202544524.png" alt="image-20210412202544524"></p>
+</li>
+</ul>
+<h2 id="1-3-setHeader-方法"><a href="#1-3-setHeader-方法" class="headerlink" title="1.3 setHeader()方法"></a>1.3 setHeader()方法</h2><p>在响应头部添加响应类型字段</p>
+<p><code>res.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
+<ul>
+<li><p>Content-Type，<strong>响应内容类型</strong></p>
+<ul>
+<li><p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
+</li>
+<li><p>text/plain，为响应数据的格式，text/plain为普通文本，响应的数据会被当作<strong>普通文本</strong>处理(html标签也会被当作普通文本)</p>
+</li>
+<li><p>text/html，为<strong>html文本</strong>，响应数据中的<strong>html标签会被浏览器自动识别并解释执行</strong></p>
+</li>
+</ul>
+</li>
+<li><p>charset=utf-8，指明返回的数据是utf-8格式编码，解决中文乱码问题 </p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>web服务器响应文件中的数据</title>
+    <url>/2021/04/13/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="1-web服务器响应文件中的数据"><a href="#1-web服务器响应文件中的数据" class="headerlink" title="1.web服务器响应文件中的数据"></a>1.web服务器响应文件中的数据</h1><h2 id="1-1Nodejs构建web服务器代码如下"><a href="#1-1Nodejs构建web服务器代码如下" class="headerlink" title="1.1Nodejs构建web服务器代码如下"></a>1.1Nodejs构建web服务器代码如下</h2><span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入核心模块http和fs</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs=<span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> url=req.url;</span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//请求时响应html文件</span></span><br><span class="line">        fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//请求失败时响应普通文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(<span class="string">&quot;文件读取失败&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//请求成功时响应html文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">//因为html文件中引用了jQuery.js文件，所以要手动添加这个文件的访问路径</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="string">&quot;3000&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功,可以访问3000端口&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>打开文件中的数据使用fs核心模块的<code>fs.readFile()</code>方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>nodejs将文件中的<strong>数据</strong>响应给浏览器</p>
+<p>将<code>fs.readFile</code>返回的文件中数据data用res.end(data)响应给浏览器并加上相应格式的响应类型Content-Type</p>
+<p><strong>注意这里的data直接响应给浏览器解释执行，不需要呈现出来查看，所以不需要toString()方法转换为可识别字符串</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">res.end(data);</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中访问如下</p>
+<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223931130.png" alt="image-20210412223931130"></p>
+<h2 id="1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"><a href="#1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url" class="headerlink" title="1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"></a>1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url</h2><p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223645626.png" alt="image-20210412223645626"></p>
+<p>例如html文件中有外部引入的jQuery.js文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;./jQuery.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>则需要手动添加到jQuery.js文件的请求url</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-Content-Type内容类型"><a href="#2-Content-Type内容类型" class="headerlink" title="2.Content-Type内容类型"></a>2.Content-Type内容类型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br></pre></td></tr></table></figure>
+
+<p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
+<p><a href="http://tool.oschina.net/commons">http://tool.oschina.net/commons</a></p>
+<p>上面的网址可以查看不同类型的数据使用什么响应类型</p>
+<h1 id="3-服务器根据不同的请求URL可以返回不同的数据"><a href="#3-服务器根据不同的请求URL可以返回不同的数据" class="headerlink" title="3.服务器根据不同的请求URL可以返回不同的数据"></a>3.服务器根据不同的请求URL可以返回不同的数据</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> url=request.url;</span><br><span class="line">    <span class="comment">//判断url不同 响应不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//可以使用end()直接响应数据后结束</span></span><br><span class="line">            <span class="comment">//响应内容只能是 字符串和二进制数串</span></span><br><span class="line">            <span class="comment">//数字，布尔值，数组，对象等需要使用JSON转换成字符串</span></span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/login&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/login&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>)</span><br><span class="line">        response.end(<span class="string">&quot;登陆页面&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/shuzu&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/shuzu&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">        <span class="comment">//响应经过JSON转换后的字符串&quot;[1,2,3,4]&quot;</span></span><br><span class="line">        response.end(<span class="built_in">JSON</span>.stringify(a));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/html&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/html&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">        response.end(<span class="string">&quot;&lt;p&gt;你好&lt;a href=&#x27;#&#x27;&gt;点击超链接&lt;/a&gt;&lt;/p&gt;&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其他url返回&quot;404 Not Found.&quot;</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;404 Not Found.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>URL为/html时</p>
+<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200745087.png" alt="image-20210414200745087"></p>
+<p>URL为/login时</p>
+<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200823281.png" alt="image-20210414200823281"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JS执行机制(同步异步)</title>
     <url>/2021/04/13/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/</url>
     <content><![CDATA[<h1 id="JS执行机制"><a href="#JS执行机制" class="headerlink" title="JS执行机制"></a>JS执行机制</h1><h2 id="1-JS是单线程"><a href="#1-JS是单线程" class="headerlink" title="1.JS是单线程"></a>1.JS是单线程</h2><ul>
@@ -1715,322 +2031,6 @@ return p2();
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>http核心模块构建简单WEB服务器</title>
-    <url>/2021/04/13/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="1-http核心模块构建简单WEB服务器"><a href="#1-http核心模块构建简单WEB服务器" class="headerlink" title="1.http核心模块构建简单WEB服务器"></a>1.http核心模块构建简单WEB服务器</h1><span id="more"></span>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-1搭建服务器时的IP和端口号简单解释"><a href="#1-1搭建服务器时的IP和端口号简单解释" class="headerlink" title="1.1搭建服务器时的IP和端口号简单解释"></a>1.1搭建服务器时的IP和端口号简单解释</h2><p>在端口3000上打开服务器</p>
-<p>IP标识一台计算机</p>
-<p>端口标识一个应用程序</p>
-<p>IP:端口号 可以<strong>唯一标识一台计算机上的一个应用程序</strong></p>
-<p>这里localhost:3000即为本机上的由<code>nodejs</code>搭建的服务器应用程序</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.listen(3000,function()&#123;  </span><br><span class="line">    console.log(&quot;服务器启动成功，可以通过http:&#x2F;&#x2F;127.0.0.1&#x2F;3000&#x2F;访问&quot;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="1-2中文乱码的解决方法"><a href="#1-2中文乱码的解决方法" class="headerlink" title="1.2中文乱码的解决方法"></a>1.2中文乱码的解决方法</h2><p>​    加上头部让浏览器明确以utf-8编码格式解析</p>
-<ul>
-<li><p>第一种方法</p>
-<p>通过meta元数据声明当前文本的编码格式为utf-8</p>
-<p>加上<code>response.write(&#39;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;/head&gt;&#39;);</code></p>
-</li>
-<li><p>第二种方法</p>
-<p>加上<code>response.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
-<p><strong>不同响应内容对应的响应类型是不一样的</strong> 例如text/plain 或 text/html</p>
-<p>第二种方法加上的头部可以在浏览器中查看</p>
-<p>F12 Network下查看</p>
-<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202501529.png" alt="image-20210412202501529"></p>
-<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202544524.png" alt="image-20210412202544524"></p>
-</li>
-</ul>
-<h2 id="1-3-setHeader-方法"><a href="#1-3-setHeader-方法" class="headerlink" title="1.3 setHeader()方法"></a>1.3 setHeader()方法</h2><p>在响应头部添加响应类型字段</p>
-<p><code>res.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
-<ul>
-<li><p>Content-Type，<strong>响应内容类型</strong></p>
-<ul>
-<li><p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
-</li>
-<li><p>text/plain，为响应数据的格式，text/plain为普通文本，响应的数据会被当作<strong>普通文本</strong>处理(html标签也会被当作普通文本)</p>
-</li>
-<li><p>text/html，为<strong>html文本</strong>，响应数据中的<strong>html标签会被浏览器自动识别并解释执行</strong></p>
-</li>
-</ul>
-</li>
-<li><p>charset=utf-8，指明返回的数据是utf-8格式编码，解决中文乱码问题 </p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>07-HTTP协议</title>
-    <url>/2021/04/26/07-HTTP%E5%8D%8F%E8%AE%AE/</url>
-    <content><![CDATA[<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><h2 id="1-HTTP协议概念"><a href="#1-HTTP协议概念" class="headerlink" title="1.HTTP协议概念"></a>1.HTTP协议概念</h2><p>HTTP(Hyper Text Transfer Protocol)：超文本传输协议,规定如何从服务器传输超文本文件(HTML文件)到浏览器，基于浏览器-服务器(B-S)架构工作，是客户端和服务器请求和应答的标准</p>
-<p>超文本(HTML)：在文本中不仅仅能包含文字，还可以包含音频视频图像等资源</p>
-<h2 id="2-报文"><a href="#2-报文" class="headerlink" title="2.报文"></a>2.报文</h2><p>HTTP<strong>请求和响应的数据块</strong>被称为报文，包括要传送的数据和一些附加信息，并且遵守规定好的格式</p>
-<p><strong>请求报文</strong>：浏览器发给服务器的HTTP请求报文</p>
-<p><strong>响应报文</strong>：服务器发给浏览器的HTTP响应报文</p>
-<span id="more"></span>
-
-<center>利用浏览器的开发者工具可以看到浏览器和服务器进行通信的请求和响应报文</center>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214103527.png" alt="image-20210426214103527"></p>
-<p>Network选项卡可以看到当前浏览器和服务器之间的通信情况</p>
-<p>下面的localhost和favicon.ico即为浏览器向服务器发送的两个HTTP请求</p>
-<ul>
-<li>localhost即为我们输出网址回车后发出的请求</li>
-<li>favicon.ico为浏览器默认的请求，请求该网页的标识小图标</li>
-</ul>
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214318773.png" alt="image-20210426214318773"></p>
-<center>点击请求可以看到更详细的信息</center>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426214439234.png" alt="image-20210426214439234"></p>
-<p>Headers选项卡展示了请求和响应的头部等信息，General中显示了请求和响应中的重要信息</p>
-<ul>
-<li>报文头部中的信息以<code>:</code>分隔的键值对表示，键值对之间使用 <code>,</code>分隔</li>
-</ul>
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426222733888.png" alt="image-20210426222733888"></p>
-<p>Response中则展示了服务器实际响应的数据</p>
-<h3 id="1-请求报文"><a href="#1-请求报文" class="headerlink" title="1.请求报文"></a>1.请求报文</h3><h4 id="1-请求方式-Request-Method"><a href="#1-请求方式-Request-Method" class="headerlink" title="1.请求方式(Request Method)"></a>1.请求方式(Request Method)</h4><ul>
-<li><strong>GET</strong>: 一般用来获取数据，也可以向服务器发送少量数据(发送的数据大小有限制)，但是不安全</li>
-<li><strong>POST</strong>: 一般用来向服务器发送数据(可以发送大量数据)，网站的一般逻辑操作也使用POST方法，POST方法比GET方法安全性高</li>
-</ul>
-<p><strong>例如：直接在浏览器输入网址访问服务器默认发送的是GET请求</strong></p>
-<p>服务器端可以获取浏览器的请求方式</p>
-<p><code>request.method</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取请求方式 在服务器后输出</span></span><br><span class="line"><span class="built_in">console</span>.log(request.method);</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426215848666.png" alt="image-20210426215848666"></p>
-<p>使用浏览器输入网址访问服务器</p>
-<p>服务器后台输出两个GET，代表localhost请求和favicon.ico请求均为GET请求</p>
-<br>
-
-<p><strong>例如：html文件中表格form提交时可以指定提交方式，指定为POST即使用POST方式请求</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">       action:提交到哪个服务器</span></span><br><span class="line"><span class="comment">       method：提交采用什么方式</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:3000&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<center>服务器后台显示</center>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426220411454.png" alt="image-20210426220411454"></p>
-<p>此处第一次表格提交为POST请求，第二次请求页面小图标favicon.ico为GET请求</p>
-<p><strong>服务器可以根据对同一网址的不同请求方式做出不同响应</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//当请求方式为GET时</span></span><br><span class="line"><span class="keyword">if</span>(request.method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&quot;GET&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(request.method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&quot;POST&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>上述代码会根据请求方式不同，给浏览器响应不同的数据</p>
-<p>例如：直接按网址访问服务器会响应’GET’，点击表单提交按钮访问服务器会响应’POST’</p>
-<h4 id="2-请求URL"><a href="#2-请求URL" class="headerlink" title="2.请求URL"></a>2.请求URL</h4><p><code>request.url</code>获取浏览器请求URL中从 ‘/‘ 开始的资源标识符</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//获取请求URL根据请求URL返回不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(request.url == <span class="string">&#x27;/index&#x27;</span>|| request.url == <span class="string">&#x27;/&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (request.url == <span class="string">&#x27;/list&#x27;</span>)&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&#x27;404NotFound!&#x27;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>当请求地址为<code>http://localhost:3000</code>时，浏览器给服务器发送的请求会自动在url末尾加上 ‘/‘ </li>
-<li>实际发送的url为<code>http://localhost:3000/</code>，所以服务器request.url获取的值都是以 ‘/‘ 开头的</li>
-</ul>
-<h4 id="3-请求头部Headers"><a href="#3-请求头部Headers" class="headerlink" title="3.请求头部Headers"></a>3.请求头部Headers</h4><p><code>request.headers</code> 获取请求报文的请求头</p>
-<p><code>request.headers[&#39;字段名&#39;]</code>获取请求头中特定字段的值</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将请求头信息在后台输出</span></span><br><span class="line"><span class="built_in">console</span>.log(request.headers);</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426223953815.png" alt="image-20210426223953815"></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回请求头中&#x27;accept&#x27;字段的值</span></span><br><span class="line"><span class="built_in">console</span>.log(request.headers[<span class="string">&#x27;accept&#x27;</span>]);</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210426224158174.png" alt="image-20210426224158174"></p>
-<br>
-
-<h3 id="2-响应报文"><a href="#2-响应报文" class="headerlink" title="2.响应报文"></a>2.响应报文</h3><h4 id="1-HTTP状态码"><a href="#1-HTTP状态码" class="headerlink" title="1.HTTP状态码"></a>1.HTTP状态码</h4><ul>
-<li>200 OK 代表请求成功</li>
-<li>300 重定向</li>
-<li>404 请求资源没找到</li>
-<li>500 服务器端错误(服务器代码报错等)</li>
-<li>400 客户端请求有语法错误等</li>
-</ul>
-<p>在浏览器开发者工具中可以看到HTTP响应的状态码</p>
-<p>在服务器端可以使用<code>response.writeHead(HTTP状态码)</code> 指定响应时的状态码</p>
-<p>如设置</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">response.writeHead(<span class="number">200</span>)</span><br></pre></td></tr></table></figure>
-
-<p>服务器返回的响应报文中HTTP状态码就为200 OK</p>
-<h4 id="2-内容类型"><a href="#2-内容类型" class="headerlink" title="2.内容类型"></a>2.内容类型</h4><p>响应数据时需要设定响应数据的类型，以便浏览器根据数据类型对返回的数据进行解析</p>
-<ul>
-<li>text/plain    纯文本 (默认的内容类型，不指定时默认纯文本) </li>
-<li>text/html    html文本(浏览器自动解析其中的html代码)</li>
-<li>text/css       css文本</li>
-<li>application/javascript   javascript文本</li>
-<li>application/json   json文本</li>
-<li>image/jpeg     .jpeg格式的图片</li>
-</ul>
-<p>使用如下代码设置内容类型</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">response.writeHead(HTTP状态码,&#123;</span><br><span class="line">	<span class="string">&#x27;content-type&#x27;</span>:<span class="string">&#x27;text/plain;charset=utf-8&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>charset=utf-8</code>代表指明响应给浏览器的数据的编码格式，utf-8编码可以解析中文</p>
-<h2 id="3-HTTP请求与响应处理"><a href="#3-HTTP请求与响应处理" class="headerlink" title="3.HTTP请求与响应处理"></a>3.HTTP请求与响应处理</h2><h3 id="1-请求参数"><a href="#1-请求参数" class="headerlink" title="1.请求参数"></a>1.请求参数</h3><p>客户端向服务端发送请求时，有时需要<strong>向服务端传递一些数据</strong>，这些数据通过<strong>请求参数的方式</strong>传递到服务端，例如登陆操作</p>
-<h4 id="1-GET请求参数"><a href="#1-GET请求参数" class="headerlink" title="1.GET请求参数"></a>1.GET请求参数</h4><p>参数被放置在浏览器地址栏(URL)中，例如<strong><code>http://localhost:3000/?name=yang&amp;age=20</code></strong></p>
-<p>这里的<code>name=yang&amp;age=20</code>就为请求参数</p>
-<ul>
-<li>请求参数使用<code>?</code>与URL隔开</li>
-<li>请求参数中的不同参数使用<code>&amp;</code>分隔</li>
-<li>请求参数以键值对的形式表示如： <code>name=yang</code>，键值之间使用<code>=</code>分隔</li>
-</ul>
-<h5 id="1-服务端如何获取GET请求参数"><a href="#1-服务端如何获取GET请求参数" class="headerlink" title="1.服务端如何获取GET请求参数"></a>1.服务端如何获取GET请求参数</h5><p>使用<code>request.url</code>可以获取请求URL，如果有请求参数，res.url会一并获取请求参数</p>
-<center>获取的请求URL(带请求参数)</center>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427214415414.png" alt="image-20210427214415414"></p>
-<ul>
-<li>可以通过字符串截取的方式获得？后的请求参数</li>
-<li>node中内置了<strong>url系统模块</strong>，可以用来处理请求URL和请求参数</li>
-</ul>
-<br>
-
-<p>url模块中的<code>url.parse(&#39;URL&#39;)</code>方法可以将URL的详细信息以对象的形式返回</p>
-<p><strong>url.parse()</strong></p>
-<ul>
-<li>第一个参数为请求URL</li>
-<li>第二个参数为true/false<ul>
-<li>true意为<strong>将请求参数解析为对象形式</strong>(返回的URL对象的query属性为一个对象)</li>
-<li>false意为请求参数以字符串返回(query属性为一个字符串)</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> url=<span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"><span class="comment">//获取url后以对象形式返回并在后台输出</span></span><br><span class="line"><span class="built_in">console</span>.log(url.parse(request.url));</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427215213302.png" alt="image-20210427215213302"></p>
-<p>query属性为<strong>字符串形式的请求参数</strong></p>
-<br>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(url.parse(request.url,<span class="literal">true</span>));</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427220107218.png" alt="image-20210427220107218"></p>
-<p>query属性为<strong>对象形式的请求参数</strong></p>
-<p>使用如下代码即可获取请求参数中的数据</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> query = url.parse(request.url,<span class="literal">true</span>).query</span><br><span class="line">    <span class="built_in">console</span>.log(query.name);</span><br><span class="line">    <span class="built_in">console</span>.log(query.age);</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-URL中加入请求参数后判断请求的资源标识符"><a href="#2-URL中加入请求参数后判断请求的资源标识符" class="headerlink" title="2.URL中加入请求参数后判断请求的资源标识符"></a>2.URL中加入请求参数后判断请求的资源标识符</h5><p>URL中加入请求参数后原来使用<code>request.url</code>判断请求资源标识符的方法需要修改</p>
-<p><code>url.parse()</code>返回的对象中的<strong>pathname属性</strong>即为不带请求参数的请求资源标识符</p>
-<p>使用ES6对象解构的方式获得query和pathname</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;query,pathname&#125; = url.parse(request.url,<span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
-
-<p>使用pathname判断请求资源标识符就可以解决这个问题</p>
-<h4 id="2-POST请求参数"><a href="#2-POST请求参数" class="headerlink" title="2.POST请求参数"></a>2.POST请求参数</h4><p>一般在<strong>提交表单时</strong>请求参数使用POST方式发送</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://localhost:3000&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>POST方式的请求参数放在<strong>请求报文中</strong>，不在URL中</p>
-<p>POST和GET方式的请求参数格式是<strong>一样</strong>的</p>
-<p>表单中请求参数的名字写在<code>input</code>标签中，如<code>name=&quot;username&quot;</code></p>
-<p><code>&lt;input type=&quot;text&quot; name=&quot;username&quot;&gt;</code></p>
-<center>POST请求，请求报文中的请求参数，浏览器开发者工具查看</center>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427222838580.png" alt="image-20210427222838580"></p>
-<h5 id="1-服务端获取POST请求参数"><a href="#1-服务端获取POST请求参数" class="headerlink" title="1.服务端获取POST请求参数"></a>1.服务端获取POST请求参数</h5><p>POST请求参数通过request对象的事件接收</p>
-<ul>
-<li>data事件  当请求参数传递时触发(POST请求传递的数据理论上可以<strong>无限制</strong>，服务端可能需要<strong>分批接收</strong>)</li>
-<li>end事件   当请求参数传递完毕时触发</li>
-<li>request的data和end事件注册写在<strong>服务器的request请求事件中</strong></li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//创建变量接收POST请求参数</span></span><br><span class="line">    <span class="keyword">let</span> datasum=<span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="comment">//data事件注册 params参数即为传来的参数</span></span><br><span class="line">    request.on(<span class="string">&#x27;data&#x27;</span>, <span class="function"><span class="params">params</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//可能分批接收，所以使用+=接收所有数据</span></span><br><span class="line">        datasum+=params</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//end事件注册</span></span><br><span class="line">    request.on(<span class="string">&#x27;end&#x27;</span>,<span class="function"><span class="params">params</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(datasum);</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    response.end(<span class="string">&quot;ok&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<center>将传来的数据在后台输出如下</center>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427225303155.png" alt="image-20210427225303155"></p>
-<br>
-
-<h5 id="2-将获取的字符串格式的POST请求参数转换为对象格式"><a href="#2-将获取的字符串格式的POST请求参数转换为对象格式" class="headerlink" title="2.将获取的字符串格式的POST请求参数转换为对象格式"></a>2.将获取的字符串格式的POST请求参数转换为对象格式</h5><p>使用node系统模块<code>queryString</code>的<code>parse()</code>方法</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入queryString模块转换请求参数格式</span></span><br><span class="line"><span class="keyword">const</span> queryString = <span class="built_in">require</span>(<span class="string">&#x27;querystring&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//将字符串格式的请求参数转换为对象格式并在后台输出</span></span><br><span class="line"><span class="comment">//此代码写在request对象的end事件中</span></span><br><span class="line"><span class="built_in">console</span>.log(queryString.parse(datasum));</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210427225733016.png" alt="image-20210427225733016"></p>
-<h3 id="2-路由"><a href="#2-路由" class="headerlink" title="2.路由"></a>2.路由</h3><p>路由是指客户端<strong>请求地址</strong>与服务端<strong>程序代码</strong>的对应关系</p>
-<p>简单来说即客户端请求什么，服务器响应什么</p>
-<p>例如：</p>
-<ul>
-<li>客户端请求<code>http://localhost:3000/index.html</code>，服务端返回index.html</li>
-<li>对于普不同的请求方式GET和POST，服务器也可以根据请求方式做出不同的响应</li>
-</ul>
-<h3 id="3-静态资源"><a href="#3-静态资源" class="headerlink" title="3.静态资源"></a>3.静态资源</h3><p>服务器端不需要处理，可以直接响应给客户端的资源被称为静态资源，例如CSS,JS,HTML文件</p>
-<p>静态资源响应的例子：</p>
-<p><strong>URL中的资源标识符不一定要写服务器端资源的路径</strong></p>
-<ul>
-<li>服务器端可以获取资源标识符后自己指定资源地址</li>
-<li>此处就使用了字符串拼接<code>path.join</code>自己指定public文件夹下的静态资源</li>
-</ul>
-<br>
-
-<p><strong>响应文件时需要在响应头中指定内容类型</strong><code>content-type</code></p>
-<ul>
-<li>在高级浏览器中即使不指定内容类型也可以正常解析文件，但一些浏览器可能发生错误</li>
-<li>html文件通过<code>readFile()</code>方法获取，html文件中<strong>从外部引入的CSS等文件</strong>也是通过<code>readFile()</code>方法获取</li>
-<li>在设置响应头中的<code>content-type</code>时，需要<strong>得知当前获取的文件类型</strong><ul>
-<li>可以使用<strong>第三方模块mime</strong></li>
-<li>mime模块的<code>getTaype(&quot;资源路径&quot;)</code>方法可以根据资源路径返回对应的文件类型</li>
-<li>使用获取的文件类型设置<code>content-type</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> url=<span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="comment">//引入第三方模块MIME 根据路径获取文件类型</span></span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">&#x27;mime&#x27;</span>)</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//获取请求资源的标识符</span></span><br><span class="line">    <span class="keyword">let</span> pathname = url.parse(req.url).pathname</span><br><span class="line">    <span class="comment">//拼接路径</span></span><br><span class="line">    <span class="keyword">let</span> filepath = path.join(__dirname,<span class="string">&#x27;public&#x27;</span>+pathname)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> type = mime.getType(filepath)</span><br><span class="line">    <span class="comment">//获取对应文件</span></span><br><span class="line">    fs.readFile(filepath,<span class="function">(<span class="params">err,data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(err != <span class="literal">null</span>)&#123;</span><br><span class="line">            res.writeHead(<span class="number">404</span>,&#123;</span><br><span class="line">                <span class="string">&#x27;content-type&#x27;</span>:<span class="string">&#x27;text/plain;charset=utf-8&#x27;</span></span><br><span class="line">            &#125;)</span><br><span class="line">            res.end(<span class="string">&#x27;文件找不到&#x27;</span>)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.writeHead(<span class="number">200</span>,&#123;</span><br><span class="line">                <span class="string">&#x27;content-type&#x27;</span>:type</span><br><span class="line">            &#125;)</span><br><span class="line">            res.end(data)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>此处使用<code>http://localhost:3000/default.html</code>访问服务器的静态资源如下</p>
-<ul>
-<li>此处的URI：/default.html并不是资源在服务器路径</li>
-<li>URI：统一资源<strong>标识符</strong></li>
-<li>URL：统一资源<strong>定位符</strong></li>
-</ul>
-<p><img data-src="/images/07-HTTP%E5%8D%8F%E8%AE%AE/image-20210428195929316.png" alt="image-20210428195929316"></p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>web服务器响应文件中的数据</title>
-    <url>/2021/04/13/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<h1 id="1-web服务器响应文件中的数据"><a href="#1-web服务器响应文件中的数据" class="headerlink" title="1.web服务器响应文件中的数据"></a>1.web服务器响应文件中的数据</h1><h2 id="1-1Nodejs构建web服务器代码如下"><a href="#1-1Nodejs构建web服务器代码如下" class="headerlink" title="1.1Nodejs构建web服务器代码如下"></a>1.1Nodejs构建web服务器代码如下</h2><span id="more"></span>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入核心模块http和fs</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs=<span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> url=req.url;</span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//请求时响应html文件</span></span><br><span class="line">        fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//请求失败时响应普通文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(<span class="string">&quot;文件读取失败&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//请求成功时响应html文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">//因为html文件中引用了jQuery.js文件，所以要手动添加这个文件的访问路径</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="string">&quot;3000&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功,可以访问3000端口&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>打开文件中的数据使用fs核心模块的<code>fs.readFile()</code>方法</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>nodejs将文件中的<strong>数据</strong>响应给浏览器</p>
-<p>将<code>fs.readFile</code>返回的文件中数据data用res.end(data)响应给浏览器并加上相应格式的响应类型Content-Type</p>
-<p><strong>注意这里的data直接响应给浏览器解释执行，不需要呈现出来查看，所以不需要toString()方法转换为可识别字符串</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">res.end(data);</span><br></pre></td></tr></table></figure>
-
-<p>在浏览器中访问如下</p>
-<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223931130.png" alt="image-20210412223931130"></p>
-<h2 id="1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"><a href="#1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url" class="headerlink" title="1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"></a>1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url</h2><p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223645626.png" alt="image-20210412223645626"></p>
-<p>例如html文件中有外部引入的jQuery.js文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;./jQuery.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>则需要手动添加到jQuery.js文件的请求url</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="2-Content-Type内容类型"><a href="#2-Content-Type内容类型" class="headerlink" title="2.Content-Type内容类型"></a>2.Content-Type内容类型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br></pre></td></tr></table></figure>
-
-<p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
-<p><a href="http://tool.oschina.net/commons">http://tool.oschina.net/commons</a></p>
-<p>上面的网址可以查看不同类型的数据使用什么响应类型</p>
-<h1 id="3-服务器根据不同的请求URL可以返回不同的数据"><a href="#3-服务器根据不同的请求URL可以返回不同的数据" class="headerlink" title="3.服务器根据不同的请求URL可以返回不同的数据"></a>3.服务器根据不同的请求URL可以返回不同的数据</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> url=request.url;</span><br><span class="line">    <span class="comment">//判断url不同 响应不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//可以使用end()直接响应数据后结束</span></span><br><span class="line">            <span class="comment">//响应内容只能是 字符串和二进制数串</span></span><br><span class="line">            <span class="comment">//数字，布尔值，数组，对象等需要使用JSON转换成字符串</span></span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/login&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/login&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>)</span><br><span class="line">        response.end(<span class="string">&quot;登陆页面&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/shuzu&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/shuzu&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">        <span class="comment">//响应经过JSON转换后的字符串&quot;[1,2,3,4]&quot;</span></span><br><span class="line">        response.end(<span class="built_in">JSON</span>.stringify(a));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/html&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/html&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">        response.end(<span class="string">&quot;&lt;p&gt;你好&lt;a href=&#x27;#&#x27;&gt;点击超链接&lt;/a&gt;&lt;/p&gt;&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其他url返回&quot;404 Not Found.&quot;</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;404 Not Found.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>URL为/html时</p>
-<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200745087.png" alt="image-20210414200745087"></p>
-<p>URL为/login时</p>
-<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200823281.png" alt="image-20210414200823281"></p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
       </tags>
   </entry>
   <entry>
