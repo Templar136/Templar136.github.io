@@ -1,240 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>02-01-系统核心模块</title>
-    <url>/2021/04/15/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/</url>
-    <content><![CDATA[<h1 id="系统-核心-模块"><a href="#系统-核心-模块" class="headerlink" title="系统(核心)模块"></a>系统(核心)模块</h1><h2 id="1-fs模块"><a href="#1-fs模块" class="headerlink" title="1.fs模块"></a>1.fs模块</h2><p>文件系统file system模块</p>
-<h3 id="1-1-fs-readFile-方法"><a href="#1-1-fs-readFile-方法" class="headerlink" title="1.1 fs.readFile()方法"></a>1.1 fs.readFile()方法</h3><p>读取文件数据方法</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.readFile(<span class="string">&quot;文件路径/文件名&quot;</span>[,<span class="string">&quot;文件编码格式&quot;</span>],callback)</span><br></pre></td></tr></table></figure>
-
-<p>文件路径：文件存放路径</p>
-<span id="more"></span>
-
-<p>文件编码格式：utf-8等</p>
-<p>callback回调函数：</p>
-<ul>
-<li>有两个参数err和data<ul>
-<li>err错误对象<ul>
-<li>如果读取出错则err为错误对象</li>
-<li>如果正确则err为null</li>
-</ul>
-</li>
-<li>data文件数据<ul>
-<li>默认以二进制数串的16进制形式保存</li>
-<li>如果指定了”文件编码格式“就按照编码格式输出</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以二进制数串的16进制表示文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以utf-8编码格式打印文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415211208528.png" alt="image-20210415211208528"></p>
-<h3 id="1-2-插入-Nodejs中的回调函数callback"><a href="#1-2-插入-Nodejs中的回调函数callback" class="headerlink" title="1.2(插入)Nodejs中的回调函数callback"></a>1.2(插入)Nodejs中的回调函数callback</h3><p>Nodejs中所有API的回调函数的第一个参数一定是err</p>
-<ul>
-<li>在发生错误时err为错误对象</li>
-<li>正确执行时err为null</li>
-</ul>
-<p>所以Nodejs中的回调函数又被称为错误优先的回调函数</p>
-<h3 id="1-3-fs-writeFile-方法"><a href="#1-3-fs-writeFile-方法" class="headerlink" title="1.3 fs.writeFile()方法"></a>1.3 fs.writeFile()方法</h3><p>写入文件方法</p>
-<p>文件不存在时会自动创建</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.writeFile(<span class="string">&#x27;文件路径/文件名&#x27;</span>,<span class="string">&#x27;写入的数据&#x27;</span>,callback)</span><br></pre></td></tr></table></figure>
-
-<p>应用场景</p>
-<p>​    程序运行报错时，自动将报错信息写入错误日志(一个文件)中</p>
-<p>示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.writeFile(<span class="string">&#x27;./fs.writeFile.txt&#x27;</span>,<span class="string">&#x27;写入fs.writeFile.txt中的数据&#x27;</span>,<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err!==<span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;写入失败&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;写入成功&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212815487.png" alt="image-20210415212815487"></p>
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212837679.png" alt="image-20210415212837679"></p>
-<h2 id="2-path模块"><a href="#2-path模块" class="headerlink" title="2. path模块"></a>2. path模块</h2><p>路径操作</p>
-<h3 id="2-1为什么要进行路径拼接"><a href="#2-1为什么要进行路径拼接" class="headerlink" title="2.1为什么要进行路径拼接"></a>2.1为什么要进行路径拼接</h3><p>不同操作系统的路径分隔符不同</p>
-<ul>
-<li>window使用 / 或 \</li>
-<li>Linux只能使用 /</li>
-</ul>
-<p>Nodejs写的代码可能要在不同的操作系统上使用，所以要明确使用什么路径分隔符</p>
-<h3 id="2-2-path-join"><a href="#2-2-path-join" class="headerlink" title="2.2 path.join()"></a>2.2 path.join()</h3><p>路径拼接API</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">path.join(<span class="string">&#x27;路径&#x27;</span>,<span class="string">&#x27;路径&#x27;</span>,...)</span><br></pre></td></tr></table></figure>
-
-<p>这个API会自动检测当前系统并使用合适的分隔符</p>
-<p>返回拼接之后的结果</p>
-<p>示例</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//当前是windows系统，采用&#x27;\&#x27;作为分隔符</span></span><br><span class="line"><span class="comment">//输出a\b\c.txt</span></span><br><span class="line"><span class="built_in">console</span>.log(path.join(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c.txt&#x27;</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415220350958.png" alt="image-20210415220350958"></p>
-<h3 id="2-3相对路径和绝对路径"><a href="#2-3相对路径和绝对路径" class="headerlink" title="2.3相对路径和绝对路径"></a>2.3相对路径和绝对路径</h3><ul>
-<li><p>大多数情况使用绝对路径</p>
-</li>
-<li><p>相对路径有时候相对的是命令行工具的当前目录</p>
-</li>
-<li><p>读取文件和设置文件时都选择绝对路径</p>
-</li>
-<li><p>使用__dirname可以获取当前文件所在目录的绝对路径</p>
-</li>
-</ul>
-<h4 id="1-相对路径有时候相对的是命令行工具的当前目录"><a href="#1-相对路径有时候相对的是命令行工具的当前目录" class="headerlink" title="1.相对路径有时候相对的是命令行工具的当前目录"></a>1.相对路径有时候相对的是命令行工具的当前目录</h4><h5 id="1-1命令行工具当前目录与执行的文件所在目录相同时"><a href="#1-1命令行工具当前目录与执行的文件所在目录相同时" class="headerlink" title="1.1命令行工具当前目录与执行的文件所在目录相同时"></a>1.1命令行工具当前目录与执行的文件所在目录相同时</h5><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path=<span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//此时使用相对路径打开当前目录下的01-path。。。文件</span></span><br><span class="line">fs.readFile(<span class="string">&#x27;./01-path.join.js&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416110904752.png" alt="image-20210416110904752"></p>
-<p>此时在<strong>02-绝对路径和相对路径.js</strong>使用相对路径打开当前目录下的<strong>01-path.join.js</strong>文件</p>
-<p>由于命令行工具的当前目录就是执行文件的目录</p>
-<p>所以readFile()中<code>./01-path.join.js</code>实际打开的文件为<strong>E:\HTML_CSS_JS学习\nodejs\new\02-核心模块path\01-path.join.js</strong></p>
-<p>所以此时使用相对路径不会引起问题</p>
-<h5 id="1-2命令行工具当前目录与执行的文件所在目录不同时"><a href="#1-2命令行工具当前目录与执行的文件所在目录不同时" class="headerlink" title="1.2命令行工具当前目录与执行的文件所在目录不同时"></a>1.2命令行工具当前目录与执行的文件所在目录不同时</h5><p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416111449458.png" alt="image-20210416111449458"></p>
-<p>此时命令行工具的当前目录为E:\HTML_CSS_JS学习\nodejs\new</p>
-<p>执行文件所在目录为E:\HTML_CSS_JS学习\nodejs\new\02-核心模块path</p>
-<p>两个目录所在位置不同</p>
-<p>readFile()方法中的url如果写相对路径，则这个<strong>相对路径就相对于命令行工具目录</strong></p>
-<p>此时readFile()中<code>./01-path.join.js</code>实际打开的文件为<strong>E:\HTML_CSS_JS学习\nodejs\new\01-path.join.js</strong></p>
-<p>即相对路径相对于命令行工具的当前目录（上图红框）</p>
-<p>此时因为找不到<strong>E:\HTML_CSS_JS学习\nodejs\new\01-path.join.js</strong>文件，会报错<code>no such file or directory</code></p>
-<p>所以打开或设置文件时使用相对路径是<strong>不安全的</strong>，容易导致错误</p>
-<h4 id="2-在require-中的相对路径比较特殊，就是相对于当前执行文件所在的目录"><a href="#2-在require-中的相对路径比较特殊，就是相对于当前执行文件所在的目录" class="headerlink" title="2.在require()中的相对路径比较特殊，就是相对于当前执行文件所在的目录"></a><strong>2.在require()中的相对路径比较特殊，就是相对于当前执行文件所在的目录</strong></h4><h4 id="3-读取文件和设置文件时都选择绝对路径"><a href="#3-读取文件和设置文件时都选择绝对路径" class="headerlink" title="3.读取文件和设置文件时都选择绝对路径"></a>3.读取文件和设置文件时都选择绝对路径</h4><p>nodejs中使用<code>__dirname</code>可以获取当前文件所在目录的绝对路径</p>
-<p>使用<code>__dirname</code>和当前文件名进行路径拼接就可以<strong>方便的得到当前文件的绝对路径</strong></p>
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416113339756.png" alt="image-20210416113339756"></p>
-<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416113325415.png" alt="image-20210416113325415"></p>
-<p>此时红框中第一行即为<code>__dirname</code>,当前执行文件所在目录</p>
-<p>红框第二行即为拼接后的要打开文件的绝对路径</p>
-<p>此时命令行工具目录与执行文件所在目录不同</p>
-<p>因为代码使用了绝对路径，不会发生找不到文件的错误</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>02-02-第三方模块</title>
-    <url>/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/</url>
-    <content><![CDATA[<h1 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h1><p><a href="https://www.npmjs.com/">npmjs.com</a>: 第三方模块的存储和分发仓库</p>
-<h2 id="1-第三方模块-nodemon"><a href="#1-第三方模块-nodemon" class="headerlink" title="1.第三方模块 nodemon"></a>1.第三方模块 nodemon</h2><p>nodemon是命令行工具，辅助项目开发</p>
-<p>在Node.js中，每次修改文件都需要重新执行文件，比较繁琐</p>
-<p>nodemon可以在保存时自动执行文件</p>
-<span id="more"></span>
-
-<h3 id="1-2使用"><a href="#1-2使用" class="headerlink" title="1.2使用"></a>1.2使用</h3><ul>
-<li><p>安装</p>
-<ul>
-<li><p><code>npm install nodemon -g</code></p>
-</li>
-<li><p>命令行工具全局安装使用 -g</p>
-</li>
-</ul>
-</li>
-<li><p>使用</p>
-<ul>
-<li>在命令行工具中使用<code>nodemon</code>替代<code>node</code>执行nodejs文件</li>
-</ul>
-</li>
-</ul>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png" alt="image-20210419110644336"></p>
-<p>执行完文件后会将命令行窗口挂起，等待执行的文件保存，保存文件后会<strong>自动执行文件</strong>，使用Ctrl+C可以退出nodemon</p>
-<p>现在在文件中添加一个输出后保存，效果如下</p>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png" alt="image-20210419111005039"></p>
-<h2 id="2-第三方模块nrm"><a href="#2-第三方模块nrm" class="headerlink" title="2.第三方模块nrm"></a>2.第三方模块nrm</h2><p>nrm(npm registry manager)：npm下载地址切换工具</p>
-<p>npm默认下载地址在国外，下载速度较慢，经常断线</p>
-<p>nrm可以将下载地址切换为为国内的服务器</p>
-<ul>
-<li>如阿里巴巴就有这样的服务器，每隔10分钟与官方的node服务器同步一次</li>
-<li>使用国内服务器就可以加快下载速度，与使用官方服务器下载的包是一样的</li>
-</ul>
-<h3 id="2-1下载使用"><a href="#2-1下载使用" class="headerlink" title="2.1下载使用"></a>2.1下载使用</h3><ol>
-<li><code>npm install nrm -g </code>   全局安装</li>
-<li>使用nrm ls 查询可用下载地址列表<ul>
-<li>npm为国外官方下载地址</li>
-<li>带*号的是当前选择的下载地址</li>
-</ul>
-</li>
-<li>切换npm下载地址为国内服务器 <code>nrm use 下载地址名称</code><ul>
-<li>这里选择阿里巴巴的taobao</li>
-</ul>
-</li>
-</ol>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png" alt="image-20210419113538099"></p>
-<h2 id="3-第三方模块Gulp"><a href="#3-第三方模块Gulp" class="headerlink" title="3.第三方模块Gulp"></a>3.第三方模块Gulp</h2><p>gulp是一种基于Node平台开发的前端构建工具</p>
-<p>可以将机械化的操作编写成任务，在执行时只需要在命令行输入编写好的命令任务就可以。</p>
-<p>机器代替手工，加开效率</p>
-<h4 id="3-1Gulp能做什么"><a href="#3-1Gulp能做什么" class="headerlink" title="3.1Gulp能做什么"></a>3.1Gulp能做什么</h4><ul>
-<li>项目上线时，HTML，CSS，JS代码压缩合并</li>
-<li>语法转换(es6转es5，less转css等)</li>
-<li>公共文件抽离(修改时只需要修改抽离的文件)</li>
-<li>修改文件浏览器自动刷新(之前修改完需要手动刷新)</li>
-</ul>
-<h4 id="3-2使用Gulp"><a href="#3-2使用Gulp" class="headerlink" title="3.2使用Gulp"></a>3.2使用Gulp</h4><p>下载</p>
-<p><code>npm install gulp</code>下载<strong>库文件</strong>，库文件是本地安装，只有当前项目能用</p>
-<p>使用</p>
-<ol>
-<li>在项目根目录下新建gulpfile.js文件(文件名不能随意更改)</li>
-<li>重构项目的文件夹结构，src目录下放置源代码文件，dist目录放置构建后的文件</li>
-<li>在gulpfile.js中编写任务</li>
-<li>在命令行工具中执行gulp任务</li>
-</ol>
-<h4 id="3-3Gulp提供了哪些编写任务的API"><a href="#3-3Gulp提供了哪些编写任务的API" class="headerlink" title="3.3Gulp提供了哪些编写任务的API"></a>3.3Gulp提供了哪些编写任务的API</h4><ul>
-<li>gulp.src()：获取任务要处理的文件</li>
-<li>gulp.dest()：输出文件</li>
-<li>gulp.task()：建立gulp任务</li>
-<li>gulp.watch()：监控文件变化</li>
-</ul>
-<h4 id="3-4第一个gulp任务"><a href="#3-4第一个gulp任务" class="headerlink" title="3.4第一个gulp任务"></a>3.4第一个gulp任务</h4><p>gulp任务写在gulpfile.js文件中</p>
-<p><strong>1.使用 <code>gulp.task(&#39;任务名&#39;,callback</code>)  创建任务</strong></p>
-<ul>
-<li>两个参数<ul>
-<li>任务名，标识任务时使用</li>
-<li>回调函数，执行任务就是执行这个函数</li>
-</ul>
-</li>
-</ul>
-<p><strong>2.完成复制文件的操作</strong></p>
-<ul>
-<li>使用 <code>gulp.src(&#39;文件路径/文件名&#39;)</code> 获取文件</li>
-<li>在   <code>.pipe()</code> 中写处理代码 </li>
-<li><code>.pipe(gulp.dest(&#39;路径/文件名&#39;))</code> 这里将base.css这个文件复制到<code>dist/css</code>文件夹下(css文件夹会自动创建)</li>
-</ul>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419193029547.png" alt="image-20210419193029547"></p>
-<p><strong>3.执行这个gulp任务需要用到与gulp库文件同名的gulp命令行工具</strong></p>
-<p>执行的不是gulpfile.js这个文件，而是文件中的 ‘first’ 任务</p>
-<p>所以需要使用gulp命令行工具</p>
-<p>1.安装gulp命令行工具</p>
-<p><code>npm install gulp-cli -g</code>    命令行工具全局安装</p>
-<p>2.使用gulp命令执行gulp任务</p>
-<p><code>gulp first</code>  即执行了名为first的任务</p>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419194002502.png" alt="image-20210419194002502"></p>
-<ul>
-<li><p>输出了<code>我的第一个gulp任务</code></p>
-</li>
-<li><p>接着在 <code>./dist/css</code>文件夹下也发现了复制的base.css文件</p>
-</li>
-<li><p>执行成功</p>
-</li>
-<li><p>Using gulpfile代表使用了gulpfile.js文件</p>
-</li>
-<li><p>Starting ‘first’ 开始执行first任务</p>
-</li>
-</ul>
-<p><strong>但是在执行时出现了两行红字</strong></p>
-<ul>
-<li>因为任务可能包含异步代码，所以必须在任务完成执行时发出信号（“异步完成”）。</li>
-</ul>
-<p>在“Gulp3.x”中，你可以不做这个就离开。如果您没有显式地发出异步完成的信号，那么Gulp只会假定您的任务是同步的，</p>
-<p>并且一旦您的任务函数返回，它就完成了。<strong>Gulp4.x在这方面更严格。你必须明确地发出任务完成的信号。</strong></p>
-<p>这里我是用的gulp版本为4.0.2，需要明确发出任务完成的信号。</p>
-<p><strong>解决办法</strong></p>
-<p>在callback回调函数中使用一个done形参，在函数内部的最后加上<code>done()</code> 来标识<strong>异步任务结束</strong></p>
-<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419195502159.png" alt="image-20210419195502159"></p>
-<p>此时不再报错</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-        <tag>Gulp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>01-什么是Node</title>
     <url>/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/</url>
     <content><![CDATA[<h1 id="1-Node-js介绍"><a href="#1-Node-js介绍" class="headerlink" title="1.Node.js介绍"></a>1.Node.js介绍</h1><h2 id="1-1学习Node-js的目的"><a href="#1-1学习Node-js的目的" class="headerlink" title="1.1学习Node.js的目的"></a>1.1学习Node.js的目的</h2><ul>
@@ -407,6 +173,476 @@
       </tags>
   </entry>
   <entry>
+    <title>02-02-第三方模块</title>
+    <url>/2021/04/19/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<h1 id="第三方模块"><a href="#第三方模块" class="headerlink" title="第三方模块"></a>第三方模块</h1><p><a href="https://www.npmjs.com/">npmjs.com</a>: 第三方模块的存储和分发仓库</p>
+<h2 id="1-第三方模块-nodemon"><a href="#1-第三方模块-nodemon" class="headerlink" title="1.第三方模块 nodemon"></a>1.第三方模块 nodemon</h2><p>nodemon是命令行工具，辅助项目开发</p>
+<p>在Node.js中，每次修改文件都需要重新执行文件，比较繁琐</p>
+<p>nodemon可以在保存时自动执行文件</p>
+<span id="more"></span>
+
+<h3 id="1-2使用"><a href="#1-2使用" class="headerlink" title="1.2使用"></a>1.2使用</h3><ul>
+<li><p>安装</p>
+<ul>
+<li><p><code>npm install nodemon -g</code></p>
+</li>
+<li><p>命令行工具全局安装使用 -g</p>
+</li>
+</ul>
+</li>
+<li><p>使用</p>
+<ul>
+<li>在命令行工具中使用<code>nodemon</code>替代<code>node</code>执行nodejs文件</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419110644336.png" alt="image-20210419110644336"></p>
+<p>执行完文件后会将命令行窗口挂起，等待执行的文件保存，保存文件后会<strong>自动执行文件</strong>，使用Ctrl+C可以退出nodemon</p>
+<p>现在在文件中添加一个输出后保存，效果如下</p>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419111005039.png" alt="image-20210419111005039"></p>
+<h2 id="2-第三方模块nrm"><a href="#2-第三方模块nrm" class="headerlink" title="2.第三方模块nrm"></a>2.第三方模块nrm</h2><p>nrm(npm registry manager)：npm下载地址切换工具</p>
+<p>npm默认下载地址在国外，下载速度较慢，经常断线</p>
+<p>nrm可以将下载地址切换为为国内的服务器</p>
+<ul>
+<li>如阿里巴巴就有这样的服务器，每隔10分钟与官方的node服务器同步一次</li>
+<li>使用国内服务器就可以加快下载速度，与使用官方服务器下载的包是一样的</li>
+</ul>
+<h3 id="2-1下载使用"><a href="#2-1下载使用" class="headerlink" title="2.1下载使用"></a>2.1下载使用</h3><ol>
+<li><code>npm install nrm -g </code>   全局安装</li>
+<li>使用nrm ls 查询可用下载地址列表<ul>
+<li>npm为国外官方下载地址</li>
+<li>带*号的是当前选择的下载地址</li>
+</ul>
+</li>
+<li>切换npm下载地址为国内服务器 <code>nrm use 下载地址名称</code><ul>
+<li>这里选择阿里巴巴的taobao</li>
+</ul>
+</li>
+</ol>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419113538099.png" alt="image-20210419113538099"></p>
+<h2 id="3-第三方模块Gulp"><a href="#3-第三方模块Gulp" class="headerlink" title="3.第三方模块Gulp"></a>3.第三方模块Gulp</h2><p>gulp是一种基于Node平台开发的前端构建工具</p>
+<p>可以将机械化的操作编写成任务，在执行时只需要在命令行输入编写好的命令任务就可以。</p>
+<p>机器代替手工，加开效率</p>
+<h4 id="3-1Gulp能做什么"><a href="#3-1Gulp能做什么" class="headerlink" title="3.1Gulp能做什么"></a>3.1Gulp能做什么</h4><ul>
+<li>项目上线时，HTML，CSS，JS代码压缩合并</li>
+<li>语法转换(es6转es5，less转css等)</li>
+<li>公共文件抽离(修改时只需要修改抽离的文件)</li>
+<li>修改文件浏览器自动刷新(之前修改完需要手动刷新)</li>
+</ul>
+<h4 id="3-2使用Gulp"><a href="#3-2使用Gulp" class="headerlink" title="3.2使用Gulp"></a>3.2使用Gulp</h4><p>下载</p>
+<p><code>npm install gulp</code>下载<strong>库文件</strong>，库文件是本地安装，只有当前项目能用</p>
+<p>使用</p>
+<ol>
+<li>在项目根目录下新建gulpfile.js文件(文件名不能随意更改)</li>
+<li>重构项目的文件夹结构，src目录下放置源代码文件，dist目录放置构建后的文件</li>
+<li>在gulpfile.js中编写任务</li>
+<li>在命令行工具中执行gulp任务</li>
+</ol>
+<h4 id="3-3Gulp提供了哪些编写任务的API"><a href="#3-3Gulp提供了哪些编写任务的API" class="headerlink" title="3.3Gulp提供了哪些编写任务的API"></a>3.3Gulp提供了哪些编写任务的API</h4><ul>
+<li>gulp.src()：获取任务要处理的文件</li>
+<li>gulp.dest()：输出文件</li>
+<li>gulp.task()：建立gulp任务</li>
+<li>gulp.watch()：监控文件变化</li>
+</ul>
+<h4 id="3-4第一个gulp任务"><a href="#3-4第一个gulp任务" class="headerlink" title="3.4第一个gulp任务"></a>3.4第一个gulp任务</h4><p>gulp任务写在gulpfile.js文件中</p>
+<p><strong>1.使用 <code>gulp.task(&#39;任务名&#39;,callback</code>)  创建任务</strong></p>
+<ul>
+<li>两个参数<ul>
+<li>任务名，标识任务时使用</li>
+<li>回调函数，执行任务就是执行这个函数</li>
+</ul>
+</li>
+</ul>
+<p><strong>2.完成复制文件的操作</strong></p>
+<ul>
+<li>使用 <code>gulp.src(&#39;文件路径/文件名&#39;)</code> 获取文件</li>
+<li>在   <code>.pipe()</code> 中写处理代码 </li>
+<li><code>.pipe(gulp.dest(&#39;路径/文件名&#39;))</code> 这里将base.css这个文件复制到<code>dist/css</code>文件夹下(css文件夹会自动创建)</li>
+</ul>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419193029547.png" alt="image-20210419193029547"></p>
+<p><strong>3.执行这个gulp任务需要用到与gulp库文件同名的gulp命令行工具</strong></p>
+<p>执行的不是gulpfile.js这个文件，而是文件中的 ‘first’ 任务</p>
+<p>所以需要使用gulp命令行工具</p>
+<p>1.安装gulp命令行工具</p>
+<p><code>npm install gulp-cli -g</code>    命令行工具全局安装</p>
+<p>2.使用gulp命令执行gulp任务</p>
+<p><code>gulp first</code>  即执行了名为first的任务</p>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419194002502.png" alt="image-20210419194002502"></p>
+<ul>
+<li><p>输出了<code>我的第一个gulp任务</code></p>
+</li>
+<li><p>接着在 <code>./dist/css</code>文件夹下也发现了复制的base.css文件</p>
+</li>
+<li><p>执行成功</p>
+</li>
+<li><p>Using gulpfile代表使用了gulpfile.js文件</p>
+</li>
+<li><p>Starting ‘first’ 开始执行first任务</p>
+</li>
+</ul>
+<p><strong>但是在执行时出现了两行红字</strong></p>
+<ul>
+<li>因为任务可能包含异步代码，所以必须在任务完成执行时发出信号（“异步完成”）。</li>
+</ul>
+<p>在“Gulp3.x”中，你可以不做这个就离开。如果您没有显式地发出异步完成的信号，那么Gulp只会假定您的任务是同步的，</p>
+<p>并且一旦您的任务函数返回，它就完成了。<strong>Gulp4.x在这方面更严格。你必须明确地发出任务完成的信号。</strong></p>
+<p>这里我是用的gulp版本为4.0.2，需要明确发出任务完成的信号。</p>
+<p><strong>解决办法</strong></p>
+<p>在callback回调函数中使用一个done形参，在函数内部的最后加上<code>done()</code> 来标识<strong>异步任务结束</strong></p>
+<p><img data-src="/images/02-02-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97/image-20210419195502159.png" alt="image-20210419195502159"></p>
+<p>此时不再报错</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>02-01-系统核心模块</title>
+    <url>/2021/04/15/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<h1 id="系统-核心-模块"><a href="#系统-核心-模块" class="headerlink" title="系统(核心)模块"></a>系统(核心)模块</h1><h2 id="1-fs模块"><a href="#1-fs模块" class="headerlink" title="1.fs模块"></a>1.fs模块</h2><p>文件系统file system模块</p>
+<h3 id="1-1-fs-readFile-方法"><a href="#1-1-fs-readFile-方法" class="headerlink" title="1.1 fs.readFile()方法"></a>1.1 fs.readFile()方法</h3><p>读取文件数据方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.readFile(<span class="string">&quot;文件路径/文件名&quot;</span>[,<span class="string">&quot;文件编码格式&quot;</span>],callback)</span><br></pre></td></tr></table></figure>
+
+<p>文件路径：文件存放路径</p>
+<span id="more"></span>
+
+<p>文件编码格式：utf-8等</p>
+<p>callback回调函数：</p>
+<ul>
+<li>有两个参数err和data<ul>
+<li>err错误对象<ul>
+<li>如果读取出错则err为错误对象</li>
+<li>如果正确则err为null</li>
+</ul>
+</li>
+<li>data文件数据<ul>
+<li>默认以二进制数串的16进制形式保存</li>
+<li>如果指定了”文件编码格式“就按照编码格式输出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以二进制数串的16进制表示文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;./fs.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;文件读取出错&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;以utf-8编码格式打印文件数据&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415211208528.png" alt="image-20210415211208528"></p>
+<h3 id="1-2-插入-Nodejs中的回调函数callback"><a href="#1-2-插入-Nodejs中的回调函数callback" class="headerlink" title="1.2(插入)Nodejs中的回调函数callback"></a>1.2(插入)Nodejs中的回调函数callback</h3><p>Nodejs中所有API的回调函数的第一个参数一定是err</p>
+<ul>
+<li>在发生错误时err为错误对象</li>
+<li>正确执行时err为null</li>
+</ul>
+<p>所以Nodejs中的回调函数又被称为错误优先的回调函数</p>
+<h3 id="1-3-fs-writeFile-方法"><a href="#1-3-fs-writeFile-方法" class="headerlink" title="1.3 fs.writeFile()方法"></a>1.3 fs.writeFile()方法</h3><p>写入文件方法</p>
+<p>文件不存在时会自动创建</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.writeFile(<span class="string">&#x27;文件路径/文件名&#x27;</span>,<span class="string">&#x27;写入的数据&#x27;</span>,callback)</span><br></pre></td></tr></table></figure>
+
+<p>应用场景</p>
+<p>​    程序运行报错时，自动将报错信息写入错误日志(一个文件)中</p>
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.writeFile(<span class="string">&#x27;./fs.writeFile.txt&#x27;</span>,<span class="string">&#x27;写入fs.writeFile.txt中的数据&#x27;</span>,<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(err!==<span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;写入失败&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;写入成功&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212815487.png" alt="image-20210415212815487"></p>
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415212837679.png" alt="image-20210415212837679"></p>
+<h2 id="2-path模块"><a href="#2-path模块" class="headerlink" title="2. path模块"></a>2. path模块</h2><p>路径操作</p>
+<h3 id="2-1为什么要进行路径拼接"><a href="#2-1为什么要进行路径拼接" class="headerlink" title="2.1为什么要进行路径拼接"></a>2.1为什么要进行路径拼接</h3><p>不同操作系统的路径分隔符不同</p>
+<ul>
+<li>window使用 / 或 \</li>
+<li>Linux只能使用 /</li>
+</ul>
+<p>Nodejs写的代码可能要在不同的操作系统上使用，所以要明确使用什么路径分隔符</p>
+<h3 id="2-2-path-join"><a href="#2-2-path-join" class="headerlink" title="2.2 path.join()"></a>2.2 path.join()</h3><p>路径拼接API</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">path.join(<span class="string">&#x27;路径&#x27;</span>,<span class="string">&#x27;路径&#x27;</span>,...)</span><br></pre></td></tr></table></figure>
+
+<p>这个API会自动检测当前系统并使用合适的分隔符</p>
+<p>返回拼接之后的结果</p>
+<p>示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//当前是windows系统，采用&#x27;\&#x27;作为分隔符</span></span><br><span class="line"><span class="comment">//输出a\b\c.txt</span></span><br><span class="line"><span class="built_in">console</span>.log(path.join(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c.txt&#x27;</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210415220350958.png" alt="image-20210415220350958"></p>
+<h3 id="2-3相对路径和绝对路径"><a href="#2-3相对路径和绝对路径" class="headerlink" title="2.3相对路径和绝对路径"></a>2.3相对路径和绝对路径</h3><ul>
+<li><p>大多数情况使用绝对路径</p>
+</li>
+<li><p>相对路径有时候相对的是命令行工具的当前目录</p>
+</li>
+<li><p>读取文件和设置文件时都选择绝对路径</p>
+</li>
+<li><p>使用__dirname可以获取当前文件所在目录的绝对路径</p>
+</li>
+</ul>
+<h4 id="1-相对路径有时候相对的是命令行工具的当前目录"><a href="#1-相对路径有时候相对的是命令行工具的当前目录" class="headerlink" title="1.相对路径有时候相对的是命令行工具的当前目录"></a>1.相对路径有时候相对的是命令行工具的当前目录</h4><h5 id="1-1命令行工具当前目录与执行的文件所在目录相同时"><a href="#1-1命令行工具当前目录与执行的文件所在目录相同时" class="headerlink" title="1.1命令行工具当前目录与执行的文件所在目录相同时"></a>1.1命令行工具当前目录与执行的文件所在目录相同时</h5><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs=<span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path=<span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//此时使用相对路径打开当前目录下的01-path。。。文件</span></span><br><span class="line">fs.readFile(<span class="string">&#x27;./01-path.join.js&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416110904752.png" alt="image-20210416110904752"></p>
+<p>此时在<strong>02-绝对路径和相对路径.js</strong>使用相对路径打开当前目录下的<strong>01-path.join.js</strong>文件</p>
+<p>由于命令行工具的当前目录就是执行文件的目录</p>
+<p>所以readFile()中<code>./01-path.join.js</code>实际打开的文件为<strong>E:\HTML_CSS_JS学习\nodejs\new\02-核心模块path\01-path.join.js</strong></p>
+<p>所以此时使用相对路径不会引起问题</p>
+<h5 id="1-2命令行工具当前目录与执行的文件所在目录不同时"><a href="#1-2命令行工具当前目录与执行的文件所在目录不同时" class="headerlink" title="1.2命令行工具当前目录与执行的文件所在目录不同时"></a>1.2命令行工具当前目录与执行的文件所在目录不同时</h5><p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416111449458.png" alt="image-20210416111449458"></p>
+<p>此时命令行工具的当前目录为E:\HTML_CSS_JS学习\nodejs\new</p>
+<p>执行文件所在目录为E:\HTML_CSS_JS学习\nodejs\new\02-核心模块path</p>
+<p>两个目录所在位置不同</p>
+<p>readFile()方法中的url如果写相对路径，则这个<strong>相对路径就相对于命令行工具目录</strong></p>
+<p>此时readFile()中<code>./01-path.join.js</code>实际打开的文件为<strong>E:\HTML_CSS_JS学习\nodejs\new\01-path.join.js</strong></p>
+<p>即相对路径相对于命令行工具的当前目录（上图红框）</p>
+<p>此时因为找不到<strong>E:\HTML_CSS_JS学习\nodejs\new\01-path.join.js</strong>文件，会报错<code>no such file or directory</code></p>
+<p>所以打开或设置文件时使用相对路径是<strong>不安全的</strong>，容易导致错误</p>
+<h4 id="2-在require-中的相对路径比较特殊，就是相对于当前执行文件所在的目录"><a href="#2-在require-中的相对路径比较特殊，就是相对于当前执行文件所在的目录" class="headerlink" title="2.在require()中的相对路径比较特殊，就是相对于当前执行文件所在的目录"></a><strong>2.在require()中的相对路径比较特殊，就是相对于当前执行文件所在的目录</strong></h4><h4 id="3-读取文件和设置文件时都选择绝对路径"><a href="#3-读取文件和设置文件时都选择绝对路径" class="headerlink" title="3.读取文件和设置文件时都选择绝对路径"></a>3.读取文件和设置文件时都选择绝对路径</h4><p>nodejs中使用<code>__dirname</code>可以获取当前文件所在目录的绝对路径</p>
+<p>使用<code>__dirname</code>和当前文件名进行路径拼接就可以<strong>方便的得到当前文件的绝对路径</strong></p>
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416113339756.png" alt="image-20210416113339756"></p>
+<p><img data-src="/images/02-01-%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97/image-20210416113325415.png" alt="image-20210416113325415"></p>
+<p>此时红框中第一行即为<code>__dirname</code>,当前执行文件所在目录</p>
+<p>红框第二行即为拼接后的要打开文件的绝对路径</p>
+<p>此时命令行工具目录与执行文件所在目录不同</p>
+<p>因为代码使用了绝对路径，不会发生找不到文件的错误</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>03-第三方模块Gulp</title>
+    <url>/2021/04/19/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/</url>
+    <content><![CDATA[<h1 id="Gulp第三方模块"><a href="#Gulp第三方模块" class="headerlink" title="Gulp第三方模块"></a>Gulp第三方模块</h1><p>Gulp的基础介绍在<strong>02-02第三方模块</strong>文章中</p>
+<h2 id="Gulp的插件"><a href="#Gulp的插件" class="headerlink" title="Gulp的插件"></a>Gulp的插件</h2><p>Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种</p>
+<ul>
+<li>gulp.src()：获取任务要处理的文件</li>
+<li>gulp.dest()：输出文件</li>
+<li>gulp.task()：建立gulp任务</li>
+<li>gulp.watch()：监控文件变化</li>
+</ul>
+<span id="more"></span>
+
+<p>其他的功能都是<strong>通过插件的形式</strong>实现的</p>
+<ul>
+<li>gulp-htmlmin：html文件压缩</li>
+<li>gulp-csso：css文件压缩</li>
+<li>gulp-babel：JavaScript语法转化 (ES6 -&gt; ES5)</li>
+<li>gulp-less：less转换为css</li>
+<li>broswersync：浏览器实时同步</li>
+<li>gulp-file-include：提取公共文件</li>
+</ul>
+<h3 id="1-Gulp插件使用"><a href="#1-Gulp插件使用" class="headerlink" title="1.Gulp插件使用"></a>1.Gulp插件使用</h3><ol>
+<li>下载<ul>
+<li>在<a href="https://www.npmjs.com/">npmjs.com</a>官网中可以搜索gulp模块的插件 (有完整使用说明)</li>
+<li>使用npm命令安装</li>
+</ul>
+</li>
+<li>在gulpfile.js文件中引入插件<ul>
+<li>require()方法</li>
+</ul>
+</li>
+<li>调用插件</li>
+</ol>
+<h4 id="1-1HTML操作插件"><a href="#1-1HTML操作插件" class="headerlink" title="1.1HTML操作插件"></a>1.1HTML操作插件</h4><h5 id="1-html文件代码压缩任务"><a href="#1-html文件代码压缩任务" class="headerlink" title="1.html文件代码压缩任务"></a>1.html文件代码压缩任务</h5><p>在项目上线服务器运行时代码一般要经过压缩</p>
+<p>安装html压缩插件</p>
+<p><code>npm install gulp-htmlmin</code>  </p>
+<p>创建任务</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//压缩html文件代码任务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引入gulp的htmlmin插件</span></span><br><span class="line"><span class="keyword">const</span> htmlmin=<span class="built_in">require</span>(<span class="string">&#x27;gulp-htmlmin&#x27;</span>)</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;htmlmin&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//&#x27;*&#x27;匹配所有html文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.html&#x27;</span>)</span><br><span class="line">    <span class="comment">//使用插件的方法压缩html文件</span></span><br><span class="line">    <span class="comment">//collapseWhitespace意为压缩空格</span></span><br><span class="line">    .pipe(htmlmin(&#123; <span class="attr">collapseWhitespace</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在powershell中执行后，./dist文件夹下产生两个同名的html文件，里面的代码都被压缩为1行显示</p>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210419212228699.png" alt="image-20210419212228699"></p>
+<h5 id="2-提取html文件中的公共代码"><a href="#2-提取html文件中的公共代码" class="headerlink" title="2.提取html文件中的公共代码"></a>2.提取html文件中的公共代码</h5><p>提取公共代码可以在代码变化时只需要修改公共代码，而不用修改每一个html文件，提高效率</p>
+<ul>
+<li>下载插件</li>
+</ul>
+<p><code>npm install gulp-file-include</code></p>
+<ul>
+<li>找到公共代码</li>
+</ul>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210419213419546.png" alt="image-20210419213419546"></p>
+<p>两个html文件同属一个网站，他们的头部框架都是相同的，头部框架就是<strong>公共代码</strong></p>
+<ul>
+<li>提取公共代码</li>
+</ul>
+<p>在src文件夹下创建common文件夹，文件夹中创建header.html用来存放两个html的公共代码</p>
+<p>将公共代码即头部框架剪切到header.html文件中，删除html文件中的公共代码(<strong>后面通过header.html引回</strong>)</p>
+<p>在gulpfile.js中引入模块插件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fileinclude = <span class="built_in">require</span>(<span class="string">&#x27;gulp-file-include&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>gulpfile.js的任务代码，两个功能(提取代码，压缩html)合并为一个任务</p>
+<p>任务中使用插件方法<code>fileinclude()</code></p>
+<p>具体插件使用方法<a href="https://www.npmjs.com/package/gulp-file-include">gulp-file-include</a></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1.压缩html文件代码任务</span></span><br><span class="line"><span class="comment">//2.抽取html文件的公共代码</span></span><br><span class="line"><span class="comment">//在压缩前先引回提取的公共代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;htmlmin&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//&#x27;*&#x27;匹配所有html文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.html&#x27;</span>)</span><br><span class="line">    <span class="comment">//使用插件引回提取的公共代码</span></span><br><span class="line">    .pipe(fileinclude())</span><br><span class="line">    <span class="comment">//使用插件的方法压缩html文件</span></span><br><span class="line">    .pipe(htmlmin(&#123; <span class="attr">collapseWhitespace</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在html文件中使用<code>@@include(&#39;./common/header.html&#39;)</code> ， 将公共代码引回文件中</p>
+<p>gulpfile.js文件中的任务使用了<code>fileinclude()</code>插件方法后，才能在html文件中使用<code>@@include(&#39;公共代码文件路径&#39;)</code></p>
+<p>此时执行<code>htmlmin</code>任务，<strong>公共代码被引回html文件</strong>，并且<strong>html文件被压缩为一行</strong></p>
+<h4 id="1-2-CSS和less操作插件"><a href="#1-2-CSS和less操作插件" class="headerlink" title="1.2 CSS和less操作插件"></a>1.2 CSS和less操作插件</h4><h5 id="1-less语法转换"><a href="#1-less语法转换" class="headerlink" title="1.less语法转换"></a>1.less语法转换</h5><p>下载将less文件转换为css的gulp插件</p>
+<p><a href="https://www.npmjs.com/package/gulp-less">gulp-less官方文档</a></p>
+<p><code>npm install gulp-less</code></p>
+<p>在gulpfiles.js文件中引入插件并编写任务</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入less代码转css代码的插件</span></span><br><span class="line"><span class="keyword">const</span> less = <span class="built_in">require</span>(<span class="string">&#x27;gulp-less&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.less代码转css代码</span></span><br><span class="line"><span class="comment">//2.压缩css代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;cssmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//取src目录下所有less文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.less&#x27;</span>)</span><br><span class="line">    .pipe(less())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/css&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>a.less文件被转换为a.css文件</p>
+<center>a.less文件</center>
+
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425172427623.png" alt="image-20210425172427623"></p>
+<center>a.css文件</center>
+
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425172652353.png" alt="image-20210425172652353"></p>
+<h5 id="2-css代码压缩"><a href="#2-css代码压缩" class="headerlink" title="2.css代码压缩"></a>2.css代码压缩</h5><p><code>gulp.src([&#39;路径&#39;,&#39;路径])</code>的参数可以传递一个数组，数组中的每个元素是一个路径，将这些路径指示的文件全部获取。</p>
+<p>下载gulp-csso插件</p>
+<p><a href="https://www.npmjs.com/package/gulp-csso">gulp-csso官方文档</a></p>
+<p><code>npm install gulp-csso</code></p>
+<p>代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//css压缩</span></span><br><span class="line"><span class="keyword">const</span> csso = <span class="built_in">require</span>(<span class="string">&#x27;gulp-csso&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.less代码转css代码</span></span><br><span class="line"><span class="comment">//2.压缩css代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;cssmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//取src/css目录下所有less文件</span></span><br><span class="line">    gulp.src([<span class="string">&#x27;./src/css/*.less&#x27;</span>,<span class="string">&#x27;./src/css/*.css&#x27;</span>])</span><br><span class="line">    <span class="comment">//less代码转换</span></span><br><span class="line">    .pipe(less())</span><br><span class="line">    <span class="comment">//css压缩</span></span><br><span class="line">    .pipe(csso())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/css&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>压缩后代码</center>
+
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425173744670.png" alt="image-20210425173744670"></p>
+<h4 id="1-3JS操作插件"><a href="#1-3JS操作插件" class="headerlink" title="1.3JS操作插件"></a>1.3JS操作插件</h4><p>下载插件</p>
+<p><a href="https://www.npmjs.com/package/gulp-babel">gulp-babel官方文档</a></p>
+<p><code>npm install gulp-babel @babel/core @babel/preset-env</code></p>
+<p>@babel/core 和 @babel/preset-env 是gulp-babel依赖的包，一起下载</p>
+<h5 id="1-ES6代码转换"><a href="#1-ES6代码转换" class="headerlink" title="1.ES6代码转换"></a>1.ES6代码转换</h5><p>代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//js任务</span></span><br><span class="line"><span class="comment">//1.ES6代码转换</span></span><br><span class="line"><span class="comment">//2.js代码压缩</span></span><br><span class="line">gulp.task(<span class="string">&#x27;jsmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/js/*.js&#x27;</span>)</span><br><span class="line">    .pipe(babel(&#123;</span><br><span class="line">        <span class="comment">//presets 自动判断当前环境，将代码转换为当前支持的格式</span></span><br><span class="line">        presets: [<span class="string">&#x27;@babel/env&#x27;</span>]</span><br><span class="line">    &#125;))</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/js&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center><strong>转换结果</strong></center>
+
+<p>将右侧的ES6代码转换为左侧的<strong>严格模式的ES5代码</strong></p>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425175329969.png" alt="image-20210425175329969"></p>
+<h5 id="2-js代码压缩"><a href="#2-js代码压缩" class="headerlink" title="2.js代码压缩"></a>2.js代码压缩</h5><p>gulp-uglify 插件 ：压缩js代码</p>
+<p>下载插件</p>
+<p><a href="https://www.npmjs.com/package/gulp-uglify">gulp-uglify官方文档</a></p>
+<p><code>npm install gulp-uglify</code></p>
+<p>代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//js代码压缩</span></span><br><span class="line"><span class="keyword">const</span> uglify = <span class="built_in">require</span>(<span class="string">&#x27;gulp-uglify&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//js任务</span></span><br><span class="line"><span class="comment">//1.ES6代码转换</span></span><br><span class="line"><span class="comment">//2.js代码压缩</span></span><br><span class="line">gulp.task(<span class="string">&#x27;jsmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/js/*.js&#x27;</span>)</span><br><span class="line">    <span class="comment">//ES6转换</span></span><br><span class="line">    .pipe(babel(&#123;</span><br><span class="line">        <span class="comment">//presets 自动判断当前环境，将代码转换为当前支持的格式</span></span><br><span class="line">        presets: [<span class="string">&#x27;@babel/env&#x27;</span>]</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">//js代码压缩</span></span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/js&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<center>ES6转换并压缩后文件</center>
+
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425180011653.png" alt="image-20210425180011653"></p>
+<h4 id="1-4文件拷背"><a href="#1-4文件拷背" class="headerlink" title="1.4文件拷背"></a>1.4文件拷背</h4><p>代码</p>
+<ul>
+<li>此处/*代表匹配一级的所有文件和目录<ul>
+<li>若使用images/*来匹配images/a/b.jpg ，则<strong>只能匹配到images/a这个文件夹</strong>，不会匹配到b.jpg</li>
+<li>此时匹配获取文件后输出的images/a文件夹是空的</li>
+</ul>
+</li>
+<li>lib/**/*代表匹配lib文件夹下的所有目录<strong>及其子目录</strong>中的文件<ul>
+<li>**代表匹配所有目录及其子目录</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将剩下的images文件夹和lib文件夹拷贝到dist文件夹下</span></span><br><span class="line">gulp.task(<span class="string">&#x27;copy&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/images/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/images&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/lib/**/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/lib&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5一次执行多个任务"><a href="#1-5一次执行多个任务" class="headerlink" title="1.5一次执行多个任务"></a>1.5一次执行多个任务</h4><p>代码</p>
+<p>执行default任务时依次执行后面数组中的每个任务</p>
+<ul>
+<li><strong>gulp4.0及更高版本</strong>需要使用<code>gulp.parallel(&#39;任务名&#39;,&#39;任务名&#39;,...)</code>来执行多个任务</li>
+<li>gulp4.0之前的版本可以使用<code>gulp.task(&#39;default&#39;,[&#39;任务名&#39;,&#39;任务名&#39;,...])</code>来执行多个任务</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>,gulp.parallel(<span class="string">&#x27;htmlmin&#x27;</span>,<span class="string">&#x27;cssmin&#x27;</span>,<span class="string">&#x27;jsmin&#x27;</span>,<span class="string">&#x27;copy&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在命令行中执行gulp命令，gulp会自动在gulpfile.js文件中寻找名为default的任务并执行</li>
+<li>在命令行中执行<code>gulp</code>相当于执行<code>gulp default</code></li>
+</ul>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112637572.png" alt="image-20210426112637572"></p>
+<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112702650.png" alt="image-20210426112702650"></p>
+<ul>
+<li>此时只需执行default任务就可以执行项目中所有的任务</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>04-node_modules文件夹的问题</title>
+    <url>/2021/04/26/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="node-modules文件夹的问题"><a href="#node-modules文件夹的问题" class="headerlink" title="node_modules文件夹的问题"></a>node_modules文件夹的问题</h1><ul>
+<li>文件夹下的文件过多过碎，<strong>拷贝项目时速度慢</strong></li>
+<li>复杂的<strong>模块依赖关系</strong>以及<strong>模块的版本号</strong>需要被记录，避免拷贝后模块版本号不同而导致运行报错</li>
+</ul>
+<h2 id="1-package-json文件"><a href="#1-package-json文件" class="headerlink" title="1.package.json文件"></a>1.package.json文件</h2><ul>
+<li><strong>拷贝项目给他人时不需要拷贝node_modules文件夹，只需要拷贝package.json文件</strong></li>
+<li>package.json项目描述文件会记录当前项目依赖的第三方模块及其版本号和项目名称等一系列项目信息</li>
+<li>别人根据package.json文件就可以下载对应的依赖第三方模块</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="创建package-json文件"><a href="#创建package-json文件" class="headerlink" title="创建package.json文件"></a>创建package.json文件</h3><p><strong>1.使用<code>npm init -y</code>命令在项目根目录下生成package.json文件</strong></p>
+<ul>
+<li><code>npm init</code> 命令执行时会询问要填写的项目基本信息，如项目名称，版本等</li>
+<li><code>npm init -y</code>   <strong>-y</strong>  即意味着所有询问的信息全部采用默认值</li>
+</ul>
+<center>创建package.json文件</center>
+
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426115738307.png" alt="image-20210426115738307"></p>
+<ul>
+<li>main ：项目的主模块</li>
+<li>script：命令别名</li>
+<li>keywords：项目关键字</li>
+<li>author：作者</li>
+<li>license：协议，ISC是开放源代码协议</li>
+</ul>
+<p><strong>2.创建好package.json文件后，使用npm命令下载第三方模块时，该模块的版本号等信息就会被自动记录在package.json文件中</strong></p>
+<p>此处使用<code>npm install formidable mime</code>命令下载两个模块</p>
+<p>package.json文件中的license字段下新增dependencies字段</p>
+<p>该字段中就保存了项目依赖的模块名字与版本信息</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426120400050.png" alt="image-20210426120400050"></p>
+<h2 id="2-别人拿到拷贝的package-json文件如何使用"><a href="#2-别人拿到拷贝的package-json文件如何使用" class="headerlink" title="2.别人拿到拷贝的package.json文件如何使用"></a>2.别人拿到拷贝的package.json文件如何使用</h2><ul>
+<li>在项目根目录下执行<code>npm Install</code>命令</li>
+<li>npm会在项目根目录下找到package.json文件中的dependencies字段</li>
+<li>将其中的依赖模块<strong>自动按版本号进行下载</strong></li>
+<li>下载完毕后根目录下会自动生成node_modules文件夹，其中就存放着下载的依赖模块</li>
+</ul>
+<h2 id="3-项目-开发依赖"><a href="#3-项目-开发依赖" class="headerlink" title="3.项目/开发依赖"></a>3.项目/开发依赖</h2><ul>
+<li>项目依赖：即开发和上线运行都需要的第三方模块</li>
+<li>开发依赖：只在开发过程需要，在<strong>上线运行时不需要</strong>的第三方模块</li>
+</ul>
+<p>安装npm包时</p>
+<ul>
+<li>使用<code>npm install 包名</code>，此时安装的包信息自动添加到package.json文件中的<strong>dependencies字段</strong>，属于<strong>项目依赖</strong></li>
+<li>使用 <code>npm install 包名 --save-dev</code> ，此时安装的包信息添加到package.json文件中的<strong>devDependencies字段</strong>，属于<strong>开发依赖</strong></li>
+</ul>
+<p>例如gulp第三发模块就是<strong>开发依赖</strong>，只在开发阶段使用。</p>
+<p>使用 <code>npm install gulp --save-dev</code>安装后，package.json文件如下</p>
+<p>在<strong>devDependencies字段</strong>中出现gulp的模块名和版本信息</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426195127018.png" alt="image-20210426195127018"></p>
+<p>根据package.json文件安装依赖时</p>
+<ul>
+<li>使用 <code>npm install</code>命令会安装package.json文件中<strong>所有的依赖</strong>，包括项目和开发依赖</li>
+<li>使用 <code>npm install --production</code>命令只会安装package.json文件中的<strong>项目依赖</strong>，即<strong>independencies字段</strong>中的第三方模块</li>
+</ul>
+<h2 id="4-package-lock-json文件"><a href="#4-package-lock-json文件" class="headerlink" title="4.package-lock.json文件"></a>4.package-lock.json文件</h2><p><strong>记录模块与模块之间复杂的依赖关系</strong></p>
+<p>下载模块时在目录下<strong>自动生成</strong>package-lock.json文件</p>
+<p>详细记录了包的信息，如下载地址、版本和依赖关系等</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426200058484.png" alt="image-20210426200058484"></p>
+<h3 id="package-lock-json文件的作用"><a href="#package-lock-json文件的作用" class="headerlink" title="package-lock.json文件的作用"></a>package-lock.json文件的作用</h3><ul>
+<li>详细记录了包的版本等信息，确保再次下载时不会下载错误的版本</li>
+<li>加快下载速度，文件中记录了包的下载地址及项目依赖的第三方包的树状结构，重新下载时不需要做额外工作</li>
+</ul>
+<h2 id="5-package-json中scripts字段的作用"><a href="#5-package-json中scripts字段的作用" class="headerlink" title="5.package.json中scripts字段的作用"></a>5.package.json中scripts字段的作用</h2><p>scripts字段可以给常用的较长的命令起别名，提升开发效率</p>
+<p>使用别名执行命令：<code>npm run &quot;别名&quot;</code></p>
+<p>例如 <code>nodemon a.js</code> 这个命令经常执行</p>
+<p>可以在scripts字段中添加以下代码</p>
+<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426200608237.png" alt="image-20210426200608237"></p>
+<p>即给<code>nodemon a.js</code>这个命令起了一个别名 build</p>
+<p>之后可以使用 <code>npm run build</code>命令来代替<code>nodemon a.js</code>命令</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+        <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>02-nodejs中JavaScript的模块化</title>
     <url>/2021/04/13/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
     <content><![CDATA[<h1 id="Nodejs的模块化"><a href="#Nodejs的模块化" class="headerlink" title="Nodejs的模块化"></a>Nodejs的模块化</h1><h2 id="1-浏览器JavaScript开发弊端"><a href="#1-浏览器JavaScript开发弊端" class="headerlink" title="1.浏览器JavaScript开发弊端"></a>1.浏览器JavaScript开发弊端</h2><p>浏览器JavaScript在使用时存在两大问题</p>
@@ -575,150 +811,38 @@
       </tags>
   </entry>
   <entry>
-    <title>03-第三方模块Gulp</title>
-    <url>/2021/04/19/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/</url>
-    <content><![CDATA[<h1 id="Gulp第三方模块"><a href="#Gulp第三方模块" class="headerlink" title="Gulp第三方模块"></a>Gulp第三方模块</h1><p>Gulp的基础介绍在<strong>02-02第三方模块</strong>文章中</p>
-<h2 id="Gulp的插件"><a href="#Gulp的插件" class="headerlink" title="Gulp的插件"></a>Gulp的插件</h2><p>Gulp是轻内核级第三方插件，本身提供的方法很少，只有几种</p>
+    <title>05-nodejs中的模块加载机制</title>
+    <url>/2021/04/26/05-nodejs%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="nodejs中的模块加载机制"><a href="#nodejs中的模块加载机制" class="headerlink" title="nodejs中的模块加载机制"></a>nodejs中的模块加载机制</h1><p>nodejs使用<code>require(&#39;&#39;)</code>方法来加载模块，参数即为模块名或者路径</p>
+<h2 id="require-查找模块"><a href="#require-查找模块" class="headerlink" title="require()查找模块"></a>require()查找模块</h2><h3 id="1-拥有完整路径-有路径但没有模块后缀"><a href="#1-拥有完整路径-有路径但没有模块后缀" class="headerlink" title="1.拥有完整路径/有路径但没有模块后缀"></a>1.拥有完整路径/有路径但没有模块后缀</h3><p>1.如果<code>require(&#39;模块&#39;)</code>参数中使用完整路径，则直接按照路径引入，找不到文件则报错</p>
 <ul>
-<li>gulp.src()：获取任务要处理的文件</li>
-<li>gulp.dest()：输出文件</li>
-<li>gulp.task()：建立gulp任务</li>
-<li>gulp.watch()：监控文件变化</li>
+<li>例如 <code>require(&#39;./find.js&#39;)</code></li>
+<li>完整模块路径可以是<strong>相对/绝对路径</strong></li>
+<li>此时执行<code>require(&#39;./find.js&#39;)</code>代码时，会在相应的目录下找对应的find.js文件引入执行</li>
 </ul>
 <span id="more"></span>
 
-<p>其他的功能都是<strong>通过插件的形式</strong>实现的</p>
+<p>2.如果参数中模块后缀省略，先找相应的同名js文件，再找同名的文件夹</p>
 <ul>
-<li>gulp-htmlmin：html文件压缩</li>
-<li>gulp-csso：css文件压缩</li>
-<li>gulp-babel：JavaScript语法转化 (ES6 -&gt; ES5)</li>
-<li>gulp-less：less转换为css</li>
-<li>broswersync：浏览器实时同步</li>
-<li>gulp-file-include：提取公共文件</li>
+<li>例如 <code>require(&#39;./find&#39;)</code></li>
+<li>先找对应目录下的find.js文件</li>
+<li>找不到就找同名的find文件夹</li>
 </ul>
-<h3 id="1-Gulp插件使用"><a href="#1-Gulp插件使用" class="headerlink" title="1.Gulp插件使用"></a>1.Gulp插件使用</h3><ol>
-<li>下载<ul>
-<li>在<a href="https://www.npmjs.com/">npmjs.com</a>官网中可以搜索gulp模块的插件 (有完整使用说明)</li>
-<li>使用npm命令安装</li>
-</ul>
-</li>
-<li>在gulpfile.js文件中引入插件<ul>
-<li>require()方法</li>
-</ul>
-</li>
-<li>调用插件</li>
-</ol>
-<h4 id="1-1HTML操作插件"><a href="#1-1HTML操作插件" class="headerlink" title="1.1HTML操作插件"></a>1.1HTML操作插件</h4><h5 id="1-html文件代码压缩任务"><a href="#1-html文件代码压缩任务" class="headerlink" title="1.html文件代码压缩任务"></a>1.html文件代码压缩任务</h5><p>在项目上线服务器运行时代码一般要经过压缩</p>
-<p>安装html压缩插件</p>
-<p><code>npm install gulp-htmlmin</code>  </p>
-<p>创建任务</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//压缩html文件代码任务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//引入gulp的htmlmin插件</span></span><br><span class="line"><span class="keyword">const</span> htmlmin=<span class="built_in">require</span>(<span class="string">&#x27;gulp-htmlmin&#x27;</span>)</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;htmlmin&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//&#x27;*&#x27;匹配所有html文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.html&#x27;</span>)</span><br><span class="line">    <span class="comment">//使用插件的方法压缩html文件</span></span><br><span class="line">    <span class="comment">//collapseWhitespace意为压缩空格</span></span><br><span class="line">    .pipe(htmlmin(&#123; <span class="attr">collapseWhitespace</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>在powershell中执行后，./dist文件夹下产生两个同名的html文件，里面的代码都被压缩为1行显示</p>
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210419212228699.png" alt="image-20210419212228699"></p>
-<h5 id="2-提取html文件中的公共代码"><a href="#2-提取html文件中的公共代码" class="headerlink" title="2.提取html文件中的公共代码"></a>2.提取html文件中的公共代码</h5><p>提取公共代码可以在代码变化时只需要修改公共代码，而不用修改每一个html文件，提高效率</p>
+<p>3.如果找到同名文件夹则引入执行文件夹中的<strong>index.js模块</strong></p>
 <ul>
-<li>下载插件</li>
+<li>找不到同名文件夹则报错</li>
 </ul>
-<p><code>npm install gulp-file-include</code></p>
-<ul>
-<li>找到公共代码</li>
-</ul>
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210419213419546.png" alt="image-20210419213419546"></p>
-<p>两个html文件同属一个网站，他们的头部框架都是相同的，头部框架就是<strong>公共代码</strong></p>
-<ul>
-<li>提取公共代码</li>
-</ul>
-<p>在src文件夹下创建common文件夹，文件夹中创建header.html用来存放两个html的公共代码</p>
-<p>将公共代码即头部框架剪切到header.html文件中，删除html文件中的公共代码(<strong>后面通过header.html引回</strong>)</p>
-<p>在gulpfile.js中引入模块插件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fileinclude = <span class="built_in">require</span>(<span class="string">&#x27;gulp-file-include&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>gulpfile.js的任务代码，两个功能(提取代码，压缩html)合并为一个任务</p>
-<p>任务中使用插件方法<code>fileinclude()</code></p>
-<p>具体插件使用方法<a href="https://www.npmjs.com/package/gulp-file-include">gulp-file-include</a></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1.压缩html文件代码任务</span></span><br><span class="line"><span class="comment">//2.抽取html文件的公共代码</span></span><br><span class="line"><span class="comment">//在压缩前先引回提取的公共代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;htmlmin&#x27;</span>, <span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//&#x27;*&#x27;匹配所有html文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.html&#x27;</span>)</span><br><span class="line">    <span class="comment">//使用插件引回提取的公共代码</span></span><br><span class="line">    .pipe(fileinclude())</span><br><span class="line">    <span class="comment">//使用插件的方法压缩html文件</span></span><br><span class="line">    .pipe(htmlmin(&#123; <span class="attr">collapseWhitespace</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">    <span class="comment">//输出到dist文件夹</span></span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>在html文件中使用<code>@@include(&#39;./common/header.html&#39;)</code> ， 将公共代码引回文件中</p>
-<p>gulpfile.js文件中的任务使用了<code>fileinclude()</code>插件方法后，才能在html文件中使用<code>@@include(&#39;公共代码文件路径&#39;)</code></p>
-<p>此时执行<code>htmlmin</code>任务，<strong>公共代码被引回html文件</strong>，并且<strong>html文件被压缩为一行</strong></p>
-<h4 id="1-2-CSS和less操作插件"><a href="#1-2-CSS和less操作插件" class="headerlink" title="1.2 CSS和less操作插件"></a>1.2 CSS和less操作插件</h4><h5 id="1-less语法转换"><a href="#1-less语法转换" class="headerlink" title="1.less语法转换"></a>1.less语法转换</h5><p>下载将less文件转换为css的gulp插件</p>
-<p><a href="https://www.npmjs.com/package/gulp-less">gulp-less官方文档</a></p>
-<p><code>npm install gulp-less</code></p>
-<p>在gulpfiles.js文件中引入插件并编写任务</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入less代码转css代码的插件</span></span><br><span class="line"><span class="keyword">const</span> less = <span class="built_in">require</span>(<span class="string">&#x27;gulp-less&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.less代码转css代码</span></span><br><span class="line"><span class="comment">//2.压缩css代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;cssmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//取src目录下所有less文件</span></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/*.less&#x27;</span>)</span><br><span class="line">    .pipe(less())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/css&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>a.less文件被转换为a.css文件</p>
-<center>a.less文件</center>
-
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425172427623.png" alt="image-20210425172427623"></p>
-<center>a.css文件</center>
-
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425172652353.png" alt="image-20210425172652353"></p>
-<h5 id="2-css代码压缩"><a href="#2-css代码压缩" class="headerlink" title="2.css代码压缩"></a>2.css代码压缩</h5><p><code>gulp.src([&#39;路径&#39;,&#39;路径])</code>的参数可以传递一个数组，数组中的每个元素是一个路径，将这些路径指示的文件全部获取。</p>
-<p>下载gulp-csso插件</p>
-<p><a href="https://www.npmjs.com/package/gulp-csso">gulp-csso官方文档</a></p>
-<p><code>npm install gulp-csso</code></p>
-<p>代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//css压缩</span></span><br><span class="line"><span class="keyword">const</span> csso = <span class="built_in">require</span>(<span class="string">&#x27;gulp-csso&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.less代码转css代码</span></span><br><span class="line"><span class="comment">//2.压缩css代码</span></span><br><span class="line">gulp.task(<span class="string">&#x27;cssmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//取src/css目录下所有less文件</span></span><br><span class="line">    gulp.src([<span class="string">&#x27;./src/css/*.less&#x27;</span>,<span class="string">&#x27;./src/css/*.css&#x27;</span>])</span><br><span class="line">    <span class="comment">//less代码转换</span></span><br><span class="line">    .pipe(less())</span><br><span class="line">    <span class="comment">//css压缩</span></span><br><span class="line">    .pipe(csso())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/css&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<center>压缩后代码</center>
-
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425173744670.png" alt="image-20210425173744670"></p>
-<h4 id="1-3JS操作插件"><a href="#1-3JS操作插件" class="headerlink" title="1.3JS操作插件"></a>1.3JS操作插件</h4><p>下载插件</p>
-<p><a href="https://www.npmjs.com/package/gulp-babel">gulp-babel官方文档</a></p>
-<p><code>npm install gulp-babel @babel/core @babel/preset-env</code></p>
-<p>@babel/core 和 @babel/preset-env 是gulp-babel依赖的包，一起下载</p>
-<h5 id="1-ES6代码转换"><a href="#1-ES6代码转换" class="headerlink" title="1.ES6代码转换"></a>1.ES6代码转换</h5><p>代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//js任务</span></span><br><span class="line"><span class="comment">//1.ES6代码转换</span></span><br><span class="line"><span class="comment">//2.js代码压缩</span></span><br><span class="line">gulp.task(<span class="string">&#x27;jsmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/js/*.js&#x27;</span>)</span><br><span class="line">    .pipe(babel(&#123;</span><br><span class="line">        <span class="comment">//presets 自动判断当前环境，将代码转换为当前支持的格式</span></span><br><span class="line">        presets: [<span class="string">&#x27;@babel/env&#x27;</span>]</span><br><span class="line">    &#125;))</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/js&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<center><strong>转换结果</strong></center>
-
-<p>将右侧的ES6代码转换为左侧的<strong>严格模式的ES5代码</strong></p>
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425175329969.png" alt="image-20210425175329969"></p>
-<h5 id="2-js代码压缩"><a href="#2-js代码压缩" class="headerlink" title="2.js代码压缩"></a>2.js代码压缩</h5><p>gulp-uglify 插件 ：压缩js代码</p>
-<p>下载插件</p>
-<p><a href="https://www.npmjs.com/package/gulp-uglify">gulp-uglify官方文档</a></p>
-<p><code>npm install gulp-uglify</code></p>
-<p>代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//js代码压缩</span></span><br><span class="line"><span class="keyword">const</span> uglify = <span class="built_in">require</span>(<span class="string">&#x27;gulp-uglify&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//js任务</span></span><br><span class="line"><span class="comment">//1.ES6代码转换</span></span><br><span class="line"><span class="comment">//2.js代码压缩</span></span><br><span class="line">gulp.task(<span class="string">&#x27;jsmin&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/js/*.js&#x27;</span>)</span><br><span class="line">    <span class="comment">//ES6转换</span></span><br><span class="line">    .pipe(babel(&#123;</span><br><span class="line">        <span class="comment">//presets 自动判断当前环境，将代码转换为当前支持的格式</span></span><br><span class="line">        presets: [<span class="string">&#x27;@babel/env&#x27;</span>]</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">//js代码压缩</span></span><br><span class="line">    .pipe(uglify())</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/js&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-
-
-<center>ES6转换并压缩后文件</center>
-
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210425180011653.png" alt="image-20210425180011653"></p>
-<h4 id="1-4文件拷背"><a href="#1-4文件拷背" class="headerlink" title="1.4文件拷背"></a>1.4文件拷背</h4><p>代码</p>
-<ul>
-<li>此处/*代表匹配一级的所有文件和目录<ul>
-<li>若使用images/*来匹配images/a/b.jpg ，则<strong>只能匹配到images/a这个文件夹</strong>，不会匹配到b.jpg</li>
-<li>此时匹配获取文件后输出的images/a文件夹是空的</li>
-</ul>
-</li>
-<li>lib/**/*代表匹配lib文件夹下的所有目录<strong>及其子目录</strong>中的文件<ul>
-<li>**代表匹配所有目录及其子目录</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将剩下的images文件夹和lib文件夹拷贝到dist文件夹下</span></span><br><span class="line">gulp.task(<span class="string">&#x27;copy&#x27;</span>,<span class="function"><span class="params">done</span> =&gt;</span> &#123;</span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/images/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/images&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    gulp.src(<span class="string">&#x27;./src/lib/**/*&#x27;</span>)</span><br><span class="line">    .pipe(gulp.dest(<span class="string">&#x27;./dist/lib&#x27;</span>))</span><br><span class="line">    done()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-5一次执行多个任务"><a href="#1-5一次执行多个任务" class="headerlink" title="1.5一次执行多个任务"></a>1.5一次执行多个任务</h4><p>代码</p>
-<p>执行default任务时依次执行后面数组中的每个任务</p>
-<ul>
-<li><strong>gulp4.0及更高版本</strong>需要使用<code>gulp.parallel(&#39;任务名&#39;,&#39;任务名&#39;,...)</code>来执行多个任务</li>
-<li>gulp4.0之前的版本可以使用<code>gulp.task(&#39;default&#39;,[&#39;任务名&#39;,&#39;任务名&#39;,...])</code>来执行多个任务</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>,gulp.parallel(<span class="string">&#x27;htmlmin&#x27;</span>,<span class="string">&#x27;cssmin&#x27;</span>,<span class="string">&#x27;jsmin&#x27;</span>,<span class="string">&#x27;copy&#x27;</span>))</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在命令行中执行gulp命令，gulp会自动在gulpfile.js文件中寻找名为default的任务并执行</li>
-<li>在命令行中执行<code>gulp</code>相当于执行<code>gulp default</code></li>
-</ul>
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112637572.png" alt="image-20210426112637572"></p>
-<p><img data-src="/images/03-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97Gulp/image-20210426112702650.png" alt="image-20210426112702650"></p>
-<ul>
-<li>此时只需执行default任务就可以执行项目中所有的任务</li>
-</ul>
+<p>4.如果文件夹中没有index.js模块，就会找当前文件夹(与参数中模块同名的文件夹)下的package.json文件,并引入执行其中main字段的主/入口模块</p>
+<p>5.如果没有指定的入口模块或者入口模块找不到，则报错</p>
+<h3 id="2-没有路径且没有后缀"><a href="#2-没有路径且没有后缀" class="headerlink" title="2.没有路径且没有后缀"></a>2.没有路径且没有后缀</h3><p>例如：<code>require(&#39;find&#39;)</code></p>
+<p>1.nodejs先假设find模块为系统模块，在系统模块中查找</p>
+<p>2.系统模块查找不到就进入当前目录的node_modules文件夹中</p>
+<p>3.在node_modules文件夹中首先查找同名js文件</p>
+<p>4.查找不到同名文件则查找同名文件夹(find文件夹)</p>
+<p>5.引入执行同名文件夹(find文件夹)中的index.js模块</p>
+<p>6.如果没有index.js模块，则查看当前文件夹(find文件夹)下的package.json文件中main字段指示的入口模块</p>
+<p>7.引入执行package.json文件中main字段指示的入口模块</p>
+<p>8.若没有main字段，或者入口模块找不到则报错</p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -726,6 +850,52 @@
       <tags>
         <tag>Nodejs</tag>
         <tag>Gulp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>06-服务器端基本概念</title>
+    <url>/2021/04/26/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h1 id="服务器端基本概念"><a href="#服务器端基本概念" class="headerlink" title="服务器端基本概念"></a>服务器端基本概念</h1><h2 id="1-URL"><a href="#1-URL" class="headerlink" title="1.URL"></a>1.URL</h2><p><strong>URL：统一资源定位符，标识internet网上资源的一种编码方式</strong></p>
+<p>使用URL可以唯一标识网络上的一个资源</p>
+<p>URL组成：</p>
+<ul>
+<li><strong>传输协议</strong>://<strong>服务器IP或域名:端口号</strong>/<strong>资源所在位置的标识</strong></li>
+<li>例如: <code>http://www.baidu.com/news/a.html</code></li>
+<li>即使用http协议访问域名为<code>www.baidu.com</code>，端口号为默认80的这个web服务器上的news文件夹下的a.html文件</li>
+<li>http：超文本传输协议，一种发布和接收html文件的方法</li>
+<li>IP或域名可以找到网络上的一台服务器，端口则代表这台服务器上的应用程序提供的服务，http默认端口为80</li>
+<li>资源所在位置标识：<strong>不一定是服务器上资源的路径</strong>，请求提交给服务器后，服务器可以根据位置标识做出其他的操作，服务器给客户端返回什么资源是服务器自身决定的</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="2-开发过程客户端和服务端说明"><a href="#2-开发过程客户端和服务端说明" class="headerlink" title="2.开发过程客户端和服务端说明"></a>2.开发过程客户端和服务端说明</h2><p>开发过程中，客户端和服务端使用同一台电脑，即开发人员的电脑</p>
+<p>开发人员电脑上的<strong>浏览器</strong>即为<strong>客户端</strong></p>
+<p>开发人员电脑上的Node可以编写服务器，可以作为<strong>服务端</strong>，即软件层面的服务器</p>
+<p>本机域名：localhost</p>
+<p>本机IP：127.0.0.1</p>
+<p>使用本机IP/域名就可以使用本机的客户端访问本机的服务端</p>
+<h2 id="3-nodejs构建简单web服务器"><a href="#3-nodejs构建简单web服务器" class="headerlink" title="3.nodejs构建简单web服务器"></a>3.nodejs构建简单web服务器</h2><p>server.js文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    <span class="comment">//也可以直接使用end()返回响应数据</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>请求处理函数中接收两个参数</p>
+<ul>
+<li>Request   请求对象：获取客户端的一些请求信息，例如请求路径等</li>
+<li>Response  响应对象：用来给客户端发送响应信息<ul>
+<li>第一个<code>response.end()</code>执行完后，服务器就已经结束响应</li>
+<li>后面代码中的<code>response.end()</code>将不再向浏览器响应数据</li>
+</ul>
+</li>
+</ul>
+<p>node执行这个文件</p>
+<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213253506.png" alt="image-20210426213253506"></p>
+<p>浏览器访问结果</p>
+<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213340606.png" alt="image-20210426213340606"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
       </tags>
   </entry>
   <entry>
@@ -945,134 +1115,6 @@
       </tags>
   </entry>
   <entry>
-    <title>06-服务器端基本概念</title>
-    <url>/2021/04/26/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<h1 id="服务器端基本概念"><a href="#服务器端基本概念" class="headerlink" title="服务器端基本概念"></a>服务器端基本概念</h1><h2 id="1-URL"><a href="#1-URL" class="headerlink" title="1.URL"></a>1.URL</h2><p><strong>URL：统一资源定位符，标识internet网上资源的一种编码方式</strong></p>
-<p>使用URL可以唯一标识网络上的一个资源</p>
-<p>URL组成：</p>
-<ul>
-<li><strong>传输协议</strong>://<strong>服务器IP或域名:端口号</strong>/<strong>资源所在位置的标识</strong></li>
-<li>例如: <code>http://www.baidu.com/news/a.html</code></li>
-<li>即使用http协议访问域名为<code>www.baidu.com</code>，端口号为默认80的这个web服务器上的news文件夹下的a.html文件</li>
-<li>http：超文本传输协议，一种发布和接收html文件的方法</li>
-<li>IP或域名可以找到网络上的一台服务器，端口则代表这台服务器上的应用程序提供的服务，http默认端口为80</li>
-<li>资源所在位置标识：<strong>不一定是服务器上资源的路径</strong>，请求提交给服务器后，服务器可以根据位置标识做出其他的操作，服务器给客户端返回什么资源是服务器自身决定的</li>
-</ul>
-<span id="more"></span>
-
-<h2 id="2-开发过程客户端和服务端说明"><a href="#2-开发过程客户端和服务端说明" class="headerlink" title="2.开发过程客户端和服务端说明"></a>2.开发过程客户端和服务端说明</h2><p>开发过程中，客户端和服务端使用同一台电脑，即开发人员的电脑</p>
-<p>开发人员电脑上的<strong>浏览器</strong>即为<strong>客户端</strong></p>
-<p>开发人员电脑上的Node可以编写服务器，可以作为<strong>服务端</strong>，即软件层面的服务器</p>
-<p>本机域名：localhost</p>
-<p>本机IP：127.0.0.1</p>
-<p>使用本机IP/域名就可以使用本机的客户端访问本机的服务端</p>
-<h2 id="3-nodejs构建简单web服务器"><a href="#3-nodejs构建简单web服务器" class="headerlink" title="3.nodejs构建简单web服务器"></a>3.nodejs构建简单web服务器</h2><p>server.js文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    <span class="comment">//也可以直接使用end()返回响应数据</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>请求处理函数中接收两个参数</p>
-<ul>
-<li>Request   请求对象：获取客户端的一些请求信息，例如请求路径等</li>
-<li>Response  响应对象：用来给客户端发送响应信息<ul>
-<li>第一个<code>response.end()</code>执行完后，服务器就已经结束响应</li>
-<li>后面代码中的<code>response.end()</code>将不再向浏览器响应数据</li>
-</ul>
-</li>
-</ul>
-<p>node执行这个文件</p>
-<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213253506.png" alt="image-20210426213253506"></p>
-<p>浏览器访问结果</p>
-<p><img data-src="/images/06-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20210426213340606.png" alt="image-20210426213340606"></p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>04-node_modules文件夹的问题</title>
-    <url>/2021/04/26/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h1 id="node-modules文件夹的问题"><a href="#node-modules文件夹的问题" class="headerlink" title="node_modules文件夹的问题"></a>node_modules文件夹的问题</h1><ul>
-<li>文件夹下的文件过多过碎，<strong>拷贝项目时速度慢</strong></li>
-<li>复杂的<strong>模块依赖关系</strong>以及<strong>模块的版本号</strong>需要被记录，避免拷贝后模块版本号不同而导致运行报错</li>
-</ul>
-<h2 id="1-package-json文件"><a href="#1-package-json文件" class="headerlink" title="1.package.json文件"></a>1.package.json文件</h2><ul>
-<li><strong>拷贝项目给他人时不需要拷贝node_modules文件夹，只需要拷贝package.json文件</strong></li>
-<li>package.json项目描述文件会记录当前项目依赖的第三方模块及其版本号和项目名称等一系列项目信息</li>
-<li>别人根据package.json文件就可以下载对应的依赖第三方模块</li>
-</ul>
-<span id="more"></span>
-
-<h3 id="创建package-json文件"><a href="#创建package-json文件" class="headerlink" title="创建package.json文件"></a>创建package.json文件</h3><p><strong>1.使用<code>npm init -y</code>命令在项目根目录下生成package.json文件</strong></p>
-<ul>
-<li><code>npm init</code> 命令执行时会询问要填写的项目基本信息，如项目名称，版本等</li>
-<li><code>npm init -y</code>   <strong>-y</strong>  即意味着所有询问的信息全部采用默认值</li>
-</ul>
-<center>创建package.json文件</center>
-
-<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426115738307.png" alt="image-20210426115738307"></p>
-<ul>
-<li>main ：项目的主模块</li>
-<li>script：命令别名</li>
-<li>keywords：项目关键字</li>
-<li>author：作者</li>
-<li>license：协议，ISC是开放源代码协议</li>
-</ul>
-<p><strong>2.创建好package.json文件后，使用npm命令下载第三方模块时，该模块的版本号等信息就会被自动记录在package.json文件中</strong></p>
-<p>此处使用<code>npm install formidable mime</code>命令下载两个模块</p>
-<p>package.json文件中的license字段下新增dependencies字段</p>
-<p>该字段中就保存了项目依赖的模块名字与版本信息</p>
-<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426120400050.png" alt="image-20210426120400050"></p>
-<h2 id="2-别人拿到拷贝的package-json文件如何使用"><a href="#2-别人拿到拷贝的package-json文件如何使用" class="headerlink" title="2.别人拿到拷贝的package.json文件如何使用"></a>2.别人拿到拷贝的package.json文件如何使用</h2><ul>
-<li>在项目根目录下执行<code>npm Install</code>命令</li>
-<li>npm会在项目根目录下找到package.json文件中的dependencies字段</li>
-<li>将其中的依赖模块<strong>自动按版本号进行下载</strong></li>
-<li>下载完毕后根目录下会自动生成node_modules文件夹，其中就存放着下载的依赖模块</li>
-</ul>
-<h2 id="3-项目-开发依赖"><a href="#3-项目-开发依赖" class="headerlink" title="3.项目/开发依赖"></a>3.项目/开发依赖</h2><ul>
-<li>项目依赖：即开发和上线运行都需要的第三方模块</li>
-<li>开发依赖：只在开发过程需要，在<strong>上线运行时不需要</strong>的第三方模块</li>
-</ul>
-<p>安装npm包时</p>
-<ul>
-<li>使用<code>npm install 包名</code>，此时安装的包信息自动添加到package.json文件中的<strong>dependencies字段</strong>，属于<strong>项目依赖</strong></li>
-<li>使用 <code>npm install 包名 --save-dev</code> ，此时安装的包信息添加到package.json文件中的<strong>devDependencies字段</strong>，属于<strong>开发依赖</strong></li>
-</ul>
-<p>例如gulp第三发模块就是<strong>开发依赖</strong>，只在开发阶段使用。</p>
-<p>使用 <code>npm install gulp --save-dev</code>安装后，package.json文件如下</p>
-<p>在<strong>devDependencies字段</strong>中出现gulp的模块名和版本信息</p>
-<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426195127018.png" alt="image-20210426195127018"></p>
-<p>根据package.json文件安装依赖时</p>
-<ul>
-<li>使用 <code>npm install</code>命令会安装package.json文件中<strong>所有的依赖</strong>，包括项目和开发依赖</li>
-<li>使用 <code>npm install --production</code>命令只会安装package.json文件中的<strong>项目依赖</strong>，即<strong>independencies字段</strong>中的第三方模块</li>
-</ul>
-<h2 id="4-package-lock-json文件"><a href="#4-package-lock-json文件" class="headerlink" title="4.package-lock.json文件"></a>4.package-lock.json文件</h2><p><strong>记录模块与模块之间复杂的依赖关系</strong></p>
-<p>下载模块时在目录下<strong>自动生成</strong>package-lock.json文件</p>
-<p>详细记录了包的信息，如下载地址、版本和依赖关系等</p>
-<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426200058484.png" alt="image-20210426200058484"></p>
-<h3 id="package-lock-json文件的作用"><a href="#package-lock-json文件的作用" class="headerlink" title="package-lock.json文件的作用"></a>package-lock.json文件的作用</h3><ul>
-<li>详细记录了包的版本等信息，确保再次下载时不会下载错误的版本</li>
-<li>加快下载速度，文件中记录了包的下载地址及项目依赖的第三方包的树状结构，重新下载时不需要做额外工作</li>
-</ul>
-<h2 id="5-package-json中scripts字段的作用"><a href="#5-package-json中scripts字段的作用" class="headerlink" title="5.package.json中scripts字段的作用"></a>5.package.json中scripts字段的作用</h2><p>scripts字段可以给常用的较长的命令起别名，提升开发效率</p>
-<p>使用别名执行命令：<code>npm run &quot;别名&quot;</code></p>
-<p>例如 <code>nodemon a.js</code> 这个命令经常执行</p>
-<p>可以在scripts字段中添加以下代码</p>
-<p><img data-src="/images/04-node_modules%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E9%97%AE%E9%A2%98/image-20210426200608237.png" alt="image-20210426200608237"></p>
-<p>即给<code>nodemon a.js</code>这个命令起了一个别名 build</p>
-<p>之后可以使用 <code>npm run build</code>命令来代替<code>nodemon a.js</code>命令</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-        <tag>Gulp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>08-node中的同步异步API</title>
     <url>/2021/04/28/08-node%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5API/</url>
     <content><![CDATA[<h1 id="node中的同步和异步API"><a href="#node中的同步和异步API" class="headerlink" title="node中的同步和异步API"></a>node中的同步和异步API</h1><p>nodejs中的API，拿到他们执行结果的方式有两种</p>
@@ -1191,48 +1233,6 @@
       </tags>
   </entry>
   <entry>
-    <title>05-nodejs中的模块加载机制</title>
-    <url>/2021/04/26/05-nodejs%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h1 id="nodejs中的模块加载机制"><a href="#nodejs中的模块加载机制" class="headerlink" title="nodejs中的模块加载机制"></a>nodejs中的模块加载机制</h1><p>nodejs使用<code>require(&#39;&#39;)</code>方法来加载模块，参数即为模块名或者路径</p>
-<h2 id="require-查找模块"><a href="#require-查找模块" class="headerlink" title="require()查找模块"></a>require()查找模块</h2><h3 id="1-拥有完整路径-有路径但没有模块后缀"><a href="#1-拥有完整路径-有路径但没有模块后缀" class="headerlink" title="1.拥有完整路径/有路径但没有模块后缀"></a>1.拥有完整路径/有路径但没有模块后缀</h3><p>1.如果<code>require(&#39;模块&#39;)</code>参数中使用完整路径，则直接按照路径引入，找不到文件则报错</p>
-<ul>
-<li>例如 <code>require(&#39;./find.js&#39;)</code></li>
-<li>完整模块路径可以是<strong>相对/绝对路径</strong></li>
-<li>此时执行<code>require(&#39;./find.js&#39;)</code>代码时，会在相应的目录下找对应的find.js文件引入执行</li>
-</ul>
-<span id="more"></span>
-
-<p>2.如果参数中模块后缀省略，先找相应的同名js文件，再找同名的文件夹</p>
-<ul>
-<li>例如 <code>require(&#39;./find&#39;)</code></li>
-<li>先找对应目录下的find.js文件</li>
-<li>找不到就找同名的find文件夹</li>
-</ul>
-<p>3.如果找到同名文件夹则引入执行文件夹中的<strong>index.js模块</strong></p>
-<ul>
-<li>找不到同名文件夹则报错</li>
-</ul>
-<p>4.如果文件夹中没有index.js模块，就会找当前文件夹(与参数中模块同名的文件夹)下的package.json文件,并引入执行其中main字段的主/入口模块</p>
-<p>5.如果没有指定的入口模块或者入口模块找不到，则报错</p>
-<h3 id="2-没有路径且没有后缀"><a href="#2-没有路径且没有后缀" class="headerlink" title="2.没有路径且没有后缀"></a>2.没有路径且没有后缀</h3><p>例如：<code>require(&#39;find&#39;)</code></p>
-<p>1.nodejs先假设find模块为系统模块，在系统模块中查找</p>
-<p>2.系统模块查找不到就进入当前目录的node_modules文件夹中</p>
-<p>3.在node_modules文件夹中首先查找同名js文件</p>
-<p>4.查找不到同名文件则查找同名文件夹(find文件夹)</p>
-<p>5.引入执行同名文件夹(find文件夹)中的index.js模块</p>
-<p>6.如果没有index.js模块，则查看当前文件夹(find文件夹)下的package.json文件中main字段指示的入口模块</p>
-<p>7.引入执行package.json文件中main字段指示的入口模块</p>
-<p>8.若没有main字段，或者入口模块找不到则报错</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-        <tag>Gulp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>09-promise对象</title>
     <url>/2021/05/06/09-promise%E5%AF%B9%E8%B1%A1/</url>
     <content><![CDATA[<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>promise对象出现的目的是解决nodejs中异步编程中<a href="08-node%E3%80%82%E3%80%82%E3%80%82">回调地狱</a>的问题。</p>
@@ -1274,28 +1274,6 @@ return p2();
 </ul>
 <p><img data-src="/images/09-promise%E5%AF%B9%E8%B1%A1/image-20210506211329533.png" alt="image-20210506211329533"></p>
 <p>输出结果即为顺序的1 2 3</p>
-]]></content>
-      <categories>
-        <category>前后端交互</category>
-      </categories>
-      <tags>
-        <tag>Nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>11-nodejs全局对象global</title>
-    <url>/2021/05/10/11-nodejs%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1global/</url>
-    <content><![CDATA[<h1 id="nodejs全局对象global"><a href="#nodejs全局对象global" class="headerlink" title="nodejs全局对象global"></a>nodejs全局对象global</h1><p>浏览器BOM中的全局对象是<strong>window</strong></p>
-<p>Node中全局对象是<strong>global</strong></p>
-<p>Node全局对象global有许多和window对象相同的方法</p>
-<p>使用global对象的方法可以省略global</p>
-<ul>
-<li>console.log() 在控制台输出</li>
-<li>setTimeout() 设置定时器(定时触发一次)</li>
-<li>clearTimeout() 清除定时器</li>
-<li>setInterval() 设置定时器(每经过设定的时间就触发)</li>
-<li>等等</li>
-</ul>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -1379,6 +1357,28 @@ return p2();
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//引入util模块的promisify方法</span></span><br><span class="line"><span class="keyword">var</span> promisify = <span class="built_in">require</span>(<span class="string">&#x27;util&#x27;</span>).promisify</span><br><span class="line"></span><br><span class="line"><span class="comment">//将要改造的异步API包裹在promisify方法中，形成一个新的异步API</span></span><br><span class="line"><span class="keyword">var</span> readFile = promisify(fs.readFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用新异步API</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">let</span> r1 = <span class="keyword">await</span> readFile(<span class="string">&#x27;./1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">console</span>.log(r1);</span><br><span class="line">&#125;</span><br><span class="line">run()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><code>readFile</code> 即为基于<code>fs.readFile</code>改造后的新异步API</p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>11-nodejs全局对象global</title>
+    <url>/2021/05/10/11-nodejs%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1global/</url>
+    <content><![CDATA[<h1 id="nodejs全局对象global"><a href="#nodejs全局对象global" class="headerlink" title="nodejs全局对象global"></a>nodejs全局对象global</h1><p>浏览器BOM中的全局对象是<strong>window</strong></p>
+<p>Node中全局对象是<strong>global</strong></p>
+<p>Node全局对象global有许多和window对象相同的方法</p>
+<p>使用global对象的方法可以省略global</p>
+<ul>
+<li>console.log() 在控制台输出</li>
+<li>setTimeout() 设置定时器(定时触发一次)</li>
+<li>clearTimeout() 清除定时器</li>
+<li>setInterval() 设置定时器(每经过设定的时间就触发)</li>
+<li>等等</li>
+</ul>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -1591,8 +1591,7 @@ return p2();
 </ul>
 <br>
 
-<p><strong>模板中格式化时间的实例</strong></p>
-<p>使用<code>dateformat</code> <a href="https://www.npmjs.com/package/dateformat">npm包</a></p>
+<h5 id="模板中格式化时间的实例"><a href="#模板中格式化时间的实例" class="headerlink" title="模板中格式化时间的实例"></a>模板中格式化时间的实例</h5><p>使用<code>dateformat</code> <a href="https://www.npmjs.com/package/dateformat">npm包</a></p>
 <p><code>npm install dateformat</code></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> dateformat = <span class="built_in">require</span>(<span class="string">&#x27;dateformat&#x27;</span>)</span><br><span class="line"><span class="comment">//导入模板变量</span></span><br><span class="line"><span class="comment">//将dateformat方法作为变量导入模板</span></span><br><span class="line">template.defaults.imports.dateformat = dateformat</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> viewpath = path.join(__dirname,<span class="string">&#x27;views&#x27;</span>,<span class="string">&#x27;07.art&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> html = template(viewpath,&#123;</span><br><span class="line">    time:<span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(html);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -1830,52 +1829,37 @@ return p2();
       </tags>
   </entry>
   <entry>
-    <title>http核心模块构建简单WEB服务器</title>
-    <url>/2021/04/13/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="1-http核心模块构建简单WEB服务器"><a href="#1-http核心模块构建简单WEB服务器" class="headerlink" title="1.http核心模块构建简单WEB服务器"></a>1.http核心模块构建简单WEB服务器</h1><span id="more"></span>
+    <title>15-学生信息管理系统实例</title>
+    <url>/2021/07/29/15-%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%AE%9E%E4%BE%8B/</url>
+    <content><![CDATA[<h1 id="15-学生信息管理系统实例"><a href="#15-学生信息管理系统实例" class="headerlink" title="15-学生信息管理系统实例"></a>15-学生信息管理系统实例</h1><p><img data-src="/images/15-%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%AE%9E%E4%BE%8B/image-20210729094611957.png" alt="image-20210729094611957"></p>
+<h2 id="4-创建路由并实现页面模板呈递"><a href="#4-创建路由并实现页面模板呈递" class="headerlink" title="4.创建路由并实现页面模板呈递"></a>4.创建路由并实现页面模板呈递</h2><p>之前通过请求方式和请求URL来区分请求的方式较繁琐</p>
+<p>使用<strong>第三方模块router</strong>简化路由</p>
+<span id="more"></span>
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-1搭建服务器时的IP和端口号简单解释"><a href="#1-1搭建服务器时的IP和端口号简单解释" class="headerlink" title="1.1搭建服务器时的IP和端口号简单解释"></a>1.1搭建服务器时的IP和端口号简单解释</h2><p>在端口3000上打开服务器</p>
-<p>IP标识一台计算机</p>
-<p>端口标识一个应用程序</p>
-<p>IP:端口号 可以<strong>唯一标识一台计算机上的一个应用程序</strong></p>
-<p>这里localhost:3000即为本机上的由<code>nodejs</code>搭建的服务器应用程序</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.listen(3000,function()&#123;  </span><br><span class="line">    console.log(&quot;服务器启动成功，可以通过http:&#x2F;&#x2F;127.0.0.1&#x2F;3000&#x2F;访问&quot;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="第三方模块router"><a href="#第三方模块router" class="headerlink" title="第三方模块router"></a>第三方模块router</h3><p>功能：简便的实现路由，易于维护</p>
+<p><code>npm install router</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入模块</span></span><br><span class="line"><span class="keyword">const</span> getRouter = <span class="built_in">require</span>(<span class="string">&#x27;router&#x27;</span>)</span><br><span class="line"><span class="comment">//获取路由对象router</span></span><br><span class="line"><span class="keyword">const</span> router = getRouter()</span><br><span class="line"><span class="comment">//使用router的get或post方法处理相应请求</span></span><br><span class="line">	<span class="comment">//第一个参数为请求URL</span></span><br><span class="line">	<span class="comment">//第二个参数为处理的回调函数</span></span><br><span class="line">router.get(<span class="string">&#x27;/add&#x27;</span>,<span class="function">(<span class="params"> req,res </span>) =&gt;</span> &#123;</span><br><span class="line">    res.end(<span class="string">&#x27;add&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">router.get(<span class="string">&#x27;/list&#x27;</span>,<span class="function">(<span class="params"> req,res </span>) =&gt;</span> &#123;</span><br><span class="line">    res.end(<span class="string">&#x27;list&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//调用router对象启用路由</span></span><br><span class="line"><span class="comment">//router对象的第三个参数是回调函数(必需)</span></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    router(req,res,<span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="1-2中文乱码的解决方法"><a href="#1-2中文乱码的解决方法" class="headerlink" title="1.2中文乱码的解决方法"></a>1.2中文乱码的解决方法</h2><p>​    加上头部让浏览器明确以utf-8编码格式解析</p>
-<ul>
-<li><p>第一种方法</p>
-<p>通过meta元数据声明当前文本的编码格式为utf-8</p>
-<p>加上<code>response.write(&#39;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;/head&gt;&#39;);</code></p>
-</li>
-<li><p>第二种方法</p>
-<p>加上<code>response.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
-<p><strong>不同响应内容对应的响应类型是不一样的</strong> 例如text/plain 或 text/html</p>
-<p>第二种方法加上的头部可以在浏览器中查看</p>
-<p>F12 Network下查看</p>
-<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202501529.png" alt="image-20210412202501529"></p>
-<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202544524.png" alt="image-20210412202544524"></p>
-</li>
-</ul>
-<h2 id="1-3-setHeader-方法"><a href="#1-3-setHeader-方法" class="headerlink" title="1.3 setHeader()方法"></a>1.3 setHeader()方法</h2><p>在响应头部添加响应类型字段</p>
-<p><code>res.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
-<ul>
-<li><p>Content-Type，<strong>响应内容类型</strong></p>
-<ul>
-<li><p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
-</li>
-<li><p>text/plain，为响应数据的格式，text/plain为普通文本，响应的数据会被当作<strong>普通文本</strong>处理(html标签也会被当作普通文本)</p>
-</li>
-<li><p>text/html，为<strong>html文本</strong>，响应数据中的<strong>html标签会被浏览器自动识别并解释执行</strong></p>
-</li>
-</ul>
-</li>
-<li><p>charset=utf-8，指明返回的数据是utf-8格式编码，解决中文乱码问题 </p>
-</li>
-</ul>
+<h2 id="5-实现静态资源访问"><a href="#5-实现静态资源访问" class="headerlink" title="5.实现静态资源访问"></a>5.实现静态资源访问</h2><p>静态资源：css，图片等</p>
+<p>使用<strong>第三方模块serve-static</strong></p>
+<h3 id="第三方模块serve-static"><a href="#第三方模块serve-static" class="headerlink" title="第三方模块serve-static"></a>第三方模块serve-static</h3><p>功能：实现静态资源访问服务</p>
+<p><code>npm install serve-static</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//1.引入模块</span></span><br><span class="line"><span class="keyword">const</span> serveStatic = <span class="built_in">require</span>(<span class="string">&#x27;serve-static&#x27;</span>)</span><br><span class="line"><span class="comment">//2.设定静态资源存放目录</span></span><br><span class="line"><span class="keyword">const</span> serve = serveStatic(path.join(__dirname,<span class="string">&#x27;public&#x27;</span>))</span><br><span class="line"><span class="comment">//在server.on()方法中调用serve方法（当服务器接收到请求时判断是否为静态资源请求从而做出反应）</span></span><br><span class="line">server.on(<span class="string">&#x27;request&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    router(req , res, <span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="comment">//3.serve方法启动静态资源访问服务</span></span><br><span class="line">    	<span class="comment">//第三个参数是必需的回调函数</span></span><br><span class="line">    serve(req , res , <span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="7-实现学生信息展示功能"><a href="#7-实现学生信息展示功能" class="headerlink" title="7.实现学生信息展示功能"></a>7.实现学生信息展示功能</h2><h3 id="第三方模块dateformat"><a href="#第三方模块dateformat" class="headerlink" title="第三方模块dateformat"></a>第三方模块dateformat</h3><p><a href="https://templar136.github.io/2021/05/31/14-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80/">14-模板引擎基础中提到过</a></p>
+<br>
+
+<h2 id="8-进一步将实例模块化"><a href="#8-进一步将实例模块化" class="headerlink" title="8.进一步将实例模块化"></a>8.进一步将实例模块化</h2><p>注意到<strong>router路由</strong>的代码可以独立出来</p>
+<p>所以创建route文件夹下的index.js文件，将与router路由有关的代码放入</p>
+<p>然后使用require将这个模块引入主模块app.js</p>
+<p><img data-src="/images/15-%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%AE%9E%E4%BE%8B/image-20210805115329922.png" alt="route文件夹下的index.js文件"></p>
+<p>将router路由代码提出时要注意<strong>需要的依赖模块</strong></p>
+<p>app.js文件中只保留<strong>第三方、用户自定义模块的引入</strong>，<strong>路径拼接</strong>，<strong>服务器创建</strong>和<strong>模板配置</strong>等代码</p>
+<p>这样的代码更接近于实际开发的模块化格式</p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
@@ -1885,48 +1869,52 @@ return p2();
       </tags>
   </entry>
   <entry>
-    <title>web服务器响应文件中的数据</title>
-    <url>/2021/04/13/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<h1 id="1-web服务器响应文件中的数据"><a href="#1-web服务器响应文件中的数据" class="headerlink" title="1.web服务器响应文件中的数据"></a>1.web服务器响应文件中的数据</h1><h2 id="1-1Nodejs构建web服务器代码如下"><a href="#1-1Nodejs构建web服务器代码如下" class="headerlink" title="1.1Nodejs构建web服务器代码如下"></a>1.1Nodejs构建web服务器代码如下</h2><span id="more"></span>
+    <title>16-Express框架</title>
+    <url>/2021/08/11/16-Express%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<h1 id="16-Express框架"><a href="#16-Express框架" class="headerlink" title="16-Express框架"></a>16-Express框架</h1><ul>
+<li><p>Express是基于Node平台的<strong>web应用开发框架</strong></p>
+</li>
+<li><p>是Node的第三方模块</p>
+</li>
+</ul>
+<p>使用<code>npm install express</code>下载</p>
+<p>Express框架简化了创建web应用的过程</p>
+<span id="more"></span>
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入核心模块http和fs</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs=<span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> url=req.url;</span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//请求时响应html文件</span></span><br><span class="line">        fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//请求失败时响应普通文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(<span class="string">&quot;文件读取失败&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//请求成功时响应html文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">//因为html文件中引用了jQuery.js文件，所以要手动添加这个文件的访问路径</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="string">&quot;3000&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功,可以访问3000端口&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="1-Express框架特性"><a href="#1-Express框架特性" class="headerlink" title="1.Express框架特性"></a>1.Express框架特性</h2><ul>
+<li>方便简洁的路由定义方式（router模块就来源于Express框架）</li>
+<li>获取HTTP请求参数进行简化处理</li>
+<li>对模板引擎支持度高，方便渲染动态HTML页面</li>
+<li>提供了<strong>中间件机制</strong>有效控制HTTP请求</li>
+<li>拥有大量<strong>第三方中间件</strong>对功能进行扩展</li>
+</ul>
+<h3 id="1-1简单样例"><a href="#1-1简单样例" class="headerlink" title="1.1简单样例"></a>1.1简单样例</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入express框架</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="comment">//创建网站服务器</span></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="comment">//设置路由</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.send(<span class="string">&#x27;网站主页&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/list&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.send(&#123;<span class="attr">mes</span>:<span class="string">&#x27;这是list页面&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;yang&#x27;</span>&#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="string">&#x27;3000&#x27;</span>,<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;服务器开启成功&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>打开文件中的数据使用fs核心模块的<code>fs.readFile()</code>方法</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>express框架可以直接<strong>使用express()方法创建网站服务器</strong></li>
+<li>app网站服务器对象可以使用<strong>get和post方法</strong>处理相应的HTTP请求</li>
+<li>使用**res.send()**可以向客户端发送响应<ul>
+<li>send方法内部会自动检测响应内容的类型</li>
+<li>send方法会自动设置http状态码</li>
+<li>send方法会<strong>自动设置响应内容类型和编码</strong></li>
+<li>send方法可以直接向客户端<strong>响应对象</strong>，end方法不能直接响应对象</li>
+</ul>
+</li>
+<li>express框架创建的网站服务器在访问不存在的路由时会显示<code>Cannot Get ‘目的路由’</code><ul>
+<li>原生js创建的网站服务器访问不存在的路由时会显示页面不存在</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/16-Express%E6%A1%86%E6%9E%B6/image-20210811155312569.png" alt="send方法自动设置响应内容类型和编码格式"></p>
+<br>
 
-<p>nodejs将文件中的<strong>数据</strong>响应给浏览器</p>
-<p>将<code>fs.readFile</code>返回的文件中数据data用res.end(data)响应给浏览器并加上相应格式的响应类型Content-Type</p>
-<p><strong>注意这里的data直接响应给浏览器解释执行，不需要呈现出来查看，所以不需要toString()方法转换为可识别字符串</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">res.end(data);</span><br></pre></td></tr></table></figure>
-
-<p>在浏览器中访问如下</p>
-<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223931130.png" alt="image-20210412223931130"></p>
-<h2 id="1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"><a href="#1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url" class="headerlink" title="1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"></a>1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url</h2><p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223645626.png" alt="image-20210412223645626"></p>
-<p>例如html文件中有外部引入的jQuery.js文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;./jQuery.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>则需要手动添加到jQuery.js文件的请求url</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="2-Content-Type内容类型"><a href="#2-Content-Type内容类型" class="headerlink" title="2.Content-Type内容类型"></a>2.Content-Type内容类型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br></pre></td></tr></table></figure>
-
-<p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
-<p><a href="http://tool.oschina.net/commons">http://tool.oschina.net/commons</a></p>
-<p>上面的网址可以查看不同类型的数据使用什么响应类型</p>
-<h1 id="3-服务器根据不同的请求URL可以返回不同的数据"><a href="#3-服务器根据不同的请求URL可以返回不同的数据" class="headerlink" title="3.服务器根据不同的请求URL可以返回不同的数据"></a>3.服务器根据不同的请求URL可以返回不同的数据</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> url=request.url;</span><br><span class="line">    <span class="comment">//判断url不同 响应不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//可以使用end()直接响应数据后结束</span></span><br><span class="line">            <span class="comment">//响应内容只能是 字符串和二进制数串</span></span><br><span class="line">            <span class="comment">//数字，布尔值，数组，对象等需要使用JSON转换成字符串</span></span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/login&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/login&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>)</span><br><span class="line">        response.end(<span class="string">&quot;登陆页面&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/shuzu&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/shuzu&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">        <span class="comment">//响应经过JSON转换后的字符串&quot;[1,2,3,4]&quot;</span></span><br><span class="line">        response.end(<span class="built_in">JSON</span>.stringify(a));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/html&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/html&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">        response.end(<span class="string">&quot;&lt;p&gt;你好&lt;a href=&#x27;#&#x27;&gt;点击超链接&lt;/a&gt;&lt;/p&gt;&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其他url返回&quot;404 Not Found.&quot;</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;404 Not Found.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p>URL为/html时</p>
-<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200745087.png" alt="image-20210414200745087"></p>
-<p>URL为/login时</p>
-<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200823281.png" alt="image-20210414200823281"></p>
+<p><img data-src="/images/16-Express%E6%A1%86%E6%9E%B6/image-20210811155427958.png" alt="send方法响应的对象"></p>
 ]]></content>
       <categories>
         <category>前后端交互</category>
       </categories>
       <tags>
-        <tag>Nodejs</tag>
+        <tag>Express</tag>
       </tags>
   </entry>
   <entry>
@@ -2034,10 +2022,111 @@ return p2();
       </tags>
   </entry>
   <entry>
+    <title>http核心模块构建简单WEB服务器</title>
+    <url>/2021/04/13/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="1-http核心模块构建简单WEB服务器"><a href="#1-http核心模块构建简单WEB服务器" class="headerlink" title="1.http核心模块构建简单WEB服务器"></a>1.http核心模块构建简单WEB服务器</h1><span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Node中有一个核心模块：http</span></span><br><span class="line"><span class="comment">//这个模块就是用来创建编写服务器的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//服务器</span></span><br><span class="line">    <span class="comment">//接受请求</span></span><br><span class="line">    <span class="comment">//处理请求</span></span><br><span class="line">    <span class="comment">//给出响应(反馈)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.引入核心模块http</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用http.createServer()创建一个WEB服务器</span></span><br><span class="line"><span class="comment">//      方法返回一个Server实例</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.注册request请求事件，当浏览器请求发向服务器时触发</span></span><br><span class="line"><span class="comment">//第二个参数是事件处理函数</span></span><br><span class="line">    <span class="comment">//请求处理函数中接收两个参数</span></span><br><span class="line">        <span class="comment">//Request   请求对象</span></span><br><span class="line">            <span class="comment">//获取客户端的一些请求信息，例如请求路径</span></span><br><span class="line">        <span class="comment">//Response  响应对象</span></span><br><span class="line">            <span class="comment">//用来给客户端发送响应信息</span></span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//服务器接收到客户端请求后就在后台输出 请求的url(路径)</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//response对象的write()方法可以给客户端发送响应数据</span></span><br><span class="line">        <span class="comment">//此时客户端访问http://127.0.0.1/3000/ 时会返回hello nodejs</span></span><br><span class="line">    response.write(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">    response.write(<span class="string">&quot; nodejs&quot;</span>);</span><br><span class="line">    <span class="comment">//可以有多个write()但最后必须有一个end()结束响应 否则客户端会一直等待</span></span><br><span class="line">    response.end()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.绑定端口号，启动服务器</span></span><br><span class="line"><span class="comment">//第二个参数的函数在服务器启动时执行(起日志作用)</span></span><br><span class="line">server.listen(<span class="number">3000</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//在3000端口启动服务器</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功，可以通过http://127.0.0.1/3000/访问&quot;</span>);</span><br><span class="line">    <span class="comment">//127.0.0.1也可以换成localhost</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1搭建服务器时的IP和端口号简单解释"><a href="#1-1搭建服务器时的IP和端口号简单解释" class="headerlink" title="1.1搭建服务器时的IP和端口号简单解释"></a>1.1搭建服务器时的IP和端口号简单解释</h2><p>在端口3000上打开服务器</p>
+<p>IP标识一台计算机</p>
+<p>端口标识一个应用程序</p>
+<p>IP:端口号 可以<strong>唯一标识一台计算机上的一个应用程序</strong></p>
+<p>这里localhost:3000即为本机上的由<code>nodejs</code>搭建的服务器应用程序</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server.listen(3000,function()&#123;  </span><br><span class="line">    console.log(&quot;服务器启动成功，可以通过http:&#x2F;&#x2F;127.0.0.1&#x2F;3000&#x2F;访问&quot;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-2中文乱码的解决方法"><a href="#1-2中文乱码的解决方法" class="headerlink" title="1.2中文乱码的解决方法"></a>1.2中文乱码的解决方法</h2><p>​    加上头部让浏览器明确以utf-8编码格式解析</p>
+<ul>
+<li><p>第一种方法</p>
+<p>通过meta元数据声明当前文本的编码格式为utf-8</p>
+<p>加上<code>response.write(&#39;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;/head&gt;&#39;);</code></p>
+</li>
+<li><p>第二种方法</p>
+<p>加上<code>response.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
+<p><strong>不同响应内容对应的响应类型是不一样的</strong> 例如text/plain 或 text/html</p>
+<p>第二种方法加上的头部可以在浏览器中查看</p>
+<p>F12 Network下查看</p>
+<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202501529.png" alt="image-20210412202501529"></p>
+<p><img data-src="/images/http%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E6%9E%84%E5%BB%BA%E7%AE%80%E5%8D%95WEB%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20210412202544524.png" alt="image-20210412202544524"></p>
+</li>
+</ul>
+<h2 id="1-3-setHeader-方法"><a href="#1-3-setHeader-方法" class="headerlink" title="1.3 setHeader()方法"></a>1.3 setHeader()方法</h2><p>在响应头部添加响应类型字段</p>
+<p><code>res.setHeader(&quot;Content-Type&quot;,&quot;text/plain; charset=utf-8&quot;)</code></p>
+<ul>
+<li><p>Content-Type，<strong>响应内容类型</strong></p>
+<ul>
+<li><p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
+</li>
+<li><p>text/plain，为响应数据的格式，text/plain为普通文本，响应的数据会被当作<strong>普通文本</strong>处理(html标签也会被当作普通文本)</p>
+</li>
+<li><p>text/html，为<strong>html文本</strong>，响应数据中的<strong>html标签会被浏览器自动识别并解释执行</strong></p>
+</li>
+</ul>
+</li>
+<li><p>charset=utf-8，指明返回的数据是utf-8格式编码，解决中文乱码问题 </p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>web服务器响应文件中的数据</title>
+    <url>/2021/04/13/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="1-web服务器响应文件中的数据"><a href="#1-web服务器响应文件中的数据" class="headerlink" title="1.web服务器响应文件中的数据"></a>1.web服务器响应文件中的数据</h1><h2 id="1-1Nodejs构建web服务器代码如下"><a href="#1-1Nodejs构建web服务器代码如下" class="headerlink" title="1.1Nodejs构建web服务器代码如下"></a>1.1Nodejs构建web服务器代码如下</h2><span id="more"></span>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//引入核心模块http和fs</span></span><br><span class="line"><span class="keyword">var</span> http=<span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs=<span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建服务器</span></span><br><span class="line"><span class="keyword">var</span> server=http.createServer();</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> url=req.url;</span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//请求时响应html文件</span></span><br><span class="line">        fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//请求失败时响应普通文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(<span class="string">&quot;文件读取失败&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//请求成功时响应html文本</span></span><br><span class="line">                res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">//因为html文件中引用了jQuery.js文件，所以要手动添加这个文件的访问路径</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(<span class="string">&quot;3000&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功,可以访问3000端口&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>打开文件中的数据使用fs核心模块的<code>fs.readFile()</code>方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fs.readFile(<span class="string">&quot;todoList.html&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>nodejs将文件中的<strong>数据</strong>响应给浏览器</p>
+<p>将<code>fs.readFile</code>返回的文件中数据data用res.end(data)响应给浏览器并加上相应格式的响应类型Content-Type</p>
+<p><strong>注意这里的data直接响应给浏览器解释执行，不需要呈现出来查看，所以不需要toString()方法转换为可识别字符串</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">res.end(data);</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中访问如下</p>
+<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223931130.png" alt="image-20210412223931130"></p>
+<h2 id="1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"><a href="#1-2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url" class="headerlink" title="1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url"></a>1.2如果响应的html文件中有外部引入的文件如css样式或者js文件，则需要手动添加到这些文件的请求url</h2><p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210412223645626.png" alt="image-20210412223645626"></p>
+<p>例如html文件中有外部引入的jQuery.js文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;./jQuery.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>则需要手动添加到jQuery.js文件的请求url</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/jQuery.js&quot;</span>)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&quot;jQuery.js&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)</span><br><span class="line">            &#123;</span><br><span class="line">                res.end(<span class="string">&quot;load faild&quot;</span>)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res.end(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-Content-Type内容类型"><a href="#2-Content-Type内容类型" class="headerlink" title="2.Content-Type内容类型"></a>2.Content-Type内容类型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">res.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>) </span><br></pre></td></tr></table></figure>
+
+<p>不同的响应内容要填入不同的类型(text/plain、text/html等)</p>
+<p><a href="http://tool.oschina.net/commons">http://tool.oschina.net/commons</a></p>
+<p>上面的网址可以查看不同类型的数据使用什么响应类型</p>
+<h1 id="3-服务器根据不同的请求URL可以返回不同的数据"><a href="#3-服务器根据不同的请求URL可以返回不同的数据" class="headerlink" title="3.服务器根据不同的请求URL可以返回不同的数据"></a>3.服务器根据不同的请求URL可以返回不同的数据</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server.on(<span class="string">&quot;request&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;接受到请求，请求路径为：&quot;</span>+request.url);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> url=request.url;</span><br><span class="line">    <span class="comment">//判断url不同 响应不同的数据</span></span><br><span class="line">    <span class="keyword">if</span>(url==<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//可以使用end()直接响应数据后结束</span></span><br><span class="line">            <span class="comment">//响应内容只能是 字符串和二进制数串</span></span><br><span class="line">            <span class="comment">//数字，布尔值，数组，对象等需要使用JSON转换成字符串</span></span><br><span class="line">        response.end(<span class="string">&quot;hello nodejs&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/login&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/login&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/plain; charset=utf-8&quot;</span>)</span><br><span class="line">        response.end(<span class="string">&quot;登陆页面&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/shuzu&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/shuzu&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">        <span class="comment">//响应经过JSON转换后的字符串&quot;[1,2,3,4]&quot;</span></span><br><span class="line">        response.end(<span class="built_in">JSON</span>.stringify(a));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//当url为&quot;/html&quot;时</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(url==<span class="string">&quot;/html&quot;</span>)&#123;</span><br><span class="line">        response.setHeader(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;text/html; charset=utf-8&quot;</span>) </span><br><span class="line">        response.end(<span class="string">&quot;&lt;p&gt;你好&lt;a href=&#x27;#&#x27;&gt;点击超链接&lt;/a&gt;&lt;/p&gt;&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其他url返回&quot;404 Not Found.&quot;</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        response.end(<span class="string">&quot;404 Not Found.&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>URL为/html时</p>
+<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200745087.png" alt="image-20210414200745087"></p>
+<p>URL为/login时</p>
+<p><img data-src="/images/web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE/image-20210414200823281.png" alt="image-20210414200823281"></p>
+]]></content>
+      <categories>
+        <category>前后端交互</category>
+      </categories>
+      <tags>
+        <tag>Nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>12-数据库相关概念</title>
     <url>/2021/05/11/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<h1 id="数据库相关概念"><a href="#数据库相关概念" class="headerlink" title="数据库相关概念"></a>数据库相关概念</h1><h2 id="1-使用MongoDB数据库"><a href="#1-使用MongoDB数据库" class="headerlink" title="1.使用MongoDB数据库"></a>1.使用MongoDB数据库</h2><p>MongoDB数据库<strong>可以使用js语法操作</strong>，前端开发人员更容易上手学习</p>
-<p>其他的数据库如MySQL、SQLServer等，都可以使用与它们契合度更高的语言进行操作</p>
+<p>MongoDB数据库是典型的<strong>非关系型数据库</strong>，数据可以使用<strong>JSON文件</strong>进行导入</p>
+<p>MySQL则是典型的<strong>关系型数据库</strong>，数据被组织成<strong>表的形式</strong>存储</p>
 <p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511201521744.png" alt="image-20210511201521744"></p>
 <span id="more"></span>
 
@@ -2083,7 +2172,7 @@ return p2();
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mongoose.connect(<span class="string">&#x27;mongodb://localhost/test&#x27;</span>,&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span> ,<span class="attr">useUnifiedTopology</span>: <span class="literal">true</span>&#125;)</span><br></pre></td></tr></table></figure>
 
 <p><img data-src="/images/12-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/image-20210511205344686.png" alt="image-20210511205344686"></p>
-<h3 id="2-3创建数据库"><a href="#2-3创建数据库" class="headerlink" title="2.3创建数据库"></a>2.3创建数据库</h3><p>MongoDB中不需要显式的创建数据库，<strong>不存在的数据库会被自动创建</strong></p>
+<h3 id="2-3创建数据库"><a href="#2-3创建数据库" class="headerlink" title="2.3创建数据库"></a>2.3创建数据库</h3><p>MongoDB中不需要显式的创建数据库，打开数据库时<strong>不存在的数据库会被自动创建</strong></p>
 <h3 id="2-4数据库的增添"><a href="#2-4数据库的增添" class="headerlink" title="2.4数据库的增添"></a>2.4数据库的增添</h3><h4 id="2-4-1创建集合"><a href="#2-4-1创建集合" class="headerlink" title="2.4.1创建集合"></a>2.4.1创建集合</h4><p>创建集合分两步</p>
 <ul>
 <li>1.设定集合规则</li>
