@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="多人博客管理系统项目 分为两部分 展示页面：博客前台展示文章总览页面和文章详情页面 管理页面：查看上传的文章列表，注册的用户列表，对文章增删查改等    1.项目初始化1.1 创建项目目录文件夹 myblog_project：项目根目录 public：静态资源文件夹 route：模块化路由文件夹 model：数据库和数据处理文件夹 views：模板文件夹 app.js：项目入口(主模块)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="17-多人博客管理系统项目">
+<meta property="og:url" content="http://example.com/2021/08/30/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="多人博客管理系统项目 分为两部分 展示页面：博客前台展示文章总览页面和文章详情页面 管理页面：查看上传的文章列表，注册的用户列表，对文章增删查改等    1.项目初始化1.1 创建项目目录文件夹 myblog_project：项目根目录 public：静态资源文件夹 route：模块化路由文件夹 model：数据库和数据处理文件夹 views：模板文件夹 app.js：项目入口(主模块)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203446873.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203543389.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830204312384.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830205046226.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830210812174.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831163400493.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831213028363.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831223205408.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831224117617.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901111933091.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901172232221.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901172822822.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901210811789.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210906172011394.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210906223507179.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908202048388.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908203033806.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908203525686.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908210224806.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908213035902.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908213411425.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908215109564.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908222811917.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909124935375.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909125348445.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909203316334.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909204804531.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909205952850.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909211437982.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909222033037.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210910104323832.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210910105508674.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203446873.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203543389.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830204312384.png">
+<meta property="og:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830205046226.png">
+<meta property="article:published_time" content="2021-08-30T10:03:23.000Z">
+<meta property="article:modified_time" content="2021-09-18T10:14:47.013Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="Nodejs">
+<meta property="article:tag" content="Mongodb数据库">
+<meta property="article:tag" content="Express">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203446873.png">
+
+<link rel="canonical" href="http://example.com/2021/08/30/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>17-多人博客管理系统项目 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/30/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          17-多人博客管理系统项目
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-30 18:03:23" itemprop="dateCreated datePublished" datetime="2021-08-30T18:03:23+08:00">2021-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-18 18:14:47" itemprop="dateModified" datetime="2021-09-18T18:14:47+08:00">2021-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/" itemprop="url" rel="index"><span itemprop="name">前后端交互</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="多人博客管理系统项目"><a href="#多人博客管理系统项目" class="headerlink" title="多人博客管理系统项目"></a>多人博客管理系统项目</h1><ul>
+<li>分为两部分<ul>
+<li><strong>展示页面</strong>：博客前台展示文章总览页面和文章详情页面</li>
+<li><strong>管理页面</strong>：查看上传的文章列表，注册的用户列表，对文章增删查改等</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-项目初始化"><a href="#1-项目初始化" class="headerlink" title="1.项目初始化"></a>1.项目初始化</h2><h3 id="1-1-创建项目目录文件夹"><a href="#1-1-创建项目目录文件夹" class="headerlink" title="1.1 创建项目目录文件夹"></a>1.1 创建项目目录文件夹</h3><ul>
+<li>myblog_project：项目根目录<ul>
+<li>public：静态资源文件夹</li>
+<li>route：模块化路由文件夹</li>
+<li>model：数据库和数据处理文件夹</li>
+<li>views：模板文件夹</li>
+<li>app.js：项目入口(主模块)</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="1-2-初始化项目描述文件"><a href="#1-2-初始化项目描述文件" class="headerlink" title="1.2 初始化项目描述文件"></a>1.2 初始化项目描述文件</h3><ul>
+<li><code>npm init- y</code></li>
+</ul>
+<h3 id="1-3-下载依赖模块"><a href="#1-3-下载依赖模块" class="headerlink" title="1.3 下载依赖模块"></a>1.3 下载依赖模块</h3><ul>
+<li><code>npm install express mongoose art-template express-art-template</code></li>
+</ul>
+<h3 id="1-4-创建网站服务器"><a href="#1-4-创建网站服务器" class="headerlink" title="1.4 创建网站服务器"></a>1.4 创建网站服务器</h3><ul>
+<li>访问路径为localhost:80</li>
+</ul>
+<h3 id="1-5-模块化路由"><a href="#1-5-模块化路由" class="headerlink" title="1.5 模块化路由"></a>1.5 模块化路由</h3><p>route文件夹下创建两个js文件</p>
+<ul>
+<li>home.js：展示页面路由模块</li>
+<li>admin.js：管理页面路由模块</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> home = express.Router()</span><br><span class="line"></span><br><span class="line"><span class="comment">//二级目录设置为&#x27;/&#x27;,访问时只需输入一级目录，浏览器自动加上&#x27;/&#x27;</span></span><br><span class="line">home.get(<span class="string">&#x27;/&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.send(<span class="string">&#x27;博客展示页面&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = home</span><br></pre></td></tr></table></figure>
+
+<center>home.js模块</center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> home = <span class="built_in">require</span>(<span class="string">&#x27;./route/home&#x27;</span>)</span><br><span class="line">app.use(<span class="string">&#x27;/home&#x27;</span>,home)</span><br></pre></td></tr></table></figure>
+
+<center>主模块中引入路由模块并匹配一级路由</center>
+
+<h3 id="1-6-请求静态页面处理"><a href="#1-6-请求静态页面处理" class="headerlink" title="1.6 请求静态页面处理"></a>1.6 请求静态页面处理</h3><p>将静态页面放在public文件夹下(例如管理页面和内容页面的js和css文件)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//静态资源请求</span></span><br><span class="line">    <span class="comment">//放在最上层避免模块化路由路径干扰</span></span><br><span class="line">app.use(express.static(path.join(__dirname,<span class="string">&#x27;public&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>在app.js中使用<code>express.static</code>方法处理静态资源请求</p>
+<h3 id="1-7-博客管理页面模板构建"><a href="#1-7-博客管理页面模板构建" class="headerlink" title="1.7 博客管理页面模板构建"></a>1.7 博客管理页面模板构建</h3><p>将后缀为.art的模板文件放在<strong>views文件下的admin文件夹</strong>中</p>
+<ul>
+<li>本项目中管理页面和内容页面的<strong>html文件使用art-template模板引擎渲染</strong>，所以改后缀为.art后放入views文件夹中</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模板文件目录设置</span></span><br><span class="line">app.set(<span class="string">&#x27;views&#x27;</span>,path.join(__dirname,<span class="string">&#x27;views&#x27;</span>))</span><br><span class="line"><span class="comment">//模板默认后缀设置</span></span><br><span class="line">app.set(<span class="string">&#x27;view engine&#x27;</span>,<span class="string">&#x27;art&#x27;</span>)</span><br><span class="line"><span class="comment">//设置art后缀的模板使用的模板引擎</span></span><br><span class="line">app.engine(<span class="string">&#x27;art&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;express-art-template&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<center>app.js中配置如下</center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">admin.get(<span class="string">&#x27;/login&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">&#x27;admin/login&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>admin.js中配置对模板请求的响应</center>
+
+<h3 id="1-8-模板中相对路径的问题"><a href="#1-8-模板中相对路径的问题" class="headerlink" title="1.8 模板中相对路径的问题"></a>1.8 模板中相对路径的问题</h3><p>模板中许多外链文件如css和js文件使用的都是<strong>相对路径</strong></p>
+<p>模板中的相对路径是<strong>相对于浏览器地址栏的路径</strong></p>
+<p>改为<strong>绝对路径</strong>可以避免因路由对象的虚拟路径而取不到静态资源文件的问题</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203446873.png" alt="login.art模板中的相对路径"></p>
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203543389.png" alt="相对路径相对于浏览器地址栏的路径"></p>
+<p>此时浏览器将地址栏中的login当作文件，所以<strong>相对路径即相对于/abc</strong></p>
+<ul>
+<li><p>可见此时请求静态资源<code>base.css</code>的路径变为了<code>http://localhost/abc/css/base.css</code></p>
+</li>
+<li><p>而<code>base.css</code>静态资源文件并不在<code>/public/abc</code>文件夹下，并且public文件夹下也并不存在abc文件夹，所以无法获取静态资源文件</p>
+</li>
+<li><p>/abc只是admin路由对象匹配的<strong>虚拟路径</strong>，这个虚拟路径<strong>随时可以发生变化</strong></p>
+</li>
+<li><p>所以在模块中使用相对路径获取静态资源文件并不合适</p>
+</li>
+<li><p>改为使用<strong>绝对路径</strong>解决这个问题</p>
+</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830204312384.png" alt="login.art模板中使用绝对路径"></p>
+<p>在原先的相对路径前加上<code>&#39;/&#39;</code>使其变为绝对路径，同时根据静态资源文件的路径加上admin</p>
+<p>此时请求静态资源文件的路径变为<code>http://localhost/admin/css/base.css</code></p>
+<p>经过<code>express.static</code>方法处理后在<code>/public/admin/css/base.css</code>找到静态资源文件</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830205046226.png" alt="模板使用绝对路径获取静态资源文件"></p>
+<br>
+
+<h3 id="1-9-优化模板中公共代码"><a href="#1-9-优化模板中公共代码" class="headerlink" title="1.9 优化模板中公共代码"></a>1.9 优化模板中公共代码</h3><p>将模板中公共代码提取为子模版</p>
+<p>将除login.art外的<strong>四个模板的头部和侧边栏提取为子模版</strong></p>
+<p>子模版header.art和aside.art存放在**/views/admin/common**文件夹下</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830210812174.png" alt="子模版引入"></p>
+<br>
+
+<h3 id="1-10-提取模板骨架"><a href="#1-10-提取模板骨架" class="headerlink" title="1.10 提取模板骨架"></a>1.10 提取模板骨架</h3><p>将除login.art外的四个模板中的开头结尾html结构提取到<code>./common/layout.art</code>文件中</p>
+<p>让四个模板继承骨架文件layout.art，并填上各自模板独立的内容</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831163400493.png" alt="修改后的user.art模板"></p>
+<br>
+
+<h2 id="2-登录功能"><a href="#2-登录功能" class="headerlink" title="2. 登录功能"></a>2. 登录功能</h2><h3 id="2-1-创建用户集合初始化用户"><a href="#2-1-创建用户集合初始化用户" class="headerlink" title="2.1 创建用户集合初始化用户"></a>2.1 创建用户集合初始化用户</h3><ul>
+<li>连接数据库</li>
+<li>创建用户集合</li>
+<li>初始化用户</li>
+</ul>
+<h4 id="2-1-1-连接数据库"><a href="#2-1-1-连接数据库" class="headerlink" title="2.1.1 连接数据库"></a>2.1.1 连接数据库</h4><p>model文件夹下的connect.js文件连接<strong>数据库blog</strong></p>
+<h4 id="2-1-2-创建用户集合"><a href="#2-1-2-创建用户集合" class="headerlink" title="2.1.2 创建用户集合"></a>2.1.2 创建用户集合</h4><p>model文件夹下的user.js文件创建用户集合</p>
+<p>用户<strong>user集合</strong>规则：用户名，邮箱，密码，角色，状态</p>
+<p>状态：0代表启用(默认为0)，1代表禁用</p>
+<p>导出<strong>集合构造函数User</strong></p>
+<h4 id="2-1-3-创建初始化用户"><a href="#2-1-3-创建初始化用户" class="headerlink" title="2.1.3 创建初始化用户"></a>2.1.3 创建初始化用户</h4><p>在user.js文件中创建一个初始化管理员用户</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个初始化用户</span></span><br><span class="line">User.create(&#123;</span><br><span class="line">    username:<span class="string">&#x27;zhangsan&#x27;</span>,</span><br><span class="line">    email:<span class="string">&#x27;zhangsan@123.com&#x27;</span>,</span><br><span class="line">    password:<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    role:<span class="string">&#x27;admin&#x27;</span>,</span><br><span class="line">    state:<span class="number">0</span></span><br><span class="line">&#125;).then( <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;初始化用户创建成功&#x27;</span>);</span><br><span class="line">&#125;).catch( <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;初始化用户创建失败&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831213028363.png" alt="创建的初始化用户"></p>
+<br>
+
+<h3 id="2-2-提交前客户端一次验证"><a href="#2-2-提交前客户端一次验证" class="headerlink" title="2.2 提交前客户端一次验证"></a>2.2 提交前客户端一次验证</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//提取表单所有控件并转化为方便处理的对象格式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">serializeToJSON</span> (<span class="params">form</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = &#123;&#125;</span><br><span class="line">    <span class="comment">//serializeArray()方法</span></span><br><span class="line">    <span class="comment">//将表单所有控件按名值提取为对象并组成一个数组</span></span><br><span class="line">    <span class="comment">//[&#123;name:&#x27;email&#x27;,value:&#x27;....&#x27;&#125;,&#123;name:&#x27;password&#x27;,value:&#x27;...&#x27;&#125;]</span></span><br><span class="line">    <span class="keyword">let</span> f = form.serializeArray()</span><br><span class="line">    <span class="comment">//将上述提取的数组简化为&#123;email:&#x27;...&#x27;,password:&#x27;...&#x27;&#125;</span></span><br><span class="line">    f.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;   </span><br><span class="line">        result[item.name] = item.value</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>common.js</center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;/admin/js/common.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt; </span><br><span class="line">    $(<span class="string">&#x27;#loginForm&#x27;</span>).on(<span class="string">&#x27;submit&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> result = serializeToJSON($(<span class="built_in">this</span>))</span><br><span class="line">        <span class="comment">//判断用户是否输入邮箱</span></span><br><span class="line">        <span class="comment">//trim()方法：去除字符串两边空格</span></span><br><span class="line">        <span class="keyword">if</span>(result.email.trim().length == <span class="number">0</span>)&#123;</span><br><span class="line">            alert(<span class="string">&#x27;请输入邮箱&#x27;</span>)</span><br><span class="line">            <span class="comment">//阻止程序运行并阻止表单默认提交事件</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    	<span class="comment">//判断用户是否输入密码</span></span><br><span class="line">        <span class="keyword">if</span>(result.password.trim().length == <span class="number">0</span>)&#123;</span><br><span class="line">            alert(<span class="string">&#x27;请输入密码&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<center>login.art模板中进行客户端提交验证</center>
+
+<h4 id="2-2-1-获取用户输入数据"><a href="#2-2-1-获取用户输入数据" class="headerlink" title="2.2.1 获取用户输入数据"></a>2.2.1 获取用户输入数据</h4><p><strong>serializeArray()方法</strong>提取表单中所有控件为<code>[&#123;name:&#39;...&#39;,value:&#39;...&#39;&#125;,&#123;name:&#39;...&#39;,value:&#39;...&#39;&#125;]</code>形式</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831223205408.png" alt="serializeArray()方法提取表单控件"></p>
+<p>将这种形式的数组进一步简化为易于处理的对象格式 <code>&#123;email:&#39;...&#39;,password:&#39;...&#39;&#125;</code></p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210831224117617.png" alt="处理后的用户输入数据"></p>
+<p>使用**自定义函数serializeToJSON()**实现</p>
+<ul>
+<li>发现**serializeToJSON()**函数的功能比较常用</li>
+<li>所以将serializeToJSON()函数提取到一个静态js文件common.js中</li>
+<li>文件放在<code>/public/admin/js</code>文件夹下</li>
+<li>其他模板获取静态js文件后即可使用这个函数</li>
+</ul>
+<h4 id="2-2-2-提交验证"><a href="#2-2-2-提交验证" class="headerlink" title="2.2.2 提交验证"></a>2.2.2 提交验证</h4><p>获取用户输入后进行邮箱和密码是否输入的验证</p>
+<ul>
+<li>若没有则弹出警示框提醒并阻止程序运行和表单提交</li>
+<li>若都输入则正常提交</li>
+</ul>
+<br>
+
+<h3 id="2-3-提交后服务器端二次验证"><a href="#2-3-提交后服务器端二次验证" class="headerlink" title="2.3 提交后服务器端二次验证"></a>2.3 提交后服务器端二次验证</h3><p>当客户端浏览器禁用JavaScript时，客户端一次验证就会失效，所以以防万一需要在服务端二次验证</p>
+<ul>
+<li>使用body-parser第三方模块获取post请求参数</li>
+<li>进行二次验证</li>
+</ul>
+<p>若<strong>验证失败</strong>则设置响应码为400并响应<strong>error.art</strong>错误模板</p>
+<ul>
+<li>错误模板继承<strong>layout.art</strong>HTML骨架</li>
+<li>再加入3s后返回登录页面的定时器</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;block <span class="string">&#x27;script&#x27;</span>&#125;&#125;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">            location.href = <span class="string">&#x27;/admin/login&#x27;</span> </span><br><span class="line">        &#125;,<span class="number">3000</span>)</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&#123;&#123;/block&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2-4-服务端查找用户是否存在"><a href="#2-4-服务端查找用户是否存在" class="headerlink" title="2.4 服务端查找用户是否存在"></a>2.4 服务端查找用户是否存在</h3><p>在admin.js路由模块中接受表单post请求时判断用户是否存在</p>
+<ul>
+<li>先引入model/user.js模块<strong>获取用户集合构造函数</strong></li>
+<li>接着findOne方法匹配用户信息</li>
+<li>找不到则返回错误信息</li>
+<li>找到用户<ul>
+<li>密码错误，返回错误信息</li>
+<li>密码正确，显示登录成功</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数据库查找用户</span></span><br><span class="line">    <span class="keyword">let</span> user = <span class="keyword">await</span> User.findOne(&#123;<span class="attr">email</span>:email&#125;)</span><br><span class="line">    <span class="comment">//如果用户存在</span></span><br><span class="line">    <span class="keyword">if</span>(user)&#123;</span><br><span class="line">        <span class="comment">//密码正确</span></span><br><span class="line">        <span class="keyword">if</span>(user.password == password)&#123;</span><br><span class="line">            res.send(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">        <span class="comment">//密码错误</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.render(<span class="string">&#x27;admin/error&#x27;</span>,&#123;<span class="attr">msg</span>:<span class="string">&#x27;邮箱或密码错误&#x27;</span>&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="comment">//如果用户不存在</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.render(<span class="string">&#x27;admin/error&#x27;</span>,&#123;<span class="attr">msg</span>:<span class="string">&#x27;邮箱或密码错误&#x27;</span>&#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<center>admin.js中查找用户是否存在部分代码</center>
+
+<br>
+
+<h3 id="2-5-密码加密-bcrypt"><a href="#2-5-密码加密-bcrypt" class="headerlink" title="2.5 密码加密 bcrypt"></a>2.5 密码加密 bcrypt</h3><p>用户的密码直接以明文形式存放在数据库中是不安全的</p>
+<p><strong>使用第三方模块bcrypt进行密码加密</strong></p>
+<ul>
+<li><p>哈希加密</p>
+</li>
+<li><p>在密文中加入随机字符串增加破解难度</p>
+</li>
+</ul>
+<h4 id="2-5-1-安装bcrypt模块"><a href="#2-5-1-安装bcrypt模块" class="headerlink" title="2.5.1 安装bcrypt模块"></a>2.5.1 安装bcrypt模块</h4><p>安装前需要三个依赖</p>
+<ul>
+<li>python 2.x<ul>
+<li><strong>在环境变量中配置path</strong></li>
+</ul>
+</li>
+<li>node-gyp 模块<ul>
+<li><code>npm install -g node-gyp</code> </li>
+<li>全局安装</li>
+</ul>
+</li>
+<li>windows-build-tools 模块<ul>
+<li><code>npm install --global --production windows-build-tools</code></li>
+<li>在<strong>管理员权限</strong>下安装</li>
+<li>全局安装</li>
+</ul>
+</li>
+</ul>
+<p>安装bcrypt模块</p>
+<ul>
+<li><code>npm install bcrypt</code><ul>
+<li><strong>管理员权限</strong></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h4 id="2-5-2-加密密码和比对明文密文"><a href="#2-5-2-加密密码和比对明文密文" class="headerlink" title="2.5.2 加密密码和比对明文密文"></a>2.5.2 加密密码和比对明文密文</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">createUser</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//生成随机数</span></span><br><span class="line">    <span class="comment">//参数数值越大，随机数越复杂</span></span><br><span class="line">    <span class="comment">//默认为10</span></span><br><span class="line">    <span class="keyword">const</span> salt = <span class="keyword">await</span> bcrypt.genSalt(<span class="number">10</span>)</span><br><span class="line">    <span class="comment">//生成加密密码，第一个参数为明文，第二个参数为生成的随机数</span></span><br><span class="line">    <span class="keyword">const</span> pass = <span class="keyword">await</span> bcrypt.hash(<span class="string">&#x27;123456&#x27;</span>,salt)</span><br><span class="line">    <span class="comment">//创建一个初始化用户</span></span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.create(&#123;</span><br><span class="line">        username:<span class="string">&#x27;zhangsan&#x27;</span>,</span><br><span class="line">        email:<span class="string">&#x27;zhangsan@123.com&#x27;</span>,</span><br><span class="line">        password:pass,</span><br><span class="line">        role:<span class="string">&#x27;admin&#x27;</span>,</span><br><span class="line">        state:<span class="number">0</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">console</span>.log(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>创建密码加密的用户文档</center>
+
+<p><code>bcrypt.genSalt(10)</code></p>
+<ul>
+<li>生成随机字符串，参数越大越复杂，默认为10</li>
+<li>返回promise对象</li>
+</ul>
+<p><code>bcrypt.hash(‘明文’,随机字符串)</code></p>
+<ul>
+<li><p>返回加密后的密码密文</p>
+</li>
+<li><p>返回promise对象</p>
+</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901111933091.png" alt="数据库中的加密密码"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//比对明文密码与密文密码</span></span><br><span class="line"><span class="comment">//bcrypt.compare()方法</span></span><br><span class="line"><span class="comment">//第一个参数为明文密码，第二个参数为密文密码</span></span><br><span class="line"><span class="comment">//返回布尔值</span></span><br><span class="line"><span class="keyword">let</span> isValid = <span class="keyword">await</span> bcrypt.compare(password,user.password)</span><br><span class="line"><span class="comment">//密码正确</span></span><br><span class="line"><span class="keyword">if</span>( isValid )&#123;</span><br><span class="line">    res.send(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line"><span class="comment">//密码错误</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    res.render(<span class="string">&#x27;admin/error&#x27;</span>,&#123;<span class="attr">msg</span>:<span class="string">&#x27;邮箱或密码错误&#x27;</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>登录时比对用户输入的明文密码和数据库中的密文密码</center>
+
+<p><code>bcrypt.compare(&#39;明文密码&#39;,密文密码)</code></p>
+<ul>
+<li><p>返回值为promise对象</p>
+</li>
+<li><p>使用await关键字获取promise对象结果为<strong>布尔值</strong></p>
+<ul>
+<li>真 即代表比对成功</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-6-cookie和session"><a href="#2-6-cookie和session" class="headerlink" title="2.6 cookie和session"></a>2.6 cookie和session</h3><p>上述客户端登录发送请求给服务端，服务端做出响应后，客户端和服务器端的<strong>连接就断开了</strong>（HTTP协议无连接）</p>
+<p>连接断开后就相当于没有登录，再次发送请求时会重置req对象</p>
+<p>这是因为<strong>http协议的无状态性</strong>导致的</p>
+<p>使用cookie和session存储客户端和服务器的关系数据可以解决这个问题</p>
+<h4 id="2-6-1-cookie"><a href="#2-6-1-cookie" class="headerlink" title="2.6.1 cookie"></a>2.6.1 cookie</h4><p>cookie是浏览器在<strong>客户端本地存储</strong>中开辟的一块空间，主要供服务端存储数据</p>
+<ul>
+<li><p>cookie中的数据以<strong>域名</strong>(Domain)区分</p>
+</li>
+<li><p>cookie是有<strong>过期时间</strong>的，过期cookie会被浏览器自动删除</p>
+</li>
+<li><p>cookie会随着客户端的请求<strong>一起被发送到服务器</strong></p>
+</li>
+<li><p>客户端<strong>第一次</strong>向服务器发送请求时(此时客户端没有存储cookie)，服务端将cookie信息与响应一同发送给客户端</p>
+<ul>
+<li>客户端接受到响应和cookie信息后将cookie存储在本地硬盘</li>
+<li>之后每次客户端发送请求都会带上存储的cookie</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-6-2-session"><a href="#2-6-2-session" class="headerlink" title="2.6.2 session"></a>2.6.2 session</h4><p>session实际上就是一个存储在<strong>服务端内存</strong>的对象，在session中可以存储多条数据，每条数据都有一个<code>sessionId</code>作为<strong>唯一标识</strong></p>
+<ul>
+<li><strong>cookie一般用来存储sessionId</strong>，客户端接受到自己的sessionId后，每次请求都带上自己的sessionId，服务端根据sessionId就可以确定客户端的身份，并维持联系。</li>
+</ul>
+<h4 id="2-6-3-在登录功能中应用cookie和session"><a href="#2-6-3-在登录功能中应用cookie和session" class="headerlink" title="2.6.3 在登录功能中应用cookie和session"></a>2.6.3 在登录功能中应用cookie和session</h4><p>使用第三方模块<code>express-session</code></p>
+<ul>
+<li>express框架官方提供的模块</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入express-session对象 用来设置服务器端session</span></span><br><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">&#x27;express-session&#x27;</span>)</span><br><span class="line"><span class="comment">//建立session对象</span></span><br><span class="line">app.use(session(&#123;<span class="attr">secret</span>:<span class="string">&#x27;secret key&#x27;</span>&#125;))</span><br></pre></td></tr></table></figure>
+
+<p>使用app.use拦截所有请求，并设置session对象</p>
+<ul>
+<li>session方法有一个必填参数secret<ul>
+<li>即加密sessionId所用的密钥</li>
+<li>密钥可以自定义</li>
+<li>此处设置为<code>secret key</code></li>
+</ul>
+</li>
+<li><strong>session对象设置在请求对象下 req.session</strong></li>
+</ul>
+<p>创建session对象后，当服务端<strong>向session对象中存入数据时</strong>，session对象就会为数据指定唯一的sessionId</p>
+<p>并且随着响应把sessionId存放在客户端cookie中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//密码正确</span></span><br><span class="line"><span class="keyword">if</span>( isValid )&#123;</span><br><span class="line">    <span class="comment">//将用户名存储在session对象中</span></span><br><span class="line">    req.session.username = user.username</span><br><span class="line">    res.send(<span class="string">&#x27;登录成功&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>login.js中登录请求路由处理函数部分代码</center>
+
+<p>处理<strong>用户登录请求</strong>时，在服务器二次验证用户存在并且密码正确时<strong>将用户名username存储在session对象中</strong></p>
+<p>此时就在session对象中存入了数据，session对象<strong>自动生成sessionId</strong>并随着响应<strong>自动发送</strong>cookie（响应中无需书写添加cookie代码）</p>
+<ul>
+<li>谷歌浏览器 <strong>检查-&gt;Application-&gt;cookie选项</strong> 就可以看到cookie</li>
+<li>红框中字符串即为加密后的sessionId</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901172232221.png" alt="客户端存储的cookie"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用户查询页面二级路由</span></span><br><span class="line">admin.get(<span class="string">&#x27;/user&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">&#x27;admin/user&#x27;</span>,&#123;<span class="attr">msg</span>:req.session.username&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>admin.js用户查询页面部分代码</center>
+
+<p>在登录后<strong>查询用户页面</strong>时，将session中存放的username作为拼接数据显示在模板中</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901172822822.png" alt="session对象中的username显示在模板中"></p>
+<p>至此完成了cookie和session在登录功能中的应用</p>
+<br>
+
+<h3 id="2-7-登录后跳转到用户列表页面并显示用户名"><a href="#2-7-登录后跳转到用户列表页面并显示用户名" class="headerlink" title="2.7 登录后跳转到用户列表页面并显示用户名"></a>2.7 登录后跳转到用户列表页面并显示用户名</h3><p>因为有多个模板的右上角都需要显示用户名，所以将数据写为<strong>app.locals下的对象</strong>供所有模板使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将user作为模板公共拼接数据</span></span><br><span class="line"><span class="comment">//req.app即为app.js模块中的app对象</span></span><br><span class="line">req.app.locals.userInfo = user</span><br><span class="line"><span class="comment">//重定向到用户展示页面</span></span><br><span class="line">res.redirect(<span class="string">&#x27;/admin/user&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重定向使用express框架提供的<strong>res.redirect()方法</strong></p>
+<p>将user作为公共拼接数据</p>
+<p>然后在header.art模板中使用userInfo.username拼接用户名即可</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210901210811789.png" alt="显示登录用户的用户名"></p>
+<br>
+
+<h3 id="2-8-登录拦截"><a href="#2-8-登录拦截" class="headerlink" title="2.8 登录拦截"></a>2.8 登录拦截</h3><p>用户在没有登录时只能访问<code>localhost/admin/login</code>登录页面</p>
+<p><strong>此时访问其他页面都应该跳转到登录页面</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//登录拦截</span></span><br><span class="line"><span class="comment">//app.use匹配以&#x27;/admin&#x27;开头的请求路径</span></span><br><span class="line">app.use(<span class="string">&#x27;/admin&#x27;</span>,<span class="function">(<span class="params">req,res,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//访问的不是登录页面且没有登录信息</span></span><br><span class="line">    <span class="comment">//此时req.url结果为/admin后面的url</span></span><br><span class="line">    <span class="keyword">if</span>(req.url!=<span class="string">&#x27;/login&#x27;</span> &amp;&amp; !req.session.username)&#123;</span><br><span class="line">        <span class="comment">//重定向</span></span><br><span class="line">        res.redirect(<span class="string">&#x27;/admin/login&#x27;</span>)</span><br><span class="line">    <span class="comment">//有登录信息则放行</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        next()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>app.js中登录拦截的代码</center>
+
+<ul>
+<li><p>这段代码应该<strong>写在admin路由对象匹配路径的代码前面</strong></p>
+</li>
+<li><p>通过req.url判断请求的是否为登录页面</p>
+</li>
+<li><p>同过session对象下有无username属性判断发送请求的客户端是否登录</p>
+</li>
+</ul>
+<br>
+
+<h3 id="2-9-退出登录功能实现"><a href="#2-9-退出登录功能实现" class="headerlink" title="2.9 退出登录功能实现"></a>2.9 退出登录功能实现</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//登出页面路由</span></span><br><span class="line">admin.get(<span class="string">&#x27;/logout&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//删除session</span></span><br><span class="line">    req.session.destroy(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">//删除cookie</span></span><br><span class="line">        res.clearCookie(<span class="string">&#x27;connect.sid&#x27;</span>)</span><br><span class="line">        <span class="comment">//重定向到登录页面</span></span><br><span class="line">        res.redirect(<span class="string">&#x27;/admin/login&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用户登出时<strong>删除session</strong> <code>req.session.destory</code><ul>
+<li>自动根据cookie存储的sessionId删除对应的用户session信息</li>
+</ul>
+</li>
+<li>在<code>req.session.destory</code>的回调函数中<strong>删除cookie</strong>并将页面重定向到登陆页面</li>
+<li>删除cookie：<code>res.clearCookie(&#39;cookie名&#39;)</code><ul>
+<li>connect.sid为express框架的默认cookie名</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p><strong>注意：</strong></p>
+<ul>
+<li>express-session模块使用时默认会设置未初始化cookie<ul>
+<li>即当客户端向服务端发送请求时就会存储一个cookie</li>
+<li>这个cookie不存储用户的sessionId</li>
+<li>我们希望用户退出登录时<strong>将这个未初始化cookie也删除</strong></li>
+</ul>
+</li>
+<li>默认的cookie过期时间为null<ul>
+<li>即当浏览器关闭时就会删除cookie</li>
+<li>我们希望<strong>设置cookie过期时间为一天后</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//建立session对象</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    <span class="comment">//加密cookie</span></span><br><span class="line">    secret:<span class="string">&#x27;secret key&#x27;</span>,</span><br><span class="line">    <span class="comment">//不添加未初始化cookie</span></span><br><span class="line">    saveUninitialized:<span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        <span class="comment">//设置过期时间(毫秒)</span></span><br><span class="line">        maxAge:<span class="number">24</span> * <span class="number">60</span> *<span class="number">60</span> * <span class="number">1000</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="2-10-app-js和admin-js文件优化"><a href="#2-10-app-js和admin-js文件优化" class="headerlink" title="2.10 app.js和admin.js文件优化"></a>2.10 app.js和admin.js文件优化</h3><p><strong>1. 对于网站入口文件app.js</strong></p>
+<ul>
+<li>我们通常只希望其进行<strong>模块引入</strong>和<strong>简单的配置</strong>工作</li>
+<li><strong>功能性的代码</strong>通常通过其他模块引入</li>
+</ul>
+<p>app.js中的登录拦截就是功能性代码，需要将其分离</p>
+<p>在<strong>myblog_project文件夹</strong>下(即<strong>app.js所在目录下</strong>)创建<strong>middleware文件夹</strong>来存放app.js使用的功能性中间件代码</p>
+<ul>
+<li>将登录拦截app.use中间件的<strong>第二个参数即处理函数抽离</strong>并放在middleware文件夹下的loginGuard.js文件中</li>
+<li>在loginGuard.js文件中开放这个函数并<strong>通过require引回app.js中使用</strong></li>
+<li>这样可以维持app.js的简单性</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//登录拦截</span></span><br><span class="line">app.use(<span class="string">&#x27;/admin&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./middleware/loginGuard&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<center>app.js登录拦截代码</center>
+
+<p><code>require(&#39;./middleware/loginGuard&#39;)</code>的返回值即为导出的函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">req,res,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//访问的不是登录页面且没有登录信息</span></span><br><span class="line">    <span class="comment">//此时req.url结果为/admin后面的url</span></span><br><span class="line">    <span class="keyword">if</span>(req.url!=<span class="string">&#x27;/login&#x27;</span> &amp;&amp; !req.session.username)&#123;</span><br><span class="line">        res.redirect(<span class="string">&#x27;/admin/login&#x27;</span>)</span><br><span class="line">    <span class="comment">//有登录信息则放行</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        next()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>loginGuard.js文件</center>
+
+<p><strong>2. 对于路由模块admin.js</strong></p>
+<ul>
+<li>我们希望它作为一个<strong>路由列表文件</strong></li>
+<li>具体的<strong>路由处理函数</strong>需要分离</li>
+</ul>
+<p>在admin.js所在目录下建立admin文件夹(存放admin.js文件的路由处理函数)</p>
+<p>使用app.js文件分离功能函数的方式进行分离即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> admin = express.Router()</span><br><span class="line"></span><br><span class="line"><span class="comment">//登录页面路由</span></span><br><span class="line">admin.get(<span class="string">&#x27;/login&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./admin/loginPage&#x27;</span>))</span><br><span class="line"><span class="comment">//用户列表页面路由</span></span><br><span class="line">admin.get(<span class="string">&#x27;/user&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./admin/userPage&#x27;</span>))</span><br><span class="line"><span class="comment">//登出页面路由</span></span><br><span class="line">admin.get(<span class="string">&#x27;/logout&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./admin/logout&#x27;</span>))</span><br><span class="line"><span class="comment">//登录请求处理路由</span></span><br><span class="line">admin.post(<span class="string">&#x27;/login&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./admin/login&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = admin</span><br></pre></td></tr></table></figure>
+
+<center>优化后的admin.js文件，仅作为路由列表文件</center>
+
+<br>
+
+<h2 id="3-用户注册功能"><a href="#3-用户注册功能" class="headerlink" title="3. 用户注册功能"></a>3. 用户注册功能</h2><p>当用户点击用户展示页面的新增用户按钮时<strong>跳转到注册用户页面</strong>进行用户注册</p>
+<p>在admin.js文件中定义<strong>跳转到注册页面的路由</strong>和<strong>注册信息提交的路由</strong></p>
+<p>使用<strong>joi第三方模块</strong>可以方便的进行对象格式验证</p>
+<h3 id="3-1-joi第三方模块"><a href="#3-1-joi第三方模块" class="headerlink" title="3.1 joi第三方模块"></a>3.1 joi第三方模块</h3><p><code>npm install joi</code></p>
+<ul>
+<li><p>下载版本为<strong>17.4.2</strong></p>
+</li>
+<li><p>创建验证规则</p>
+<ul>
+<li><code>Joi.object(&#123;&#125;)</code>方法，对象作为参数，对对象的属性进行限制</li>
+<li>可以指定待验证属性的<strong>类型</strong>，<strong>长度</strong>，<strong>是否必填</strong>等</li>
+<li>可以自定义验证不通过时的报错信息</li>
+</ul>
+</li>
+<li><p>进行验证</p>
+<ul>
+<li>第一种方式<ul>
+<li><code>const &#123;value,error&#125; = schema.validate(‘待验证对象’)</code></li>
+<li>schema为验证规则</li>
+<li>通过时value为待验证对象，error为undefined</li>
+<li>不通过时value为待验证对象，error为错误对象</li>
+</ul>
+</li>
+<li>第二种方式<ul>
+<li><code>schema.validateAsync(‘待验证对象’)</code></li>
+<li>返回promise对象</li>
+<li>使用<strong>异步函数错误捕获</strong>的方式**(try catch)**</li>
+<li>在catch中进行错误信息的输出**(err.message输出简要错误信息)**</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入模块</span></span><br><span class="line"><span class="keyword">const</span> Joi = <span class="built_in">require</span>(<span class="string">&#x27;joi&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建验证规则</span></span><br><span class="line"><span class="keyword">const</span> schema = Joi.object(&#123;</span><br><span class="line">    <span class="comment">//username属性的值为字符串，最短2，最长10，必填</span></span><br><span class="line">    <span class="comment">//error()方法可以自定义报错信息</span></span><br><span class="line">    username: Joi.string().min(<span class="number">2</span>).max(<span class="number">10</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;username验证不通过&#x27;</span>)),</span><br><span class="line">    birthyear: Joi.number().min(<span class="number">1900</span>).max(<span class="number">2021</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一种验证方式</span></span><br><span class="line"><span class="keyword">const</span> &#123;value,error&#125; = schema.validate(&#123;<span class="attr">birthyear</span>:<span class="number">1901</span>&#125;)</span><br><span class="line"><span class="comment">//value为验证对象</span></span><br><span class="line"><span class="built_in">console</span>.log(value);</span><br><span class="line"><span class="comment">//验证通过时error为undefined，没通过error为错误对象</span></span><br><span class="line"><span class="built_in">console</span>.log(error.message);</span><br><span class="line"></span><br><span class="line"><span class="comment">//第二种验证方式</span></span><br><span class="line"><span class="comment">//使用异步函数错误捕获</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">//value为验证对象</span></span><br><span class="line">        <span class="keyword">const</span> value = <span class="keyword">await</span> schema.validateAsync(&#123;<span class="attr">birthyear</span>:<span class="number">1900</span>&#125;)</span><br><span class="line">    &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">        <span class="comment">//输出错误信息</span></span><br><span class="line">        <span class="built_in">console</span>.log(err.message);</span><br><span class="line">        <span class="comment">//终止</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;验证通过&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">run()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-使用joi模块实现服务端注册信息验证"><a href="#3-2-使用joi模块实现服务端注册信息验证" class="headerlink" title="3.2 使用joi模块实现服务端注册信息验证"></a>3.2 使用joi模块实现服务端注册信息验证</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Joi = <span class="built_in">require</span>(<span class="string">&#x27;joi&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//设定验证规则</span></span><br><span class="line"><span class="keyword">const</span> schema = Joi.object(&#123;</span><br><span class="line">    username: Joi.string().min(<span class="number">2</span>).max(<span class="number">10</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;用户名验证不通过&#x27;</span>)),</span><br><span class="line">    email: Joi.string().email().required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;邮箱验证不通过&#x27;</span>)),</span><br><span class="line">    password: Joi.string().regex(<span class="regexp">/^[a-zA-Z0-9]&#123;3,30&#125;&amp;/</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;密码验证不通过&#x27;</span>)),</span><br><span class="line">    role: Joi.string().valid(<span class="string">&#x27;admin&#x27;</span>,<span class="string">&#x27;normal&#x27;</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;角色值验证不通过&#x27;</span>)),</span><br><span class="line">    state: Joi.number().valid(<span class="number">0</span>,<span class="number">1</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;状态验证不通过&#x27;</span>)),</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> (req,res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">await</span> schema.validateAsync(req.body)</span><br><span class="line">    <span class="comment">//验证不通过则重定向到注册页面并在页面显示错误提示</span></span><br><span class="line">    &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">        res.redirect(<span class="string">`/admin/user-edit?message=<span class="subst">$&#123;err.message&#125;</span>`</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    res.send(req.body)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>regex(/^[a-zA-Z0-9]&#123;3,30&#125;&amp;/)</code> 密码验证使用正则表达式</p>
+<ul>
+<li>长度为<strong>3到30</strong>(包括边界)并由<strong>大小写字母和数字0-9</strong>组成的字符串可以通过验证</li>
+</ul>
+</li>
+<li><p><code>valid(&#39;admin&#39;,&#39;normal)</code> 角色验证使用可选字符串</p>
+<ul>
+<li>只有admin或normal两个字符串可以通过</li>
+<li>valid中选择数字同理，只有特定数字可以通过验证</li>
+</ul>
+</li>
+<li><p><code>email()</code>代表符合邮箱字符串格式才能通过</p>
+</li>
+<li><p>验证不通过时<strong>将错误信息作为请求参数加入重定向url中</strong></p>
+<ul>
+<li>重定向请求处理时<strong>将参数中的错误信息与模板拼接</strong></li>
+</ul>
+</li>
+<li><p>执行res.redirect()重定向时要<strong>接着return</strong></p>
+<ul>
+<li>因为重定向时会默认执行res.end()方法结束请求</li>
+<li>如果下面的代码还有res.send这类结束请求的代码就会报错</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-3-用户添加到数据库"><a href="#3-3-用户添加到数据库" class="headerlink" title="3.3 用户添加到数据库"></a>3.3 用户添加到数据库</h3><p>用户提交信息通过服务端格式验证后，继续判断邮箱是否已经注册，若<strong>没有注册则将用户添加到数据库</strong>并将页面重定向到用户展示页面</p>
+<p>若已经注册则重定向回注册页面并显示<strong>邮箱已被注册</strong></p>
+<ul>
+<li>判断邮箱是否已经注册<ul>
+<li>没有注册则将密码加密</li>
+<li>然后将新用户信息存入数据库</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证用户提交的邮箱是否存在</span></span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.findOne(&#123;<span class="attr">email</span>:req.body.email&#125;)</span><br><span class="line">    <span class="comment">//如果存在则重定向回注册页面并显示错误</span></span><br><span class="line">    <span class="keyword">if</span>(user)&#123;</span><br><span class="line">        <span class="keyword">return</span> res.redirect(<span class="string">`/admin/user-edit?message=当前邮箱已经注册`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//不存在则可以注册</span></span><br><span class="line">    <span class="comment">//加密用户密码</span></span><br><span class="line">    <span class="keyword">const</span> salt = <span class="keyword">await</span> bcrypt.genSalt(<span class="number">10</span>)</span><br><span class="line">    <span class="comment">//生成加密密码，第一个参数为明文，第二个参数为生成的随机数</span></span><br><span class="line">    <span class="keyword">const</span> password = <span class="keyword">await</span> bcrypt.hash(req.body.password,salt)</span><br><span class="line">    req.body.password = password</span><br><span class="line">    <span class="comment">//在数据库中创建新用户</span></span><br><span class="line">    <span class="keyword">await</span> User.create(req.body)</span><br><span class="line">    <span class="comment">//重定向到用户展示页面</span></span><br><span class="line">    <span class="keyword">return</span> res.redirect(<span class="string">&#x27;/admin/user&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-优化user-editSubmit-js文件"><a href="#3-4-优化user-editSubmit-js文件" class="headerlink" title="3.4 优化user-editSubmit.js文件"></a>3.4 优化user-editSubmit.js文件</h3><h4 id="3-4-1-提交信息格式验证代码优化"><a href="#3-4-1-提交信息格式验证代码优化" class="headerlink" title="3.4.1 提交信息格式验证代码优化"></a>3.4.1 提交信息格式验证代码优化</h4><ul>
+<li>验证提交信息格式的代码属于<strong>用户数据处理的代码</strong>，并可能多次使用<ul>
+<li>将其提取放在<strong>model/user.js</strong>文件中</li>
+<li>model文件夹存放<strong>数据处理</strong>的文件</li>
+<li>user.js文件存放<strong>用户数据处理</strong>代码</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//验证用户注册信息格式函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateSubmit</span> (<span class="params">user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> schema = Joi.object(&#123;</span><br><span class="line">        username: Joi.string().min(<span class="number">2</span>).max(<span class="number">10</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;用户名验证不通过&#x27;</span>)),</span><br><span class="line">        email: Joi.string().email().required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;邮箱验证不通过&#x27;</span>)),</span><br><span class="line">        password: Joi.string().regex(<span class="regexp">/^[a-zA-Z0-9]&#123;3,16&#125;$/</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;密码验证不通过&#x27;</span>)),</span><br><span class="line">        role: Joi.string().valid(<span class="string">&#x27;admin&#x27;</span>,<span class="string">&#x27;normal&#x27;</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;角色值验证不通过&#x27;</span>)),</span><br><span class="line">        state: Joi.number().valid(<span class="number">0</span>,<span class="number">1</span>).required().error(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;状态验证不通过&#x27;</span>)),</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> schema.validateAsync(user)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//导出User集合构造函数和注册信息格式验证函数</span></span><br><span class="line"><span class="comment">//使用对象,方便之后其他对象导出</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    User,</span><br><span class="line">    validateSubmit</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4-2-重定向错误处理代码优化"><a href="#3-4-2-重定向错误处理代码优化" class="headerlink" title="3.4.2 重定向错误处理代码优化"></a>3.4.2 重定向错误处理代码优化</h4><ul>
+<li>格式验证不通过和邮箱已经被注册时进行重定向属于<strong>错误处理代码</strong><ul>
+<li>将其提取后放在app.js文件中的<strong>错误处理中间件中</strong></li>
+<li><strong>next()方法接受字符串作为参数</strong>，需要将对象转换为字符串(<code>JSON.stringify()</code>方法)</li>
+<li><strong>next()方法的参数</strong>即为错误处理中间件的<strong>err参数</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// return res.redirect(`/admin/user-edit?message=当前邮箱已经注册`)</span></span><br><span class="line"><span class="comment">//将原本的重定向代码替换为下面的next()方法</span></span><br><span class="line">next(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">path</span>:<span class="string">&#x27;/admin/user-edit&#x27;</span>,<span class="attr">message</span>:<span class="string">&#x27;当前邮箱已经注册&#x27;</span>&#125;))</span><br></pre></td></tr></table></figure>
+
+<center>user-editSubmit.js文件中跳转错误处理中间件</center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入模块化路由</span></span><br><span class="line"><span class="keyword">const</span> home = <span class="built_in">require</span>(<span class="string">&#x27;./route/home&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> admin = <span class="built_in">require</span>(<span class="string">&#x27;./route/admin&#x27;</span>)</span><br><span class="line">app.use(<span class="string">&#x27;/home&#x27;</span>,home)</span><br><span class="line">app.use(<span class="string">&#x27;/admin&#x27;</span>,admin)</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误处理中间件</span></span><br><span class="line"><span class="comment">//next()方法的参数即为错误处理中间件的err参数</span></span><br><span class="line">app.use(<span class="function">(<span class="params">err,req,res,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//转换回对象提取数据</span></span><br><span class="line">    <span class="keyword">const</span> &#123;path,message&#125; = <span class="built_in">JSON</span>.parse(err)</span><br><span class="line">    <span class="comment">//重定向</span></span><br><span class="line">    res.redirect(<span class="string">`<span class="subst">$&#123;path&#125;</span>?message=<span class="subst">$&#123;message&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>app.js中错误处理中间件</center>
+
+<h2 id="4-用户列表页面"><a href="#4-用户列表页面" class="headerlink" title="4. 用户列表页面"></a>4. 用户列表页面</h2><p>用户登录成功或者注册成功时<strong>会跳转到用户列表页面</strong></p>
+<p>用户列表页面需要<strong>显示当前数据库中已注册用户的信息</strong></p>
+<ul>
+<li>请求用户列表页面时将数据库中的所有注册用户数据<strong>作为拼接数据进行模板渲染</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;User&#125; = <span class="built_in">require</span>(<span class="string">&#x27;../../model/user&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> (req,res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> users = <span class="keyword">await</span> User.find()</span><br><span class="line">    res.render(<span class="string">&#x27;admin/user&#x27;</span>,&#123;</span><br><span class="line">        users:users</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>userPage.js</center>
+
+<ul>
+<li>在用户列表页面模板中<strong>通过循环显示用户数据</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;each users&#125;&#125;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">    &lt;td&gt;&#123;&#123;@$value._id&#125;&#125;&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;&#123;&#123;$value.username&#125;&#125;&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;&#123;&#123;$value.email&#125;&#125;&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;&#123;&#123;$value.role == <span class="string">&#x27;admin&#x27;</span> ? <span class="string">&#x27;管理员&#x27;</span> : <span class="string">&#x27;普通用户&#x27;</span>&#125;&#125;&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;&#123;&#123;$value.state == <span class="number">0</span> ? <span class="string">&#x27;启用&#x27;</span> : <span class="string">&#x27;禁用&#x27;</span>&#125;&#125;&lt;/td&gt;</span><br><span class="line">    &lt;td&gt;</span><br><span class="line">        &lt;a href=<span class="string">&quot;user-edit.html&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;glyphicon glyphicon-edit&quot;</span>&gt;&lt;/a&gt;</span><br><span class="line">		&lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;glyphicon glyphicon-remove&quot;</span> data-toggle=<span class="string">&quot;modal&quot;</span> data-target=<span class="string">&quot;.confirm-modal&quot;</span>&gt;&lt;/i&gt;</span><br><span class="line">	&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&#123;&#123;/each&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<center>user.art模板循环显示用户信息</center>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210906172011394.png" alt="用户列表页面实际效果"></p>
+<br>
+
+<h3 id="4-1-用户列表分页显示功能"><a href="#4-1-用户列表分页显示功能" class="headerlink" title="4.1 用户列表分页显示功能"></a>4.1 用户列表分页显示功能</h3><p>实现分页功能的几个要点：</p>
+<ul>
+<li>每一页显示的数据条数</li>
+<li>数据库中要显示的数据总条数</li>
+<li>当前要显示的页码<ul>
+<li>当前要显示的页码通过get请求参数传递到服务器</li>
+<li>若为最后一页则要取消下一页按钮</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取当前请求的页码参数</span></span><br><span class="line"><span class="keyword">const</span> page = req.query.page || <span class="number">1</span></span><br><span class="line"><span class="comment">//设定一页显示的数据条数</span></span><br><span class="line"><span class="keyword">const</span> pageSize = <span class="number">1</span></span><br><span class="line"><span class="comment">//获取数据库中数据总条数</span></span><br><span class="line"><span class="comment">//参数为匹配条件，空则匹配所有数据</span></span><br><span class="line"><span class="keyword">const</span> count = <span class="keyword">await</span> User.countDocuments(&#123;&#125;)</span><br><span class="line"><span class="comment">//总页数</span></span><br><span class="line"><span class="keyword">const</span> total = <span class="built_in">Math</span>.ceil(count/pageSize)</span><br><span class="line"><span class="comment">//当前页首条数据开始位置</span></span><br><span class="line"><span class="keyword">const</span> start = (page - <span class="number">1</span>) * pageSize</span><br><span class="line"><span class="comment">//从数据库中查询当前页数据</span></span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">await</span> User.find().limit(pageSize).skip(start)</span><br><span class="line"><span class="comment">//渲染模板</span></span><br><span class="line">res.render(<span class="string">&#x27;admin/user&#x27;</span>,&#123;</span><br><span class="line">    users:users</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>userPage.js中分页功能代码</center>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% for (var i=1 ; i&lt;=total ; i++) &#123; %&gt;</span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/admin/user?page=&lt;%= i %&gt;&quot;</span>&gt;</span>&lt;%= i %&gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<center>user.art中使用模板原始语法循环生成每一页按钮</center>
+
+<ul>
+<li><p>获取请求页码时 <code>|| 1</code>，此时若请求中没有传递页码参数，page = 1，默认显示第一页数据</p>
+</li>
+<li><p>当页首条数据在数据库中序号为 <code>(page - 1) * pageSize</code></p>
+</li>
+<li><p>总页数计算时向上取整，不满一页的数据也算一页</p>
+</li>
+<li><p>查询时使用<code>limit()</code>和<code>skip()</code>方法</p>
+<ul>
+<li>limit()  限制一次查询的数据条数</li>
+<li>skip()   限制本次查询从哪一条数据开始<ul>
+<li>参数为数据在数据库中的序号</li>
+<li>数据库中的<strong>第1条数据序号为0</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-1-1-适时取消上一页-下一页按钮"><a href="#4-1-1-适时取消上一页-下一页按钮" class="headerlink" title="4.1.1 适时取消上一页/下一页按钮"></a>4.1.1 适时取消上一页/下一页按钮</h4><p>当前页为第一页或者最后一页时隐藏上一页或下一页按钮</p>
+<p><strong>防止访问不存在的页导致错误</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">style</span>=<span class="string">&quot;display: &lt;%= page-1==0 ? &#x27;none&#x27; : &#x27;inline&#x27;%&gt;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/admin/user?page=&lt;%= page-1 %&gt;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="symbol">&amp;laquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<center>user.art中上一页按钮显示隐藏</center>
+
+<p>使用<strong>模板原始语法修改li标签display属性值</strong>实现隐藏显示</p>
+<p>当前页page=1时即隐藏上一页按钮</p>
+<p>下一页按钮同理</p>
+<ul>
+<li>此处html模板中显示使用inline，修改为显示时也使用inline</li>
+<li>下一页判断时<code>page-0+1</code>先使用<code>page-0</code>将<strong>字符串隐式转换为数字再进行加法</strong></li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210906223507179.png" alt="当前显示第一页时隐藏上一页按钮"></p>
+<br>
+
+<h2 id="5-用户信息修改功能"><a href="#5-用户信息修改功能" class="headerlink" title="5. 用户信息修改功能"></a>5. 用户信息修改功能</h2><h3 id="5-1-用户信息修改页面"><a href="#5-1-用户信息修改页面" class="headerlink" title="5.1 用户信息修改页面"></a>5.1 用户信息修改页面</h3><p><strong>用户信息修改</strong>和<strong>新用户添加</strong>使用同一个模板即<code>user-edit.art</code></p>
+<p>当用户点击用户列表页面的编辑按钮时，将要修改的用户ID作为get参数发送，请求地址<code>/admin/user-edit</code>（修改和添加使用同一个请求地址）</p>
+<p>将要修改的用户信息填入文本框</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//请求参数是否有id参数</span></span><br><span class="line"><span class="keyword">if</span>(id)&#123;</span><br><span class="line">    <span class="comment">//用户信息修改</span></span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.findOne(&#123;<span class="attr">_id</span>:id&#125;)</span><br><span class="line">    res.render(<span class="string">&#x27;admin/user-edit&#x27;</span>,&#123;</span><br><span class="line">        message:message,</span><br><span class="line">        user:user,</span><br><span class="line">        <span class="comment">//link来区分修改和添加提交地址</span></span><br><span class="line">        link:<span class="string">&#x27;/admin/user-editChange&#x27;</span>,</span><br><span class="line">        button:<span class="string">&#x27;修改&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="comment">//添加新用户</span></span><br><span class="line"> 	res.render(<span class="string">&#x27;admin/user-edit&#x27;</span>,&#123;</span><br><span class="line">        message:message,</span><br><span class="line">        link:<span class="string">&#x27;/admin/user-edit&#x27;</span>,</span><br><span class="line">        button:<span class="string">&#x27;添加&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>user-edit.js中处理修改和新增用户请求</center>
+
+<ul>
+<li>首先从请求参数中解构出id参数</li>
+<li><strong>判断id参数是否存在</strong><ul>
+<li>是 修改请求<ul>
+<li>数据库中查询要修改的用户数据</li>
+<li>作为模板拼接数据渲染</li>
+</ul>
+</li>
+<li>否 新增用户请求(用户注册)</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p><strong>user-edit.art模板渲染时注意的问题</strong></p>
+<ul>
+<li>因为新增用户时<strong>不需要将用户数据作为拼接数据</strong>，所以模板中使用user数据时要<strong>先判断user是否存在</strong><ul>
+<li>如果新增用户时模板<strong>使用一个不存在的拼接数据</strong>，会报错</li>
+<li><code>&#123;&#123;@user && user._id&#125;&#125;</code>使用与运算符判断，如果user拼接数据存在，再填入user._id，否则留空<ul>
+<li>使用@进行id的原文输出(id在数据库中存储的格式为<code>ObjectId</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改信息和新增用户<strong>使用不同的表单提交地址</strong><ul>
+<li>使用拼接数据<code>link</code>区分提交地址</li>
+</ul>
+</li>
+<li>两个页面提交按钮的文字不同 <strong>修改/提交</strong> 使用button拼接数据区分</li>
+<li>修改用户信息时<strong>密码并不显示在文本框中</strong>，用户需进行下一步验证才能修改密码</li>
+</ul>
+<br>
+
+<h3 id="5-2-用户信息修改提交"><a href="#5-2-用户信息修改提交" class="headerlink" title="5.2 用户信息修改提交"></a>5.2 用户信息修改提交</h3><p>点击提交按钮后发送<strong>post请求</strong>到<code>/admin/user-modify</code>地址</p>
+<ul>
+<li><strong>将修改用户的id</strong>作为get参数</li>
+<li><strong>修改信息</strong>作为post参数</li>
+<li>post请求也可以添加get参数</li>
+</ul>
+<p>服务器接受请求后使用bcrypt模块<strong>比对用户输入的密码和数据库中的密码</strong></p>
+<ul>
+<li>成功则允许修改，更新数据库中用户数据</li>
+<li>失败则重定向回修改页面并显示错误信息</li>
+</ul>
+<h4 id="5-2-1-密码比对错误时"><a href="#5-2-1-密码比对错误时" class="headerlink" title="5.2.1 密码比对错误时"></a>5.2.1 密码比对错误时</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//密码比对失败</span></span><br><span class="line"><span class="comment">//调用错误处理中间件重定向回修改页面并显示错误信息</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">path</span>:<span class="string">&#x27;/admin/user-edit&#x27;</span>,<span class="attr">message</span>:<span class="string">&#x27;密码错误，请重试&#x27;</span>,<span class="attr">id</span>:id&#125;</span><br><span class="line">next(<span class="built_in">JSON</span>.stringify(obj))</span><br></pre></td></tr></table></figure>
+
+<center>user-modify.js文件密码比对失败时处理</center>
+
+<p>比对失败时，将<strong>重定向地址</strong>，<strong>错误信息</strong>，<strong>用户id</strong>(重定向后显示用户信息使用)作为错误对象传递到错误处理中间件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//错误处理中间件</span></span><br><span class="line"><span class="comment">//出错后带着错误信息重定向</span></span><br><span class="line">app.use(<span class="function">(<span class="params">err,req,res,next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="built_in">JSON</span>.parse(err)</span><br><span class="line">    <span class="comment">//修改用户信息密码比对错误时的 result = &#123;path:&#x27;...&#x27;,message:&#x27;...&#x27;,id:...&#125;</span></span><br><span class="line">    <span class="keyword">const</span> params = []</span><br><span class="line">    <span class="comment">//通过循环将要添加的多个请求参数存入数组</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> attr <span class="keyword">in</span> result)&#123;</span><br><span class="line">        <span class="keyword">if</span>(attr != <span class="string">&#x27;path&#x27;</span>)&#123;</span><br><span class="line">            params.push(<span class="string">`<span class="subst">$&#123;attr&#125;</span>=<span class="subst">$&#123;result[attr]&#125;</span>`</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//使用数组join方法以&amp;分隔 将多个请求参数添加到url中</span></span><br><span class="line">    res.redirect(<span class="string">`<span class="subst">$&#123;result.path&#125;</span>?<span class="subst">$&#123;params.join(<span class="string">&#x27;&amp;&#x27;</span>)&#125;</span>`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>app.js中改进后的错误处理中间件</center>
+
+<ul>
+<li>之前的错误处理中间件在重定向时<strong>将请求参数固定写为一个</strong>，但是重定向时的<strong>请求参数个数通常不定</strong></li>
+<li>需要动态根据每个错误修改参数个数</li>
+</ul>
+<p>使用<strong>循环遍历错误对象</strong>，将其中每个请求参数存入数组</p>
+<p>使用<strong>数组join方法</strong>将每个元素以&amp;拼接后作为url中的请求参数</p>
+<ul>
+<li><strong>注意：</strong>以变量获取对象属性时使用**[]**，例如上述代码第二次循环时<code>attr = message</code></li>
+<li>获取<code>result.message</code>属性时，代码为<code>result[attr]</code></li>
+</ul>
+<p>此时当用户在修改用户信息页面<strong>输入错误的密码并点击修改按钮</strong>后，页面重定向到修改用户信息页面并提示错误信息</p>
+<br>
+
+<h4 id="5-2-2-密码比对成功时"><a href="#5-2-2-密码比对成功时" class="headerlink" title="5.2.2 密码比对成功时"></a>5.2.2 密码比对成功时</h4><p>更新数据库中对应用户的<strong>除密码外的信息</strong></p>
+<p>然后重定向到用户列表页面，修改后的结果可以在列表页面查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//密码比对成功</span></span><br><span class="line"><span class="comment">//更新数据库中信息(密码不更新)</span></span><br><span class="line"><span class="keyword">await</span> User.updateOne(&#123;<span class="attr">_id</span>:id&#125;,&#123;</span><br><span class="line">    username:username,</span><br><span class="line">    email:email,</span><br><span class="line">    role:role,</span><br><span class="line">    state:state</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//重定向到用户列表页面</span></span><br><span class="line">res.redirect(<span class="string">&#x27;/admin/user&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="6-用户删除功能"><a href="#6-用户删除功能" class="headerlink" title="6. 用户删除功能"></a>6. 用户删除功能</h2><p>在用户列表页面点击用户信息后的删除按钮将用户删除</p>
+<ul>
+<li>给删除按钮添加自定义属性<code>data-id</code>(即为要删除用户的id)</li>
+<li>script代码加入删除按钮点击事件，在处理函数中获取data-id属性值</li>
+<li>将<strong>用户id</strong>设置为表单隐藏域的<strong>value属性值</strong></li>
+<li>表单设置为GET请求，提交地址为<code>/admin/user-delete</code></li>
+<li>服务器端设置删除路由<code>/admin/user-delete</code></li>
+<li>服务端接受请求获取GET请求参数id</li>
+<li>根据id删除对应用户</li>
+<li><strong>重定向回用户列表页面</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    $(<span class="string">&#x27;.delete&#x27;</span>).on(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    	<span class="comment">//获取删除按钮自定义属性</span></span><br><span class="line">        <span class="keyword">let</span> id = $(<span class="built_in">this</span>).attr(<span class="string">&#x27;data-id&#x27;</span>)</span><br><span class="line">        <span class="comment">//将id值 给表单隐藏域的value属性</span></span><br><span class="line">        $(<span class="string">&#x27;#userDelete&#x27;</span>).val(id)</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<center>删除按钮点击事件</center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;您确定要删除这个用户吗?&lt;/p&gt;</span><br><span class="line"><span class="comment">//表单隐藏域</span></span><br><span class="line">&lt;input type=<span class="string">&quot;hidden&quot;</span> name=<span class="string">&quot;id&quot;</span> id=<span class="string">&quot;userDelete&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<center>表单隐藏域</center>
+
+<ul>
+<li>表单隐藏域即为一个<strong>type值为hidden的input标签</strong></li>
+<li>他不显示在页面中，只起<strong>设定表单请求参数的作用</strong></li>
+<li>当表单以GET请求方式提交时，隐藏域请求参数<strong>仍显示在地址栏中（localhost/admin/user-delete?id=…）</strong></li>
+</ul>
+<br>
+
+<h2 id="7-文章管理功能"><a href="#7-文章管理功能" class="headerlink" title="7.文章管理功能"></a>7.文章管理功能</h2><ul>
+<li>给<strong>文章列表页面</strong>和<strong>文章编辑页面</strong>添加路由</li>
+<li><code>views/admin/commom</code>文件夹下的<strong>aside.art侧边栏模板文件</strong>中为文章管理和用户管理添加超链接</li>
+<li>在用户页面(列表和编辑)和文章页面的路由处理函数中添加模板公共拼接数据，根据变量<strong>currentLink的值</strong>判断侧边栏选中项</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;item &#123;&#123;currentLink == &#x27;user&#x27; ? &#x27;active&#x27; : &#x27;&#x27;&#125;&#125;&quot;</span> href=<span class="string">&quot;/admin/user&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<center>aside.art文件中判断侧边栏是否选中用户管理</center>
+
+<h3 id="7-1-创建文章集合articles"><a href="#7-1-创建文章集合articles" class="headerlink" title="7.1 创建文章集合articles"></a>7.1 创建文章集合articles</h3><p>创建集合规则时注意：文章集合中的<strong>一个作者字段即对应用户集合中一个的文档</strong>（一条用户信息），需要使用<strong>集合关联</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建集合规则</span></span><br><span class="line"><span class="keyword">const</span> articleSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    title:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        required:[<span class="literal">true</span>,<span class="string">&#x27;请输入标题&#x27;</span>],</span><br><span class="line">        minlength:<span class="number">4</span>,</span><br><span class="line">        maxlength:<span class="number">20</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//作者实际就是用户集合中的文档（用户信息）</span></span><br><span class="line">    <span class="comment">//集合关联</span></span><br><span class="line">    author:&#123;</span><br><span class="line">        type:mongoose.Schema.Types.ObjectId,</span><br><span class="line">        ref:<span class="string">&#x27;User&#x27;</span>,</span><br><span class="line">        required:[<span class="literal">true</span>,<span class="string">&#x27;请写作者&#x27;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    publishDate:&#123;</span><br><span class="line">        type:<span class="built_in">Date</span>,</span><br><span class="line">        <span class="keyword">default</span>:<span class="built_in">Date</span>.now</span><br><span class="line">    &#125;,</span><br><span class="line">    cover:&#123;</span><br><span class="line">        type:<span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>:<span class="literal">null</span></span><br><span class="line">    &#125;,</span><br><span class="line">    content:&#123;</span><br><span class="line">        type:<span class="built_in">String</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>创建文章集合规则</center>
+
+<h3 id="7-2-添加文章功能"><a href="#7-2-添加文章功能" class="headerlink" title="7.2 添加文章功能"></a>7.2 添加文章功能</h3><ul>
+<li>给article-edit.art页面的表单设置提交地址，提交方式，<strong>编码类型</strong>，请求参数名<ul>
+<li>编码类型需要设置为<strong>multipart/form-data</strong>，表单数据以二进制编码</li>
+<li>表单中<strong>上传文件时</strong>，数据<strong>必须以二进制编码</strong></li>
+</ul>
+</li>
+<li>设置文章添加路由</li>
+<li>表单数据以二进制编码时，接收表单数据需要使用<strong>第三方模块formidable</strong></li>
+</ul>
+<h4 id="7-2-1-formidable模块-处理二进制表单数据"><a href="#7-2-1-formidable模块-处理二进制表单数据" class="headerlink" title="7.2.1 formidable模块 处理二进制表单数据"></a>7.2.1 formidable模块 处理二进制表单数据</h4><ul>
+<li>支持解析GET/POST请求参数，<strong>解析上传文件</strong></li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908202048388.png" alt="formidable模块基本使用"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//formidable模块处理二进制表单数据(有文件上传的表单)</span></span><br><span class="line"><span class="keyword">const</span> formidable = <span class="built_in">require</span>(<span class="string">&#x27;formidable&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//创建表单解析对象form</span></span><br><span class="line">    <span class="keyword">const</span> form = formidable.IncomingForm()</span><br><span class="line">    <span class="comment">//设定上传文件存储位置</span></span><br><span class="line">    form.uploadDir = path.join(__dirname,<span class="string">&#x27;../&#x27;</span>,<span class="string">&#x27;../&#x27;</span>,<span class="string">&#x27;public&#x27;</span>,<span class="string">&#x27;uploads&#x27;</span>)</span><br><span class="line">    <span class="comment">//保留上传文件后缀</span></span><br><span class="line">    form.keepExtensions = <span class="literal">true</span></span><br><span class="line">    <span class="comment">//解析表单数据</span></span><br><span class="line">    <span class="comment">//第一个参数为请求对象 第二个为回调函数</span></span><br><span class="line">    form.parse(req,<span class="function">(<span class="params">err,fields,files</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//err为错误对象 出错为对象 正常为null</span></span><br><span class="line">        <span class="comment">//fields 对象类型 为普通请求参数(非文件上传参数)</span></span><br><span class="line">        <span class="comment">//files 对象类型 上传文件的相关信息</span></span><br><span class="line">        res.send(fields)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>article-add.js文件处理二进制表单数据</center>
+
+<ul>
+<li>上传文件保存在<code>myblog_project/public/uploads</code>文件夹下</li>
+<li>保留文件后缀</li>
+</ul>
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908203033806.png" alt="fields对象内容"></p>
+<ul>
+<li>fields对象内容<ul>
+<li>除cover上传文件参数外的<strong>其他普通参数</strong></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908203525686.png" alt="files对象内容"></p>
+<ul>
+<li>对象中有cover（文件上传的参数名）属性</li>
+<li>cover属性是一个对象<ul>
+<li>size文件大小</li>
+<li>path文件在本地存储路径（避免文件名重复会使用一个随机生成的）</li>
+<li>name文件上传时的名字</li>
+<li>type文件类型</li>
+<li>mtime最后修改时间</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h4 id="7-2-2-添加文章页面显示登录用户id"><a href="#7-2-2-添加文章页面显示登录用户id" class="headerlink" title="7.2.2 添加文章页面显示登录用户id"></a>7.2.2 添加文章页面显示登录用户id</h4><p>使用模板公共拼接数据<strong>userInfo</strong>（login.js文件中用户登录后将用户对象做为公共拼接数据userInfo）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name=<span class="string">&quot;author&quot;</span> type=<span class="string">&quot;text&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;form-control&quot;</span> readonly value=<span class="string">&quot;&#123;&#123;@userInfo._id&#125;&#125;&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用@原文输出id</p>
+<br>
+
+<h4 id="7-2-3-上传文章封面显示缩略图"><a href="#7-2-3-上传文章封面显示缩略图" class="headerlink" title="7.2.3 上传文章封面显示缩略图"></a>7.2.3 上传文章封面显示缩略图</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 文件上传文本框加上multiple属性后可以一次选择多个文件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;cover&quot;</span> <span class="attr">id</span>=<span class="string">&quot;files&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>文件上传文本框（type=’file’）</li>
+<li>加multiple属性可以一次选择多个文件上传</li>
+</ul>
+<br>
+
+<p><strong>文件读取对象 FileReader</strong></p>
+<p>JS的文件读取对象FileReader可以读取通过文件上传文本框上传的文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建文件读取对象</span></span><br><span class="line"><span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line"><span class="comment">//读取文件</span></span><br><span class="line">reader.readAsDataURL(<span class="string">&#x27;文件&#x27;</span>)</span><br><span class="line"><span class="comment">//监听文件读取完毕事件（文件读取是异步API，不能使用返回值获取结果）</span></span><br><span class="line"><span class="comment">//reader.result即为读取文件的内容</span></span><br><span class="line">reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(reader.result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<center>文件读取对象基本使用</center>
+
+
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908210224806.png" alt="右侧为读取图片时reader.result内容"></p>
+<ul>
+<li>对于图片文件的读取，上图右侧即为读取后reader.result的内容</li>
+<li>将reader.result的内容<strong>直接作为img标签src属性的值</strong>，效果与直接外链图片一致</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        <span class="comment">//获取上传文件文本框（type=&#x27;file&#x27;）</span></span><br><span class="line">        <span class="keyword">let</span> file = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#files&#x27;</span>)</span><br><span class="line">        <span class="comment">//获取预览img标签</span></span><br><span class="line">        <span class="keyword">let</span> preview = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;#preview&#x27;</span>)</span><br><span class="line">        <span class="comment">//监听文件上传事件 上传文件文本框change即代表有文件上传</span></span><br><span class="line">        file.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">//创建文件读取对象</span></span><br><span class="line">            <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader()</span><br><span class="line">            <span class="comment">//读取文件</span></span><br><span class="line">            reader.readAsDataURL(<span class="built_in">this</span>.files[<span class="number">0</span>])</span><br><span class="line">            <span class="comment">//监听文件读取完毕事件（文件读取是异步API，不能使用返回值获取结果）</span></span><br><span class="line">            reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                preview.src = reader.result</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<center>article-edit.art文件中上传文件显示缩略图</center>
+
+<ul>
+<li>有文件上传时即开始创建文件读取对象FileReader</li>
+<li>文件上传文本框的<strong>this.files</strong> 为上传文件的列表</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908213035902.png" alt="this.files（上传一个文件）"></p>
+<ul>
+<li>this.files[0]即为上传的第一个文件<ul>
+<li><code>reader.readAsDataURL(this.files[0])</code>  即读取文件列表中第一个文件</li>
+</ul>
+</li>
+<li>文件读取完毕后直接<strong>将结果作为缩略图img标签的src属性</strong></li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908213411425.png" alt="缩略图效果"></p>
+<br>
+
+<h4 id="7-2-4-添加文章存入数据库"><a href="#7-2-4-添加文章存入数据库" class="headerlink" title="7.2.4 添加文章存入数据库"></a>7.2.4 添加文章存入数据库</h4><ul>
+<li>将新增文章存入数据库时<strong>两个字段需要注意</strong>：<ul>
+<li>author字段存储的是<strong>登录用户的id</strong><ul>
+<li>用户id在提交前已经通过公共拼接数据写入文本框value属性</li>
+</ul>
+</li>
+<li>cover字段存储的是<strong>封面文件在服务器本地的绝对存储路径</strong> （也就是模板渲染图片时使用的路径）</li>
+</ul>
+</li>
+</ul>
+<h5 id="7-2-4-1-获取封面文件在服务器本地的绝对存储路径"><a href="#7-2-4-1-获取封面文件在服务器本地的绝对存储路径" class="headerlink" title="7.2.4.1 获取封面文件在服务器本地的绝对存储路径"></a>7.2.4.1 获取封面文件在服务器本地的绝对存储路径</h5><p>解析表单数据<code>form.parse</code>方法中回调函数的<strong>files参数存储上传文件的信息</strong></p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908215109564.png" alt="files对象存储上传文件信息"></p>
+<p>其中cover对象的path参数即为上传文件在服务器本机的绝对路径</p>
+<p>对绝对路径进行截取获得的<strong>\uploads\upload_5a8abecaac6a7be8db59a90461efb878.jpg <strong>即为</strong>文章集合中cover字段的值</strong></p>
+<ul>
+<li>在app.js文件中已经设置过<strong>静态资源文件的存放路径为public文件夹下</strong>，所以从public后开始截取</li>
+<li>模板文件中的绝对路径使用 <strong>‘/ ’</strong> 开头</li>
+<li>使用字符串的<strong>split方法</strong>以public分割字符串，<strong>分割后数组的第二个元素即为cover的值</strong></li>
+</ul>
+<br>
+
+<p>因为表单中的所有参数被分在两个变量（fields，files）中，所以<strong>创建数据库集合中文档使用的对象需要进行组合</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组合文章数据</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    title:fields.title,</span><br><span class="line">    author:fields.author,</span><br><span class="line">    publishDate:fields.publishDate == <span class="string">&#x27;&#x27;</span> ? <span class="built_in">Date</span>.now() : fields.publishDate,</span><br><span class="line">    <span class="comment">//以public分割的后部分路径</span></span><br><span class="line">    cover:files.cover.path.split(<span class="string">&#x27;public&#x27;</span>)[<span class="number">1</span>],</span><br><span class="line">    content:fields.content,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//存入数据库</span></span><br><span class="line"><span class="keyword">await</span> Article.create(obj)</span><br><span class="line"><span class="comment">//重定向到文章列表页</span></span><br><span class="line">res.redirect(<span class="string">&#x27;/admin/article&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<center>article-add.js文件 将添加的文章存入数据库</center>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210908222811917.png" alt="数据库中的文章信息"></p>
+<br>
+
+<h3 id="7-3-文章列表页面"><a href="#7-3-文章列表页面" class="headerlink" title="7.3 文章列表页面"></a>7.3 文章列表页面</h3><p>查询数据库中所有文章，作为拼接数据，在模板中渲染</p>
+<ul>
+<li>查询时需要用到<strong>多集合关联查询</strong>（populate()方法）<ul>
+<li>查询时author字段值为<strong>mongoose文档对象格式</strong></li>
+<li>render方法与其冲突</li>
+<li>使用lean()将其<strong>转换为普通对象格式</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查询文章集合所有文档</span></span><br><span class="line">    <span class="comment">//链式调用populate()方法 </span></span><br><span class="line">    <span class="comment">//多集合联合查询author字段</span></span><br><span class="line">        <span class="comment">//即查询_id值为author字段值的User集合中的文档</span></span><br><span class="line">        <span class="comment">//并用这个文档对象替换author的值</span></span><br><span class="line">    <span class="comment">//使用lean()缓和查询数据库与渲染模板的冲突</span></span><br><span class="line"><span class="keyword">let</span> articles = <span class="keyword">await</span> Article.find().populate(<span class="string">&#x27;author&#x27;</span>).lean()</span><br><span class="line"></span><br><span class="line"><span class="comment">//渲染模板</span></span><br><span class="line">res.render(<span class="string">&#x27;admin/article&#x27;</span>,&#123;</span><br><span class="line">    articles:articles</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="7-3-1发布时间格式处理"><a href="#7-3-1发布时间格式处理" class="headerlink" title="7.3.1发布时间格式处理"></a>7.3.1发布时间格式处理</h4><p>使用<strong>第三方模块dateformat</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入dateFormat模块格式化时间</span></span><br><span class="line"><span class="keyword">const</span> dateFormat= <span class="built_in">require</span>(<span class="string">&#x27;dateformat&#x27;</span>)</span><br><span class="line"><span class="comment">//引入art-template</span></span><br><span class="line"><span class="keyword">const</span> template = <span class="built_in">require</span>(<span class="string">&#x27;art-template&#x27;</span>)</span><br><span class="line"><span class="comment">//模板中导入外部变量</span></span><br><span class="line">template.defaults.imports.dateFormat = dateFormat</span><br></pre></td></tr></table></figure>
+
+<center>app.js中引入dateformat模块并向模板导入外部变量</center>
+
+<ul>
+<li>项目使用了两个模板 ‘express-art-template’和’art-template’</li>
+<li>将dateformat作为art-template模板的外部变量导入</li>
+<li>在模板中使用<code>dateFormat(&#39;时间数据&#39;,&#39;格式化格式&#39;)</code>进行格式化</li>
+<li><code>&#123;&#123;dateFormat($value.publishDate,'yyyy-mm-dd')&#125;&#125;</code> 格式化为年-月-日</li>
+</ul>
+<br>
+
+<h4 id="7-3-2-文章列表页面分页"><a href="#7-3-2-文章列表页面分页" class="headerlink" title="7.3.2 文章列表页面分页"></a>7.3.2 文章列表页面分页</h4><p>文章列表页面使用<strong>第三方模块mongoose-sex-page</strong>实现，使用<strong>与用户列表页面分页不同的方法</strong></p>
+<p><code>npm install mongoose-sex-page</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入mongoose-sex-page模块进行分页</span></span><br><span class="line"><span class="keyword">const</span> pagination = <span class="built_in">require</span>(<span class="string">&#x27;mongoose-sex-page&#x27;</span>)</span><br><span class="line"><span class="comment">//查询文章集合所有文档</span></span><br><span class="line">    <span class="comment">//链式调用populate()方法 </span></span><br><span class="line">        <span class="comment">//多集合联合查询author字段</span></span><br><span class="line">        <span class="comment">//即查询_id值为author字段值的User集合中的文档</span></span><br><span class="line">        <span class="comment">//并用这个文档对象替换author的值</span></span><br><span class="line">    <span class="comment">//使用mongoose-sex-page模块分页</span></span><br><span class="line">        <span class="comment">//page:当前显示第几页</span></span><br><span class="line">        <span class="comment">//size:一页显示多少条数据</span></span><br><span class="line">        <span class="comment">//display:页面下方分页按钮显示几页</span></span><br><span class="line">        <span class="comment">//exec():从数据库中查询</span></span><br><span class="line">    <span class="keyword">let</span> articles = <span class="keyword">await</span> pagination(Article).page(page).size(<span class="number">2</span>).display(<span class="number">2</span>).populate(<span class="string">&#x27;author&#x27;</span>).exec()</span><br><span class="line">    <span class="comment">//将查询出的对象先转换为JSON字符串再转换为对象</span></span><br><span class="line">    <span class="comment">//将author字段值的类型由mongoose文档对象转换为普通对象避免渲染模板时的冲突</span></span><br><span class="line">    <span class="keyword">let</span> temp = <span class="built_in">JSON</span>.stringify(articles)</span><br><span class="line">    articles = <span class="built_in">JSON</span>.parse(temp)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// res.send(articles)</span></span><br><span class="line"></span><br><span class="line">    res.render(<span class="string">&#x27;admin/article&#x27;</span>,&#123;</span><br><span class="line">        articles:articles</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>pagination(‘集合构造函数’).page().size().display().exec()</strong></p>
+<ul>
+<li>集合构造函数：即要从<strong>哪个集合中查询数据并分页</strong></li>
+<li>page()：参数为<strong>当前显示的页码</strong></li>
+<li>size()：参数为<strong>一页显示的数据条数</strong></li>
+<li>display()：参数为<strong>页面中分页按钮条显示几个按钮</strong><ul>
+<li>若参数为2则一次显示2个按钮 1 2</li>
+</ul>
+</li>
+<li>exec()：代表按照前面设定的规则开始在数据库中查询</li>
+</ul>
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909124935375.png" alt="分页模块查询后的结果articles"></p>
+</li>
+<li><p>上述红框records对象即为<strong>第一页的两条数据</strong></p>
+</li>
+<li><p>total：总共查询出的数据条数</p>
+</li>
+<li><p>pages：分页的总页数</p>
+</li>
+<li><p>display属性为一个数组（循环数组显示分页按钮）</p>
+</li>
+</ul>
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909125348445.png" alt="分页效果"></p>
+<ul>
+<li>一页显示两条数据(<strong>size(2)</strong>)</li>
+<li>下方分页按钮条显示两个按钮 1 2 (<strong>display(2)</strong>)</li>
+</ul>
+<br>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;each articles.display&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/admin/article?page=&#123;&#123;$value&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;$value&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;/each&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<center>article.art模板中遍历display数组生成分页按钮并指定请求地址和显示的值</center>
+
+<p>在请求地址中<strong>加入相应的page参数</strong>，服务端<strong>根据page参数返回相应的页码数据</strong></p>
+<br>
+
+<h5 id="7-3-2-1-分页按钮功能实现"><a href="#7-3-2-1-分页按钮功能实现" class="headerlink" title="7.3.2.1 分页按钮功能实现"></a>7.3.2.1 分页按钮功能实现</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 上一页按钮 --&gt;</span></span><br><span class="line">&#123;&#123;if articles.page &gt; 1&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/admin/article?page=&#123;&#123;articles.page - 1&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="symbol">&amp;laquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;/if&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 指定页面按钮 1 2 3 --&gt;</span></span><br><span class="line">&#123;&#123;each articles.display&#125;&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/admin/article?page=&#123;&#123;$value&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;$value&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;/each&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 下一页按钮 &gt; --&gt;</span></span><br><span class="line">&#123;&#123;if articles.page &lt; articles.pages&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/admin/article?page=&#123;&#123;articles.page - 0 + 1&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">span</span>&gt;</span><span class="symbol">&amp;raquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;&#123;/if&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模板<strong>标准语法if判断</strong>，<strong>满足条件时if所包裹的代码才执行</strong></p>
+<br>
+
+<h4 id="7-3-3-文章修改和删除功能与用户的修改删除同理"><a href="#7-3-3-文章修改和删除功能与用户的修改删除同理" class="headerlink" title="7.3.3 文章修改和删除功能与用户的修改删除同理"></a>7.3.3 文章修改和删除功能与用户的修改删除同理</h4><br>
+
+<h2 id="8-为mongoDB数据库添加账户"><a href="#8-为mongoDB数据库添加账户" class="headerlink" title="8.为mongoDB数据库添加账户"></a>8.为mongoDB数据库添加账户</h2><p>mongoDB数据库安装后<strong>默认不需要登录账户就可以访问修改数据库数据</strong>，安全性不足</p>
+<p>为了提高安全性，给mongoDB数据库设置账户，mongoDB数据库有<strong>两种账户</strong>：</p>
+<ul>
+<li>超级管理员（roles:[‘root’]）</li>
+<li>单个数据库管理员<ul>
+<li>先创建超级管理员后才能创建单个数据库管理员</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Windows\system32&gt; mongo</span><br><span class="line"></span><br><span class="line">&gt; use admin</span><br><span class="line"></span><br><span class="line">&gt; db.createUser(&#123;user:&#39;root&#39;,pwd:&#39;root&#39;,roles:[&#39;root&#39;]&#125;)</span><br><span class="line"></span><br><span class="line">&gt; use blog</span><br><span class="line"></span><br><span class="line">&gt; db.createUser(&#123;user:&#39;blogadmin&#39;,pwd:&#39;blogadmin&#39;,roles:[&#39;readWrite&#39;]&#125;)</span><br><span class="line"></span><br><span class="line">&gt; exit</span><br><span class="line"></span><br><span class="line">PS C:\Windows\system32&gt; net stop mongodb</span><br><span class="line"></span><br><span class="line">PS C:\Windows\system32&gt; mongod --remove</span><br><span class="line"></span><br><span class="line">PS C:\Windows\system32&gt; mongod --logpath&#x3D;&#39;C:\Mongodb\Server\4.4\log\mongod.log&#39; --dbpath&#x3D;&#39;C:\Mongodb\Server\4.4\data&#39; --install -auth</span><br><span class="line"></span><br><span class="line">PS C:\Windows\system32&gt; net start mongoDB</span><br><span class="line">MongoDB 服务正在启动 .</span><br><span class="line">MongoDB 服务已经启动成功。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>进入数据库下的admin数据库和blog数据库分别创建超级管理员和单个数据库管理员</p>
+</li>
+<li><p>退出卸载mongoDB服务</p>
+</li>
+<li><p>重新安装服务并指定日志文件和数据库文件存放位置</p>
+<ul>
+<li>使用-auth参数指定开启账户验证</li>
+</ul>
+</li>
+<li><p>安装完后重启mongoDB服务</p>
+</li>
+<li><p>自此连接数据库时的connect方法第一个参数需要传递账号密码才能对数据库进行操作</p>
+<ul>
+<li><p>blog数据库账号密码都为<strong>blogadmin</strong></p>
+</li>
+<li><p>```js<br>//blog数据库的账号密码都为blogadmin<br>mongoose.connect(‘mongodb://blogadmin:blogadmin@localhost/blog’)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">## 9. 开发环境和生产环境</span><br><span class="line"></span><br><span class="line">- 开发环境：项目**开发人员使用的电脑上的环境**</span><br><span class="line">- 生产环境：项目放到真实的网站服务器上运行时，该**网站服务器主机的环境**</span><br><span class="line"></span><br><span class="line">项目放到**生产环境**运行时需要**对一些修改做出限制**，**不能在生产环境随意更改项目配置**</span><br><span class="line"></span><br><span class="line">项目在**开发环境**运行时可以将客户端请求项目时的测试结果打印在控制台方便开发人员调试</span><br><span class="line"></span><br><span class="line">所以项目运行时需要**区分运行的环境**进行不同的操作</span><br><span class="line"></span><br><span class="line">- 通过**系统变量NODE_ENV**的值来区别运行环境</span><br><span class="line">  - development：开发环境</span><br><span class="line">  - production：生产环境</span><br><span class="line"></span><br><span class="line">![新建系统变量NODE_ENV](&#x2F;images&#x2F;17-多人博客管理系统项目&#x2F;image-20210909200331019.png)</span><br><span class="line"></span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">- 通过&#96;process.env.NODE_ENV&#96;查询系统变量中的NODE_ENV变量</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;js</span><br><span class="line">&#x2F;&#x2F;检查运行环境</span><br><span class="line">if(process.env.NODE_ENV &#x3D;&#x3D; &#39;development&#39;)&#123;</span><br><span class="line">    console.log(&#39;开发环境&#39;);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    console.log(&#39;生产环境&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<center>app.js检查项目运行环境</center>
+
+<br>
+
+<h3 id="9-1-开发环境将客户端请求打印在控制台（morgan模块）"><a href="#9-1-开发环境将客户端请求打印在控制台（morgan模块）" class="headerlink" title="9.1 开发环境将客户端请求打印在控制台（morgan模块）"></a>9.1 开发环境将客户端请求打印在控制台（morgan模块）</h3><p>使用<strong>第三方模块morgan</strong></p>
+<ul>
+<li>morgan是一个中间件函数</li>
+<li>使用时app.use中间件<strong>放在上层避免其他中间件干扰</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//检查运行环境</span></span><br><span class="line"><span class="keyword">if</span>(process.env.NODE_ENV == <span class="string">&#x27;development&#x27;</span>)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;开发环境&#x27;</span>);</span><br><span class="line">    <span class="comment">//dev是固定参数</span></span><br><span class="line">    <span class="comment">//morgan是中间件函数</span></span><br><span class="line">    <span class="comment">//将请求信息打印在控制台</span></span><br><span class="line">    app.use(morgan(<span class="string">&#x27;dev&#x27;</span>))</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;生产环境&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>app.js文件客户端请求打印</center>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909203316334.png" alt="打印的请求信息"></p>
+<br>
+
+<h3 id="9-2-不同运行环境使用不同的配置信息（config模块）"><a href="#9-2-不同运行环境使用不同的配置信息（config模块）" class="headerlink" title="9.2 不同运行环境使用不同的配置信息（config模块）"></a>9.2 不同运行环境使用不同的配置信息（config模块）</h3><p><strong>config第三方模块</strong>：可以将不同运行环境下的配置信息抽离到单独的文件中，模块自动判断运行环境并应用相应的配置文件，节省了切换运行环境时手动更换配置信息的维护成本。</p>
+<ul>
+<li>安装conifg模块<ul>
+<li><code>npm i config</code></li>
+</ul>
+</li>
+<li>在项目根目录下创建config文件夹（名称固定）<ul>
+<li>文件夹下创建三个json文件<ul>
+<li>development.json：开发环境配置文件</li>
+<li>production.json：生产环境配置文件</li>
+<li>default.json：默认配置文件（在上面两个文件中都获取不到的配置信息在default.json文件中查找）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用**config.get(‘配置信息名’)**可以获取相应环境下的配置信息</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909204804531.png" alt="获取开发环境下的title配置信息"></p>
+<br>
+
+<h4 id="9-2-1-将连接数据库信息抽离到开发环境配置文件中"><a href="#9-2-1-将连接数据库信息抽离到开发环境配置文件中" class="headerlink" title="9.2.1 将连接数据库信息抽离到开发环境配置文件中"></a>9.2.1 将连接数据库信息抽离到开发环境配置文件中</h4><p>数据库连接中的<strong>数据库账号密码、地址和端口等</strong>需要抽离到配置文件中方便开发人员修改</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909205952850.png" alt="数据库连接信息抽离到开发环境配置文件中"></p>
+<br>
+
+<ul>
+<li>抽离到配置文件中后，通过<strong>config模块的get方法</strong>获取配置信息后连接数据库</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongoose.connect(<span class="string">`mongodb://<span class="subst">$&#123;config.get(<span class="string">&#x27;db.user&#x27;</span>)&#125;</span>:<span class="subst">$&#123;config.get(<span class="string">&#x27;db.pwd&#x27;</span>)&#125;</span>@<span class="subst">$&#123;config.get(<span class="string">&#x27;db.host&#x27;</span>)&#125;</span>:<span class="subst">$&#123;config.get(<span class="string">&#x27;db.port&#x27;</span>)&#125;</span>/<span class="subst">$&#123;config.get(<span class="string">&#x27;db.dbname&#x27;</span>)&#125;</span>`</span>,&#123; <span class="attr">useNewUrlParser</span>: <span class="literal">true</span> ,<span class="attr">useUnifiedTopology</span>: <span class="literal">true</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="9-2-2-将敏感配置信息存储在环境变量中"><a href="#9-2-2-将敏感配置信息存储在环境变量中" class="headerlink" title="9.2.2 将敏感配置信息存储在环境变量中"></a>9.2.2 将敏感配置信息存储在环境变量中</h4><p>一些敏感的配置信息如数据库密码，不应该存放在项目文件中，以防止在分享代码时泄露造成安全隐患</p>
+<p><strong>config模块可以在环境变量中提取配置信息</strong>，将<strong>敏感信息存放在系统变量</strong>中就可以防止密码泄露</p>
+<ul>
+<li>在项目根目录下config文件夹下创建custom-environment-variables.json文件（文件名固定）<ul>
+<li>这个文件实现从系统变量中获取配置信息</li>
+<li>将<strong>系统变量名</strong>作为这个文件中<strong>配置项属性的值</strong>即可</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909211437982.png" alt="从系统变量中获取配置信息"></p>
+<p><strong>注意：</strong></p>
+<ul>
+<li><strong>custom-environment-variables.json</strong>文件内部的db属性要与<strong>development.json</strong>文件中的db属性<strong>格式相同</strong></li>
+<li>将<strong>development.json</strong>文件中的敏感配置信息pwd密码<strong>删除</strong>，通过<strong>custom-environment-variables.json</strong>文件<strong>获取系统变量app_pwd的值作为pwd配置项的值</strong></li>
+<li>此时数据库连接时会获取系统变量app_pwd的值作为数据库密码，防止了分享代码时密码泄露的隐患</li>
+</ul>
+<br>
+
+<br>
+
+<br>
+
+<h2 id="10-博客网站前台展示页面"><a href="#10-博客网站前台展示页面" class="headerlink" title="10. 博客网站前台展示页面"></a>10. 博客网站前台展示页面</h2><p>前面在 <strong>7.文章管理功能</strong> 开发完毕时，博客的所有管理页面就完成了</p>
+<p>现在开始开发博客网站前台展示页面</p>
+<h3 id="10-1-建立路由"><a href="#10-1-建立路由" class="headerlink" title="10.1 建立路由"></a>10.1 建立路由</h3><ul>
+<li>博客前台文章总览页面（/home）</li>
+<li>博客文章详情页面（/home/article）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> home = express.Router()</span><br><span class="line"></span><br><span class="line"><span class="comment">//博客前台首页(文章总览)</span></span><br><span class="line">home.get(<span class="string">&#x27;/&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./home/index&#x27;</span>))</span><br><span class="line"><span class="comment">//文章详情页面</span></span><br><span class="line">home.get(<span class="string">&#x27;/article&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./home/article&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = home</span><br></pre></td></tr></table></figure>
+
+<center>route/home.js</center>
+
+<h3 id="10-2-模板文件处理"><a href="#10-2-模板文件处理" class="headerlink" title="10.2 模板文件处理"></a>10.2 模板文件处理</h3><ul>
+<li>博客前台的两个模板文件 <strong>default.art</strong> 和 <strong>article.art</strong>文件存放在/views/home文件夹下</li>
+<li>路由处理函数中渲染模板</li>
+<li>对模板中的<strong>外链文件路径使用绝对路径</strong></li>
+<li>提取两个模板文件的<strong>HTML骨架</strong></li>
+<li>提取两个模板文件的<strong>公共部分</strong></li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210909222033037.png" alt="抽离骨架提取公共代码后的default.art文件"></p>
+<br>
+
+<h3 id="10-3-从数据库中查询文章并显示在用户总览页面"><a href="#10-3-从数据库中查询文章并显示在用户总览页面" class="headerlink" title="10.3 从数据库中查询文章并显示在用户总览页面"></a>10.3 从数据库中查询文章并显示在用户总览页面</h3><ul>
+<li>查询文章数据时使用<strong>多集合级联查询</strong>和<strong>分页规则查询</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查询文章</span></span><br><span class="line"><span class="comment">//多集合级联查询</span></span><br><span class="line"><span class="comment">//分页规则查询</span></span><br><span class="line"><span class="keyword">let</span> articles = <span class="keyword">await</span> pagination(Article).page(<span class="number">1</span>).size(<span class="number">4</span>).display(<span class="number">3</span>).populate(<span class="string">&#x27;author&#x27;</span>).exec()</span><br><span class="line"><span class="comment">//转换格式避免渲染冲突</span></span><br><span class="line"><span class="keyword">let</span> temp = <span class="built_in">JSON</span>.stringify(articles)</span><br><span class="line">articles = <span class="built_in">JSON</span>.parse(temp)</span><br><span class="line"></span><br><span class="line"><span class="comment">// res.send(articles)</span></span><br><span class="line">res.render(<span class="string">&#x27;home/default&#x27;</span>,&#123;</span><br><span class="line">    results:articles</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>index.js文件查询文章数据并渲染总览页面</center>
+
+<br>
+
+<ul>
+<li><p>渲染default.art页面时<strong>注意：</strong></p>
+<ul>
+<li><p>每一个文章块<strong>li标签的class值为 fl 和 fr 交替出现</strong></p>
+<ul>
+<li>渲染时 遍历文章数据数组时 用遍历序号<strong>对2取余</strong>的值判断该文章模块class的取值</li>
+<li>即偶数为fl，奇数为fr</li>
+</ul>
+</li>
+<li><p>用户名为<strong>author.username</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 遍历文章数组生成文章预览块 --&gt;</span></span><br><span class="line">		&#123;&#123;each results.records&#125;&#125;</span><br><span class="line">		<span class="comment">&lt;!-- 判断class值 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;&#123;&#123;$index % 2 == 0 ? &#x27;fl&#x27; : &#x27;fr&#x27;&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/home/article?id=&#123;&#123;@$value._id&#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;thumbnail&quot;</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;&#123;&#123;$value.cover&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;article-title&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/home/article?id=&#123;&#123;@$value._id&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;$value.title&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;article-info&quot;</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;author&quot;</span>&gt;</span>&#123;&#123;$value.author.username&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123;$value.publishDate&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;brief&quot;</span>&gt;</span></span><br><span class="line">					&#123;&#123;$value.content&#125;&#125;</span><br><span class="line">				<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">		&#123;&#123;/each&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<center>default.art模块遍历results拼接数据生成文章块</center>
+
+<br>
+
+<h4 id="10-3-1-文章数据格式处理"><a href="#10-3-1-文章数据格式处理" class="headerlink" title="10.3.1 文章数据格式处理"></a>10.3.1 文章数据格式处理</h4><p>文章信息在总览页面显示时要注意：</p>
+<ul>
+<li>日期以’yyyy-mm-dd‘的格式显示，用<strong>dateFormat第三方模块</strong>实现</li>
+<li>文章内容节选需要<strong>去除HTML标签</strong>，<strong>原文输出</strong>，<strong>节选长度</strong><ul>
+<li>去除HTML标签使用字符串的replace方法<ul>
+<li>使用<strong>正则表达式匹配HTML标签</strong>并替换为空字符串（注意匹配时全局）</li>
+<li><code>replace(/&lt;[^&gt;]+&gt;/g,&#39;&#39;)</code></li>
+</ul>
+</li>
+<li>原文输出是为了<strong>防止将空格显示为&amp;nbsp</strong>等情况<ul>
+<li>在数据变量前加@原文输出</li>
+</ul>
+</li>
+<li>节选长度使用字符串substr方法自定义<ul>
+<li><code>substr(0,100)</code>节选0到100的字符显示</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h4 id="10-3-2-分页按钮条处理"><a href="#10-3-2-分页按钮条处理" class="headerlink" title="10.3.2 分页按钮条处理"></a>10.3.2 分页按钮条处理</h4><p><strong>文章总览页面</strong>的分页原理与<strong>文章列表页面</strong>一致</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 分页开始 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;page w1100&quot;</span>&gt;</span></span><br><span class="line">		&#123;&#123;if results.page &gt; 1&#125;&#125;</span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/home/?page=&#123;&#123;results.page - 1&#125;&#125;&quot;</span>&gt;</span>上一页<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		&#123;&#123;/if&#125;&#125;</span><br><span class="line">        </span><br><span class="line">		&#123;&#123;each results.display&#125;&#125;</span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/home/?page=&#123;&#123;$value&#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;&#123;&#123;results.page == $value ? &#x27;active&#x27; : &#x27;&#x27;&#125;&#125;&quot;</span>&gt;</span>&#123;&#123;$value&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		&#123;&#123;/each&#125;&#125;</span><br><span class="line">        </span><br><span class="line">		&#123;&#123;if results.page &lt; results.pages&#125;&#125;</span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/home/?page=&#123;&#123;results.page - 0 + 1&#125;&#125;&quot;</span>&gt;</span>下一页<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		&#123;&#123;/if&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 分页结束 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>页码按钮增加了选中状态，若<strong>页码按钮值等于当前页码</strong>，则设置class为active进行颜色标记</li>
+</ul>
+<br>
+
+<h3 id="10-4-文章详情页面"><a href="#10-4-文章详情页面" class="headerlink" title="10.4 文章详情页面"></a>10.4 文章详情页面</h3><p>在文章总览页面的每个文章模块中加入超链接 将该文章的<strong>id值作为get参数传递</strong></p>
+<p>服务器接受到请求后根据id查询文章信息并渲染文章详情页面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> (req,res) =&gt; &#123;</span><br><span class="line">    <span class="comment">//接受id参数</span></span><br><span class="line">    <span class="keyword">const</span> id = req.query.id</span><br><span class="line">    <span class="comment">//数据库中查询文章信息</span></span><br><span class="line">    <span class="comment">//多集合级联查询author</span></span><br><span class="line">    <span class="comment">//lean()转换格式</span></span><br><span class="line">    <span class="keyword">let</span> article = <span class="keyword">await</span> Article.findOne(&#123;<span class="attr">_id</span>:id&#125;).populate(<span class="string">&#x27;author&#x27;</span>).lean()</span><br><span class="line">    res.render(<span class="string">&#x27;home/article&#x27;</span>,&#123;</span><br><span class="line">        article:article</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>article.js文章详情页面请求处理</center>
+
+<br>
+
+<br>
+
+<h2 id="11-普通用户和管理用户权限区分"><a href="#11-普通用户和管理用户权限区分" class="headerlink" title="11. 普通用户和管理用户权限区分"></a>11. 普通用户和管理用户权限区分</h2><p>通过用户信息中的<strong>role属性</strong>分别两种用户</p>
+<ul>
+<li>normal：普通用户</li>
+<li>admin：管理员用户</li>
+</ul>
+<br>
+
+<h3 id="11-1-登录页面处理函数修改"><a href="#11-1-登录页面处理函数修改" class="headerlink" title="11.1 登录页面处理函数修改"></a>11.1 登录页面处理函数修改</h3><p>两种用户登录后应该跳转到不同页面</p>
+<ul>
+<li>普通用户登录后跳转到<strong>前台首页</strong></li>
+<li>管理用户登录后跳转到<strong>用户列表</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断用户角色</span></span><br><span class="line"><span class="keyword">if</span>(user.role == <span class="string">&#x27;normal&#x27;</span>)&#123;</span><br><span class="line">    <span class="comment">//普通用户登录后跳转到前台首页</span></span><br><span class="line">    res.redirect(<span class="string">&#x27;/home/&#x27;</span>)</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//重定向到用户展示页面</span></span><br><span class="line">    res.redirect(<span class="string">&#x27;/admin/user&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>login.js区分用户修改登陆后显示的页面</center>
+
+<br>
+
+<h3 id="11-2-登录拦截处理函数修改"><a href="#11-2-登录拦截处理函数修改" class="headerlink" title="11.2 登录拦截处理函数修改"></a>11.2 登录拦截处理函数修改</h3><p>之前登录拦截处理函数<strong>只拦截没有登录的用户</strong>，登录后的任意用户都可以访问网站所有网页</p>
+<p>现在<strong>普通用户登录后是没有权限访问博客管理页面的</strong></p>
+<ul>
+<li>将登录成功时将用户的<strong>角色信息存储在session对象中</strong><ul>
+<li>修改login.js文件添加<code>req.session.role = user.role</code></li>
+</ul>
+</li>
+<li>登录拦截处理时，当用户登录后，判断用户角色<ul>
+<li>若为普通用户，则其<strong>访问/admin下的管理页面时重定向到前台首页</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(req.session.role == <span class="string">&#x27;normal&#x27;</span>)&#123;</span><br><span class="line">    <span class="comment">//普通用户尝试访问管理页面时重定向回前台首页</span></span><br><span class="line">    <span class="keyword">return</span> res.redirect(<span class="string">&#x27;/home/&#x27;</span>)</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//管理用户放行</span></span><br><span class="line">    next()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>loginGuard.js修改后判断用户角色</center>
+
+<br>
+
+<br>
+
+<h2 id="12-文章详情页评论功能"><a href="#12-文章详情页评论功能" class="headerlink" title="12. 文章详情页评论功能"></a>12. 文章详情页评论功能</h2><ul>
+<li>model文件夹下创建comment.js文件<strong>创建评论集合</strong></li>
+<li>提交评论表单时判断用户登陆状态</li>
+<li>服务器端创建处理评论请求的路由</li>
+<li>路由处理函数中接受评论信息</li>
+<li>将评论信息存储在评论集合中</li>
+<li>重定向回文章详情页，并将文章评论信息更新</li>
+</ul>
+<h3 id="12-1-创建评论集合"><a href="#12-1-创建评论集合" class="headerlink" title="12.1 创建评论集合"></a>12.1 创建评论集合</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建集合构造函数</span></span><br><span class="line"><span class="keyword">const</span> commentSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">    aid:&#123;</span><br><span class="line">        type:mongoose.Schema.Types.ObjectId,</span><br><span class="line">        ref:<span class="string">&#x27;Article&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    uid:&#123;</span><br><span class="line">        type:mongoose.Schema.Types.ObjectId,</span><br><span class="line">        ref:<span class="string">&#x27;User&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    publishDate:&#123;</span><br><span class="line">        type:<span class="built_in">Date</span>,</span><br><span class="line">        <span class="keyword">default</span>:<span class="built_in">Date</span>.now</span><br><span class="line">    &#125;,</span><br><span class="line">    commentContent:&#123;</span><br><span class="line">        type:<span class="built_in">String</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="12-2-评论时判断用户状态"><a href="#12-2-评论时判断用户状态" class="headerlink" title="12.2 评论时判断用户状态"></a>12.2 评论时判断用户状态</h3><p>通过login.js文件在用户登录时添加的<strong>模板公共拼接数据userInfo来判断</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 判断用户登录状态 --&gt;</span></span><br><span class="line">&#123;&#123;if userInfo&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;comment-form&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">textarea</span> <span class="attr">class</span>=<span class="string">&quot;comment&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;items&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">&#123;&#123;else&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h4</span>&gt;</span>请登陆后再评论<span class="tag">&lt;/<span class="name">h4</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;&#123;/if&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<center>artcle.art模板</center>
+
+<p><strong>注意：</strong></p>
+<ul>
+<li>userInfo是模板公共拼接数据，当用户退出时，<strong>logout.js处理函数中需要清除userInfo变量</strong>，否则会导致bug</li>
+<li>通过对userInfo置null来清除用户信息</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//登出后清除模板公共数据中的用户信息</span></span><br><span class="line">req.app.locals.userInfo = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="12-3-创建评论功能路由并处理请求"><a href="#12-3-创建评论功能路由并处理请求" class="headerlink" title="12.3 创建评论功能路由并处理请求"></a>12.3 创建评论功能路由并处理请求</h3><ul>
+<li>在article.art模板中的<strong>表单设置请求地址等参数</strong></li>
+<li>创建评论路由</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//评论提交路由</span></span><br><span class="line">home.post(<span class="string">&#x27;/comment&#x27;</span>,<span class="built_in">require</span>(<span class="string">&#x27;./home/comment&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ul>
+<li>处理评论请求函数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取评论集合构造函数</span></span><br><span class="line"><span class="keyword">const</span> &#123; Comment &#125; = <span class="built_in">require</span>(<span class="string">&quot;../../model/comment&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> (req,res) =&gt; &#123;</span><br><span class="line">    <span class="comment">//获取评论表单参数</span></span><br><span class="line">    <span class="keyword">const</span> body = req.body</span><br><span class="line">    <span class="comment">//将评论添加到评论集合</span></span><br><span class="line">    <span class="keyword">await</span> Comment.create(body)</span><br><span class="line">    <span class="comment">//重定向回文章详情页</span></span><br><span class="line">    res.redirect(<span class="string">&#x27;/home/article?id=&#x27;</span> + body.aid)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210910104323832.png" alt="数据库中comments集合中的评论数据"></p>
+<br>
+
+<h3 id="12-4-文章详情页显示对应的评论信息"><a href="#12-4-文章详情页显示对应的评论信息" class="headerlink" title="12.4 文章详情页显示对应的评论信息"></a>12.4 文章详情页显示对应的评论信息</h3><ul>
+<li>文章详情页处理函数中，使用<strong>文章id</strong>查询在评论集合中查询出<strong>属于当前文章的所有评论</strong>，将其作为拼接数据渲染模板</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查询当前文章的所有评论（使用文章id匹配）</span></span><br><span class="line"><span class="comment">//联合查询出用户信息（显示用户名等）</span></span><br><span class="line"><span class="keyword">let</span> comments = <span class="keyword">await</span> Comment.find(&#123;<span class="attr">aid</span>:id&#125;).populate(<span class="string">&#x27;uid&#x27;</span>).lean()</span><br><span class="line"></span><br><span class="line"><span class="comment">//渲染模板（评论数组作为拼接数据）</span></span><br><span class="line">res.render(<span class="string">&#x27;home/article&#x27;</span>,&#123;</span><br><span class="line">    article:article,</span><br><span class="line">    comments:comments</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>article.js处理函数</center>
+
+<br>
+
+<ul>
+<li>遍历评论数组生成评论</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 生成评论 --&gt;</span></span><br><span class="line">&#123;&#123;each comments&#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mb10&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;article-info&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;author&quot;</span>&gt;</span>&#123;&#123;$value.uid.username&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123;dateFormat($value.publishDate,&#x27;yyyy-mm-dd&#x27;)&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123;$value.uid.email&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;comment-content&quot;</span>&gt;</span></span><br><span class="line">		&#123;&#123;$value.content&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;&#123;/each&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<center>article.art模板生成评论</center>
+
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210910105508674.png" alt="显示评论"></p>
+<br>
+
+<br>
+
+<h2 id="开发过程遇见的问题"><a href="#开发过程遇见的问题" class="headerlink" title="开发过程遇见的问题"></a>开发过程遇见的问题</h2><h3 id="1-连接mongoDB数据库时报错TextEncoder-is-not-defined"><a href="#1-连接mongoDB数据库时报错TextEncoder-is-not-defined" class="headerlink" title="1.连接mongoDB数据库时报错TextEncoder is not defined"></a>1.连接mongoDB数据库时报错TextEncoder is not defined</h3><p>低于<strong>v11版本</strong>的Node运行环境<strong>不支持TextEncoder方法</strong></p>
+<p>将node版本升级到v11解决</p>
+<p>进行项目开发时<strong>明确使用的环境版本非常重要</strong>，并且在开发中经常会遇到<strong>不同的项目使用不同版本的Node</strong>，此时频繁切换不同版本的Node非常麻烦。</p>
+<p>使用<strong>nvm</strong> 来管理node版本</p>
+<br>
+
+<h3 id="2-多集合级联查询与render方法渲染模板冲突"><a href="#2-多集合级联查询与render方法渲染模板冲突" class="headerlink" title="2. 多集合级联查询与render方法渲染模板冲突"></a>2. 多集合级联查询与render方法渲染模板冲突</h3><p><strong>第一种解决办法</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> articles = <span class="keyword">await</span> pagination(Article).page(page).size(<span class="number">2</span>).display(<span class="number">2</span>).populate(<span class="string">&#x27;author&#x27;</span>).exec()</span><br><span class="line">    <span class="comment">//将查询出的对象先转换为JSON字符串再转换为对象</span></span><br><span class="line">    <span class="comment">//将author字段值的类型由mongoose文档对象转换为普通对象避免渲染模板时的冲突</span></span><br><span class="line">    <span class="keyword">let</span> temp = <span class="built_in">JSON</span>.stringify(articles)</span><br><span class="line">    articles = <span class="built_in">JSON</span>.parse(temp)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将查询结果使用**JSON.stringify()和JSON.parse()**方法转换</li>
+<li>将mongoose的<strong>文档格式对象</strong>转化为<strong>普通对象</strong></li>
+</ul>
+<p><strong>第二种解决办法</strong></p>
+<ul>
+<li>在populate()方法后链式调用lean()方法</li>
+<li>原理与第一种方法相同</li>
+<li>但是<strong>使用mongoose-sex-page模块进行分页时与lean()方法冲突</strong></li>
+<li>故使用第一种方法</li>
+</ul>
+<br>
+
+<h3 id="3-实现分页按钮条上一页-下一页按钮隐藏时的问题"><a href="#3-实现分页按钮条上一页-下一页按钮隐藏时的问题" class="headerlink" title="3. 实现分页按钮条上一页/下一页按钮隐藏时的问题"></a>3. 实现分页按钮条上一页/下一页按钮隐藏时的问题</h3><p>如果直接在标签内style属性中的<strong>display属性中使用模板标准语法进行条件表达式判断</strong></p>
+<ul>
+<li>此时当<strong>VSCODE语言模式选择为HTML时会提示错误</strong>，但项目仍能运行</li>
+<li>将语言模式改为art时，不会报错，但文件中又不会提示代码补全</li>
+<li>综上，<strong>使用模板标准语法的判断语句</strong>来实现上一页/下一页的隐藏显示</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;if results.page &lt; results.pages&#125;&#125;</span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/home/?page=&#123;&#123;results.page - 0 + 1&#125;&#125;&quot;</span>&gt;</span>下一页<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">&#123;&#123;/if&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当满足判断条件时，即当前页码小于最后一页时显示下一页，否则隐藏</li>
+</ul>
+<br>
+
+<h3 id="4-模板中相对路径的问题"><a href="#4-模板中相对路径的问题" class="headerlink" title="4. 模板中相对路径的问题"></a>4. 模板中相对路径的问题</h3><p>模板中许多外链文件如css和js文件使用的都是<strong>相对路径</strong></p>
+<p>模板中的相对路径是<strong>相对于浏览器地址栏的路径</strong></p>
+<p>改为<strong>绝对路径</strong>可以避免因路由对象的虚拟路径而取不到静态资源文件的问题</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203446873.png" alt="login.art模板中的相对路径"></p>
+<br>
+
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830203543389.png" alt="相对路径相对于浏览器地址栏的路径"></p>
+<p>此时浏览器将地址栏中的login当作文件，所以<strong>相对路径即相对于/abc</strong></p>
+<ul>
+<li><p>可见此时请求静态资源<code>base.css</code>的路径变为了<code>http://localhost/abc/css/base.css</code></p>
+</li>
+<li><p>而<code>base.css</code>静态资源文件并不在<code>/public/abc</code>文件夹下，并且public文件夹下也并不存在abc文件夹，所以无法获取静态资源文件</p>
+</li>
+<li><p>/abc只是admin路由对象匹配的<strong>虚拟路径</strong>，这个虚拟路径<strong>随时可以发生变化</strong></p>
+</li>
+<li><p>所以在模块中使用相对路径获取静态资源文件并不合适</p>
+</li>
+<li><p>改为使用<strong>绝对路径</strong>解决这个问题</p>
+</li>
+</ul>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830204312384.png" alt="login.art模板中使用绝对路径"></p>
+<p>在原先的相对路径前加上<code>&#39;/&#39;</code>使其变为绝对路径，同时根据静态资源文件的路径加上admin</p>
+<p>此时请求静态资源文件的路径变为<code>http://localhost/admin/css/base.css</code></p>
+<p>经过<code>express.static</code>方法处理后在<code>/public/admin/css/base.css</code>找到静态资源文件</p>
+<p><img data-src="/images/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/image-20210830205046226.png" alt="模板使用绝对路径获取静态资源文件"></p>
+<br>
+
+<h3 id="5-用户退出登录后在浏览器仍有cookie保存"><a href="#5-用户退出登录后在浏览器仍有cookie保存" class="headerlink" title="5. 用户退出登录后在浏览器仍有cookie保存"></a>5. 用户退出登录后在浏览器仍有cookie保存</h3><p><code>logout.js</code>处理函数中在用户退出登陆后<strong>删除服务端session和客户端cookie</strong></p>
+<p>但是退出登陆后在浏览器仍然保存一个cookie</p>
+<p><strong>原因为：</strong></p>
+<p>express-session模块使用时默认会设置未初始化cookie</p>
+<ul>
+<li>即当客户端向服务端发送请求时就会存储一个cookie</li>
+<li>这个cookie不存储用户的sessionId</li>
+<li>我们希望用户退出登录时<strong>将这个未初始化cookie也删除</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//建立session对象</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    <span class="comment">//加密cookie</span></span><br><span class="line">    secret:<span class="string">&#x27;secret key&#x27;</span>,</span><br><span class="line">    <span class="comment">//默认不添加未初始化cookie</span></span><br><span class="line">    saveUninitialized:<span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        <span class="comment">//设置过期时间(毫秒)</span></span><br><span class="line">        maxAge:<span class="number">24</span> * <span class="number">60</span> *<span class="number">60</span> * <span class="number">1000</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>在app.js文件中建立session对象时<code>saveUninitialized:false</code></p>
+</li>
+<li><p>将这个属性置为false则不会自动添加未初始化cookie</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Nodejs/" rel="tag"><i class="fa fa-tag"></i> Nodejs</a>
+              <a href="/tags/Mongodb%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> Mongodb数据库</a>
+              <a href="/tags/Express/" rel="tag"><i class="fa fa-tag"></i> Express</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/11/16-Express%E6%A1%86%E6%9E%B6/" rel="prev" title="16-Express框架">
+      <i class="fa fa-chevron-left"></i> 16-Express框架
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/10/01-Vue/" rel="next" title="01-Vue">
+      01-Vue <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE"><span class="nav-text">多人博客管理系统项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">1.项目初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-text">1.1 创建项目目录文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%B9%E7%9B%AE%E6%8F%8F%E8%BF%B0%E6%96%87%E4%BB%B6"><span class="nav-text">1.2 初始化项目描述文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96%E6%A8%A1%E5%9D%97"><span class="nav-text">1.3 下载依赖模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%88%9B%E5%BB%BA%E7%BD%91%E7%AB%99%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">1.4 创建网站服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%A8%A1%E5%9D%97%E5%8C%96%E8%B7%AF%E7%94%B1"><span class="nav-text">1.5 模块化路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E8%AF%B7%E6%B1%82%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%A4%84%E7%90%86"><span class="nav-text">1.6 请求静态页面处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E9%A1%B5%E9%9D%A2%E6%A8%A1%E6%9D%BF%E6%9E%84%E5%BB%BA"><span class="nav-text">1.7 博客管理页面模板构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">1.8 模板中相对路径的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-%E4%BC%98%E5%8C%96%E6%A8%A1%E6%9D%BF%E4%B8%AD%E5%85%AC%E5%85%B1%E4%BB%A3%E7%A0%81"><span class="nav-text">1.9 优化模板中公共代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-10-%E6%8F%90%E5%8F%96%E6%A8%A1%E6%9D%BF%E9%AA%A8%E6%9E%B6"><span class="nav-text">1.10 提取模板骨架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD"><span class="nav-text">2. 登录功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E9%9B%86%E5%90%88%E5%88%9D%E5%A7%8B%E5%8C%96%E7%94%A8%E6%88%B7"><span class="nav-text">2.1 创建用户集合初始化用户</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">2.1.1 连接数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E9%9B%86%E5%90%88"><span class="nav-text">2.1.2 创建用户集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-%E5%88%9B%E5%BB%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E7%94%A8%E6%88%B7"><span class="nav-text">2.1.3 创建初始化用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%8F%90%E4%BA%A4%E5%89%8D%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%80%E6%AC%A1%E9%AA%8C%E8%AF%81"><span class="nav-text">2.2 提交前客户端一次验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-text">2.2.1 获取用户输入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E6%8F%90%E4%BA%A4%E9%AA%8C%E8%AF%81"><span class="nav-text">2.2.2 提交验证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%8F%90%E4%BA%A4%E5%90%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E4%BA%8C%E6%AC%A1%E9%AA%8C%E8%AF%81"><span class="nav-text">2.3 提交后服务器端二次验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9F%A5%E6%89%BE%E7%94%A8%E6%88%B7%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="nav-text">2.4 服务端查找用户是否存在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86-bcrypt"><span class="nav-text">2.5 密码加密 bcrypt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-1-%E5%AE%89%E8%A3%85bcrypt%E6%A8%A1%E5%9D%97"><span class="nav-text">2.5.1 安装bcrypt模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-2-%E5%8A%A0%E5%AF%86%E5%AF%86%E7%A0%81%E5%92%8C%E6%AF%94%E5%AF%B9%E6%98%8E%E6%96%87%E5%AF%86%E6%96%87"><span class="nav-text">2.5.2 加密密码和比对明文密文</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-cookie%E5%92%8Csession"><span class="nav-text">2.6 cookie和session</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1-cookie"><span class="nav-text">2.6.1 cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2-session"><span class="nav-text">2.6.2 session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-3-%E5%9C%A8%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E4%B8%AD%E5%BA%94%E7%94%A8cookie%E5%92%8Csession"><span class="nav-text">2.6.3 在登录功能中应用cookie和session</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E7%99%BB%E5%BD%95%E5%90%8E%E8%B7%B3%E8%BD%AC%E5%88%B0%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2%E5%B9%B6%E6%98%BE%E7%A4%BA%E7%94%A8%E6%88%B7%E5%90%8D"><span class="nav-text">2.7 登录后跳转到用户列表页面并显示用户名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-%E7%99%BB%E5%BD%95%E6%8B%A6%E6%88%AA"><span class="nav-text">2.8 登录拦截</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-text">2.9 退出登录功能实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-app-js%E5%92%8Cadmin-js%E6%96%87%E4%BB%B6%E4%BC%98%E5%8C%96"><span class="nav-text">2.10 app.js和admin.js文件优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD"><span class="nav-text">3. 用户注册功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-joi%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97"><span class="nav-text">3.1 joi第三方模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BD%BF%E7%94%A8joi%E6%A8%A1%E5%9D%97%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B3%A8%E5%86%8C%E4%BF%A1%E6%81%AF%E9%AA%8C%E8%AF%81"><span class="nav-text">3.2 使用joi模块实现服务端注册信息验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">3.3 用户添加到数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E4%BC%98%E5%8C%96user-editSubmit-js%E6%96%87%E4%BB%B6"><span class="nav-text">3.4 优化user-editSubmit.js文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF%E6%A0%BC%E5%BC%8F%E9%AA%8C%E8%AF%81%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-text">3.4.1 提交信息格式验证代码优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-%E9%87%8D%E5%AE%9A%E5%90%91%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-text">3.4.2 重定向错误处理代码优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2"><span class="nav-text">4. 用户列表页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8%E5%88%86%E9%A1%B5%E6%98%BE%E7%A4%BA%E5%8A%9F%E8%83%BD"><span class="nav-text">4.1 用户列表分页显示功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E9%80%82%E6%97%B6%E5%8F%96%E6%B6%88%E4%B8%8A%E4%B8%80%E9%A1%B5-%E4%B8%8B%E4%B8%80%E9%A1%B5%E6%8C%89%E9%92%AE"><span class="nav-text">4.1.1 适时取消上一页&#x2F;下一页按钮</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9%E5%8A%9F%E8%83%BD"><span class="nav-text">5. 用户信息修改功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9%E9%A1%B5%E9%9D%A2"><span class="nav-text">5.1 用户信息修改页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9%E6%8F%90%E4%BA%A4"><span class="nav-text">5.2 用户信息修改提交</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-%E5%AF%86%E7%A0%81%E6%AF%94%E5%AF%B9%E9%94%99%E8%AF%AF%E6%97%B6"><span class="nav-text">5.2.1 密码比对错误时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-%E5%AF%86%E7%A0%81%E6%AF%94%E5%AF%B9%E6%88%90%E5%8A%9F%E6%97%B6"><span class="nav-text">5.2.2 密码比对成功时</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%94%A8%E6%88%B7%E5%88%A0%E9%99%A4%E5%8A%9F%E8%83%BD"><span class="nav-text">6. 用户删除功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%96%87%E7%AB%A0%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD"><span class="nav-text">7.文章管理功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E5%88%9B%E5%BB%BA%E6%96%87%E7%AB%A0%E9%9B%86%E5%90%88articles"><span class="nav-text">7.1 创建文章集合articles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E5%8A%9F%E8%83%BD"><span class="nav-text">7.2 添加文章功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-1-formidable%E6%A8%A1%E5%9D%97-%E5%A4%84%E7%90%86%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-text">7.2.1 formidable模块 处理二进制表单数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-2-%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E7%99%BB%E5%BD%95%E7%94%A8%E6%88%B7id"><span class="nav-text">7.2.2 添加文章页面显示登录用户id</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-3-%E4%B8%8A%E4%BC%A0%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2%E6%98%BE%E7%A4%BA%E7%BC%A9%E7%95%A5%E5%9B%BE"><span class="nav-text">7.2.3 上传文章封面显示缩略图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-4-%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">7.2.4 添加文章存入数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7-2-4-1-%E8%8E%B7%E5%8F%96%E5%B0%81%E9%9D%A2%E6%96%87%E4%BB%B6%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9C%AC%E5%9C%B0%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84"><span class="nav-text">7.2.4.1 获取封面文件在服务器本地的绝对存储路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2"><span class="nav-text">7.3 文章列表页面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-1%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-text">7.3.1发布时间格式处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-2-%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%E9%A1%B5%E9%9D%A2%E5%88%86%E9%A1%B5"><span class="nav-text">7.3.2 文章列表页面分页</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7-3-2-1-%E5%88%86%E9%A1%B5%E6%8C%89%E9%92%AE%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-text">7.3.2.1 分页按钮功能实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-3-%E6%96%87%E7%AB%A0%E4%BF%AE%E6%94%B9%E5%92%8C%E5%88%A0%E9%99%A4%E5%8A%9F%E8%83%BD%E4%B8%8E%E7%94%A8%E6%88%B7%E7%9A%84%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4%E5%90%8C%E7%90%86"><span class="nav-text">7.3.3 文章修改和删除功能与用户的修改删除同理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%B8%BAmongoDB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B7%BB%E5%8A%A0%E8%B4%A6%E6%88%B7"><span class="nav-text">8.为mongoDB数据库添加账户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%B0%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82%E6%89%93%E5%8D%B0%E5%9C%A8%E6%8E%A7%E5%88%B6%E5%8F%B0%EF%BC%88morgan%E6%A8%A1%E5%9D%97%EF%BC%89"><span class="nav-text">9.1 开发环境将客户端请求打印在控制台（morgan模块）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-%E4%B8%8D%E5%90%8C%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%EF%BC%88config%E6%A8%A1%E5%9D%97%EF%BC%89"><span class="nav-text">9.2 不同运行环境使用不同的配置信息（config模块）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-1-%E5%B0%86%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF%E6%8A%BD%E7%A6%BB%E5%88%B0%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD"><span class="nav-text">9.2.1 将连接数据库信息抽离到开发环境配置文件中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-2-%E5%B0%86%E6%95%8F%E6%84%9F%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%AD%98%E5%82%A8%E5%9C%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%AD"><span class="nav-text">9.2.2 将敏感配置信息存储在环境变量中</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E5%89%8D%E5%8F%B0%E5%B1%95%E7%A4%BA%E9%A1%B5%E9%9D%A2"><span class="nav-text">10. 博客网站前台展示页面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-%E5%BB%BA%E7%AB%8B%E8%B7%AF%E7%94%B1"><span class="nav-text">10.1 建立路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-text">10.2 模板文件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%96%87%E7%AB%A0%E5%B9%B6%E6%98%BE%E7%A4%BA%E5%9C%A8%E7%94%A8%E6%88%B7%E6%80%BB%E8%A7%88%E9%A1%B5%E9%9D%A2"><span class="nav-text">10.3 从数据库中查询文章并显示在用户总览页面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10-3-1-%E6%96%87%E7%AB%A0%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-text">10.3.1 文章数据格式处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-3-2-%E5%88%86%E9%A1%B5%E6%8C%89%E9%92%AE%E6%9D%A1%E5%A4%84%E7%90%86"><span class="nav-text">10.3.2 分页按钮条处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2"><span class="nav-text">10.4 文章详情页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E5%92%8C%E7%AE%A1%E7%90%86%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E5%8C%BA%E5%88%86"><span class="nav-text">11. 普通用户和管理用户权限区分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="nav-text">11.1 登录页面处理函数修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-%E7%99%BB%E5%BD%95%E6%8B%A6%E6%88%AA%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="nav-text">11.2 登录拦截处理函数修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85%E9%A1%B5%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD"><span class="nav-text">12. 文章详情页评论功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-%E5%88%9B%E5%BB%BA%E8%AF%84%E8%AE%BA%E9%9B%86%E5%90%88"><span class="nav-text">12.1 创建评论集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-%E8%AF%84%E8%AE%BA%E6%97%B6%E5%88%A4%E6%96%AD%E7%94%A8%E6%88%B7%E7%8A%B6%E6%80%81"><span class="nav-text">12.2 评论时判断用户状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-3-%E5%88%9B%E5%BB%BA%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD%E8%B7%AF%E7%94%B1%E5%B9%B6%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82"><span class="nav-text">12.3 创建评论功能路由并处理请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-4-%E6%96%87%E7%AB%A0%E8%AF%A6%E6%83%85%E9%A1%B5%E6%98%BE%E7%A4%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E8%AF%84%E8%AE%BA%E4%BF%A1%E6%81%AF"><span class="nav-text">12.4 文章详情页显示对应的评论信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E9%81%87%E8%A7%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">开发过程遇见的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%BF%9E%E6%8E%A5mongoDB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%B6%E6%8A%A5%E9%94%99TextEncoder-is-not-defined"><span class="nav-text">1.连接mongoDB数据库时报错TextEncoder is not defined</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A4%9A%E9%9B%86%E5%90%88%E7%BA%A7%E8%81%94%E6%9F%A5%E8%AF%A2%E4%B8%8Erender%E6%96%B9%E6%B3%95%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E5%86%B2%E7%AA%81"><span class="nav-text">2. 多集合级联查询与render方法渲染模板冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%9E%E7%8E%B0%E5%88%86%E9%A1%B5%E6%8C%89%E9%92%AE%E6%9D%A1%E4%B8%8A%E4%B8%80%E9%A1%B5-%E4%B8%8B%E4%B8%80%E9%A1%B5%E6%8C%89%E9%92%AE%E9%9A%90%E8%97%8F%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">3. 实现分页按钮条上一页&#x2F;下一页按钮隐藏时的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">4. 模板中相对路径的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%94%A8%E6%88%B7%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95%E5%90%8E%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BB%8D%E6%9C%89cookie%E4%BF%9D%E5%AD%98"><span class="nav-text">5. 用户退出登录后在浏览器仍有cookie保存</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
