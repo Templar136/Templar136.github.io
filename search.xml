@@ -4979,4 +4979,172 @@ return p2();
         <tag>Vue</tag>
       </tags>
   </entry>
+  <entry>
+    <title>10-Git命令行命令</title>
+    <url>/2022/04/23/10-Git%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="Git命令行命令"><a href="#Git命令行命令" class="headerlink" title="Git命令行命令"></a>Git命令行命令</h1><h2 id="1-git-status"><a href="#1-git-status" class="headerlink" title="1. git status"></a>1. <code>git status</code></h2><p>查看你的文件在工作目录与缓存的状态</p>
+<ul>
+<li>修改没有送入缓存区时</li>
+<li>红色代表<strong>修改完但没有送入缓存区</strong></li>
+</ul>
+<p><img data-src="/images/10-Git%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%91%BD%E4%BB%A4/image-20211019172434607.png" alt="image-20211019172434607"></p>
+<span id="more"></span>
+
+<ul>
+<li>修改文件送入缓存区并准备提交</li>
+<li>绿色代表<strong>修改完并送入缓存区</strong></li>
+</ul>
+<p><img data-src="/images/10-Git%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%91%BD%E4%BB%A4/image-20211019172858490.png" alt="image-20211019172858490"></p>
+<ul>
+<li>缓存区文件已经提交到本地仓库，此时缓存区清空</li>
+</ul>
+<p><img data-src="/images/10-Git%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%91%BD%E4%BB%A4/image-20211019172947560.png" alt="image-20211019172947560"></p>
+<br>
+
+<h2 id="2-git-add"><a href="#2-git-add" class="headerlink" title="2. git add"></a>2. <code>git add</code></h2><p>添加文件到缓存</p>
+<p><code>git add README</code>：将<code>README</code>文件送入缓存区</p>
+<p><code>git add .</code>：将所有修改文件送入缓存区</p>
+<br>
+
+<h2 id="3-git-reset-HEAD"><a href="#3-git-reset-HEAD" class="headerlink" title="3. git reset HEAD"></a>3. <code>git reset HEAD</code></h2><p>取消缓存区中已缓存的内容</p>
+<p><code>git reset HEAD</code> ：取消缓存区的<strong>所有文件</strong></p>
+<p><code>git reset HEAD -- hello.vue</code>：取消缓存区中的**<code>hello.vue</code>文件** </p>
+<br>
+
+<h2 id="4-git-remote-add-lt-shortname-gt-lt-URL-gt"><a href="#4-git-remote-add-lt-shortname-gt-lt-URL-gt" class="headerlink" title="4. git remote add &lt;shortname&gt; &lt;URL&gt;"></a>4. <code>git remote add &lt;shortname&gt; &lt;URL&gt;</code></h2><ul>
+<li><p>关联<strong>本地仓库与远程仓库</strong></p>
+</li>
+<li><p>给远程仓库的URL <code>&lt;URL&gt;</code> 起简写名称 <code>&lt;shortname&gt;</code></p>
+</li>
+<li><p>后续命令可以使用简写名称代替URL</p>
+</li>
+</ul>
+<p><code>git remote add origin https://gitee.com/yang-xiao123/vue_shop.git</code></p>
+<ul>
+<li><p>给<code>https://gitee.com/yang-xiao123/vue_shop.git</code>这个远程仓库 <strong>vue_shop</strong>的<strong>URL</strong></p>
+<p>起简写名称为<strong>origin</strong></p>
+</li>
+</ul>
+<h2 id="5-git-push-lt-远程仓库名-gt-lt-本地分支名-gt-lt-远程分支名-gt"><a href="#5-git-push-lt-远程仓库名-gt-lt-本地分支名-gt-lt-远程分支名-gt" class="headerlink" title="5. git push &lt;远程仓库名&gt; &lt;本地分支名&gt; [&lt;远程分支名&gt;]"></a>5. <code>git push &lt;远程仓库名&gt; &lt;本地分支名&gt; [&lt;远程分支名&gt;]</code></h2><p>将<strong>本地仓库的分支</strong>推送到<strong>远程仓库的对应分支</strong></p>
+<p><code>&lt;远程仓库名&gt;</code>即为上述的URL简写名称</p>
+<p><code>git push origin master master</code> ：将本地仓库master分支推送到origin仓库的master分支</p>
+<ul>
+<li><code>&lt;远程分支名&gt;</code>省略时，使用本地分支名作为<code>&lt;远程分支名&gt;</code></li>
+</ul>
+<br>
+
+<ul>
+<li><code>git push -u origin master</code> </li>
+<li><strong>-u</strong>：将本地分支master推送到远程分支master并<strong>建立追踪</strong><ul>
+<li>将<strong>本地分支master</strong>与<strong>远程分支master</strong>建立追踪</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<ul>
+<li><code>git push</code></li>
+</ul>
+<p>将<strong>当前所在的本地分支</strong>推送到<strong>与其建立追踪的远程分支</strong></p>
+<ul>
+<li>若当前分支<strong>没有建立过远程追踪则报错</strong></li>
+</ul>
+<br>
+
+<h2 id="6-git-branch"><a href="#6-git-branch" class="headerlink" title="6. git branch"></a>6. <code>git branch</code></h2><p><code>git branch </code>：显示可用分支，当前所在分支<strong>加’*’号并绿色显示</strong></p>
+<p><code>git branch &lt;new branch&gt;</code>：创建新分支</p>
+<p><code>git branch -d &lt;branchname&gt;</code>：删除分支(删除时不能处于被删除分支上)</p>
+<h2 id="7-git-checkout-lt-branchname-gt"><a href="#7-git-checkout-lt-branchname-gt" class="headerlink" title="7. git checkout &lt;branchname&gt;"></a>7. <code>git checkout &lt;branchname&gt;</code></h2><p>切换到新的分支上下文</p>
+<p><code>git checkout -b &lt;newbranchname&gt;</code>：创建新分支并切换到该分支</p>
+<ul>
+<li><strong>会带着当前分支的状态</strong>创建新分支</li>
+</ul>
+<h2 id="8-git-init"><a href="#8-git-init" class="headerlink" title="8. git init"></a>8. <code>git init</code></h2><p>创建/初始化本地仓库</p>
+<ol>
+<li>在项目目录下执行命令 <code>git init</code></li>
+</ol>
+<ul>
+<li><p>会创建一个隐藏的<code>.git</code>文件夹</p>
+</li>
+<li><p>会将项目初始化为本地仓库</p>
+</li>
+</ul>
+<ol start="2">
+<li>在gitee或者github上创建远程仓库</li>
+<li>将创建的本地仓库与远程仓库关联</li>
+</ol>
+<ul>
+<li><code>git remote add origin https://gitee.com/yang-xiao123/vue_shop.git</code></li>
+<li>关联本地仓库与远程仓库并给远程仓库URL取简写名称</li>
+</ul>
+<ol start="4">
+<li>推送本地分支到远程分支</li>
+</ol>
+<ul>
+<li><code>git push ...</code></li>
+<li>空的本地仓库不能推送</li>
+</ul>
+<br>
+
+<h2 id="9-git-clone"><a href="#9-git-clone" class="headerlink" title="9. git clone"></a>9. <code>git clone</code></h2><p>执行<code>git clone [url]</code></p>
+<ul>
+<li><p>将远程仓库克隆到本地</p>
+</li>
+<li><p><code>[url]</code>：远程仓库的URL</p>
+</li>
+</ul>
+<h2 id="10-git-commit"><a href="#10-git-commit" class="headerlink" title="10. git commit"></a>10. <code>git commit</code></h2><p>提交缓存到本体仓库</p>
+<p><code>git commit -m &quot;add files&quot;</code></p>
+<ul>
+<li><strong>提交</strong>缓存到本地仓库并<strong>设置摘要</strong>(<code>add files</code>)</li>
+</ul>
+<p><img data-src="/images/10-Git%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%91%BD%E4%BB%A4/image-20211019192735436.png" alt="image-20211019192735436"></p>
+<br>
+
+<h2 id="11-git-log"><a href="#11-git-log" class="headerlink" title="11. git log"></a>11. <code>git log</code></h2><p>显示<strong>一个分支</strong>中提交的更改记录</p>
+<ul>
+<li><strong>不同分支</strong>的提交记录<strong>互相独立</strong></li>
+</ul>
+<br>
+
+<h2 id="12-git-merge"><a href="#12-git-merge" class="headerlink" title="12. git merge"></a>12. <code>git merge</code></h2><p>将<strong>目标分支</strong>合并到你的<strong>当前分支</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master	<span class="comment">//当前处于mster分支</span></span><br><span class="line">  removals</span><br><span class="line">$ git merge removals	<span class="comment">//将removals分支合并到master分支(当前分支)</span></span><br></pre></td></tr></table></figure>
+
+<p>当前分支(master)被removals分支覆盖</p>
+<br>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><ul>
+<li><p>本地仓库的缓存区是<strong>多个分支共享的</strong></p>
+<ul>
+<li>多个分支执行<code>git add ...</code> 命令会将文件加入同一个缓存区</li>
+</ul>
+</li>
+<li><p>但是本地仓库分支的<strong>提交是独立的</strong></p>
+<ul>
+<li>在test分支下执行<code>git commit ...</code>命令进行提交</li>
+<li>会将缓存区内容提交到test分支(<strong>更新test分支</strong>)</li>
+<li>其他分支仍<strong>维持它们上次提交后的状态</strong></li>
+</ul>
+</li>
+<li><p>仓库的<strong>多个分支之间是互相独立的</strong></p>
+<ul>
+<li>对于login分支进行修改并提交后，只有login分支被更新，其他分支仍维持其上次提交后的状态</li>
+</ul>
+</li>
+<li><p>各个本地仓库的remote是独立的</p>
+<ul>
+<li>例如 仓库1: <code> git remote add origin [url1]</code> </li>
+<li>仓库2: <code>git remote add origin [url2]</code></li>
+<li><strong>两个origin不同</strong></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端工程化</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
 </search>
