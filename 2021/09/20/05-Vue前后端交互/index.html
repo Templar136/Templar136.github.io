@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Vue前后端交互浏览器通过调用后台接口获取数据后在前端进行渲染 1. 接口调用方式向服务器发起请求的方式  原生ajax jQuery的ajax fetch：标准化组织制定的新规则，可以理解为ajax的升级版 axios：第三方库，基于ajax，更加方便的调用接口   图一  2. URL地址格式 图二   图三   Restful形式的URL与请求方式密切相关（同样的URL，不同的请求方式，是两">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05-Vue前后端交互">
+<meta property="og:url" content="http://example.com/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="Vue前后端交互浏览器通过调用后台接口获取数据后在前端进行渲染 1. 接口调用方式向服务器发起请求的方式  原生ajax jQuery的ajax fetch：标准化组织制定的新规则，可以理解为ajax的升级版 axios：第三方库，基于ajax，更加方便的调用接口   图一  2. URL地址格式 图二   图三   Restful形式的URL与请求方式密切相关（同样的URL，不同的请求方式，是两">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153138393.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153350428.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153441636.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924111144099.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924112213973.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924113915375.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924150401787.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924132853216.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924150617500.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924150819517.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924153158556.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924153543646.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924154338161.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924170522698.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924200701733.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924204045271.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924210152233.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924210639384.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924211334446.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924212353264.png">
+<meta property="og:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924213909471.png">
+<meta property="article:published_time" content="2021-09-20T10:36:19.000Z">
+<meta property="article:modified_time" content="2022-07-11T23:35:07.469Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153138393.png">
+
+<link rel="canonical" href="http://example.com/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>05-Vue前后端交互 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05-Vue前后端交互
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-12 07:35:07" itemprop="dateModified" datetime="2022-07-12T07:35:07+08:00">2022-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Vue前后端交互"><a href="#Vue前后端交互" class="headerlink" title="Vue前后端交互"></a>Vue前后端交互</h1><p>浏览器通过<strong>调用后台接口获取数据</strong>后<strong>在前端进行渲染</strong></p>
+<h2 id="1-接口调用方式"><a href="#1-接口调用方式" class="headerlink" title="1. 接口调用方式"></a>1. 接口调用方式</h2><p>向服务器<strong>发起请求的方式</strong></p>
+<ul>
+<li>原生<code>ajax</code></li>
+<li><code>jQuery</code>的<code>ajax</code></li>
+<li><code>fetch</code>：标准化组织制定的新规则，可以理解为<code>ajax</code>的升级版</li>
+<li><code>axios</code>：第三方库，基于<code>ajax</code>，更加方便的调用接口</li>
+</ul>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153138393.png" alt="image-20210923153138393"></p>
+<center>图一</center>
+
+<h2 id="2-URL地址格式"><a href="#2-URL地址格式" class="headerlink" title="2. URL地址格式"></a>2. URL地址格式</h2><p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153350428.png" alt="image-20210923153350428"></p>
+<center>图二</center>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210923153441636.png" alt="image-20210923153441636"></p>
+<center>图三</center>
+
+<ul>
+<li>Restful形式的URL<strong>与请求方式密切相关</strong>（同样的URL，不同的请求方式，是两个请求）</li>
+<li>Restful形式的URL，请求参数<strong>直接以’/‘分隔后加在url末尾</strong></li>
+<li><code>nodejs</code>在后台接收 Restful URL的请求时，用<code>req.params.&#39;属性名&#39;</code>获取请求参数</li>
+</ul>
+<h2 id="3-Promise对象"><a href="#3-Promise对象" class="headerlink" title="3. Promise对象"></a>3. Promise对象</h2><p>多次异步编程，<strong>不能保证结果返回的顺序</strong></p>
+<p>如果要求顺序，就要使用<strong>回调函数嵌套的方式</strong></p>
+<p>这种方式嵌套层数多时，会导致代码可读性下降，维护困难，造成<strong>回调地狱的问题</strong></p>
+<br>
+
+<p><strong>Promise的提出就是为了解决上述回调地狱问题</strong></p>
+<ul>
+<li><p>Promise是异步编程的一种解决方案</p>
+</li>
+<li><p>Promise是一个对象，有简洁的API来控制异步操作，获取结果和处理错误等</p>
+</li>
+</ul>
+<h2 id="4-基于Promise对象处理Ajax请求"><a href="#4-基于Promise对象处理Ajax请求" class="headerlink" title="4. 基于Promise对象处理Ajax请求"></a>4. 基于Promise对象处理Ajax请求</h2><p>原本的Ajax请求是异步操作，若需要多个异步AJax请求顺序返回结果，使用回调函数嵌套会<strong>引起回调地狱问题</strong></p>
+<p>使用Promise对象包裹异步Ajax请求，使用Promise的<code>.then</code>方法按顺序发起ajax请求</p>
+<ul>
+<li>这样在多个ajax请求需要顺序执行时，可以<strong>链式调用.then方法</strong>，避免了回调地狱，提升程序可读性</li>
+</ul>
+<br>
+
+<h3 id="4-1-promise对象处理一个ajax请求"><a href="#4-1-promise对象处理一个ajax请求" class="headerlink" title="4.1 promise对象处理一个ajax请求"></a>4.1 promise对象处理一个ajax请求</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promiseAjax</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">            <span class="comment">//返回一个Promise对象</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">//在promise对象中进行异步AJAX请求</span></span><br><span class="line">                <span class="keyword">var</span> XHR = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">                XHR.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(XHR.readyState != <span class="number">4</span>) <span class="keyword">return</span></span><br><span class="line">                    <span class="keyword">if</span>(XHR.status == <span class="number">200</span>)&#123;</span><br><span class="line">                        resolve(XHR.responseText)	<span class="comment">//成功</span></span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        reject(<span class="string">&#x27;出错&#x27;</span>)	<span class="comment">//失败</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                XHR.open(<span class="string">&#x27;get&#x27;</span>,url)</span><br><span class="line">                XHR.send(<span class="literal">null</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//通过promise对象的.then方法处理异步AJAX请求的结果或者错误信息</span></span><br><span class="line">        promiseAjax(<span class="string">&#x27;http://localhost/data&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125;,<span class="function">(<span class="params">info</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(info);</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>promiseAjax函数返回一个promise对象，</p>
+<ul>
+<li><p>该promise对象<strong>状态变为成功时</strong>（调用resolve函数），成功回调函数<strong>接受服务器端传来的数据并处理</strong></p>
+</li>
+<li><p>该promise对象<strong>状态变为失败时</strong>（调用reject函数），失败回调函数<strong>接受错误信息并处理</strong></p>
+</li>
+</ul>
+</li>
+<li><p><code>.then</code>方法的第一个参数为成功回调函数，第二个参数为失败回调函数</p>
+</li>
+</ul>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924111144099.png" alt="image-20210924111144099"></p>
+<center>图四</center>
+
+<ul>
+<li>图四即为服务器端将状态码手动设置为404时，<ul>
+<li>promise对象调用<code>reject(&#39;错误&#39;)</code>后<strong>经错误回调函数处理后的结果</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-promise对象处理多个AJAX请求顺序返回结果"><a href="#4-2-promise对象处理多个AJAX请求顺序返回结果" class="headerlink" title="4.2 promise对象处理多个AJAX请求顺序返回结果"></a>4.2 promise对象处理多个AJAX请求顺序返回结果</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">promiseAjax(<span class="string">&#x27;http://localhost/data&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);	<span class="comment">//hello data</span></span><br><span class="line">                <span class="keyword">return</span> promiseAjax(<span class="string">&#x27;http://localhost/data1&#x27;</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">			<span class="comment">//对上一个.then方法返回的promise对象调用.then方法</span></span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);	<span class="comment">//hello data1</span></span><br><span class="line">                <span class="keyword">return</span> promiseAjax(<span class="string">&#x27;http://localhost/data2&#x27;</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);	<span class="comment">//hello data2</span></span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>此处删除了错误回调函数方便观察</p>
+</li>
+<li><p>在上一个<code>.then</code>方法的成功回调函数中<strong>再次调用promiseAjax函数并将其返回值return</strong></p>
+</li>
+<li><p>下一个<code>.then</code>方法对前面返回的promise对象调用(处理第二个ajax请求的结果)</p>
+</li>
+<li><p>这样通过<strong>3个.then方法链式调用</strong>就完成了三个ajax请求顺序返回结果</p>
+</li>
+</ul>
+<p style="color:red;">将回调函数嵌套转换为.then方法的链式调用</p>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924112213973.png" alt="image-20210924112213973"></p>
+<center>图五</center>
+
+<p>图五即为三个ajax请求顺序返回结果</p>
+<br>
+
+<h2 id="5-promise对象-then方法返回值问题"><a href="#5-promise对象-then方法返回值问题" class="headerlink" title="5. promise对象.then方法返回值问题"></a>5. promise对象.then方法返回值问题</h2><p>.then方法可以有两种返回值：</p>
+<ul>
+<li>promise对象</li>
+<li>普通数据类型</li>
+</ul>
+<h3 id="5-1-上一个-then返回promise对象"><a href="#5-1-上一个-then返回promise对象" class="headerlink" title="5.1 上一个.then返回promise对象"></a>5.1 上一个.then返回promise对象</h3><p>此时<strong>下一个.then就在返回的promise对象上调用</strong>，处理该promise对象中异步操作的结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">promiseAjax(<span class="string">&#x27;http://localhost/data&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);	</span><br><span class="line">                <span class="keyword">return</span> promiseAjax(<span class="string">&#x27;http://localhost/data1&#x27;</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">			<span class="comment">//对上一个.then方法返回的promise对象调用.then方法</span></span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;	<span class="comment">//data即为上一个返回的promise对象中异步操作的结果</span></span><br><span class="line">                <span class="built_in">console</span>.log(data);	</span><br><span class="line">                <span class="keyword">return</span> promiseAjax(<span class="string">&#x27;http://localhost/data2&#x27;</span>)</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上述代码<strong>第二个.then</strong>中成功回调函数的参数<strong>data</strong><ul>
+<li>即为上一个返回的promise对象（<code>promiseAjax(&#39;http://localhost/data1&#39;)</code>）中异步操作的结果</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-2-上一个-then返回普通数据类型"><a href="#5-2-上一个-then返回普通数据类型" class="headerlink" title="5.2 上一个.then返回普通数据类型"></a>5.2 上一个.then返回普通数据类型</h3><p>此时下一个.then方法会<strong>将这个普通数据类型包裹为promise对象</strong>并在其上调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">promiseAjax(<span class="string">&#x27;http://localhost/data&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);	<span class="comment">//hello data</span></span><br><span class="line">                <span class="keyword">return</span> promiseAjax(<span class="string">&#x27;http://localhost/data1&#x27;</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);	<span class="comment">//hello data1</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">123</span>	<span class="comment">//返回普通数据类型</span></span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;	<span class="comment">//data即为上个.then返回的普通数据类型</span></span><br><span class="line">                <span class="built_in">console</span>.log(data); <span class="comment">//123</span></span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上述第二个.then返回普通数据类型 <code>123</code></li>
+<li>第三个.then在<strong>被promise对象包裹的 123</strong> 上调用，此时成功回调函数的<strong>参数data即接收 普通数据类型</strong> <code>123</code></li>
+</ul>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924113915375.png" alt="image-20210924113915375"></p>
+<center>图六</center>
+
+<h2 id="6-promise对象常用API-实例方法"><a href="#6-promise对象常用API-实例方法" class="headerlink" title="6. promise对象常用API (实例方法)"></a>6. promise对象常用API (实例方法)</h2><p>首先使用<code>console.dir(Promise)</code>查看Promise对象</p>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924150401787.png" alt="image-20210924150401787"></p>
+<center>图七</center>
+
+<p>红框标注的方法在<code>Promise.prototype</code>下，属于Promise<strong>对象实例的方法</strong></p>
+<br>
+
+<ul>
+<li><strong>then</strong>：获取异步操作的<strong>正确结果或者错误信息</strong><ul>
+<li>第一个参数为成功回调函数</li>
+<li>第二个参数为失败回调函数（可选）</li>
+</ul>
+</li>
+<li><strong>catch</strong>：获取异步操作的<strong>错误信息</strong><ul>
+<li>参数为失败回调函数（与then方法第二个参数相同）</li>
+</ul>
+</li>
+<li><strong>finally</strong>：无论成功与否都会执行<ul>
+<li>promise对象<strong>无论成功与否</strong>，都会在最后执行finally方法的回调函数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promiseAjax</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="comment">//返回一个Promise对象</span></span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">               <span class="comment">//延时1s后返回promise对象结果</span></span><br><span class="line">               <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                   <span class="comment">// resolve(&#x27;123&#x27;)	//成功时异步操作结果为&#x27;123&#x27;</span></span><br><span class="line">                   reject(<span class="string">&#x27;Error&#x27;</span>)		<span class="comment">//失败时错误信息为&#x27;Error&#x27;</span></span><br><span class="line">               &#125;, <span class="number">1000</span>)</span><br><span class="line">           &#125;)</span><br><span class="line">       &#125;</span><br><span class="line">       promiseAjax()</span><br><span class="line">           .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">               <span class="built_in">console</span>.log(data);	<span class="comment">//输出成功时的结果 &#x27;123&#x27;</span></span><br><span class="line">           &#125;)</span><br><span class="line">           .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">               <span class="built_in">console</span>.log(err);	<span class="comment">//输出错误信息&#x27;Error&#x27;</span></span><br><span class="line">           &#125;)</span><br><span class="line">           .finally(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">               <span class="built_in">console</span>.log(<span class="string">&#x27;finished&#x27;</span>);	<span class="comment">//无论成功与否都会输出&#x27;finished&#x27;</span></span><br><span class="line">           &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924132853216.png" alt="image-20210924132853216"></p>
+<center>图八</center>
+
+<ul>
+<li>图七即为异步操作失败后<strong>调用catch方法输出 ‘Error’</strong> </li>
+<li>然后<strong>调用finally方法输出 ‘finished’</strong></li>
+</ul>
+<br>
+
+<h2 id="7-Promise对象常用API（对象方法）"><a href="#7-Promise对象常用API（对象方法）" class="headerlink" title="7. Promise对象常用API（对象方法）"></a>7. Promise对象常用API（对象方法）</h2><p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924150617500.png" alt="image-20210924150617500"></p>
+<center>图九</center>
+
+<p>红框标注的<code>all</code>和<code>race</code>方法都是<strong>Promise对象</strong>下的方法</p>
+<p>这样的方法称为<strong>对象方法（静态方法）</strong></p>
+<p>直接使用Promise对象调用</p>
+<h3 id="7-1-all方法"><a href="#7-1-all方法" class="headerlink" title="7.1 all方法"></a>7.1 all方法</h3><p><code>Promise.all(&#39;Array&#39;)</code>    并发处理多个异步任务</p>
+<ul>
+<li>参数为一个<strong>元素为Promise实例对象的数组</strong></li>
+<li>返回值为一个新的Promise对象</li>
+<li>当数组中<strong>所有promise实例都返回正确结果时</strong>，all方法返回的新promise对象<strong>状态变为成功</strong><ul>
+<li>新Promise对象then方法的成功回调函数<strong>接受一个数组作为参数</strong></li>
+<li>数组元素为<strong>每一个promise实例的正确结果</strong>（顺序与Array中相同）</li>
+</ul>
+</li>
+<li>当数组中有一个promise对象错误，则新promise对象状态变为错误，并将数组中首个出错promise对象的错误信息作为自己的错误信息</li>
+</ul>
+<h3 id="7-2-race方法"><a href="#7-2-race方法" class="headerlink" title="7.2 race方法"></a>7.2 race方法</h3><p><code>Promise.race(&#39;Array&#39;)</code>    并发处理多个异步任务</p>
+<ul>
+<li>参数与all方法相同</li>
+<li>当数组中<strong>有一个promise实例成功时，新promise对象立即成功</strong>，并将首个成功promise实例的结果作为新promise对象成功的结果</li>
+<li>当数组有一个promise实例错误时，与all方法执行同样操作</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">          <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">              resolve(<span class="string">&#x27;HelloWorld&#x27;</span>)</span><br><span class="line">          &#125;, <span class="number">1000</span>);</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">          <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">              resolve(<span class="string">&#x27;Hello Tom&#x27;</span>)</span><br><span class="line">          &#125;, <span class="number">2000</span>);</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">var</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">          <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">              resolve(<span class="string">&#x27;Hello Jerry&#x27;</span>)</span><br><span class="line">          &#125;, <span class="number">3000</span>);</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">//所有promise对象都返回结果后 新promise成功</span></span><br><span class="line">      <span class="built_in">Promise</span>.all([p1,p2,p3])</span><br><span class="line">          .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="built_in">console</span>.log(data);	</span><br><span class="line">          &#125;)</span><br><span class="line"><span class="comment">//只要有一个成功返回 新pormise实例立即成功</span></span><br><span class="line">      <span class="built_in">Promise</span>.race([p1,p2,p3])</span><br><span class="line">          .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="built_in">console</span>.log(data);</span><br><span class="line">          &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924150819517.png" alt="image-20210924150819517"></p>
+<center>图十</center>
+
+<ul>
+<li>因为race方法返回的promise实例在第数组一个实例成功后就立即成功</li>
+<li>所以race方法结果打印在all方法之前</li>
+</ul>
+<br>
+
+<h2 id="8-fetch-API-接口调用"><a href="#8-fetch-API-接口调用" class="headerlink" title="8. fetch API 接口调用"></a>8. fetch API 接口调用</h2><h3 id="8-1-fetch-API概述"><a href="#8-1-fetch-API概述" class="headerlink" title="8.1 fetch API概述"></a>8.1 fetch API概述</h3><ul>
+<li><strong>提供了一个获取资源的接口</strong>：更加简单的数据获取方式，功能更强大，更灵活，可以看作是<strong>普通Ajax的升级版</strong></li>
+<li><strong>基于Promise实现</strong></li>
+<li>标准化组织制定的新规则，<strong>内置对象</strong></li>
+<li>返回值为promise对象</li>
+</ul>
+<h3 id="8-2-语法结构"><a href="#8-2-语法结构" class="headerlink" title="8.2 语法结构"></a>8.2 语法结构</h3><p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924153158556.png" alt="image-20210924153158556"></p>
+<center>图十一</center>
+
+<h3 id="8-3-使用fetch-API-简单实例"><a href="#8-3-使用fetch-API-简单实例" class="headerlink" title="8.3 使用fetch API 简单实例"></a>8.3 使用fetch API 简单实例</h3><p><code>fetch(&#39;url&#39;).then().catch()</code></p>
+<ul>
+<li>传入一个url作为参数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;http://localhost/fetchdata&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">    			<span class="comment">//获取服务器传来的数据</span></span><br><span class="line">                <span class="built_in">console</span>.log(data);	<span class="comment">//hello fetch</span></span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>上述代码向<code>&#39;http://localhost/fetchdata&#39;</code>发送请求</p>
+</li>
+<li><p>第一个then方法中data并不是获取的数据，<code>data.text()</code>方法返回一个promise实例</p>
+<ul>
+<li>text()方法是<strong>属于fetch的方法</strong></li>
+</ul>
+</li>
+<li><p>第二个then方法才能获取到服务器发来的数据</p>
+</li>
+</ul>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924153543646.png" alt="image-20210924153543646"></p>
+<center>图十二</center>
+
+<br>
+
+<h3 id="8-4-fetch-配置选项"><a href="#8-4-fetch-配置选项" class="headerlink" title="8.4 fetch 配置选项"></a>8.4 fetch 配置选项</h3><p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924154338161.png" alt="image-20210924154338161"></p>
+<center>图十三</center>
+
+<ul>
+<li>fetch方法的第二个参数为一个对象，<strong>对象中属性为配置项</strong></li>
+</ul>
+<h3 id="8-5-fetch-请求参数"><a href="#8-5-fetch-请求参数" class="headerlink" title="8.5 fetch 请求参数"></a>8.5 fetch 请求参数</h3><h4 id="8-5-1-GET-请求参数"><a href="#8-5-1-GET-请求参数" class="headerlink" title="8.5.1 GET 请求参数"></a>8.5.1 GET 请求参数</h4><p><strong>使用传统url方式传参</strong></p>
+<ul>
+<li>请求参数直接使用<code>?</code>接在URL后面</li>
+<li>服务器后台程序接受参数使用<code>req.query.&#39;参数名&#39;</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;http://localhost/fetchdata?id=123&#x27;</span>,&#123;</span><br><span class="line">            method:<span class="string">&#x27;get&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/fetchdata&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.send(<span class="string">&#x27;传统URL传参:&#x27;</span>+ req.query.id)	<span class="comment">//传统URL传参:123</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p><strong>使用Restful url方式传参</strong></p>
+<ul>
+<li>请求参数以<code>&#39;/&#39;</code>隔开接在URL后面（不需要设定参数名字）</li>
+<li>接受请求参数时在中间件地址参数最后加上 <code>/:&#39;参数名&#39;</code><ul>
+<li>参数名自定义</li>
+<li>使用<code>req.params.&#39;参数名&#39;</code>获取对应请求参数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;http://localhost/fetchdata/456&#x27;</span>,&#123;</span><br><span class="line">            method:<span class="string">&#x27;get&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/fetchdata/:id&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">        res.send(<span class="string">&#x27;Restful URL传参:&#x27;</span>+ req.params.id)	<span class="comment">//Restful URL传参:456</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="8-5-2-DELETE-请求参数"><a href="#8-5-2-DELETE-请求参数" class="headerlink" title="8.5.2 DELETE 请求参数"></a>8.5.2 DELETE 请求参数</h4><p>DELETE是删除请求</p>
+<p>DELETE请求方式传参与GET方式类似</p>
+<ul>
+<li>仍使用restful URL传参 (传统URL传参方式与GET请求也相同)</li>
+<li>method配置项设置为<code>&#39;delete&#39;</code></li>
+<li>接受时使用<code>app.delete()</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;http://localhost/fetchdata/789&#x27;</span>,&#123;</span><br><span class="line">            method:<span class="string">&#x27;delete&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125;)</span><br><span class="line">            </span><br><span class="line">app.delete(<span class="string">&#x27;/fetchdata/:id&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.send(<span class="string">&#x27;DELETE请求传参:&#x27;</span>+ req.params.id)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-5-3-POST请求参数"><a href="#8-5-3-POST请求参数" class="headerlink" title="8.5.3 POST请求参数"></a>8.5.3 POST请求参数</h4><ul>
+<li>post请求参数写在body配置项中</li>
+<li>请求参数的格式可以为<ul>
+<li>普通字符串    <code>&quot;name=zhangsan&amp;age=20&quot;</code></li>
+<li>JSON对象   <code>&#123;name:&#39;lisi&#39;,age:30&#125;</code><ul>
+<li>JSON对象格式的参数在传递时要转换为JSON字符串传送</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>post请求使用body配置项传递参数时，<strong>必须</strong>使用headers配置项<strong>设定content-type请求头字段</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//POST请求 普通字符串传参</span></span><br><span class="line">      fetch(<span class="string">&#x27;http://localhost/fetchdata&#x27;</span>,&#123;</span><br><span class="line">          method:<span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">          <span class="comment">//普通字符串参数</span></span><br><span class="line">          body:<span class="string">&quot;uname=zhagsan&amp;age=20&quot;</span>,</span><br><span class="line">          headers:&#123;</span><br><span class="line">              <span class="comment">//设定请求头content-type字段</span></span><br><span class="line">              <span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;).then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="keyword">return</span> data.text()</span><br><span class="line">          &#125;)</span><br><span class="line">          .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="built_in">console</span>.log(data);</span><br><span class="line">          &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//POST请求 JSON对象传参</span></span><br><span class="line">        fetch(<span class="string">&#x27;http://localhost/fetchdata&#x27;</span>,&#123;</span><br><span class="line">            method:<span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">            <span class="comment">//传递时转化为JSON字符串</span></span><br><span class="line">            body:<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                uname:<span class="string">&#x27;lisi&#x27;</span>,</span><br><span class="line">                age:<span class="number">30</span></span><br><span class="line">            &#125;),</span><br><span class="line">            headers:&#123;</span><br><span class="line">                <span class="comment">//content-type字段设置为json</span></span><br><span class="line">                <span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>服务端接受请求参数时使用 node的<code>第三方模块 body-parser</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//接收以json格式和普通字符串格式传递的post参数</span></span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line">app.use(bodyParser.urlencoded(&#123;<span class="attr">extended</span>:<span class="literal">false</span>&#125;))</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用req.body.&#x27;参数名&#x27; 接受POST请求参数</span></span><br><span class="line">app.post(<span class="string">&#x27;/fetchdata&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.send(<span class="string">&#x27;POST请求传参:&#x27;</span>+ req.body.uname + <span class="string">&#x27;-------&#x27;</span> + req.body.age)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="8-5-4-PUT-请求参数"><a href="#8-5-4-PUT-请求参数" class="headerlink" title="8.5.4 PUT 请求参数"></a>8.5.4 PUT 请求参数</h4><p>PUT是修改请求</p>
+<p>PUT请求参数的设置方式与POST类似</p>
+<ul>
+<li>唯一不同的是PUT请求是<strong>修改请求</strong>，需要传递<strong>修改数据的id</strong></li>
+<li>id可以通过URL传递</li>
+<li>服务端接受body配置项的参数时，也可以接受url中的参数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//PUT修改请求 需要传递待修改数据的id</span></span><br><span class="line">        fetch(<span class="string">&#x27;http://localhost/fetchdata/?id=1&#x27;</span>,&#123;	<span class="comment">//id=1</span></span><br><span class="line">            method:<span class="string">&#x27;put&#x27;</span>,</span><br><span class="line">            body:<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                uname:<span class="string">&#x27;lisi&#x27;</span>,</span><br><span class="line">                age:<span class="number">30</span></span><br><span class="line">            &#125;),</span><br><span class="line">            headers:&#123;</span><br><span class="line">                <span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()</span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="8-6-fetch-响应结果"><a href="#8-6-fetch-响应结果" class="headerlink" title="8.6 fetch 响应结果"></a>8.6 fetch 响应结果</h3><p>使用fetch API向后台发送请求时</p>
+<ul>
+<li>后台可以返回<strong>普通字符串</strong>或者<strong>JSON对象格式</strong>的数据</li>
+<li>fetch API使用<code>.then</code>方法处理后台响应的数据时<ul>
+<li><code>text()</code>方法将数据转换为<strong>普通字符串</strong></li>
+<li><code>json()</code>方法将数据转换为<strong>JSON对象格式</strong>（相当于使用<code>JSON.parse()</code>）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">        fetch(<span class="string">&#x27;http://localhost/fetchResponse&#x27;</span>,&#123;</span><br><span class="line">            method:<span class="string">&#x27;get&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> data.text()  <span class="comment">//将响应数据转换为字符串类型</span></span><br><span class="line">            	<span class="comment">//return data.json() //将响应数据转换为JSON对象类型</span></span><br><span class="line">            &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(data);			<span class="comment">//&quot;&#123;name:&#x27;yang&#x27;,age:20&#125;&quot; 或 &#123;name:&#x27;yang&#x27;,age:20&#125;</span></span><br><span class="line">                <span class="built_in">console</span>.log(<span class="keyword">typeof</span> data);   <span class="comment">//String 或 Object</span></span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/fetchResponse&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">//服务器响应JSON对象格式数据，传送时转换为JSON字符串传送</span></span><br><span class="line">    res.send(&#123;</span><br><span class="line">        name:<span class="string">&#x27;yang&#x27;</span>,</span><br><span class="line">        age:<span class="number">20</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924170522698.png" alt="image-20210924170522698"></p>
+<center>图十四</center>
+
+<ul>
+<li>图十四即为将响应数据使用<code>text()</code>方法<strong>转换为字符串后的输出结果</strong></li>
+</ul>
+<br>
+
+<h2 id="9-axios-API接口调用"><a href="#9-axios-API接口调用" class="headerlink" title="9. axios API接口调用"></a>9. axios API接口调用</h2><p>axios是一个基于Promise对象 用于浏览器和node.js的HTTP客户端</p>
+<p>第三方库 通过<code>script</code>标签引入，比fetch的功能更强大</p>
+<p>特征：</p>
+<ul>
+<li>支持<strong>浏览器和Nodejs</strong></li>
+<li><strong>基于promise</strong></li>
+<li>能拦截请求和响应</li>
+<li>自动转换JSON数据</li>
+<li>返回值为promise对象</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入axios库</span></span><br><span class="line">&lt;script src=<span class="string">&quot;./js/axios.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用axios API发送GET请求</span></span><br><span class="line">axios.get(<span class="string">&#x27;http://localhost/axiosdata&#x27;</span>)</span><br><span class="line">			<span class="comment">//使用then方法处理异步操作结果</span></span><br><span class="line">            .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(res);</span><br><span class="line">                <span class="built_in">console</span>.log(res.data);</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924200701733.png" alt="image-20210924200701733"></p>
+<center>图十五</center>
+
+<ul>
+<li><code>axios API</code> 异步操作成功时结果为<strong>一个对象（res）</strong>（对象中记录了请求和响应的相关信息）</li>
+<li>对象中的<strong>data属性</strong>为服务端返回的数据</li>
+</ul>
+<br>
+
+<h3 id="9-1-axios-请求参数传递"><a href="#9-1-axios-请求参数传递" class="headerlink" title="9.1 axios 请求参数传递"></a>9.1 axios 请求参数传递</h3><p>axios有四个常用API，分别对应四种HTTP请求方式</p>
+<ul>
+<li><code>axios.get()</code></li>
+<li><code>axios.delete()</code></li>
+<li><code>axios.post()</code></li>
+<li><code>axios.put()</code></li>
+</ul>
+<h4 id="9-1-1-GET和DELETE请求参数传递"><a href="#9-1-1-GET和DELETE请求参数传递" class="headerlink" title="9.1.1 GET和DELETE请求参数传递"></a>9.1.1 GET和DELETE请求参数传递</h4><p>GET和DELETE请求参数传递方法类似</p>
+<ul>
+<li>使用URL传递：与<strong>fetch API的传递方式相同</strong><ul>
+<li>传统URL</li>
+<li>Restful URL</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<ul>
+<li>使用<code>params</code>配置项传递<ul>
+<li><code>axios.get</code>方法<strong>第二个参数配置对象</strong>中使用<strong>params属性</strong>传递GET或DELETE请求参数</li>
+<li>服务端接受<code>params</code>配置项传递的参数使用<code>req.query.&#39;属性名&#39;</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">axios.get(<span class="string">&#x27;http://localhost/axiosdata&#x27;</span>,&#123;</span><br><span class="line">			<span class="comment">//params配置项传递参数</span></span><br><span class="line">            params:&#123;</span><br><span class="line">                name:<span class="string">&#x27;yang&#x27;</span>,</span><br><span class="line">                age:<span class="number">20</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(res);</span><br><span class="line">                <span class="built_in">console</span>.log(res.data);</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/axiosdata&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.send(<span class="string">&#x27;GET请求参数:&#x27;</span>+req.query.name+<span class="string">&#x27;----&#x27;</span>+req.query.age)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924204045271.png" alt="image-20210924204045271"></p>
+<center>图十六</center>
+
+<br>
+
+<h4 id="9-1-2-POST和PUT请求参数传递"><a href="#9-1-2-POST和PUT请求参数传递" class="headerlink" title="9.1.2 POST和PUT请求参数传递"></a>9.1.2 POST和PUT请求参数传递</h4><p>POST和PUT请求参数传递方法<strong>类似</strong></p>
+<p>post请求参数有<strong>两种方式传递</strong></p>
+<ul>
+<li><p>使用对象传递参数：通过<code>axios.post()</code>方法第二个参数传递</p>
+<ul>
+<li>第二个参数<strong>对象中直接写请求参数</strong></li>
+<li>这种方法传递的是<strong>JSON对象格式的请求参数</strong><ul>
+<li>服务端需要提前设置接受JSON对象格式的参数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>通过<code>URLSearchParams</code>对象的实例对象传递</p>
+<ul>
+<li>向实例中添加属性（属性即为请求参数）</li>
+<li>最后将实例作为<code>axios.post()</code>的第二个参数</li>
+<li>传递的是<strong>字符串类型的请求参数</strong></li>
+</ul>
+</li>
+</ul>
+<p>服务器端使用<code>req.body.&#39;属性名&#39;</code>接受请求参数()</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.使用选项传递参数</span></span><br><span class="line">axios.post(<span class="string">&#x27;http://localhost/axiosdata&#x27;</span>,&#123;	<span class="comment">//第二个参数对象中直接写请求参数</span></span><br><span class="line">                name:<span class="string">&#x27;yang&#x27;</span>,</span><br><span class="line">                age:<span class="number">20</span></span><br><span class="line">        &#125;)</span><br><span class="line">            .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(res);</span><br><span class="line">                <span class="built_in">console</span>.log(res.data);</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.使用URLSearchParams对象的实例对象传递</span></span><br><span class="line">		<span class="keyword">var</span> params = <span class="keyword">new</span> URLSearchParams()</span><br><span class="line">        <span class="comment">//给params实例添加属性（请求参数）</span></span><br><span class="line">        params.append(<span class="string">&#x27;name&#x27;</span>,<span class="string">&quot;xiao&quot;</span>)</span><br><span class="line">        params.append(<span class="string">&#x27;age&#x27;</span>,<span class="number">30</span>)</span><br><span class="line">		<span class="comment">//params作为API第二个参数</span></span><br><span class="line">        axios.post(<span class="string">&#x27;http://localhost/axiosdata&#x27;</span>,params)</span><br><span class="line">            .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(res);</span><br><span class="line">                <span class="built_in">console</span>.log(res.data);</span><br><span class="line">            &#125;)    </span><br><span class="line"></span><br><span class="line">app.post(<span class="string">&#x27;/axiosdata&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    res.send(<span class="string">&#x27;POST请求参数:&#x27;</span>+req.body.name+<span class="string">&#x27;----&#x27;</span>+req.body.age)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924210152233.png" alt="image-20210924210152233"></p>
+<center>图十七</center>
+
+<p>图十七，使用原生对象方式传递post请求参数时<strong>格式为JSON对象</strong></p>
+<br>
+
+<h3 id="9-2-axios响应结果"><a href="#9-2-axios响应结果" class="headerlink" title="9.2 axios响应结果"></a>9.2 axios响应结果</h3><p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924210639384.png" alt="image-20210924210639384"></p>
+<center>图十八</center>
+
+<p><code>axios API</code> 接受服务器响应数据为一个对象，对象中常用属性如下</p>
+<ul>
+<li><strong>data</strong>：服务器返回的数据</li>
+<li><strong>status</strong>：HTTP响应状态码</li>
+<li><strong>headers</strong>：响应头中的字段</li>
+<li><strong>statusText</strong>：响应状态码文字说明</li>
+</ul>
+<p>当服务端响应的数据为JSON对象格式时，axios会<strong>自动进行格式转换</strong>（不需要手动将JSON字符串转换为JSON对象）</p>
+<p>接受的data属性即为JS对象，可以直接获取对象中的属性</p>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924211334446.png" alt="image-20210924211334446"></p>
+<center>图十九</center>
+
+<h3 id="9-3-axios的全局配置"><a href="#9-3-axios的全局配置" class="headerlink" title="9.3 axios的全局配置"></a>9.3 axios的全局配置</h3><ul>
+<li><p><code>axios.defaults.timeout = &#39;时间&#39;</code></p>
+<ul>
+<li>超出设定的时间服务器还没有响应就认为请求出错</li>
+</ul>
+</li>
+<li><p><code>axios.defaults.baseURL = &#39;url&#39;</code></p>
+<ul>
+<li>设置默认基准URL</li>
+<li>调用axios方法发送请求时，第一个参数(url)<strong>若简写</strong>，则会<strong>自动在前方拼接基准URL</strong></li>
+</ul>
+</li>
+<li><p><code>axios.defaults.headers[&#39;请求头名&#39;] = ’值‘</code></p>
+<ul>
+<li>设定请求头中的字段</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置基准URL</span></span><br><span class="line">      axios.defaults.baseURL = <span class="string">&#x27;http://localhost/&#x27;</span></span><br><span class="line">      <span class="comment">//添加请求头字段</span></span><br><span class="line">      axios.defaults.headers[<span class="string">&#x27;mytoken&#x27;</span>] = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="comment">//简写URL 自动拼接基准URL</span></span><br><span class="line">      axios.get(<span class="string">&#x27;axiosdata&#x27;</span>)</span><br><span class="line">          .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="built_in">console</span>.log(res.data);</span><br><span class="line">          &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924212353264.png" alt="image-20210924212353264"></p>
+<center>图二十</center>
+
+<ul>
+<li>图二十红框即为添加的请求头字段<ul>
+<li>添加请求头字段时若请求发生跨域，要允许新增的请求头字段跨域</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//允许mytoken请求头字段跨域传送</span></span><br><span class="line">res.header(<span class="string">&#x27;Access-Control-Allow-Headers&#x27;</span>,<span class="string">&#x27;mytoken&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="9-4-axios拦截器"><a href="#9-4-axios拦截器" class="headerlink" title="9.4 axios拦截器"></a>9.4 axios拦截器</h3><p>axios拦截器分为两种</p>
+<ul>
+<li><strong>请求拦截器</strong>：在请求发送前修改请求</li>
+<li><strong>响应拦截器</strong>：在客户端接受响应数据前修改数据</li>
+</ul>
+<p><img data-src="/images/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/image-20210924213909471.png" alt="image-20210924213909471"></p>
+<center>图二十一</center>
+
+<ul>
+<li>图二十一为请求拦截器图示，响应拦截器类似</li>
+</ul>
+<br>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use(<span class="function"><span class="keyword">function</span>(<span class="params">config</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//处理请求</span></span><br><span class="line">	<span class="keyword">return</span> config</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上述方法定义axios请求拦截器，响应拦截器将 <code>request</code> 换成 <code>response</code><ul>
+<li>方法传递<strong>两个函数作为参数</strong><ul>
+<li>第一个函数中处理请求或者响应数据（参数即为请求或者响应对象）<ul>
+<li>第一个函数最后要<strong>将处理后的请求或数据返回</strong></li>
+<li>返回值才是<code>axios API</code><strong>真正发送的请求或者接受的数据</strong></li>
+</ul>
+</li>
+<li>第二个函数为错误处理函数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//请求拦截器 在请求发送前进行操作</span></span><br><span class="line">      axios.interceptors.request.use(<span class="function"><span class="keyword">function</span>(<span class="params">config</span>) </span>&#123;</span><br><span class="line">          <span class="comment">//输出url</span></span><br><span class="line">          <span class="built_in">console</span>.log(config.url);</span><br><span class="line">          <span class="comment">//增加请求头字段</span></span><br><span class="line">          config.headers[<span class="string">&#x27;mytoken&#x27;</span>] = <span class="string">&#x27;nihao&#x27;</span></span><br><span class="line">          <span class="comment">//return 后修改生效</span></span><br><span class="line">          <span class="keyword">return</span> config</span><br><span class="line">      &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(err);</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//响应拦截器</span></span><br><span class="line">      axios.interceptors.response.use(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">          <span class="comment">//在客户端接受响应数据前 提取出响应对象中的data</span></span><br><span class="line">          <span class="keyword">return</span> res.data</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      axios.get(<span class="string">&#x27;http://localhost/axiosdata&#x27;</span>)</span><br><span class="line">          .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">              <span class="built_in">console</span>.log(res);	<span class="comment">//直接输出响应数据（响应拦截器提取了数据）</span></span><br><span class="line">          &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>拦截器相对于全局配置可以<strong>更方便</strong>的对于<strong>特定请求或者响应</strong>进行处理</li>
+</ul>
+<br>
+
+<h2 id="10-async-await-接口调用"><a href="#10-async-await-接口调用" class="headerlink" title="10. async/await 接口调用"></a>10. async/await 接口调用</h2><p>async/await 是ES7提出的异步编程<strong>进一步的解决方案</strong></p>
+<p>相对于promise对象可以更加方便的处理异步操作</p>
+<ul>
+<li>await会<span style="color:red">阻塞当前的异步函数</span>，等待await后的promise正确返回或者发生错误再继续执行<ul>
+<li>保证多个异步操作的执行顺序</li>
+</ul>
+</li>
+</ul>
+<p><strong>可以将异步操作写成同步的形式</strong></p>
+<ul>
+<li>异步函数返回值为promise对象<ul>
+<li><strong>当retrun一个非promise对象时，会被包裹为promise对象返回</strong></li>
+</ul>
+</li>
+<li>await只能在异步函数中使用<ul>
+<li>await 后跟一个promise对象时<ul>
+<li>若promise状态变为成功，则<strong>提取</strong>promise对象中异步操作的<strong>正确结果</strong></li>
+<li>若promise状态变为错误，则<strong>程序终止报错</strong> 错误信息为promise对象的错误信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接在异步函数中处理异步操作结果</span></span><br><span class="line">      <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">          <span class="comment">//直接获取promise对象中异步操作成功的结果</span></span><br><span class="line">          <span class="comment">//res即为服务端响应的数据对象</span></span><br><span class="line">          <span class="keyword">let</span> res = <span class="keyword">await</span> axios.get(url)</span><br><span class="line">          <span class="built_in">console</span>.log(res);</span><br><span class="line">          <span class="built_in">console</span>.log(res.data);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将异步操作的结果返回 使用then方法处理结果</span></span><br><span class="line">      <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">          <span class="keyword">let</span> res = <span class="keyword">await</span> axios.get(url)</span><br><span class="line">          <span class="keyword">return</span> res	<span class="comment">//res被包裹为promise对象</span></span><br><span class="line">      &#125;</span><br><span class="line">      send(<span class="string">&#x27;http://localhost/axiosdata&#x27;</span>)</span><br><span class="line">      .then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(res.data);</span><br><span class="line">      &#125;)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"><i class="fa fa-tag"></i> Vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" rel="prev" title="07-Vue前端路由">
+      <i class="fa fa-chevron-left"></i> 07-Vue前端路由
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/20/03-Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/" rel="next" title="03-Vue组件化开发">
+      03-Vue组件化开发 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92"><span class="nav-text">Vue前后端交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">1. 接口调用方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-URL%E5%9C%B0%E5%9D%80%E6%A0%BC%E5%BC%8F"><span class="nav-text">2. URL地址格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Promise%E5%AF%B9%E8%B1%A1"><span class="nav-text">3. Promise对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%BA%E4%BA%8EPromise%E5%AF%B9%E8%B1%A1%E5%A4%84%E7%90%86Ajax%E8%AF%B7%E6%B1%82"><span class="nav-text">4. 基于Promise对象处理Ajax请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-promise%E5%AF%B9%E8%B1%A1%E5%A4%84%E7%90%86%E4%B8%80%E4%B8%AAajax%E8%AF%B7%E6%B1%82"><span class="nav-text">4.1 promise对象处理一个ajax请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-promise%E5%AF%B9%E8%B1%A1%E5%A4%84%E7%90%86%E5%A4%9A%E4%B8%AAAJAX%E8%AF%B7%E6%B1%82%E9%A1%BA%E5%BA%8F%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C"><span class="nav-text">4.2 promise对象处理多个AJAX请求顺序返回结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-promise%E5%AF%B9%E8%B1%A1-then%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%80%BC%E9%97%AE%E9%A2%98"><span class="nav-text">5. promise对象.then方法返回值问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E4%B8%8A%E4%B8%80%E4%B8%AA-then%E8%BF%94%E5%9B%9Epromise%E5%AF%B9%E8%B1%A1"><span class="nav-text">5.1 上一个.then返回promise对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E4%B8%8A%E4%B8%80%E4%B8%AA-then%E8%BF%94%E5%9B%9E%E6%99%AE%E9%80%9A%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">5.2 上一个.then返回普通数据类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-promise%E5%AF%B9%E8%B1%A1%E5%B8%B8%E7%94%A8API-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="nav-text">6. promise对象常用API (实例方法)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Promise%E5%AF%B9%E8%B1%A1%E5%B8%B8%E7%94%A8API%EF%BC%88%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%EF%BC%89"><span class="nav-text">7. Promise对象常用API（对象方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-all%E6%96%B9%E6%B3%95"><span class="nav-text">7.1 all方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-race%E6%96%B9%E6%B3%95"><span class="nav-text">7.2 race方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-fetch-API-%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="nav-text">8. fetch API 接口调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-fetch-API%E6%A6%82%E8%BF%B0"><span class="nav-text">8.1 fetch API概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84"><span class="nav-text">8.2 语法结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-%E4%BD%BF%E7%94%A8fetch-API-%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B"><span class="nav-text">8.3 使用fetch API 简单实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-fetch-%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="nav-text">8.4 fetch 配置选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5-fetch-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-text">8.5 fetch 请求参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-1-GET-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-text">8.5.1 GET 请求参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-2-DELETE-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-text">8.5.2 DELETE 请求参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-3-POST%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-text">8.5.3 POST请求参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5-4-PUT-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0"><span class="nav-text">8.5.4 PUT 请求参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-6-fetch-%E5%93%8D%E5%BA%94%E7%BB%93%E6%9E%9C"><span class="nav-text">8.6 fetch 响应结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-axios-API%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="nav-text">9. axios API接口调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-axios-%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-text">9.1 axios 请求参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1-1-GET%E5%92%8CDELETE%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-text">9.1.1 GET和DELETE请求参数传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1-2-POST%E5%92%8CPUT%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-text">9.1.2 POST和PUT请求参数传递</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-axios%E5%93%8D%E5%BA%94%E7%BB%93%E6%9E%9C"><span class="nav-text">9.2 axios响应结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-axios%E7%9A%84%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="nav-text">9.3 axios的全局配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-axios%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-text">9.4 axios拦截器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-async-await-%E6%8E%A5%E5%8F%A3%E8%B0%83%E7%94%A8"><span class="nav-text">10. async&#x2F;await 接口调用</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
