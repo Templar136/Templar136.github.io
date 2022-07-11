@@ -590,6 +590,132 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/08-Vue%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B7%AF%E7%94%B1%E6%A1%88%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/08-Vue%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B7%AF%E7%94%B1%E6%A1%88%E4%BE%8B/" class="post-title-link" itemprop="url">08-Vue后台管理路由案例</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-12 07:36:28" itemprop="dateModified" datetime="2022-07-12T07:36:28+08:00">2022-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue后台管理路由案例"><a href="#Vue后台管理路由案例" class="headerlink" title="Vue后台管理路由案例"></a>Vue后台管理路由案例</h1><h2 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h2><p><img data-src="/images/08-Vue/image-20210926215440605.png" alt="image-20210926215440605"></p>
+<center>图一</center>
+
+<center>图一为项目的效果图</center>
+
+<ul>
+<li>项目分为上中下三部分</li>
+<li>中间部分<strong>通过左侧按钮进行路由跳转</strong></li>
+<li>路由跳转后渲染的模板中还有详情<strong>子级路由</strong></li>
+<li>子级路由对应组件渲染详情页面</li>
+</ul>
+<br>
+
+<h2 id="1-抽离渲染app根组件"><a href="#1-抽离渲染app根组件" class="headerlink" title="1. 抽离渲染app根组件"></a>1. 抽离渲染app根组件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 中间主体区域 --&gt;</span><br><span class="line">       &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">           &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">       &lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主体部分模板</span></span><br><span class="line"><span class="keyword">var</span> main = &#123;</span><br><span class="line">           template: <span class="string">`</span></span><br><span class="line"><span class="string">           &lt;div class=&quot;main&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;!-- 左侧菜单栏 --&gt;</span></span><br><span class="line"><span class="string">               &lt;div class=&quot;content left&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;ul&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;用户管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;权限管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;商品管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;订单管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;系统设置&lt;/li&gt;</span></span><br><span class="line"><span class="string">               &lt;/ul&gt;</span></span><br><span class="line"><span class="string">               &lt;/div&gt;</span></span><br><span class="line"><span class="string">               &lt;!-- 右侧内容区域 --&gt;</span></span><br><span class="line"><span class="string">               &lt;div class=&quot;content right&quot;&gt;&lt;div class=&quot;main-content&quot;&gt;添加用户表单&lt;/div&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">           &lt;/div&gt;`</span></span><br><span class="line">       &#125;</span><br><span class="line">   	<span class="comment">//创建路由实例配置规则</span></span><br><span class="line">       <span class="keyword">var</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">           routes:[&#123;</span><br><span class="line">               path:<span class="string">&#x27;/&#x27;</span>,<span class="attr">component</span>:main</span><br><span class="line">           &#125;]</span><br><span class="line">       &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当用户打开页面时默认hash为<code>/</code>，根据路由规则匹配渲染main组件中的模板</li>
+</ul>
+<br>
+
+<h2 id="2-主体部分左侧菜单改造为路由链接"><a href="#2-主体部分左侧菜单改造为路由链接" class="headerlink" title="2. 主体部分左侧菜单改造为路由链接"></a>2. 主体部分左侧菜单改造为路由链接</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/users&#x27;</span>&gt;</span>用户管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/rights&#x27;</span>&gt;</span>权限管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/goods&#x27;</span>&gt;</span>商品管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/orders&#x27;</span>&gt;</span>订单管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/settings&#x27;</span>&gt;</span>系统设置<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-左侧菜单创建路由组件"><a href="#3-左侧菜单创建路由组件" class="headerlink" title="3. 左侧菜单创建路由组件"></a>3. 左侧菜单创建路由组件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> User = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;用户管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Right = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;权限管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Good = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;商品管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Order = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;订单管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Setting = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;系统设置&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-右侧主体内容添加路由占位符"><a href="#4-右侧主体内容添加路由占位符" class="headerlink" title="4. 右侧主体内容添加路由占位符"></a>4. 右侧主体内容添加路由占位符</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 右侧内容区域 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content right&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main-content&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">router-view</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">routes:[&#123;</span><br><span class="line">    //左侧菜单的路由为/的子级路由</span><br><span class="line">    path:&#x27;/&#x27;,component:main,children:[&#123;</span><br><span class="line">    	path:&#x27;/users&#x27;,component:User</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/rights&#x27;,component:Right</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/goods&#x27;,component:Good</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/orders&#x27;,component:Order</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/settings&#x27;,component:Setting</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>左侧菜单的四个路由<code>/user ... /settings</code>为<code>/</code>路由的<strong>子路由</strong></li>
+<li>路由规则定义在<code>/</code>路由规则的<strong>children属性中</strong></li>
+</ul>
+<p>main组件作为<strong>根组件app</strong>的子组件</p>
+<p>左侧菜单的四个路由组件作为<strong>main组件</strong>的子组件</p>
+<br>
+
+<h2 id="5-设置默认路由重定向"><a href="#5-设置默认路由重定向" class="headerlink" title="5. 设置默认路由重定向"></a>5. 设置默认路由重定向</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">routes:[&#123;</span><br><span class="line">            path:<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">            <span class="comment">//路由重定向到用户管理</span></span><br><span class="line">            redirect:<span class="string">&#x27;/users&#x27;</span>,</span><br><span class="line">            component:main,</span><br><span class="line">            children:...</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-渲染用户列表数据"><a href="#6-渲染用户列表数据" class="headerlink" title="6. 渲染用户列表数据"></a>6. 渲染用户列表数据</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">data:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                    <span class="comment">//用户列表数据</span></span><br><span class="line">                    list:[</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">1</span>,<span class="attr">name</span>:<span class="string">&#x27;y1&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;,</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">2</span>,<span class="attr">name</span>:<span class="string">&#x27;y2&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;,</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">3</span>,<span class="attr">name</span>:<span class="string">&#x27;y3&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;,</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">4</span>,<span class="attr">name</span>:<span class="string">&#x27;y4&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            template:<span class="string">`&lt;div&gt;</span></span><br><span class="line"><span class="string">                        &lt;h3&gt;用户管理&lt;/h3&gt;</span></span><br><span class="line"><span class="string">                        &lt;table&gt;</span></span><br><span class="line"><span class="string">                            &lt;thead&gt;</span></span><br><span class="line"><span class="string">                                &lt;tr&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;编号&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;姓名&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;年龄&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;操作&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                &lt;/tr&gt;   </span></span><br><span class="line"><span class="string">                            &lt;/thead&gt;</span></span><br><span class="line"><span class="string">                            &lt;tbody&gt;</span></span><br><span class="line"><span class="string">								//循环生成用户数据表格</span></span><br><span class="line"><span class="string">                                &lt;tr v-for=&#x27;item in list&#x27;&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&#123;&#123;item.id&#125;&#125;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&#123;&#123;item.age&#125;&#125;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&lt;a href=&quot;javascript:;&quot;&gt;修改&lt;/a&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                &lt;/tr&gt;</span></span><br><span class="line"><span class="string">                            &lt;/tbody&gt;    </span></span><br><span class="line"><span class="string">                        &lt;/table&gt;</span></span><br><span class="line"><span class="string">                    &lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在User路由组件中<strong>定义用户列表数据数组</strong></li>
+<li>在User路由组件template中<strong>利用循环生成用户列表数据表格</strong></li>
+</ul>
+<h2 id="7-编程式导航跳转到用户详情页"><a href="#7-编程式导航跳转到用户详情页" class="headerlink" title="7. 编程式导航跳转到用户详情页"></a>7. 编程式导航跳转到用户详情页</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;td&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> @<span class="attr">click</span>=<span class="string">&#x27;change(item.id)&#x27;</span>&gt;</span>修改<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/td&gt;</span><br><span class="line">     </span><br><span class="line">change:<span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">                    <span class="comment">//编程式导航 路由跳转 传递id参数</span></span><br><span class="line">                    <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/userinfo/&#x27;</span>+id)</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表格中的修改超链接被点击后触发change事件并<strong>传递当前数据的id</strong></li>
+<li>编程式导航跳转带上id参数</li>
+</ul>
+<h2 id="8-在用户详情页使用编程式导航回退到上一页"><a href="#8-在用户详情页使用编程式导航回退到上一页" class="headerlink" title="8. 在用户详情页使用编程式导航回退到上一页"></a>8. 在用户详情页使用编程式导航回退到上一页</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=<span class="string">&#x27;back&#x27;</span>&gt;返回上一页&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">back:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="built_in">this</span>.$router.go(-<span class="number">1</span>)</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>Userinfo</code>组件的template模板中创建button实现回退</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/09-Vuex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -746,132 +872,6 @@
 </li>
 </ul>
 <p><img data-src="/images/09-Vuex/image-20220412162238536.png" alt="image-20220412162238536"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/08-Vue%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B7%AF%E7%94%B1%E6%A1%88%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/20/08-Vue%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E8%B7%AF%E7%94%B1%E6%A1%88%E4%BE%8B/" class="post-title-link" itemprop="url">08-Vue后台管理路由案例</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-12 07:36:28" itemprop="dateModified" datetime="2022-07-12T07:36:28+08:00">2022-07-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Vue后台管理路由案例"><a href="#Vue后台管理路由案例" class="headerlink" title="Vue后台管理路由案例"></a>Vue后台管理路由案例</h1><h2 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h2><p><img data-src="/images/08-Vue/image-20210926215440605.png" alt="image-20210926215440605"></p>
-<center>图一</center>
-
-<center>图一为项目的效果图</center>
-
-<ul>
-<li>项目分为上中下三部分</li>
-<li>中间部分<strong>通过左侧按钮进行路由跳转</strong></li>
-<li>路由跳转后渲染的模板中还有详情<strong>子级路由</strong></li>
-<li>子级路由对应组件渲染详情页面</li>
-</ul>
-<br>
-
-<h2 id="1-抽离渲染app根组件"><a href="#1-抽离渲染app根组件" class="headerlink" title="1. 抽离渲染app根组件"></a>1. 抽离渲染app根组件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 中间主体区域 --&gt;</span><br><span class="line">       &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">           &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">       &lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主体部分模板</span></span><br><span class="line"><span class="keyword">var</span> main = &#123;</span><br><span class="line">           template: <span class="string">`</span></span><br><span class="line"><span class="string">           &lt;div class=&quot;main&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;!-- 左侧菜单栏 --&gt;</span></span><br><span class="line"><span class="string">               &lt;div class=&quot;content left&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;ul&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;用户管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;权限管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;商品管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;订单管理&lt;/li&gt;</span></span><br><span class="line"><span class="string">                   &lt;li&gt;系统设置&lt;/li&gt;</span></span><br><span class="line"><span class="string">               &lt;/ul&gt;</span></span><br><span class="line"><span class="string">               &lt;/div&gt;</span></span><br><span class="line"><span class="string">               &lt;!-- 右侧内容区域 --&gt;</span></span><br><span class="line"><span class="string">               &lt;div class=&quot;content right&quot;&gt;&lt;div class=&quot;main-content&quot;&gt;添加用户表单&lt;/div&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">           &lt;/div&gt;`</span></span><br><span class="line">       &#125;</span><br><span class="line">   	<span class="comment">//创建路由实例配置规则</span></span><br><span class="line">       <span class="keyword">var</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">           routes:[&#123;</span><br><span class="line">               path:<span class="string">&#x27;/&#x27;</span>,<span class="attr">component</span>:main</span><br><span class="line">           &#125;]</span><br><span class="line">       &#125;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>当用户打开页面时默认hash为<code>/</code>，根据路由规则匹配渲染main组件中的模板</li>
-</ul>
-<br>
-
-<h2 id="2-主体部分左侧菜单改造为路由链接"><a href="#2-主体部分左侧菜单改造为路由链接" class="headerlink" title="2. 主体部分左侧菜单改造为路由链接"></a>2. 主体部分左侧菜单改造为路由链接</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/users&#x27;</span>&gt;</span>用户管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/rights&#x27;</span>&gt;</span>权限管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/goods&#x27;</span>&gt;</span>商品管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/orders&#x27;</span>&gt;</span>订单管理<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&#x27;/settings&#x27;</span>&gt;</span>系统设置<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="3-左侧菜单创建路由组件"><a href="#3-左侧菜单创建路由组件" class="headerlink" title="3. 左侧菜单创建路由组件"></a>3. 左侧菜单创建路由组件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> User = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;用户管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Right = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;权限管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Good = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;商品管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Order = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;订单管理&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> Setting = &#123;</span><br><span class="line">            template:<span class="string">`&lt;div&gt;&lt;h3&gt;系统设置&lt;/h3&gt;&lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-右侧主体内容添加路由占位符"><a href="#4-右侧主体内容添加路由占位符" class="headerlink" title="4. 右侧主体内容添加路由占位符"></a>4. 右侧主体内容添加路由占位符</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 右侧内容区域 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content right&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main-content&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">router-view</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">routes:[&#123;</span><br><span class="line">    //左侧菜单的路由为/的子级路由</span><br><span class="line">    path:&#x27;/&#x27;,component:main,children:[&#123;</span><br><span class="line">    	path:&#x27;/users&#x27;,component:User</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/rights&#x27;,component:Right</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/goods&#x27;,component:Good</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/orders&#x27;,component:Order</span><br><span class="line">    &#125;,&#123;</span><br><span class="line">    	path:&#x27;/settings&#x27;,component:Setting</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>左侧菜单的四个路由<code>/user ... /settings</code>为<code>/</code>路由的<strong>子路由</strong></li>
-<li>路由规则定义在<code>/</code>路由规则的<strong>children属性中</strong></li>
-</ul>
-<p>main组件作为<strong>根组件app</strong>的子组件</p>
-<p>左侧菜单的四个路由组件作为<strong>main组件</strong>的子组件</p>
-<br>
-
-<h2 id="5-设置默认路由重定向"><a href="#5-设置默认路由重定向" class="headerlink" title="5. 设置默认路由重定向"></a>5. 设置默认路由重定向</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">routes:[&#123;</span><br><span class="line">            path:<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">            <span class="comment">//路由重定向到用户管理</span></span><br><span class="line">            redirect:<span class="string">&#x27;/users&#x27;</span>,</span><br><span class="line">            component:main,</span><br><span class="line">            children:...</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-渲染用户列表数据"><a href="#6-渲染用户列表数据" class="headerlink" title="6. 渲染用户列表数据"></a>6. 渲染用户列表数据</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">data:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                    <span class="comment">//用户列表数据</span></span><br><span class="line">                    list:[</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">1</span>,<span class="attr">name</span>:<span class="string">&#x27;y1&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;,</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">2</span>,<span class="attr">name</span>:<span class="string">&#x27;y2&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;,</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">3</span>,<span class="attr">name</span>:<span class="string">&#x27;y3&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;,</span><br><span class="line">                        &#123;<span class="attr">id</span>:<span class="number">4</span>,<span class="attr">name</span>:<span class="string">&#x27;y4&#x27;</span>,<span class="attr">age</span>:<span class="number">10</span>&#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            template:<span class="string">`&lt;div&gt;</span></span><br><span class="line"><span class="string">                        &lt;h3&gt;用户管理&lt;/h3&gt;</span></span><br><span class="line"><span class="string">                        &lt;table&gt;</span></span><br><span class="line"><span class="string">                            &lt;thead&gt;</span></span><br><span class="line"><span class="string">                                &lt;tr&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;编号&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;姓名&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;年龄&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                    &lt;th&gt;操作&lt;/th&gt;</span></span><br><span class="line"><span class="string">                                &lt;/tr&gt;   </span></span><br><span class="line"><span class="string">                            &lt;/thead&gt;</span></span><br><span class="line"><span class="string">                            &lt;tbody&gt;</span></span><br><span class="line"><span class="string">								//循环生成用户数据表格</span></span><br><span class="line"><span class="string">                                &lt;tr v-for=&#x27;item in list&#x27;&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&#123;&#123;item.id&#125;&#125;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&#123;&#123;item.age&#125;&#125;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                    &lt;td&gt;&lt;a href=&quot;javascript:;&quot;&gt;修改&lt;/a&gt;&lt;/td&gt;</span></span><br><span class="line"><span class="string">                                &lt;/tr&gt;</span></span><br><span class="line"><span class="string">                            &lt;/tbody&gt;    </span></span><br><span class="line"><span class="string">                        &lt;/table&gt;</span></span><br><span class="line"><span class="string">                    &lt;/div&gt;`</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在User路由组件中<strong>定义用户列表数据数组</strong></li>
-<li>在User路由组件template中<strong>利用循环生成用户列表数据表格</strong></li>
-</ul>
-<h2 id="7-编程式导航跳转到用户详情页"><a href="#7-编程式导航跳转到用户详情页" class="headerlink" title="7. 编程式导航跳转到用户详情页"></a>7. 编程式导航跳转到用户详情页</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;td&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:;&quot;</span> @<span class="attr">click</span>=<span class="string">&#x27;change(item.id)&#x27;</span>&gt;</span>修改<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/td&gt;</span><br><span class="line">     </span><br><span class="line">change:<span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">                    <span class="comment">//编程式导航 路由跳转 传递id参数</span></span><br><span class="line">                    <span class="built_in">this</span>.$router.push(<span class="string">&#x27;/userinfo/&#x27;</span>+id)</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>表格中的修改超链接被点击后触发change事件并<strong>传递当前数据的id</strong></li>
-<li>编程式导航跳转带上id参数</li>
-</ul>
-<h2 id="8-在用户详情页使用编程式导航回退到上一页"><a href="#8-在用户详情页使用编程式导航回退到上一页" class="headerlink" title="8. 在用户详情页使用编程式导航回退到上一页"></a>8. 在用户详情页使用编程式导航回退到上一页</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=<span class="string">&#x27;back&#x27;</span>&gt;返回上一页&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">back:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="built_in">this</span>.$router.go(-<span class="number">1</span>)</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在<code>Userinfo</code>组件的template模板中创建button实现回退</li>
-</ul>
 
       
     </div>
