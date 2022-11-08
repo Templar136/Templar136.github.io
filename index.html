@@ -643,7 +643,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-08 22:12:28" itemprop="dateModified" datetime="2022-11-08T22:12:28+08:00">2022-11-08</time>
+                <time title="修改时间：2022-11-08 22:27:05" itemprop="dateModified" datetime="2022-11-08T22:27:05+08:00">2022-11-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -668,21 +668,18 @@
       
           <h1 id="Vuex案例-todoList"><a href="#Vuex案例-todoList" class="headerlink" title="Vuex案例 todoList"></a>Vuex案例 todoList</h1><h2 id="1-项目初始化"><a href="#1-项目初始化" class="headerlink" title="1.项目初始化"></a>1.项目初始化</h2><ul>
 <li><p>项目目录</p>
-<ul>
-<li>```text<br>E:\1前端学习资料和代码\1-23 学习代码\17-Vue基础代码\06-Vuex\02-vuex-todolist<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">![image-20220412200231243](&#x2F;images&#x2F;10-Vuex案例todoList&#x2F;image-20220412200231243.png)</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">- 依赖版本</span><br><span class="line"></span><br><span class="line">![image-20220412200253363](&#x2F;images&#x2F;10-Vuex案例todoList&#x2F;image-20220412200253363.png)</span><br><span class="line"></span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">## 2.获取list数据</span><br><span class="line"></span><br><span class="line">&#96;App.vue&#96;组件的created钩子中调用store实例的actions方法</span><br><span class="line"></span><br><span class="line">actions方法使用axios异步获取&#96;list.json&#96;中的数据</span><br><span class="line"></span><br><span class="line">&#96;App.vue&#96;通过调用&#96;...mapState&#96;**将state数据映射为计算属性后使用**</span><br><span class="line"></span><br><span class="line">## 3.input输入域数据绑定</span><br><span class="line"></span><br><span class="line">与state.inputValue绑定</span><br><span class="line"></span><br><span class="line">输入域change事件触发，调用&#96;mutations&#96;函数修改inputValue</span><br><span class="line"></span><br><span class="line">## 4.增加任务</span><br><span class="line"></span><br><span class="line">点击添加，根据&#96;state.inputValue&#96;进行添加</span><br><span class="line"></span><br><span class="line">## 5.删除任务</span><br><span class="line"></span><br><span class="line">根据id删除</span><br><span class="line"></span><br><span class="line">## 6.复选框状态绑定</span><br><span class="line"></span><br><span class="line">## 7.修改复选框状态</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;html</span><br><span class="line">        &lt;a-checkbox @change&#x3D;&quot;(e) &#x3D;&gt; &#123;checkboxChange(e,item.id)&#125;&quot; :checked&#x3D;&quot;item.done&quot;&gt;&#123;&#123;item.info&#125;&#125;&lt;&#x2F;a-checkbox&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
+<p><code>E:\1前端学习资料和代码\1-23 学习代码\17-Vue基础代码\06-Vuex\02-vuex-todolist</code></p>
 </li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取事件对象的同时传递参数</span></span><br><span class="line">(e) =&gt; &#123;checkboxChange(e,item.id)&#125;	<span class="comment">//change事件处理函数</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="8-计算未完成任务数目"><a href="#8-计算未完成任务数目" class="headerlink" title="8.计算未完成任务数目"></a>8.计算未完成任务数目</h2><p>通过getters根据state数据 计算出<strong>未完成数目(新数据)</strong></p>
-<p>将getters<strong>映射为App.vue的计算属性</strong></p>
-<h2 id="9-清除已完成任务"><a href="#9-清除已完成任务" class="headerlink" title="9.清除已完成任务"></a>9.清除已完成任务</h2><p>过滤出list数组中<code>done=false</code>的任务</p>
-<h2 id="10-点击下方三个按钮改变样式"><a href="#10-点击下方三个按钮改变样式" class="headerlink" title="10.点击下方三个按钮改变样式"></a>10.点击下方三个按钮改变样式</h2><p>根据state.key值设置按钮的样式，点击按钮修改<code>state.key</code>值以实现样式的改变</p>
-<h2 id="11-切换显示不同状态的任务"><a href="#11-切换显示不同状态的任务" class="headerlink" title="11.切换显示不同状态的任务"></a>11.切换显示不同状态的任务</h2><p>使用getters，根据key值(当前要显示的任务的状态)返回相应的任务列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前选择显示的任务列表</span></span><br><span class="line"><span class="function"><span class="title">infoList</span>(<span class="params">state</span>)</span> &#123;	<span class="comment">//getters</span></span><br><span class="line">    <span class="keyword">if</span>(state.key === <span class="string">&#x27;all&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> state.list</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(state.key === <span class="string">&#x27;undone&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> state.list.filter(<span class="function"><span class="params">x</span> =&gt;</span> !x.done)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(state.key === <span class="string">&#x27;done&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> state.list.filter(<span class="function"><span class="params">x</span> =&gt;</span> x.done)</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> state.list</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+<p><img data-src="/images/10-Vuex%E6%A1%88%E4%BE%8BtodoList/image-20220412200231243.png" alt="image-20220412200231243"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/10-Vuex%E6%A1%88%E4%BE%8BtodoList/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -788,90 +785,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">07-Vue前端路由</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-08 22:20:13" itemprop="dateModified" datetime="2022-11-08T22:20:13+08:00">2022-11-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Vue前端路由"><a href="#Vue前端路由" class="headerlink" title="Vue前端路由"></a>Vue前端路由</h1><h2 id="1-路由"><a href="#1-路由" class="headerlink" title="1. 路由"></a>1. 路由</h2><p>路由的本质是<strong>对应关系</strong></p>
-<p>路由分为<strong>前端路由</strong>和<strong>后端路由</strong></p>
-<h3 id="1-1-后端路由"><a href="#1-1-后端路由" class="headerlink" title="1.1 后端路由"></a>1.1 后端路由</h3><p>后端路由：根据不同的请求URL，服务器端返回不同的资源</p>
-<p><strong>本质</strong>：<strong>URL请求地址</strong>与<strong>服务器资源</strong>的对应关系</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,6 +850,90 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">07-Vue前端路由</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-08 22:20:13" itemprop="dateModified" datetime="2022-11-08T22:20:13+08:00">2022-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue前端路由"><a href="#Vue前端路由" class="headerlink" title="Vue前端路由"></a>Vue前端路由</h1><h2 id="1-路由"><a href="#1-路由" class="headerlink" title="1. 路由"></a>1. 路由</h2><p>路由的本质是<strong>对应关系</strong></p>
+<p>路由分为<strong>前端路由</strong>和<strong>后端路由</strong></p>
+<h3 id="1-1-后端路由"><a href="#1-1-后端路由" class="headerlink" title="1.1 后端路由"></a>1.1 后端路由</h3><p>后端路由：根据不同的请求URL，服务器端返回不同的资源</p>
+<p><strong>本质</strong>：<strong>URL请求地址</strong>与<strong>服务器资源</strong>的对应关系</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
