@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="React原理1.setState()说明  多次调用setState()方法，只会触发一次重新渲染(render方法执行一次)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React原理">
+<meta property="og:url" content="http://example.com/2022/11/27/11-React%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="React原理1.setState()说明  多次调用setState()方法，只会触发一次重新渲染(render方法执行一次)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404115410837.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404115950459.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404121757304.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404122323677.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404122512949.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404123105188.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404123517847.png">
+<meta property="og:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404125623459.png">
+<meta property="article:published_time" content="2022-11-27T12:57:17.000Z">
+<meta property="article:modified_time" content="2022-11-27T12:09:29.978Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/11-React%E5%8E%9F%E7%90%86/image-20220404115410837.png">
+
+<link rel="canonical" href="http://example.com/2022/11/27/11-React%E5%8E%9F%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>React原理 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/27/11-React%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-27 20:57:17 / 修改时间：20:09:29" itemprop="dateCreated datePublished" datetime="2022-11-27T20:57:17+08:00">2022-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="React原理"><a href="#React原理" class="headerlink" title="React原理"></a>React原理</h1><h2 id="1-setState-说明"><a href="#1-setState-说明" class="headerlink" title="1.setState()说明"></a>1.<code>setState()</code>说明</h2><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404115410837.png" alt="image-20220404115410837"></p>
+<ul>
+<li>多次调用setState()方法，只会触发一次重新渲染(<strong>render方法执行一次</strong>)</li>
+</ul>
+<span id="more"></span>
+
+<br>
+
+<h3 id="推荐语法"><a href="#推荐语法" class="headerlink" title="推荐语法"></a>推荐语法</h3><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404115950459.png" alt="image-20220404115950459"></p>
+<ul>
+<li>使用这种语法，<code>setState()</code><strong>仍然是异步更新数据</strong>。</li>
+<li>这种语法每次得到的<code>state</code>都是<strong>最新的状态</strong>，这使得<span style="color:red;">下一个<code>setState()</code>依赖上一个<code>setState()</code>的写法可行。</span></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 点击&#x27;增加&#x27;按钮事件</span></span><br><span class="line">handle = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//异步更新数据 原始语法</span></span><br><span class="line">    <span class="comment">// this.setState(&#123;</span></span><br><span class="line">    <span class="comment">//     count:this.state.count + 1 // 1 + 1</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">    <span class="comment">// this.setState(&#123;</span></span><br><span class="line">    <span class="comment">//     count:this.state.count + 1 // 1 + 1</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">    <span class="comment">// console.log(this.state.count); // 1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//推荐语法</span></span><br><span class="line">    <span class="built_in">this</span>.setState(<span class="function">(<span class="params">state,props</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            count:state.count + <span class="number">1</span> <span class="comment">// 1 + 1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//依赖上一个setState()</span></span><br><span class="line">    <span class="built_in">this</span>.setState(<span class="function">(<span class="params">state,props</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//state是当前最新的状态</span></span><br><span class="line">        <span class="built_in">console</span>.log(state); <span class="comment">//&#123;count:2&#125;</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            count:state.count + <span class="number">1</span> <span class="comment">// 2 + 1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//因为异步更新所以输出1</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.state.count); <span class="comment">//1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="第二个参数"><a href="#第二个参数" class="headerlink" title="第二个参数"></a>第二个参数</h3><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404121757304.png" alt="image-20220404121757304"></p>
+<ul>
+<li>在<strong>状态更新且页面完成重新渲染后</strong>(render执行后)立即执行的函数，与<code>componentDidUpdate</code>钩子的执行时机相似。</li>
+<li>可以在第二个参数中完成一些修改DOM的操作等。</li>
+</ul>
+<br>
+
+<h2 id="2-JSX语法的转化过程"><a href="#2-JSX语法的转化过程" class="headerlink" title="2. JSX语法的转化过程"></a>2. JSX语法的转化过程</h2><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404122323677.png" alt="image-20220404122323677"></p>
+<ul>
+<li>最后JSX和<code>createElement</code>创建的均为React元素</li>
+</ul>
+<p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404122512949.png" alt="image-20220404122512949"></p>
+<center>打印JSX或createElement创建的React元素，结果相同</center>
+
+<br>
+
+<h2 id="3-组件更新机制"><a href="#3-组件更新机制" class="headerlink" title="3. 组件更新机制"></a>3. 组件更新机制</h2><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404123105188.png" alt="image-20220404123105188"></p>
+<center>Parent2更新，Parent2组件子树均更新</center>
+
+<ul>
+<li>当前组件被更新(重新渲染)，<strong>其本身</strong>和<strong>其所有子组件</strong>均会更新。<ul>
+<li>其<strong>兄弟组件</strong>和<strong>父组件</strong>不受影响。</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h2 id="4-组件性能优化"><a href="#4-组件性能优化" class="headerlink" title="4. 组件性能优化"></a>4. 组件性能优化</h2><h3 id="1-减轻state"><a href="#1-减轻state" class="headerlink" title="1.减轻state"></a>1.减轻state</h3><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404123517847.png" alt="image-20220404123517847"></p>
+<ul>
+<li>对于<strong>需要在多个方法用到</strong>并且<strong>与组件渲染无关</strong>的数据，放在**this(组件实例)**中。<ul>
+<li>例如定时器ID</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="2-避免不必要的重新渲染"><a href="#2-避免不必要的重新渲染" class="headerlink" title="2.避免不必要的重新渲染"></a>2.避免不必要的重新渲染</h3><p><img data-src="/images/11-React%E5%8E%9F%E7%90%86/image-20220404125623459.png" alt="image-20220404125623459"></p>
+<ul>
+<li><code>nextProps</code>与<code>nextState</code>两个参数分别表示<strong>最新的props和state</strong></li>
+<li>在<code>shouldComponentUpdate</code>钩子中，可以使用<code>this.state</code>获取更新前的状态<ul>
+<li><strong>更新前的状态</strong> 与 <strong>最新的state</strong>比较结果，可以作为是否更新组件的依据。</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="3-随机数性能优化案例"><a href="#3-随机数性能优化案例" class="headerlink" title="3.随机数性能优化案例"></a>3.随机数性能优化案例</h3><p>点击按钮生成随机数显示在页面上，当<strong>新生成的随机数与上次的值相同</strong>则不会重新渲染。</p>
+<h4 id="1-利用state判断是否重新渲染"><a href="#1-利用state判断是否重新渲染" class="headerlink" title="1.利用state判断是否重新渲染"></a>1.利用state判断是否重新渲染</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//是否渲染的钩子函数</span></span><br><span class="line"><span class="function"><span class="title">shouldComponentUpdate</span>(<span class="params">nextProps,nextState</span>)</span> &#123;</span><br><span class="line">        <span class="comment">//打印最新state和当前state</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;最新state:&#x27;</span>+ nextState.number,<span class="string">&#x27;当前state:&#x27;</span>+ <span class="built_in">this</span>.state.number);</span><br><span class="line">        <span class="comment">//相等返回false 不重新渲染</span></span><br><span class="line">        <span class="keyword">return</span> nextState.number !== <span class="built_in">this</span>.state.number </span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//渲染方法</span></span><br><span class="line"><span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;render&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> (&lt;div&gt;</span><br><span class="line">            随机值:&#123;<span class="built_in">this</span>.state.number&#125;</span><br><span class="line">            &lt;button onClick=&#123;<span class="built_in">this</span>.handle&#125;&gt;生成随机值&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<center>RandomExample.js</center>
+
+<br>
+
+<h4 id="2-利用props判断是否重新渲染"><a href="#2-利用props判断是否重新渲染" class="headerlink" title="2.利用props判断是否重新渲染"></a>2.利用props判断是否重新渲染</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;render&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">        	&#123;<span class="comment">/* 随机值:&#123;this.state.number */</span>&#125;</span><br><span class="line">        	&#123;<span class="comment">/*使用另一个组件Number显示随机值*/</span>&#125;</span><br><span class="line">        	&lt;<span class="built_in">Number</span> number=&#123;<span class="built_in">this</span>.state.number&#125;/&gt;	</span><br><span class="line">			&lt;button onClick=&#123;<span class="built_in">this</span>.handle&#125;&gt;生成随机值&lt;/button&gt;</span><br><span class="line">		&lt;/div&gt;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用一个Number组件渲染显示随机值，随机值<strong>使用props传入Number组件</strong></li>
+<li>Number组件的<code>shouldComponentUpdate</code>钩子中<strong>依据更新前后props是否相同</strong>决定是否重新渲染。</li>
+</ul>
+<br>
+
+<h3 id="4-使用纯组件避免不必要的重新渲染"><a href="#4-使用纯组件避免不必要的重新渲染" class="headerlink" title="4.使用纯组件避免不必要的重新渲染"></a>4.使用纯组件避免不必要的重新渲染</h3><p><strong>纯组件：</strong>使用class创建组件时继承<code>React.PureComponent</code>类。</p>
+<ul>
+<li>纯组件会<strong>自动检测更新前后的state和props是否改变</strong>(不需要手写<code>shouldComponentUpdate</code>钩子来判断)，如果改变则重新渲染组件，否则不重新渲染。</li>
+</ul>
+<br>
+
+<h4 id="纯组件内部的比较原理"><a href="#纯组件内部的比较原理" class="headerlink" title="纯组件内部的比较原理"></a>纯组件内部的比较原理</h4><p>纯组件内部对比更新前后props和state采用的是<strong>浅层对比(shallow compare)</strong></p>
+<p><strong>浅层对比：</strong></p>
+<ul>
+<li>对于值类型如(Number等)，比较更新前后的<strong>值内容</strong>。(无需特别注意)</li>
+<li>对于<span style="color:red">引用类型(数组、对象等)</span>，比较更新前后的**引用(地址引用)**。</li>
+</ul>
+<p><strong>问题：</strong>若使用<code>setState()</code>方法<strong>修改引用类型数据时只修改内容</strong>，修改前后<strong>引用地址不变</strong>时，纯组件<strong>比较认为引用数据类型没有发生变化(引用地址相同)而不会重新渲染</strong>。</p>
+<p><strong>解决办法：</strong>纯组件中<strong>更新state中的引用类型数据时</strong>，需要<span style="color:red"><strong>创建新数据(新旧引用类型数据的地址不同)</strong></span>再进行赋值。</p>
+<ul>
+<li>普通组件中也建议在<strong>修改引用类型状态</strong>时<strong>创建新数据</strong>以避免可能出现的问题。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">handle = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 错误示范</span></span><br><span class="line">    <span class="comment">// newObj与this.state.obj引用地址相同</span></span><br><span class="line">    <span class="comment">// let newObj = this.state.obj</span></span><br><span class="line">    <span class="comment">// newObj.number = Math.floor(Math.random() * 3)</span></span><br><span class="line">    <span class="comment">// this.setState(() =&gt; &#123;</span></span><br><span class="line">    <span class="comment">//     return &#123;</span></span><br><span class="line">    <span class="comment">//         obj:newObj  //更新前后obj状态引用地址相同(判断时没有变化，不会重新渲染)</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 正确示范</span></span><br><span class="line">    <span class="comment">// newObj是使用this.state.obj内容创建的新对象(内存地址不同)</span></span><br><span class="line">    <span class="keyword">let</span> newObj = &#123;...this.state.obj,<span class="attr">number</span>:<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">3</span>)&#125;</span><br><span class="line">    <span class="built_in">this</span>.setState(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            obj:newObj   <span class="comment">//内存地址不同(每次更新均重新渲染)</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>PureComponent.js</center>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/27/12-%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/" rel="prev" title="虚拟DOM和Diff算法">
+      <i class="fa fa-chevron-left"></i> 虚拟DOM和Diff算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/27/10-%E9%A1%B5%E9%9D%A2%E4%BA%8B%E4%BB%B6/" rel="next" title="页面事件">
+      页面事件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React%E5%8E%9F%E7%90%86"><span class="nav-text">React原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-setState-%E8%AF%B4%E6%98%8E"><span class="nav-text">1.setState()说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E8%AF%AD%E6%B3%95"><span class="nav-text">推荐语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="nav-text">第二个参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JSX%E8%AF%AD%E6%B3%95%E7%9A%84%E8%BD%AC%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="nav-text">2. JSX语法的转化过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0%E6%9C%BA%E5%88%B6"><span class="nav-text">3. 组件更新机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%BB%84%E4%BB%B6%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-text">4. 组件性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%87%8F%E8%BD%BBstate"><span class="nav-text">1.减轻state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%81%BF%E5%85%8D%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93"><span class="nav-text">2.避免不必要的重新渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%9A%8F%E6%9C%BA%E6%95%B0%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%A1%88%E4%BE%8B"><span class="nav-text">3.随机数性能优化案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%A9%E7%94%A8state%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93"><span class="nav-text">1.利用state判断是否重新渲染</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%88%A9%E7%94%A8props%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93"><span class="nav-text">2.利用props判断是否重新渲染</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8%E7%BA%AF%E7%BB%84%E4%BB%B6%E9%81%BF%E5%85%8D%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93"><span class="nav-text">4.使用纯组件避免不必要的重新渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E7%BB%84%E4%BB%B6%E5%86%85%E9%83%A8%E7%9A%84%E6%AF%94%E8%BE%83%E5%8E%9F%E7%90%86"><span class="nav-text">纯组件内部的比较原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

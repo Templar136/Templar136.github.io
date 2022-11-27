@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="HTTP协议、HTTPS协议和TCP协议1. HTTP和HTTPS协议基本概念HTTP协议：  超文本传输协议，互联网应用最广泛的一种网络协议 一个客户端和服务器端请求和应答的标准 用于从www服务器传输超文本到本地浏览器的传输协议 使浏览器更加高效  HTTPS协议：  以安全为目标的HTTP通道 HTTP的安全版本，使用SSL安全套接字层进行加密 主要作用：建立一个信息安全通道，确保数据传输和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议、HTTPS协议和TCP协议">
+<meta property="og:url" content="http://example.com/2022/11/27/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="HTTP协议、HTTPS协议和TCP协议1. HTTP和HTTPS协议基本概念HTTP协议：  超文本传输协议，互联网应用最广泛的一种网络协议 一个客户端和服务器端请求和应答的标准 用于从www服务器传输超文本到本地浏览器的传输协议 使浏览器更加高效  HTTPS协议：  以安全为目标的HTTP通道 HTTP的安全版本，使用SSL安全套接字层进行加密 主要作用：建立一个信息安全通道，确保数据传输和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20210914092803504.png">
+<meta property="og:image" content="http://example.com/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20210914092733068.png">
+<meta property="og:image" content="http://example.com/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20211013170501555.png">
+<meta property="og:image" content="http://example.com/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20211013170539574.png">
+<meta property="article:published_time" content="2022-11-27T12:57:17.000Z">
+<meta property="article:modified_time" content="2022-11-27T12:20:15.188Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="知识点汇总">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20210914092803504.png">
+
+<link rel="canonical" href="http://example.com/2022/11/27/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HTTP协议、HTTPS协议和TCP协议 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/27/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTTP协议、HTTPS协议和TCP协议
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-27 20:57:17 / 修改时间：20:20:15" itemprop="dateCreated datePublished" datetime="2022-11-27T20:57:17+08:00">2022-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTMLandCss/" itemprop="url" rel="index"><span itemprop="name">HTMLandCss</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="HTTP协议、HTTPS协议和TCP协议"><a href="#HTTP协议、HTTPS协议和TCP协议" class="headerlink" title="HTTP协议、HTTPS协议和TCP协议"></a>HTTP协议、HTTPS协议和TCP协议</h1><h2 id="1-HTTP和HTTPS协议基本概念"><a href="#1-HTTP和HTTPS协议基本概念" class="headerlink" title="1. HTTP和HTTPS协议基本概念"></a>1. HTTP和HTTPS协议基本概念</h2><p><strong>HTTP协议</strong>：</p>
+<ul>
+<li>超文本传输协议，互联网应用最广泛的一种网络协议</li>
+<li>一个客户端和服务器端请求和应答的标准</li>
+<li>用于<strong>从www服务器传输超文本到本地浏览器的传输协议</strong></li>
+<li>使浏览器更加高效</li>
+</ul>
+<p><strong>HTTPS协议</strong>：</p>
+<ul>
+<li>以安全为目标的HTTP通道</li>
+<li>HTTP的安全版本，使用<strong>SSL安全套接字层</strong>进行加密</li>
+<li>主要作用：建立一个信息安全通道，确保<strong>数据传输和网站的真实性</strong></li>
+</ul>
+<span id="more"></span>
+
+<h2 id="2-HTTP和HTTPS协议区别"><a href="#2-HTTP和HTTPS协议区别" class="headerlink" title="2. HTTP和HTTPS协议区别"></a>2. HTTP和HTTPS协议区别</h2><ul>
+<li>HTTP传输的数据未加密，是明文的</li>
+<li>HTTPS协议是由HTTP协议和SSL协议构建的<strong>可进行加密传输和身份验证的网络协议</strong>，比HTTP安全性更高</li>
+<li>主要区别：<ul>
+<li>HTTPS：需要ca证书，费用高</li>
+<li>HTTP明文传输数据，HTTPS是<strong>SSL加密传输协议</strong>，安全性高</li>
+<li>HTTP的端口80，HTTPS的端口443</li>
+<li><strong>HTTP连接简单，无状态</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-HTTPS工作原理"><a href="#3-HTTPS工作原理" class="headerlink" title="3. HTTPS工作原理"></a>3. HTTPS工作原理</h2><p>客户端使用HTTPS协议与WEB服务器通信步骤：</p>
+<ul>
+<li>使用HTTPS URL访问服务器，<strong>要求web服务器建立SSL链接</strong></li>
+<li>web服务器接受到请求后，将<strong>包含公钥的网站证书</strong>传输给客户端</li>
+<li>客户端和服务器开始<strong>协商SSL连接的安全等级</strong>，加密等级</li>
+<li><strong>客户端</strong>浏览器通过协商后<strong>建立会话密钥</strong>，通过网站公钥加密后<strong>传送给网站服务器</strong></li>
+<li>WEB服务器通过自己的私钥解密出会话密钥</li>
+<li>web服务器<strong>通过会话密钥加密</strong>与客户端之间的通信</li>
+</ul>
+<h3 id="3-1-对称加密和非对称加密的优缺点"><a href="#3-1-对称加密和非对称加密的优缺点" class="headerlink" title="3.1 对称加密和非对称加密的优缺点"></a>3.1 对称加密和非对称加密的优缺点</h3><p>对称加密：DES/AES算法</p>
+<ul>
+<li>加密解密使用同样的密钥</li>
+<li>优点：计算量小，<strong>加密效率高</strong></li>
+<li>缺点：密钥的管理和分发困难，不够安全</li>
+</ul>
+<p>非对称加密：RSA算法</p>
+<ul>
+<li>使用公钥和私钥进行加密与解密，公钥可以发送给任意请求它的人，公钥加密的消息只有私钥的持有者才能解密</li>
+<li>优点：普遍比对称加密更安全</li>
+<li>缺点：<strong>算法复杂，效率低</strong></li>
+</ul>
+<h2 id="4-HTTPS协议的优点"><a href="#4-HTTPS协议的优点" class="headerlink" title="4. HTTPS协议的优点"></a>4. HTTPS协议的优点</h2><ul>
+<li>可以认证用户和服务器，确保<strong>数据发送到正确</strong>客户机和服务器</li>
+<li>保证<strong>数据完整性</strong>（传输过程不被窃取改变等）</li>
+<li>HTTPS是<strong>现行架构下最安全的解决方案</strong>，增加中间人攻击的成本</li>
+</ul>
+<h2 id="5-HTTPS的缺点"><a href="#5-HTTPS的缺点" class="headerlink" title="5.HTTPS的缺点"></a>5.HTTPS的缺点</h2><ul>
+<li>HTTPS握手阶段花费时间较大，<strong>延长页面加载时间</strong></li>
+<li>缓存不如HTTP高效，<strong>增加数据开销</strong></li>
+<li>SSL证书需要<strong>付费</strong></li>
+<li>SSL证书需要绑定IP，<strong>不能在同一个IP上绑定多个域名</strong>（ipv4资源不够）</li>
+</ul>
+<h2 id="6-TCP和UDP区别"><a href="#6-TCP和UDP区别" class="headerlink" title="6. TCP和UDP区别"></a>6. TCP和UDP区别</h2><ul>
+<li><strong>TCP协议</strong>：传输控制协议<ul>
+<li>面向连接，需要<strong>建立连接后才可以发送数据</strong></li>
+<li>提供<strong>可靠的服务</strong>，无差错，不丢失，按时到达</li>
+<li>面向<strong>字节流</strong></li>
+<li>TCP是<strong>一对一</strong>的</li>
+</ul>
+</li>
+<li><strong>UDP协议</strong>：用户数据报<ul>
+<li>无连接</li>
+<li>尽最大努力交付，<strong>不保证可靠交付</strong></li>
+<li>面向<strong>报文</strong></li>
+<li>UDP支持<strong>一对一和一对多</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="7-TCP三次握手四次挥手"><a href="#7-TCP三次握手四次挥手" class="headerlink" title="7. TCP三次握手四次挥手"></a>7. TCP三次握手四次挥手</h2><h3 id="7-1-三次握手"><a href="#7-1-三次握手" class="headerlink" title="7.1 三次握手"></a>7.1 三次握手</h3><p>客户端和服务端都需要确认**对方和自己可收发(信道正常)**，所以需要三次握手</p>
+<ul>
+<li>第一次握手：客户端向服务器发起连接请求，等待服务器响应</li>
+<li>第二次握手：服务端接受请求后向客户端发送响应ack报文，客户端接受响应后<strong>明确了客户端到服务器的传输正常</strong></li>
+<li>第三次握手：客户端向服务端发送ack报文，服务端接受后<strong>明确了服务端到客户端的传输正常</strong></li>
+</ul>
+<p><img data-src="/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20210914092803504.png" alt="image-20210914092803504"></p>
+<h3 id="7-2-四次挥手"><a href="#7-2-四次挥手" class="headerlink" title="7.2 四次挥手"></a>7.2 四次挥手</h3><p>服务器和客户端<strong>都可以发起四次挥手</strong></p>
+<p><img data-src="/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20210914092733068.png" alt="image-20210914092733068"></p>
+<p>例如客户端发起四次挥手</p>
+<ul>
+<li><p>第一次挥手：客户端发送请求启动四次挥手，并<strong>停止向服务端传送数据</strong></p>
+</li>
+<li><p>第二次挥手：服务端向客户端响应确认收到请求，但<strong>可能还有数据没有传送完毕</strong>，接着传送剩下的数据</p>
+</li>
+<li><p>第三次挥手：<strong>同样是服务端发送</strong>，告知客户端服务端数据发送完毕，并<strong>停止向客户端发送数据</strong></p>
+</li>
+<li><p>第四次挥手：客户端收到第三次挥手后确认服务端准备关闭，发送第四次挥手报文，服务端接受到第四次挥手后<strong>立即关闭连接</strong>，客户端在发送第四次挥手报文后<strong>等待2MSL后关闭</strong></p>
+</li>
+</ul>
+<p>注意：</p>
+<p>客户端发送第四次挥手报文后<strong>等待2MSL后再关闭</strong></p>
+<ul>
+<li><p>MSL：一段TCP报文在传输过程最大生命周期（来回即2MSL）</p>
+</li>
+<li><p>因为若服务端在1MSL内没有收到第四次挥手，则会向客户端发出FIN报文。此时客户端需要再次发送第四次挥手请求</p>
+</li>
+<li><p><strong>经过2MSL没有接受到服务端报文</strong>，说明服务端已经正常关闭，客户端也可以关闭</p>
+<ul>
+<li>若服务端没有正常关闭，则客户端必在2MSL内收到服务端的报文</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-HTTP报文中的头部字段"><a href="#8-HTTP报文中的头部字段" class="headerlink" title="8. HTTP报文中的头部字段"></a>8. HTTP报文中的头部字段</h2><h3 id="8-1-请求头"><a href="#8-1-请求头" class="headerlink" title="8.1 请求头"></a>8.1 请求头</h3><p>  <strong>Accept</strong>: <em>/</em>(客户端能接收的资源类型)<br>  <strong>Accept-Language</strong>: en-us(客户端接收的语言类型)<br>  <strong>Connection</strong>: Keep-Alive(维护客户端和服务端的连接关系)<br>  <strong>Host</strong>: localhost:8080(连接的目标主机和端口号)<br>  <strong>Referer</strong>: <a target="_blank" rel="noopener" href="http://localhost/links.asp(%E5%91%8A%E8%AF%89%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%88%91%E6%9D%A5%E8%87%AA%E4%BA%8E%E5%93%AA%E9%87%8C)">http://localhost/links.asp(告诉服务器我来自于哪里)</a><br>  <strong>User-Agent</strong>: Mozilla/4.0(客户端版本号的名字)<br>  Accept-Encoding: gzip, deflate(客户端能接收的压缩数据的类型)<br>  <strong>If-Modified-Since</strong>: Tue, 11 Jul 2000 18:23:51 GMT(缓存时间)  （上次请求响应的<strong>Last-Modified</strong>）<br>  Cookie：(客户端暂存服务端的信息)</p>
+<p>  <strong>Content-Type</strong>: <strong>请求体的MIME类型（用于POST请求中）</strong></p>
+<p>  <strong>Date</strong>: Tue, 11 Jul 2000 18:23:51 GMT(客户端请求服务端的时间)</p>
+<h3 id="8-2-响应头"><a href="#8-2-响应头" class="headerlink" title="8.2 响应头"></a>8.2 响应头</h3><p>  <strong>Location</strong>: <a target="_blank" rel="noopener" href="http://www.baidu.com**(服务端需要客户端访问的页面路径)/">http://www.baidu.com**(服务端需要客户端访问的页面路径)</a>** </p>
+<p>  <strong>Server</strong>:apache tomcat(服务端的Web服务端名)</p>
+<p>  Content-Encoding: gzip(服务端能够发送压缩编码类型) </p>
+<p>  Content-Length: 80(服务端发送的压缩数据的长度) </p>
+<p>  Content-Language: zh-cn(服务端发送的语言类型) </p>
+<p>  <strong>Content-Type</strong>: text/html; charset=GB2312**(服务端发送数据的类型及采用的编码方式)**</p>
+<p>  Last-Modified: Tue, 11 Jul 2000 18:23:51 GMT(服务端对该资源最后修改的时间)</p>
+<p>  <strong>Set-Cookie</strong>:SS=Q0=5Lb_nQ; path=/search(<strong>服务端发送到客户端的暂存数据)</strong></p>
+<p><strong>强缓存</strong>响应头：</p>
+<ul>
+<li><p>Expires: 服务器返回该请求的结果缓存的<strong>到期时间</strong></p>
+</li>
+<li><p>Cache-Control: 默认取值为<strong>private</strong>（所有内容只有客户端可以缓存）</p>
+<p><strong>Connection</strong>: close(1.0)/(1.1)Keep-Alive**(维护客户端和服务端的连接关系)**  </p>
+<p>Date: Tue, 11 Jul 2000 18:23:51 GMT(服务端响应客户端的时间)</p>
+</li>
+</ul>
+<p><strong>在服务器响应客户端的时候，带上Access-Control-Allow-Origin头信息，解决跨域的一种方法。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// * ：允许所有ip地址发送请求</span></span><br><span class="line">res.header(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>,<span class="string">&#x27;*&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="9-HTTP请求方式"><a href="#9-HTTP请求方式" class="headerlink" title="9. HTTP请求方式"></a>9. HTTP请求方式</h2><p>共有<strong>8种</strong>：</p>
+<ul>
+<li>GET：请求指定页面的信息，返回实体主题，可以传递少量请求参数数据，请求参数数据在URL中</li>
+<li>POST：向指定资源<strong>提交数据进行处理请求</strong>，数据包含在请求体中</li>
+<li>HEAD：与GET请求类似，<strong>返回的响应没有具体内容</strong>，用户<strong>获取报头</strong></li>
+<li>OPTIONS：客户端<strong>查看服务器的性能</strong>请求</li>
+<li>PUT：修改请求</li>
+<li>DELETE：删除请求</li>
+<li>等等</li>
+</ul>
+<h2 id="10-HTTP-2-0"><a href="#10-HTTP-2-0" class="headerlink" title="10. HTTP 2.0"></a>10. HTTP 2.0</h2><p><strong>http2.0</strong>是基于1999年发布的http1.0之后的首次更新</p>
+<ul>
+<li><p>相比HTTP1.0<strong>提升了访问速度</strong></p>
+</li>
+<li><p>允许<strong>多路复用</strong>：同时通过单一的HTTP/2.0 连接<strong>发送多重请求-响应信息</strong>。</p>
+<ul>
+<li>在http1.1中，浏览器客户端在同一时间，针对同一域名下的<strong>请求有一定数量限制</strong>（连接数量），超过限制会被阻塞。</li>
+</ul>
+</li>
+<li><p><strong>二进制分帧</strong>：HTTP2.0会将所有的传输信息分割为更小的信息或者帧，并对他们进行<strong>二进制编码</strong></p>
+</li>
+<li><p><strong>首部压缩</strong></p>
+</li>
+</ul>
+<h2 id="11-HTTP状态码"><a href="#11-HTTP状态码" class="headerlink" title="11. HTTP状态码"></a>11. HTTP状态码</h2><ul>
+<li>1**：服务器收到请求，需要请求者继续执行操作</li>
+<li>2**：成功，请求被接受并处理</li>
+<li>3**：重定向，需要进一步操作完成请求</li>
+<li>4**：客户端错误，请求包含语法错误或无法完成请求</li>
+<li>5**：服务端错误，服务器在请求处理过程中出错</li>
+</ul>
+<p><strong>200  OK  请求成功。一般用于GET与POST请求</strong></p>
+<p>300  Multiple Choices  多种选择。请求的资源可包括多个位置，相应可返回一个资源特征与地址的列表用于用户终端（例如：浏览器）选择</p>
+<p>301  Moved Permanently  永久移动。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替</p>
+<p>302  Found  临时移动。与301类似。但资源只是临时被移动。客户端应继续使用原有URI</p>
+<p><strong>304  Not Modified  未修改。所请求的资源未修改，服务器返回此状态码时，不会返回任何资源。客户端通常会缓存访问过的资源，通过提供一个头信息指出客户端希望只返回在指定日期之后修改的资源</strong></p>
+<p><strong>400  Bad Request  客户端错误</strong></p>
+<p><strong>401  Unauthorized  请求要求用户的身份认证</strong>(请求一个受保护资源但是没有证书或者证书错误)</p>
+<p>403  Forbidden  服务器理解客户端的请求，但是<strong>拒绝执行此请求</strong>(一般用于只在特定时间允许访问的资源)</p>
+<p><strong>404  Not Found  服务器无法根据客户端的请求找到资源（网页）。通过此代码，网站设计人员可设置”您所请求的资源无法找到”的个性页面</strong></p>
+<p><strong>500  Internal Server Error  服务器内部错误，无法完成请求</strong></p>
+<p><strong>501</strong> Not Implemented  服务器不支持请求的功能，无法完成请求</p>
+<p><strong>502</strong> Bad Gateway 作为<strong>网关或者代理工作的服务器</strong>尝试执行请求时，从远程服务器接收到了一个无效的响应(代理与上行服务器之间出现问题)</p>
+<p>505  HTTP Version not supported  服务器不支持请求的HTTP协议的版本，无法完成处理</p>
+<br>
+
+<h2 id="12-HTTP请求报文和响应报文"><a href="#12-HTTP请求报文和响应报文" class="headerlink" title="12. HTTP请求报文和响应报文"></a>12. HTTP请求报文和响应报文</h2><h3 id="12-1-请求报文"><a href="#12-1-请求报文" class="headerlink" title="12.1 请求报文"></a>12.1 请求报文</h3><p><img data-src="/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20211013170501555.png" alt="image-20211013170501555"></p>
+<p><strong>请求行：GET(请求的方式) /newcoder/hello.html(请求的目标资源) HTTP/1.1(请求采用的协议和版本号)</strong></p>
+<p>GET请求的请求参数存放于URL中，<strong>没有报文主体</strong></p>
+<p>POST请求的请求参数<strong>存放于报文体中</strong></p>
+<h3 id="12-2-响应报文"><a href="#12-2-响应报文" class="headerlink" title="12.2 响应报文"></a>12.2 响应报文</h3><p><img data-src="/images/01-http%E5%92%8Chttps%E5%8D%8F%E8%AE%AE/image-20211013170539574.png" alt="image-20211013170539574"></p>
+<p><strong>状态行：HTTP/1.1(响应采用的协议和版本号) 200(状态码) OK(描述信息)</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" rel="tag"><i class="fa fa-tag"></i> 知识点汇总</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/27/01-%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AE%80%E4%BB%8B/" rel="prev" title="小程序简介">
+      <i class="fa fa-chevron-left"></i> 小程序简介
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/27/03-%E5%A4%9A%E8%A1%A8%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2/" rel="next" title="多表联合查询">
+      多表联合查询 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE%E3%80%81HTTPS%E5%8D%8F%E8%AE%AE%E5%92%8CTCP%E5%8D%8F%E8%AE%AE"><span class="nav-text">HTTP协议、HTTPS协议和TCP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-HTTP%E5%92%8CHTTPS%E5%8D%8F%E8%AE%AE%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">1. HTTP和HTTPS协议基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HTTP%E5%92%8CHTTPS%E5%8D%8F%E8%AE%AE%E5%8C%BA%E5%88%AB"><span class="nav-text">2. HTTP和HTTPS协议区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-HTTPS%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">3. HTTPS工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">3.1 对称加密和非对称加密的优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-HTTPS%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-text">4. HTTPS协议的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-HTTPS%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-text">5.HTTPS的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-TCP%E5%92%8CUDP%E5%8C%BA%E5%88%AB"><span class="nav-text">6. TCP和UDP区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-text">7. TCP三次握手四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-text">7.1 三次握手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-text">7.2 四次挥手</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-HTTP%E6%8A%A5%E6%96%87%E4%B8%AD%E7%9A%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5"><span class="nav-text">8. HTTP报文中的头部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-text">8.1 请求头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-%E5%93%8D%E5%BA%94%E5%A4%B4"><span class="nav-text">8.2 响应头</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-HTTP%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="nav-text">9. HTTP请求方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-HTTP-2-0"><span class="nav-text">10. HTTP 2.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-HTTP%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-text">11. HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E5%92%8C%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87"><span class="nav-text">12. HTTP请求报文和响应报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="nav-text">12.1 请求报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87"><span class="nav-text">12.2 响应报文</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

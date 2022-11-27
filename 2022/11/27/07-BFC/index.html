@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="BFC-块级格式化上下文块级元素满足特定条件会创建BFC  每一个BFC只包含其子元素，不包含更深层次的后代（不包含子元素的子元素） 每一个BFC互相隔绝，互不影响 BFC解决的问题： 清除浮动 防止margin重叠">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BFC-块级格式化上下文">
+<meta property="og:url" content="http://example.com/2022/11/27/07-BFC/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="BFC-块级格式化上下文块级元素满足特定条件会创建BFC  每一个BFC只包含其子元素，不包含更深层次的后代（不包含子元素的子元素） 每一个BFC互相隔绝，互不影响 BFC解决的问题： 清除浮动 防止margin重叠">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/07-BFC/image-20210916103058395.png">
+<meta property="og:image" content="http://example.com/images/07-BFC/image-20210916103841629.png">
+<meta property="og:image" content="http://example.com/images/07-BFC/image-20210916104407405.png">
+<meta property="og:image" content="http://example.com/images/07-BFC/image-20210916105135313.png">
+<meta property="og:image" content="http://example.com/images/07-BFC/image-20210916110351049.png">
+<meta property="og:image" content="http://example.com/images/07-BFC/image-20210916110936595.png">
+<meta property="article:published_time" content="2022-11-27T12:57:30.000Z">
+<meta property="article:modified_time" content="2022-11-27T12:55:25.800Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="知识点汇总">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/07-BFC/image-20210916103058395.png">
+
+<link rel="canonical" href="http://example.com/2022/11/27/07-BFC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>BFC-块级格式化上下文 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/27/07-BFC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BFC-块级格式化上下文
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-27 20:57:30 / 修改时间：20:55:25" itemprop="dateCreated datePublished" datetime="2022-11-27T20:57:30+08:00">2022-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTMLandCss/" itemprop="url" rel="index"><span itemprop="name">HTMLandCss</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="BFC-块级格式化上下文"><a href="#BFC-块级格式化上下文" class="headerlink" title="BFC-块级格式化上下文"></a>BFC-块级格式化上下文</h1><p>块级元素满足<strong>特定条件</strong>会创建BFC</p>
+<ul>
+<li>每一个BFC只包含其子元素，不包含更深层次的后代（不包含子元素的子元素）</li>
+<li>每一个BFC<strong>互相隔绝，互不影响</strong></li>
+<li>BFC解决的问题：<ul>
+<li>清除浮动</li>
+<li>防止margin重叠</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="触发BFC的条件"><a href="#触发BFC的条件" class="headerlink" title="触发BFC的条件"></a><strong>触发BFC的条件</strong></h2><ul>
+<li><p>·body根元素</p>
+</li>
+<li><p>·设置浮动，不包括none</p>
+</li>
+<li><p>·设置定位，absoulte或者fixed</p>
+</li>
+<li><p>·行内块显示模式，inline-block</p>
+</li>
+<li><p>·设置overflow，值为hidden，auto，scroll</p>
+</li>
+<li><p>·表格单元格，table-cell</p>
+</li>
+<li><p>·弹性布局，flex</p>
+</li>
+</ul>
+<h2 id="BFC解决问题"><a href="#BFC解决问题" class="headerlink" title="BFC解决问题"></a>BFC解决问题</h2><p>根据每个BFC<strong>互不影响</strong>的特性可以解决一些问题</p>
+<h3 id="1-解决两个块级元素外边距（margin）塌陷问题"><a href="#1-解决两个块级元素外边距（margin）塌陷问题" class="headerlink" title="1. 解决两个块级元素外边距（margin）塌陷问题"></a>1. 解决两个块级元素外边距（margin）塌陷问题</h3><p><img data-src="/images/07-BFC/image-20210916103058395.png" alt="image-20210916103058395"></p>
+<ul>
+<li>此时两个盒子都设置<code>margin:100px</code>,但是实际显示效果上下盒子相距不是200px而是100px</li>
+</ul>
+<p><strong>外边距(margin)重叠</strong></p>
+<p>外边距重叠是指两个垂直相邻的块级元素，当上下两个边距相遇时，外边距会产生重叠现象，且重叠后的外边距，等于<strong>其中较大者</strong>。</p>
+<ul>
+<li>此时给两个块级元素添加属性<code>overflow:hidden</code>,让其生成两个BFC，两个BFC互不影响，则相距变为200px</li>
+</ul>
+<h3 id="2-解决嵌套的子元素设置margin-top影响到父元素问题"><a href="#2-解决嵌套的子元素设置margin-top影响到父元素问题" class="headerlink" title="2.解决嵌套的子元素设置margin-top影响到父元素问题"></a>2.解决嵌套的子元素设置margin-top影响到父元素问题</h3><p><img data-src="/images/07-BFC/image-20210916103841629.png" alt="image-20210916103841629"></p>
+<ul>
+<li><p>此时子元素设置<code>margin-top:50px</code>，我们想要的效果为，<strong>子元素与父元素上边框相距50px</strong></p>
+</li>
+<li><p>而实际效果为，父元素出现<code>margin-top:50px</code>的效果（据浏览器顶部50px），而子元素仍紧贴父元素上边框</p>
+</li>
+<li><p>此时就可以触发BFC，将<strong>父盒子变成一个独立的区域</strong>，这样在BFC区域内部的任何操作，都<strong>不会影响到外部</strong>。</p>
+<ul>
+<li>此时body一个BFC ，父元素一个BFC ，两个BFC互不影响，父元素内部样式改变不会影响body的BFC</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-解决浮动子元素导致父元素高度塌陷问题"><a href="#3-解决浮动子元素导致父元素高度塌陷问题" class="headerlink" title="3.解决浮动子元素导致父元素高度塌陷问题"></a>3.解决浮动子元素导致父元素高度塌陷问题</h3><p><img data-src="/images/07-BFC/image-20210916104407405.png" alt="image-20210916104407405"></p>
+<ul>
+<li><p>此时内部7个子元素都设置浮动，产生七个BFC，导致父元素高度塌陷</p>
+<ul>
+<li>浮动元素脱离了标准流并覆盖在标准流的元素之上</li>
+</ul>
+</li>
+<li><p>此时父元素高度为0（不显示），但是width:300px仍然影响子元素排列，所以七个son每行两个排列</p>
+</li>
+</ul>
+<br>
+
+<ul>
+<li>此时只要给父元素生成一个BFC即与七个son生成的BFC互不影响<ul>
+<li>父元素加入<code>overflow:hidden</code>属性生成BFC</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="/images/07-BFC/image-20210916105135313.png" alt="image-20210916105135313"></p>
+<ul>
+<li>此时父元素高度被七个son撑起，父元素显示</li>
+</ul>
+<br>
+
+<h3 id="4-利用BFC阻止标准流元素被浮动元素覆盖"><a href="#4-利用BFC阻止标准流元素被浮动元素覆盖" class="headerlink" title="4.利用BFC阻止标准流元素被浮动元素覆盖"></a>4.利用BFC阻止标准流元素被浮动元素覆盖</h3><ul>
+<li>红盒子浮动生成BFC，蓝盒子标准流</li>
+<li> 默认情况下浮动的红盒子会覆盖在蓝盒子上方</li>
+</ul>
+<p><img data-src="/images/07-BFC/image-20210916110351049.png" alt="image-20210916110351049"></p>
+<ul>
+<li>给蓝盒子设置<code>overflow:hidden</code>属性后，两个BFC（红/蓝盒子）互不影响</li>
+<li>蓝盒子在<strong>当前标准流位置的基础上右移避开红色盒子</strong></li>
+</ul>
+<p><img data-src="/images/07-BFC/image-20210916110936595.png" alt="image-20210916110936595"></p>
+<ul>
+<li>同时会根据红盒子宽度的变化改变右移距离（始终在红盒子右侧）</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不同的BFC区域之间是相互独立的，互不影响的</p>
+<ul>
+<li>利用这个特性我们可以让不同BFC区域之间的<strong>布局不产生影响</strong>。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" rel="tag"><i class="fa fa-tag"></i> 知识点汇总</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/27/08-%E7%9B%92%E5%AD%90%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/" rel="prev" title="盒子水平垂直居中">
+      <i class="fa fa-chevron-left"></i> 盒子水平垂直居中
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/27/06-%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%96%B9%E6%B3%95/" rel="next" title="清除浮动的方法">
+      清除浮动的方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BFC-%E5%9D%97%E7%BA%A7%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-text">BFC-块级格式化上下文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91BFC%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">触发BFC的条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-text">BFC解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A7%A3%E5%86%B3%E4%B8%A4%E4%B8%AA%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E5%A4%96%E8%BE%B9%E8%B7%9D%EF%BC%88margin%EF%BC%89%E5%A1%8C%E9%99%B7%E9%97%AE%E9%A2%98"><span class="nav-text">1. 解决两个块级元素外边距（margin）塌陷问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%A7%A3%E5%86%B3%E5%B5%8C%E5%A5%97%E7%9A%84%E5%AD%90%E5%85%83%E7%B4%A0%E8%AE%BE%E7%BD%AEmargin-top%E5%BD%B1%E5%93%8D%E5%88%B0%E7%88%B6%E5%85%83%E7%B4%A0%E9%97%AE%E9%A2%98"><span class="nav-text">2.解决嵌套的子元素设置margin-top影响到父元素问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A7%A3%E5%86%B3%E6%B5%AE%E5%8A%A8%E5%AD%90%E5%85%83%E7%B4%A0%E5%AF%BC%E8%87%B4%E7%88%B6%E5%85%83%E7%B4%A0%E9%AB%98%E5%BA%A6%E5%A1%8C%E9%99%B7%E9%97%AE%E9%A2%98"><span class="nav-text">3.解决浮动子元素导致父元素高度塌陷问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%88%A9%E7%94%A8BFC%E9%98%BB%E6%AD%A2%E6%A0%87%E5%87%86%E6%B5%81%E5%85%83%E7%B4%A0%E8%A2%AB%E6%B5%AE%E5%8A%A8%E5%85%83%E7%B4%A0%E8%A6%86%E7%9B%96"><span class="nav-text">4.利用BFC阻止标准流元素被浮动元素覆盖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

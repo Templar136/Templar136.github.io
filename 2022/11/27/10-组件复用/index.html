@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="组件复用若两个组件中的部分功能相似，可以通过组件复用 (复用相似的功能) 的方式来优化程序 例如：同样需要使用鼠标相对于浏览器可视窗口坐标的组件，可以复用记录坐标的状态和其操作方法。  复用什么：  state状态  操作状态的方法   两种复用方式：  render props模式 高阶组件(HOC)   两种复用方式不是新API，而是由React自身特点的编码技巧演化而成的固定模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组件复用">
+<meta property="og:url" content="http://example.com/2022/11/27/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="组件复用若两个组件中的部分功能相似，可以通过组件复用 (复用相似的功能) 的方式来优化程序 例如：同样需要使用鼠标相对于浏览器可视窗口坐标的组件，可以复用记录坐标的状态和其操作方法。  复用什么：  state状态  操作状态的方法   两种复用方式：  render props模式 高阶组件(HOC)   两种复用方式不是新API，而是由React自身特点的编码技巧演化而成的固定模式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403201750221.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403203417088.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403212133391.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403212957517.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403223141935.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403223226473.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403223455030.png">
+<meta property="og:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403224658929.png">
+<meta property="article:published_time" content="2022-11-27T12:57:17.000Z">
+<meta property="article:modified_time" content="2022-11-27T12:09:26.866Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403201750221.png">
+
+<link rel="canonical" href="http://example.com/2022/11/27/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>组件复用 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/27/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          组件复用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-27 20:57:17 / 修改时间：20:09:26" itemprop="dateCreated datePublished" datetime="2022-11-27T20:57:17+08:00">2022-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="组件复用"><a href="#组件复用" class="headerlink" title="组件复用"></a>组件复用</h1><p>若<strong>两个组件中的部分功能相似</strong>，可以通过组件复用 (复用相似的功能) 的方式来优化程序</p>
+<p>例如：同样需要使用鼠标相对于浏览器可视窗口坐标的组件，可以复用<strong>记录坐标的状态</strong>和<strong>其操作方法</strong>。</p>
+<ul>
+<li><p>复用什么：</p>
+<ul>
+<li>state状态 </li>
+<li>操作状态的方法</li>
+</ul>
+</li>
+<li><p>两种复用方式：</p>
+<ul>
+<li><code>render props</code>模式</li>
+<li>高阶组件(HOC)</li>
+</ul>
+</li>
+<li><p>两种复用方式<strong>不是新API</strong>，而是由React自身特点的编码技巧演化而成的<strong>固定模式</strong>。</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<br>
+
+<h2 id="1-render-props模式"><a href="#1-render-props模式" class="headerlink" title="1. render props模式"></a>1. render props模式</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403201750221.png" alt="image-20220403201750221"></p>
+<br>
+
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403203417088.png" alt="image-20220403203417088"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(props)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;render props模式&lt;/h1&gt;</span><br><span class="line">        &#123;<span class="comment">/* render函数prop */</span>&#125;</span><br><span class="line">        &lt;Text render=&#123;<span class="function">(<span class="params">mouse</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>鼠标坐标为:&#123;mouse.x&#125; &#123;mouse.y&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">        &#125;&#125;&gt;&lt;/Text&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Text组件，实现鼠标坐标(状态)的复用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Text</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="comment">//复用的状态</span></span><br><span class="line">  state = &#123;</span><br><span class="line">    x:<span class="number">0</span>,</span><br><span class="line">    y:<span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//组件挂载完钩子</span></span><br><span class="line">  <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">//鼠标移动事件修改状态</span></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;mousemove&#x27;</span>,<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">        x:e.clientX,</span><br><span class="line">        y:e.clientY</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">//将复用状态作为render的参数，根据使用时render函数的返回值决定渲染的UI结构</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.props.render(<span class="built_in">this</span>.state)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Text</code>组件实现<strong>鼠标坐标状态</strong>的复用，复用后<strong>渲染的UI结构</strong>由使用者提供的render函数返回值决定。</li>
+<li>render函数<strong>接收复用的状态逻辑</strong>，通过<strong>使用不同的返回值</strong>即可实现复用状态逻辑下的<strong>不同UI渲染</strong>。</li>
+</ul>
+<br>
+
+<h3 id="复用的例子"><a href="#复用的例子" class="headerlink" title="复用的例子"></a>复用的例子</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="comment">/* Text组件复用 渲染一个说明鼠标坐标的p标签 */</span>&#125;</span><br><span class="line">&lt;Text render=&#123;<span class="function">(<span class="params">mouse</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>鼠标坐标为:&#123;mouse.x&#125; &#123;mouse.y&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">&#125;&#125;&gt;&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">/* Text组件复用 渲染一个跟随鼠标移动的图片 */</span>&#125;</span><br><span class="line">&lt;Text render=&#123;<span class="function">(<span class="params">mouse</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//src值为引入的图片 style设置数值类型不加单位</span></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;img&#125;</span> <span class="attr">alt</span>=<span class="string">&quot;logo&quot;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="xml">                                            position: &#x27;absolute&#x27;,</span></span><br><span class="line"><span class="xml">                                            left: mouse.x - 100,</span></span><br><span class="line"><span class="xml">                                            top: mouse.y - 100,</span></span><br><span class="line"><span class="xml">                                            width: 200,</span></span><br><span class="line"><span class="xml">                                            height: 200,</span></span><br><span class="line"><span class="xml">                                           &#125;&#125;&gt;<span class="tag">&lt;/<span class="name">img</span>&gt;</span></span></span><br><span class="line">&#125;&#125;&gt;&lt;/Text&gt;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="使用children形式替代render"><a href="#使用children形式替代render" class="headerlink" title="使用children形式替代render"></a>使用children形式替代render</h3><p>使用<code>render-props</code>模式实现组件复用，<strong>并不意味着该prop函数必须名为render</strong>，使用<strong>其他形式</strong>达到相同目的即使用了 <code>render-props</code>模式。</p>
+<p>例如：</p>
+<p>使用<code>props.children</code>的形式代替<code>render</code>可以<strong>更直观</strong>的进行复用</p>
+<p>将<strong>本来的render函数</strong>作为<strong>复用组件的子节点</strong>通过<code>props.children</code>方式调用更直观</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="comment">/* render函数prop形式复用 */</span>&#125;</span><br><span class="line">&#123;<span class="comment">/* &lt;Text render=&#123;(mouse) =&gt; &#123;</span></span><br><span class="line"><span class="comment">        return &lt;p&gt;鼠标坐标为:&#123;mouse.x&#125; &#123;mouse.y&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="comment">   &#125;&#125;&gt;&lt;/Text&gt; */</span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="comment">/* 使用props.children代替render以更直观形式复用 */</span>&#125;</span><br><span class="line">&lt;Text&gt;</span><br><span class="line">    <span class="comment">//Text组件props的children属性</span></span><br><span class="line">    &#123;<span class="function">(<span class="params">mouse</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>鼠标坐标为:&#123;mouse.x&#125; &#123;mouse.y&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">    &#125;&#125;</span><br><span class="line">&lt;/Text&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Text组件的render方法</span></span><br><span class="line"><span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">//调用props.children渲染复用后显示的UI结构</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.props.children(<span class="built_in">this</span>.state)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>props.children代替render</center>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Consumer&gt;</span><br><span class="line">        &#123; <span class="function"><span class="params">data</span> =&gt;</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>接收的数据:&#123;data&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>&#125;</span><br><span class="line">&lt;/Consumer&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>组件通信的Context方式中的Consumer数据消费者组件，也使用了<code>props.children</code>形式进行复用。</li>
+</ul>
+<br>
+
+<h3 id="例子中的代码优化"><a href="#例子中的代码优化" class="headerlink" title="例子中的代码优化"></a>例子中的代码优化</h3><p>1.使用<code>prop-types</code>模块进行<code>props</code>验证，规定<code>props.children</code>为<strong>函数且必填</strong>。</p>
+<p>2.在组件卸载时<strong>清除window的鼠标移动事件绑定</strong>。</p>
+<br>
+
+<h2 id="2-高阶组件"><a href="#2-高阶组件" class="headerlink" title="2.高阶组件"></a>2.高阶组件</h2><h3 id="思路分析-1"><a href="#思路分析-1" class="headerlink" title="思路分析"></a>思路分析</h3><p>采用包装模式</p>
+<p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403212133391.png" alt="image-20220403212133391"></p>
+<ul>
+<li>由<code>WrappedComponent</code>组件决定复用状态后渲染的UI结构。</li>
+</ul>
+<br>
+
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403212957517.png" alt="image-20220403212957517"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建高阶组件(一个函数) 参数为要包装增强的组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">withMouse</span>(<span class="params">WrappedComponent</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//定义一个类组件 提供复用的状态</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Mouse</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">        <span class="comment">//复用状态</span></span><br><span class="line">        state = &#123;</span><br><span class="line">            x: <span class="number">0</span>,</span><br><span class="line">            y: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//移动事件处理函数 状态逻辑处理</span></span><br><span class="line">        movehandle = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.setState(&#123;</span><br><span class="line">                x: e.clientX,</span><br><span class="line">                y: e.clientY</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//挂载完添加移动事件</span></span><br><span class="line">        <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;mousemove&#x27;</span>, <span class="built_in">this</span>.movehandle)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//卸载时清除移动事件绑定</span></span><br><span class="line">        <span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="built_in">window</span>.removeEventListener(<span class="string">&#x27;mousemove&#x27;</span>, <span class="built_in">this</span>.movehandle)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">            <span class="comment">//返回增强后的组件</span></span><br><span class="line">            <span class="keyword">return</span> &lt;WrappedComponent&gt;</span><br><span class="line">                &#123;<span class="comment">/* 复用的数据 */</span>&#125;</span><br><span class="line">                &#123;<span class="built_in">this</span>.state&#125;</span><br><span class="line">            &lt;/WrappedComponent&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回Mouse组件渲染的增强组件</span></span><br><span class="line">    <span class="keyword">return</span> Mouse</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 显示坐标组件</span></span><br><span class="line"><span class="keyword">let</span> Position = <span class="function"><span class="params">props</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>鼠标的坐标为：&#123;props.children.x&#125; &#123;props.children.y&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 图片跟随组件</span></span><br><span class="line"><span class="keyword">let</span> Logo = <span class="function"><span class="params">props</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;img&#125;</span> <span class="attr">alt</span>=<span class="string">&quot;logo&quot;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="xml">        position: &#x27;absolute&#x27;,</span></span><br><span class="line"><span class="xml">        left: props.children.x - 100,</span></span><br><span class="line"><span class="xml">        top: props.children.y - 100,</span></span><br><span class="line"><span class="xml">        width: 200,</span></span><br><span class="line"><span class="xml">        height: 200,</span></span><br><span class="line"><span class="xml">    &#125;&#125;&gt;<span class="tag">&lt;/<span class="name">img</span>&gt;</span></span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//调用高阶组件返回复用后增强组件 被包装的组件要提前声明</span></span><br><span class="line"><span class="keyword">const</span> MousePosition = withMouse(Position)</span><br><span class="line"><span class="keyword">const</span> MouseLogo = withMouse(Logo)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h1&gt;高阶组件&lt;/h1&gt;</span><br><span class="line">                &#123;<span class="comment">/* 使用复用后的增强组件 */</span>&#125;</span><br><span class="line">                &lt;MousePosition /&gt;</span><br><span class="line">                &lt;MouseLogo/&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="设置displayName"><a href="#设置displayName" class="headerlink" title="设置displayName"></a>设置displayName</h3><p>高阶组件创建的多个增强组件在调试工具(React developer tools)中显示为一个组件名称，不利于调试分辨。</p>
+<p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403223141935.png" alt="image-20220403223141935"></p>
+<ul>
+<li>此处<strong>高阶函数返回值为Mouse组件</strong>，所以渲染时两个增强组件均是被Mouse组件包裹</li>
+</ul>
+<p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403223226473.png" alt="image-20220403223226473"></p>
+<p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403223455030.png" alt="image-20220403223455030"></p>
+<p>设置<code>displayName</code>后的两个增强组件更易于区分，都由高阶组件<code>withMouse</code>生成，再加上各自功能名称。</p>
+<br>
+
+<h3 id="传递props"><a href="#传递props" class="headerlink" title="传递props"></a>传递props</h3><p><strong>增强组件：</strong>高阶组件返回的其<strong>内部定义的类组件</strong>(类组件渲染复用状态的原组件)</p>
+<p>向高阶组件包装过的增强组件添加props后，原组件(被包装组件)取不到该值。</p>
+<p><strong>原因：</strong>高阶组件<strong>返回值为其内部创建的类组件</strong>(上例中为Mouse)，而这个类组件渲染的UI结构是<strong>复用状态的原组件</strong>。向<strong>增强组件(高阶函数返回值)<strong>传递的props</strong>实际只传递给了Mouse组件</strong>，而Mouse组件并没有向原组件中传递。</p>
+<p><strong>解决办法：</strong>手动让Mouse组件将props传递给原组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">//返回复用状态的被包装组件 传递复用状态 和 props</span></span><br><span class="line">    <span class="comment">//此处 对象扩展运算符得到的结果直接作为组件标签属性 是JSX实现的</span></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">WrappedComponent</span> &#123;<span class="attr">...this.state</span>&#125; &#123;<span class="attr">...this.props</span>&#125;&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">WrappedComponent</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<center>高阶组件中Mouse组件的render函数</center>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>高阶组件<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    &#123;/* 使用复用后的增强组件 */&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">MousePosition</span> /&gt;</span></span><br><span class="line">    &#123;/* 传递props */&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">MouseLogo</span> <span class="attr">a</span>=<span class="string">&#x27;1&#x27;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<center>Parent组件渲染的UI结构</center>
+
+<p><img data-src="/images/10-%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8/image-20220403224658929.png" alt="image-20220403224658929"></p>
+<ul>
+<li>原组件接收到向增强组件(高阶函数返回值)传递的props</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/27/10-%E9%A1%B5%E9%9D%A2%E4%BA%8B%E4%BB%B6/" rel="prev" title="页面事件">
+      <i class="fa fa-chevron-left"></i> 页面事件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/27/09-%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="next" title="组件生命周期">
+      组件生命周期 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8"><span class="nav-text">组件复用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-render-props%E6%A8%A1%E5%BC%8F"><span class="nav-text">1. render props模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E7%94%A8%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-text">复用的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8children%E5%BD%A2%E5%BC%8F%E6%9B%BF%E4%BB%A3render"><span class="nav-text">使用children形式替代render</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-text">例子中的代码优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6"><span class="nav-text">2.高阶组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90-1"><span class="nav-text">思路分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEdisplayName"><span class="nav-text">设置displayName</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92props"><span class="nav-text">传递props</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

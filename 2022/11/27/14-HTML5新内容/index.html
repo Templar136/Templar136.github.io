@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="HTML5新内容1. 新增语义化标签HTML5新增了  语义化标签、 表单控件、(比如数字、日期、时间、日历和滑块。) 强大的图像支持、( &lt;canvas&gt; 和 &lt;svg&gt;) 强大的多媒体支持和强大的API  (加入WebStorage替代Cookie) WebStorage：LoaclStrorage和SessionStorage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML5新内容">
+<meta property="og:url" content="http://example.com/2022/11/27/14-HTML5%E6%96%B0%E5%86%85%E5%AE%B9/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="HTML5新内容1. 新增语义化标签HTML5新增了  语义化标签、 表单控件、(比如数字、日期、时间、日历和滑块。) 强大的图像支持、( &lt;canvas&gt; 和 &lt;svg&gt;) 强大的多媒体支持和强大的API  (加入WebStorage替代Cookie) WebStorage：LoaclStrorage和SessionStorage">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/14-HTML5%E6%96%B0%E5%86%85%E5%AE%B9/image-20211020174037417.png">
+<meta property="article:published_time" content="2022-11-27T12:57:30.000Z">
+<meta property="article:modified_time" content="2022-11-27T12:56:00.193Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="知识点汇总">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/14-HTML5%E6%96%B0%E5%86%85%E5%AE%B9/image-20211020174037417.png">
+
+<link rel="canonical" href="http://example.com/2022/11/27/14-HTML5%E6%96%B0%E5%86%85%E5%AE%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HTML5新内容 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/27/14-HTML5%E6%96%B0%E5%86%85%E5%AE%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTML5新内容
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-27 20:57:30 / 修改时间：20:56:00" itemprop="dateCreated datePublished" datetime="2022-11-27T20:57:30+08:00">2022-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTMLandCss/" itemprop="url" rel="index"><span itemprop="name">HTMLandCss</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="HTML5新内容"><a href="#HTML5新内容" class="headerlink" title="HTML5新内容"></a>HTML5新内容</h1><h2 id="1-新增语义化标签"><a href="#1-新增语义化标签" class="headerlink" title="1. 新增语义化标签"></a>1. 新增语义化标签</h2><p>HTML5新增了</p>
+<ul>
+<li>语义化标签、</li>
+<li>表单控件、(比如数字、日期、时间、日历和滑块。)</li>
+<li>强大的图像支持、( <code>&lt;canvas&gt;</code> 和 <code>&lt;svg&gt;</code>)</li>
+<li>强大的多媒体支持和强大的API  (加入WebStorage替代Cookie)<ul>
+<li>WebStorage：LoaclStrorage和SessionStorage</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<p>语义化标签</p>
+<table>
+<thead>
+<tr>
+<th><code>&lt;article&gt;</code></th>
+<th>定义文档内的文章。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;aside&gt;</code></td>
+<td>定义页面内容之外的内容。</td>
+</tr>
+<tr>
+<td><code>&lt;bdi&gt;</code></td>
+<td>定义与其他文本不同的文本方向。</td>
+</tr>
+<tr>
+<td><code>&lt;details&gt;</code></td>
+<td>定义用户可查看或隐藏的额外细节。</td>
+</tr>
+<tr>
+<td><code>&lt;dialog&gt;</code></td>
+<td>定义对话框或窗口。</td>
+</tr>
+<tr>
+<td><code>&lt;figcaption&gt;</code></td>
+<td>定义<code>&lt;figure&gt;</code>元素的标题。</td>
+</tr>
+<tr>
+<td><code>&lt;figure&gt;</code></td>
+<td>定义自包含内容，比如图示、图表、照片、代码清单等等。</td>
+</tr>
+<tr>
+<td><code>&lt;footer&gt;</code></td>
+<td>定义文档或节的页脚。</td>
+</tr>
+<tr>
+<td><code>&lt;header&gt;</code></td>
+<td>定义文档或节的页眉。</td>
+</tr>
+<tr>
+<td><code>&lt;main&gt;</code></td>
+<td>定义文档的主内容。</td>
+</tr>
+<tr>
+<td><code>&lt;mark&gt;</code></td>
+<td>定义重要或强调的内容。</td>
+</tr>
+<tr>
+<td><code>&lt;menuitem&gt;</code></td>
+<td>定义用户能够从弹出菜单调用的命令/菜单项目。</td>
+</tr>
+<tr>
+<td><code>&lt;meter&gt;</code></td>
+<td>定义已知范围（尺度）内的标量测量。</td>
+</tr>
+<tr>
+<td><code>&lt;nav&gt;</code></td>
+<td>定义文档内的导航链接。</td>
+</tr>
+<tr>
+<td><code>&lt;progress&gt;</code></td>
+<td>定义任务进度。</td>
+</tr>
+<tr>
+<td><code>&lt;rp&gt;</code></td>
+<td>定义在不支持 ruby 注释的浏览器中显示什么。</td>
+</tr>
+<tr>
+<td><code>&lt;rt&gt;</code></td>
+<td>定义关于字符的解释/发音（用于东亚字体）。</td>
+</tr>
+<tr>
+<td><code>&lt;ruby&gt;</code></td>
+<td>定义 ruby 注释（用于东亚字体）。</td>
+</tr>
+<tr>
+<td><code>&lt;section&gt;</code></td>
+<td><strong>定义文档中的节。</strong></td>
+</tr>
+<tr>
+<td><code>&lt;summary&gt;</code></td>
+<td>定义 <code>&lt;details&gt;</code> 元素的可见标题。</td>
+</tr>
+<tr>
+<td><code>&lt;time&gt;</code></td>
+<td>定义日期/时间。</td>
+</tr>
+<tr>
+<td><code>&lt;wbr&gt;</code></td>
+<td>定义可能的折行（line-break）。</td>
+</tr>
+</tbody></table>
+<h2 id="2-删除一些标签"><a href="#2-删除一些标签" class="headerlink" title="2. 删除一些标签"></a>2. 删除一些标签</h2><ul>
+<li>```HTML <acronym>
+ <applet>
+ <basefont>
+ <big>
+ <center>
+ <dir>
+ <font>
+ <frame>
+ <frameset>
+ <noframes>
+ <strike>
+ <tt>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在HTML5中使用CSS样式完成这些标签的作用</span><br><span class="line"></span><br><span class="line">## 3. 简化Doctype声明等一系列细微优化</span><br><span class="line"></span><br><span class="line">只需要写&#96;&lt;!doctype html&gt;&#96;就行了</span><br><span class="line"></span><br><span class="line">## 4. HTML5 是跨平台的</span><br><span class="line"></span><br><span class="line">被设计为在不同类型的硬件：</span><br><span class="line"></span><br><span class="line">- PC、</span><br><span class="line">- 平板、</span><br><span class="line">- 手机、</span><br><span class="line">- 电视机等等）之上运行。</span><br><span class="line"></span><br><span class="line">## 5. HTML5应用程序缓存</span><br><span class="line"></span><br><span class="line">HTML5 引入了应用程序缓存（Application Cache），这意味着可**对 web 应用进行缓存**，并可在没有因特网连接时进行访问。</span><br><span class="line"></span><br><span class="line">应用程序缓存为应用带来三个优势：</span><br><span class="line"></span><br><span class="line">1. **离线浏览** - 用户可在应用离线时使用它们</span><br><span class="line">2. **速度** - 已缓存资源加载得更快</span><br><span class="line">3. **减少服务器负载** - 浏览器将只从服务器下载更新过或更改过的资源</span><br><span class="line"></span><br><span class="line">强缓存和协商缓存之分</span><br><span class="line"></span><br><span class="line">## 6. HTML5跨文档消息传输</span><br><span class="line"></span><br><span class="line">h5提供了网页文档之间发送信息和互相接收的功能。</span><br><span class="line"></span><br><span class="line">使用这个功能，只要**获得网页窗口所在对象的实例**，</span><br><span class="line"></span><br><span class="line">- 即可以**同域**（协议+端口号+域名）相互通信，</span><br><span class="line">- **跨域也可以相互通信**。</span><br><span class="line"></span><br><span class="line">### 6.1 接收其他窗口向本窗口发送的消息</span><br><span class="line"></span><br><span class="line">接受从其他的窗口那里发送的消息，**对窗口对象的message事件进行监听**</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;js</span><br><span class="line">window.addEventListener(&quot;message&quot;,function(event)&#123;</span><br><span class="line">    console.log(event.data)</span><br><span class="line">&#125;,false)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><code>event.data</code>：事件对象的data属性即为其他窗口发送来的消息</p>
+<h3 id="6-2-向其他窗口发送消息"><a href="#6-2-向其他窗口发送消息" class="headerlink" title="6.2 向其他窗口发送消息"></a>6.2 向其他窗口发送消息</h3><p>使用<strong>其他窗口window对象的postMessage方法</strong>向其他窗口发送消息，其方法定义如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">otherWindow.postMessage(message,targetOrigin)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>otherWindow</strong>：目标窗口的引用(其他窗口的window对象)</p>
+</li>
+<li><p>第一个参数为所<strong>发送的消息文本</strong></p>
+</li>
+<li><p>第二个参数为<strong>接收消息的窗口的URL地址</strong></p>
+</li>
+</ul>
+<p>例子：<img data-src="/images/14-HTML5%E6%96%B0%E5%86%85%E5%AE%B9/image-20211020174037417.png" alt="image-20211020174037417"></p>
+<p>父页面向内嵌页面发送消息</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" rel="tag"><i class="fa fa-tag"></i> 知识点汇总</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/27/15-HTML5%20WebWorker/" rel="prev" title="Web Worker">
+      <i class="fa fa-chevron-left"></i> Web Worker
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/27/13-HTML%E7%9A%84script%E6%A0%87%E7%AD%BE/" rel="next" title="HTML的script标签">
+      HTML的script标签 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML5%E6%96%B0%E5%86%85%E5%AE%B9"><span class="nav-text">HTML5新内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%96%B0%E5%A2%9E%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE"><span class="nav-text">1. 新增语义化标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%A0%E9%99%A4%E4%B8%80%E4%BA%9B%E6%A0%87%E7%AD%BE"><span class="nav-text">2. 删除一些标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E5%90%91%E5%85%B6%E4%BB%96%E7%AA%97%E5%8F%A3%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-text">6.2 向其他窗口发送消息</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
