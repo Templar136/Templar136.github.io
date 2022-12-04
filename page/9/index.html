@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/13/00-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B0%83%E8%AF%95js%E7%A8%8B%E5%BA%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/09-Vuex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -201,7 +201,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/13/00-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B0%83%E8%AF%95js%E7%A8%8B%E5%BA%8F/" class="post-title-link" itemprop="url">00-浏览器调试js程序代码</a>
+            <a href="/2021/09/20/09-Vuex/" class="post-title-link" itemprop="url">09-Vuex</a>
         </h2>
 
         <div class="post-meta">
@@ -211,14 +211,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-04-13 20:56:26" itemprop="dateCreated datePublished" datetime="2021-04-13T20:56:26+08:00">2021-04-13</time>
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-14 16:37:06" itemprop="dateModified" datetime="2021-09-14T16:37:06+08:00">2021-09-14</time>
+                <time title="修改时间：2022-11-08 22:12:03" itemprop="dateModified" datetime="2022-11-08T22:12:03+08:00">2022-11-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,7 +226,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
                 </span>
             </span>
 
@@ -241,207 +241,794 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="浏览器调试JS程序代码（chrome浏览器）"><a href="#浏览器调试JS程序代码（chrome浏览器）" class="headerlink" title="浏览器调试JS程序代码（chrome浏览器）"></a>浏览器调试JS程序代码（chrome浏览器）</h1><ul>
-<li><p><strong>-将js代码写在html文件的script标签中</strong></p>
+          <h1 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h1><h1 id="1-组件之间共享数据的方式"><a href="#1-组件之间共享数据的方式" class="headerlink" title="1.组件之间共享数据的方式"></a>1.组件之间共享数据的方式</h1><ul>
+<li><p><strong>父向子：</strong>v-bind属性绑定，通过props接收</p>
 </li>
-<li><p>在浏览器打开html文件</p>
+<li><p><strong>子向父：</strong>$emit触发自定义事件并传值，父组件$on监听相应事件接收数据</p>
 </li>
-<li><p>点击检查中的<strong>Sources选项</strong></p>
-</li>
-<li><p>点击代码前面序号<strong>设置断点</strong></p>
-</li>
-<li><p>刷新当前页面<strong>执行js代码</strong></p>
-</li>
-<li><p>代码中<code>console.log</code>语句的<strong>输出结果显示在Console选项中</strong></p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/13/00-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B0%83%E8%AF%95js%E7%A8%8B%E5%BA%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/" class="post-title-link" itemprop="url">01-什么是Node</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-13 20:56:26" itemprop="dateCreated datePublished" datetime="2021-04-13T20:56:26+08:00">2021-04-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-19 21:17:00" itemprop="dateModified" datetime="2021-04-19T21:17:00+08:00">2021-04-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/" itemprop="url" rel="index"><span itemprop="name">前后端交互</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-Node-js介绍"><a href="#1-Node-js介绍" class="headerlink" title="1.Node.js介绍"></a>1.Node.js介绍</h1><h2 id="1-1学习Node-js的目的"><a href="#1-1学习Node-js的目的" class="headerlink" title="1.1学习Node.js的目的"></a>1.1学习Node.js的目的</h2><ul>
-<li><p>用来<strong>操作使用WEB后台服务器</strong>(能够实现同样功能的后台语言还有java、python、php等)</p>
-</li>
-<li><p>了解后台服务器才能更好的与后端开发人员协同开发</p>
-</li>
-<li><p>生态系统活跃，有许多开源库可以使用</p>
-</li>
-<li><p>前端开发工具大多基于Node开发</p>
-</li>
-<li><p>学习Node.js实际上就是在学习<strong>WEB服务器开发</strong></p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/13/01-%E4%BB%80%E4%B9%88%E6%98%AFNode.js/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/13/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/13/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/" class="post-title-link" itemprop="url">02-nodejs中JavaScript的模块化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-13 20:56:26" itemprop="dateCreated datePublished" datetime="2021-04-13T20:56:26+08:00">2021-04-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-19 21:16:56" itemprop="dateModified" datetime="2021-04-19T21:16:56+08:00">2021-04-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/" itemprop="url" rel="index"><span itemprop="name">前后端交互</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Nodejs的模块化"><a href="#Nodejs的模块化" class="headerlink" title="Nodejs的模块化"></a>Nodejs的模块化</h1><h2 id="1-浏览器JavaScript开发弊端"><a href="#1-浏览器JavaScript开发弊端" class="headerlink" title="1.浏览器JavaScript开发弊端"></a>1.浏览器JavaScript开发弊端</h2><p>浏览器JavaScript在使用时存在两大问题</p>
+<li><p>兄弟组件/不相干组件传值：<code>EventBus</code>事件中心</p>
 <ul>
-<li>文件依赖<ul>
-<li>通过script标签引入的多个js文件的依赖关系不明确，查找依赖关系不便</li>
+<li>发送数据组件：使用<code>EventBus.$emit</code>触发自定义事件并传值</li>
+<li>接收数据组件：使用<code>EventBus.$on</code>监听自定义事件接收数据</li>
 </ul>
 </li>
-<li>命名冲突<ul>
-<li>浏览器JavaScript通过script引入的多个js文件是<strong>完全开放</strong>的，例如a.js里声明的变量可以在b.js中访问</li>
-<li>如果在后续引入的js文件中声明了一个之前引入的js文件中已有的变量，就会导致之前的变量声明被后来的覆盖</li>
+</ul>
+<p><strong>问题：</strong>当多个组件<strong>结构复杂</strong>时，传值<strong>操作繁琐</strong>且<strong>不利于维护</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/09-Vuex/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/10-Vuex%E6%A1%88%E4%BE%8BtodoList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/10-Vuex%E6%A1%88%E4%BE%8BtodoList/" class="post-title-link" itemprop="url">10-Vuex案例 todoList</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-08 22:27:05" itemprop="dateModified" datetime="2022-11-08T22:27:05+08:00">2022-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vuex案例-todoList"><a href="#Vuex案例-todoList" class="headerlink" title="Vuex案例 todoList"></a>Vuex案例 todoList</h1><h2 id="1-项目初始化"><a href="#1-项目初始化" class="headerlink" title="1.项目初始化"></a>1.项目初始化</h2><ul>
+<li><p>项目目录</p>
+<p><code>E:\1前端学习资料和代码\1-23 学习代码\17-Vue基础代码\06-Vuex\02-vuex-todolist</code></p>
+</li>
+</ul>
+<p><img data-src="/images/10-Vuex%E6%A1%88%E4%BE%8BtodoList/image-20220412200231243.png" alt="image-20220412200231243"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/10-Vuex%E6%A1%88%E4%BE%8BtodoList/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/03-Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/03-Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">03-Vue组件化开发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-08 22:12:39" itemprop="dateModified" datetime="2022-11-08T22:12:39+08:00">2022-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue组件化开发"><a href="#Vue组件化开发" class="headerlink" title="Vue组件化开发"></a>Vue组件化开发</h1><h2 id="1-组件化开发思想"><a href="#1-组件化开发思想" class="headerlink" title="1. 组件化开发思想"></a>1. 组件化开发思想</h2><ul>
+<li>标准：多个组件最后要进行结合生成完整的程序，统一的标准的必不可少的</li>
+<li>分治：将大问题，化解为多个小问题，即多个组件</li>
+<li>重用：一个组件可以被多次使用，提升开发效率</li>
+<li>组合</li>
+</ul>
+<p>对于应用程序开发来说，将应用的<strong>多个功能封装为多个组件</strong>，最后通过这些<strong>组件的结合形成完整的应用</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/03-Vue%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/" class="post-title-link" itemprop="url">05-Vue前后端交互</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-08 22:13:04" itemprop="dateModified" datetime="2022-11-08T22:13:04+08:00">2022-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue前后端交互"><a href="#Vue前后端交互" class="headerlink" title="Vue前后端交互"></a>Vue前后端交互</h1><p>浏览器通过<strong>调用后台接口获取数据</strong>后<strong>在前端进行渲染</strong></p>
+<h2 id="1-接口调用方式"><a href="#1-接口调用方式" class="headerlink" title="1. 接口调用方式"></a>1. 接口调用方式</h2><p>向服务器<strong>发起请求的方式</strong></p>
+<ul>
+<li>原生<code>ajax</code></li>
+<li><code>jQuery</code>的<code>ajax</code></li>
+<li><code>fetch</code>：标准化组织制定的新规则，可以理解为<code>ajax</code>的升级版</li>
+<li><code>axios</code>：第三方库，基于<code>ajax</code>，更加方便的调用接口</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/05-Vue%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">07-Vue前端路由</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-20 18:36:19" itemprop="dateCreated datePublished" datetime="2021-09-20T18:36:19+08:00">2021-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-08 22:20:13" itemprop="dateModified" datetime="2022-11-08T22:20:13+08:00">2022-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue前端路由"><a href="#Vue前端路由" class="headerlink" title="Vue前端路由"></a>Vue前端路由</h1><h2 id="1-路由"><a href="#1-路由" class="headerlink" title="1. 路由"></a>1. 路由</h2><p>路由的本质是<strong>对应关系</strong></p>
+<p>路由分为<strong>前端路由</strong>和<strong>后端路由</strong></p>
+<h3 id="1-1-后端路由"><a href="#1-1-后端路由" class="headerlink" title="1.1 后端路由"></a>1.1 后端路由</h3><p>后端路由：根据不同的请求URL，服务器端返回不同的资源</p>
+<p><strong>本质</strong>：<strong>URL请求地址</strong>与<strong>服务器资源</strong>的对应关系</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/20/07-Vue%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/19/02-Vue%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/19/02-Vue%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">02-Vue简单案例图书管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-19 20:36:19 / 修改时间：21:09:34" itemprop="dateCreated datePublished" datetime="2021-09-19T20:36:19+08:00">2021-09-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue图书管理简单案例"><a href="#Vue图书管理简单案例" class="headerlink" title="Vue图书管理简单案例"></a>Vue图书管理简单案例</h1><p><img data-src="/images/02-Vue%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86/image-20210919200854285.png" alt="效果图"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/19/02-Vue%E7%AE%80%E5%8D%95%E6%A1%88%E4%BE%8B%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/12/01-%E6%A0%91%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/12/01-%E6%A0%91%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">01-树相关算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-12 14:50:34" itemprop="dateCreated datePublished" datetime="2021-09-12T14:50:34+08:00">2021-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-19 21:09:09" itemprop="dateModified" datetime="2021-09-19T21:09:09+08:00">2021-09-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="树相关算法"><a href="#树相关算法" class="headerlink" title="树相关算法"></a>树相关算法</h1><h2 id="1-树的先中后序遍历"><a href="#1-树的先中后序遍历" class="headerlink" title="1.树的先中后序遍历"></a>1.树的先中后序遍历</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/12/01-%E6%A0%91%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/10/01-Vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/10/01-Vue/" class="post-title-link" itemprop="url">01-Vue</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-10 15:36:19" itemprop="dateCreated datePublished" datetime="2021-09-10T15:36:19+08:00">2021-09-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-19 21:00:39" itemprop="dateModified" datetime="2021-09-19T21:00:39+08:00">2021-09-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue学习"><a href="#Vue学习" class="headerlink" title="Vue学习"></a>Vue学习</h1><h2 id="1-什么是Vue"><a href="#1-什么是Vue" class="headerlink" title="1.什么是Vue"></a>1.什么是Vue</h2><ul>
+<li>2014年Vue.js正式发布</li>
+<li>15年10月27日，正式发布1.0.0</li>
+<li>16年4月27日，<strong>发布2.0的预览版本</strong>（主要学习的版本）</li>
+<li>现在已经有<strong>3.0</strong>版本的Vue</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/10/01-Vue/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/30/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/30/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">17-多人博客管理系统项目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-30 18:03:23" itemprop="dateCreated datePublished" datetime="2021-08-30T18:03:23+08:00">2021-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-18 18:14:47" itemprop="dateModified" datetime="2021-09-18T18:14:47+08:00">2021-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/" itemprop="url" rel="index"><span itemprop="name">前后端交互</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="多人博客管理系统项目"><a href="#多人博客管理系统项目" class="headerlink" title="多人博客管理系统项目"></a>多人博客管理系统项目</h1><ul>
+<li>分为两部分<ul>
+<li><strong>展示页面</strong>：博客前台展示文章总览页面和文章详情页面</li>
+<li><strong>管理页面</strong>：查看上传的文章列表，注册的用户列表，对文章增删查改等</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-项目初始化"><a href="#1-项目初始化" class="headerlink" title="1.项目初始化"></a>1.项目初始化</h2><h3 id="1-1-创建项目目录文件夹"><a href="#1-1-创建项目目录文件夹" class="headerlink" title="1.1 创建项目目录文件夹"></a>1.1 创建项目目录文件夹</h3><ul>
+<li>myblog_project：项目根目录<ul>
+<li>public：静态资源文件夹</li>
+<li>route：模块化路由文件夹</li>
+<li>model：数据库和数据处理文件夹</li>
+<li>views：模板文件夹</li>
+<li>app.js：项目入口(主模块)</li>
 </ul>
 </li>
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/04/13/02-nodejs%E4%B8%ADJavaScript%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96/#more" rel="contents">
+              <a class="btn" href="/2021/08/30/17-%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/11/16-Express%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/11/16-Express%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">16-Express框架</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-11 15:15:47" itemprop="dateCreated datePublished" datetime="2021-08-11T15:15:47+08:00">2021-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-09-09 20:11:41" itemprop="dateModified" datetime="2021-09-09T20:11:41+08:00">2021-09-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BA%A4%E4%BA%92/" itemprop="url" rel="index"><span itemprop="name">前后端交互</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="16-Express框架"><a href="#16-Express框架" class="headerlink" title="16-Express框架"></a>16-Express框架</h1><ul>
+<li><p>Express是基于Node平台的<strong>web应用开发框架</strong></p>
+</li>
+<li><p>是Node的第三方模块</p>
+</li>
+</ul>
+<p>使用<code>npm install express</code>下载</p>
+<p>Express框架简化了创建web应用的过程</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/11/16-Express%E6%A1%86%E6%9E%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -464,7 +1051,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -532,20 +1119,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

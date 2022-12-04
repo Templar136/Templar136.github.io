@@ -21,17 +21,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="学习博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="杨骁的博客">
-<meta property="og:url" content="http://example.com/tags/JavaScript/index.html">
+  <meta name="description" content="async和awaitasync 和await 关键字是最近添加到JavaScript语言里面的。它们是ECMAScript 2017 JavaScript版的一部分 可以使异步代码更易于编写和阅读 是异步编程的更进一步解决方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="15-async和await">
+<meta property="og:url" content="http://example.com/2022/12/04/15-async%E5%92%8Cawait/index.html">
 <meta property="og:site_name" content="杨骁的博客">
-<meta property="og:description" content="学习博客">
+<meta property="og:description" content="async和awaitasync 和await 关键字是最近添加到JavaScript语言里面的。它们是ECMAScript 2017 JavaScript版的一部分 可以使异步代码更易于编写和阅读 是异步编程的更进一步解决方案">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/15-async%E5%92%8Cawait/image-20210918171312422.png">
+<meta property="article:published_time" content="2022-12-04T03:03:26.000Z">
+<meta property="article:modified_time" content="2022-12-04T04:06:24.947Z">
 <meta property="article:author" content="杨骁">
+<meta property="article:tag" content="知识点汇总">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/15-async%E5%92%8Cawait/image-20210918171312422.png">
 
-<link rel="canonical" href="http://example.com/tags/JavaScript/">
+<link rel="canonical" href="http://example.com/2022/12/04/15-async%E5%92%8Cawait/">
 
 
 <script id="page-configurations">
@@ -39,12 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: JavaScript | 杨骁的博客</title>
+  <title>15-async和await | 杨骁的博客</title>
   
 
 
@@ -181,51 +186,120 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">JavaScript
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/15-async%E5%92%8Cawait/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          15-async和await
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:24" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        <h1 id="async和await"><a href="#async和await" class="headerlink" title="async和await"></a>async和await</h1><p><code>async </code>和<code>await</code> 关键字是最近添加到JavaScript语言里面的。它们是ECMAScript 2017 JavaScript版的一部分</p>
+<p>可以使异步代码更易于编写和阅读</p>
+<p>是异步编程的更进一步解决方案</p>
+<span id="more"></span>
+
+<h2 id="async"><a href="#async" class="headerlink" title="async"></a>async</h2><ul>
+<li>在函数声明的前方加上<strong>async</strong>关键字 可以让函数变为<strong>异步函数</strong></li>
+<li>异步函数的返回值为一个promise对象<ul>
+<li>对于非promise对象会将其包裹为promise对象后返回</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a());	<span class="comment">//hello</span></span><br><span class="line"><span class="built_in">console</span>.log(b());	<span class="comment">//Promise&#123;&#x27;hello&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/15-async%E5%92%8Cawait/image-20210918171312422.png" alt="image-20210918171312422"></p>
+<ul>
+<li>异步函数中的<code>return</code>即代替了promise对象中的resolve()方法</li>
+<li>异步函数中的<code>throw</code>即代替了promise对象中的reject()方法</li>
+</ul>
+<h2 id="await"><a href="#await" class="headerlink" title="await"></a>await</h2><ul>
+<li><strong>await 只在异步函数里面才起作用</strong>。</li>
+<li><code>await promise</code>可以<strong>暂停异步函数的执行</strong>，等待promise对象返回结果后再继续执行<ul>
+<li>保证多个异步操作顺序执行</li>
+</ul>
+</li>
+<li>await可以<strong>直接获取promise对象中异步操作成功时的结果</strong>(调用<code>resolve()</code>的参数)</li>
+<li>当await 后的promise对象状态变为错误时，程序报错停止运行</li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-04-13T20:56:55+08:00"
-              content="2021-04-13">
-          04-13
-        </time>
-      </div>
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" rel="tag"><i class="fa fa-tag"></i> 知识点汇总</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/13/JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6(%E5%90%8C%E6%AD%A5%E5%BC%82%E6%AD%A5)/" itemprop="url">
-            <span itemprop="name">JS执行机制(同步异步)</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/04/17-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="prev" title="17-正则表达式">
+      <i class="fa fa-chevron-left"></i> 17-正则表达式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/04/14-promise%E5%AF%B9%E8%B1%A1/" rel="next" title="14-Promise对象">
+      14-Promise对象 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -278,6 +352,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#async%E5%92%8Cawait"><span class="nav-text">async和await</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#async"><span class="nav-text">async</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#await"><span class="nav-text">await</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -293,20 +368,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="浏览器中的同源政策同源指的是三个相同  协议相同 域名相同 端口相同  当两个网页的URL中上述任意一个不同，则两个网页不同源  不同源的网页被限制不能访问修改对方网页，即不同源的网页不能通信  浏览器安全的基石是“同源政策”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20-JS对浏览器同源政策的处理">
+<meta property="og:url" content="http://example.com/2022/12/04/20-JavaScript%E4%B8%AD%E7%9A%84%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5/index.html">
+<meta property="og:site_name" content="杨骁的博客">
+<meta property="og:description" content="浏览器中的同源政策同源指的是三个相同  协议相同 域名相同 端口相同  当两个网页的URL中上述任意一个不同，则两个网页不同源  不同源的网页被限制不能访问修改对方网页，即不同源的网页不能通信  浏览器安全的基石是“同源政策”">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-04T03:03:26.000Z">
+<meta property="article:modified_time" content="2022-12-04T04:06:39.497Z">
+<meta property="article:author" content="杨骁">
+<meta property="article:tag" content="知识点汇总">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/04/20-JavaScript%E4%B8%AD%E7%9A%84%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>20-JS对浏览器同源政策的处理 | 杨骁的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">杨骁的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/20-JavaScript%E4%B8%AD%E7%9A%84%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20-JS对浏览器同源政策的处理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:39" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="浏览器中的同源政策"><a href="#浏览器中的同源政策" class="headerlink" title="浏览器中的同源政策"></a>浏览器中的同源政策</h1><p>同源指的是<strong>三个相同</strong></p>
+<ul>
+<li>协议相同</li>
+<li>域名相同</li>
+<li>端口相同</li>
+</ul>
+<p>当两个网页的URL中<strong>上述任意一个不同</strong>，则两个网页<strong>不同源</strong></p>
+<ul>
+<li>不同源的网页被限制不能访问修改对方网页，即<strong>不同源的网页不能通信</strong></li>
+</ul>
+<p>浏览器安全的基石是<strong>“同源政策”</strong></p>
+<span id="more"></span>
+
+<h2 id="同源的目的"><a href="#同源的目的" class="headerlink" title="同源的目的"></a>同源的目的</h2><p>同源政策的目的：是为了保证用户信息的安全，<strong>防止恶意的网站窃取数据。</strong></p>
+<p>例如：用户访问A网站后A网站设置了一个cookie，接着用户访问B网页，如果没有同源政策限制，B网站就可以获取A网站设置的cookie，<strong>从而冒充用户</strong>（cookie一般保存用户的登录信息）</p>
+<p>由此可见同源政策对于防止其他恶意网站是必须的</p>
+<h2 id="非同源时的限制"><a href="#非同源时的限制" class="headerlink" title="非同源时的限制"></a>非同源时的限制</h2><p>非同源时<strong>三种行为受到限制</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">（1） 无法读取非同源网页的 Cookie、LocalStorage </span><br><span class="line"></span><br><span class="line">（2） 无法接触非同源网页的 DOM。</span><br><span class="line"></span><br><span class="line">（3） 无法向非同源地址发送 AJAX 请求（可以发送，但浏览器会拒绝接受响应）。</span><br></pre></td></tr></table></figure>
+
+<p>同源策略虽然可以防止恶意网站窃取数据</p>
+<ul>
+<li>但一些<strong>合理的跨域操作</strong>也会因为同源策略而失败</li>
+<li>例如：需要<strong>使用AJAX请求一个不同源URL所指定的资源</strong>时会因为浏览器同源策略的限制而失败</li>
+</ul>
+<h2 id="跨源-域-通信的方法"><a href="#跨源-域-通信的方法" class="headerlink" title="跨源(域)通信的方法"></a>跨源(域)通信的方法</h2><p>浏览器同源政策会<strong>限制所有的非同源通信</strong></p>
+<p>而<strong>合理的非同源通信需要跨域进行通信</strong></p>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p>JSONP 是服务器与客户端<strong>跨源通信的常用方法</strong>。最大特点就是<strong>简单适用</strong>，老式浏览器全部支持，服务端改造非常小。</p>
+<p>它的<strong>基本思想是</strong>：</p>
+<ul>
+<li>网页通过添加一个<code>&lt;script&gt;</code>元素，向服务器<strong>请求 JSON 数据</strong>，这种做法不受同源政策限制；</li>
+<li>服务器返回的数据在script标签的<code>url</code>属性中设置的回调函数中处理</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addScriptTag</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//动态添加一个script标签</span></span><br><span class="line">  <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">  script.setAttribute(<span class="string">&quot;type&quot;</span>,<span class="string">&quot;text/javascript&quot;</span>);</span><br><span class="line">  <span class="comment">//src为服务器端URL，以此发送请求</span></span><br><span class="line">  script.src = src;</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(script);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//URL最后的参数使用一个回调函数foo接受服务器返回的数据</span></span><br><span class="line">  addScriptTag(<span class="string">&#x27;http://example.com/ip?callback=foo&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//data参数即为服务器响应的JSON数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Your public IP address is: &#x27;</span> + data.ip);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//foo(&#123;</span></span><br><span class="line">  <span class="comment">//&quot;ip&quot;: &quot;8.8.8.8&quot;</span></span><br><span class="line"><span class="comment">//&#125;);</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>动态的script标签<strong>执行后立即调用回调函数foo</strong></li>
+<li>回调函数foo的<strong>参数data即为服务器返回的JSON数据</strong></li>
+<li>JSON数据直接被视为<strong>JavaScript对象</strong></li>
+</ul>
+<p>缺点：JSONP只能发送<strong>GET请求</strong></p>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>CORS 是<strong>跨源资源分享</strong>（Cross-Origin Resource Sharing）的缩写。</p>
+<p>允许浏览器向跨域的服务器，发出<code>XMLHttpRequest</code>请求，从而<strong>克服了AJAX只能同源使用的限制</strong>。</p>
+<ul>
+<li>它是 W3C 标准</li>
+<li>属于<strong>跨源 AJAX 请求的根本解决方法</strong>。</li>
+<li>相比 JSONP 只能发<code>GET</code>请求，<strong>CORS 允许任何类型的请求。</strong></li>
+</ul>
+<p>实现 CORS 通信的关键是服务器。只要<strong>服务器实现了 CORS 接口</strong>，就可以跨域通信。</p>
+<p>需要<strong>服务端指定许可的URL</strong>（发送方的URL）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http:<span class="comment">//api.bob.com</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>允许<code>http://api.bob.com</code>向服务器发送跨域请求</li>
+</ul>
+<h2 id="两种CORS请求"><a href="#两种CORS请求" class="headerlink" title="两种CORS请求"></a>两种CORS请求</h2><p>简单请求 和 非简单请求</p>
+<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>只要<strong>同时满足以下两大条件</strong>，就属于简单请求。</p>
+<p>（1）请求方法是以下三种方法之一。</p>
+<blockquote>
+<ul>
+<li>HEAD</li>
+<li>GET</li>
+<li>POST</li>
+</ul>
+</blockquote>
+<p>（2）HTTP 的头信息不超出以下几种字段。</p>
+<blockquote>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Last-Event-ID</li>
+<li>Content-Type：只限于三个值<code>application/x-www-form-urlencoded</code>、<code>multipart/form-data</code>、<code>text/plain</code></li>
+</ul>
+</blockquote>
+<p>凡是不同时满足上面两个条件，就属于<strong>非简单请求</strong>。一句话，简单请求就是简单的 HTTP 方法与简单的 HTTP 头信息的结合。</p>
+<ul>
+<li>表单在历史上一直可以跨域发出请求。表单请求就是简单请求</li>
+</ul>
+<h3 id="简单请求发送"><a href="#简单请求发送" class="headerlink" title="简单请求发送"></a>简单请求发送</h3><p>简单请求，浏览器<strong>直接发出 CORS 请求</strong>。</p>
+<p>具体来说，就是在头信息之中，<span style='color:red;'>增加一个<code>Origin</code>字段。</span></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /cors HTTP/<span class="number">1.1</span></span><br><span class="line">Origin: http:<span class="comment">//api.bob.com	//请求头增加一个origin字段</span></span><br><span class="line">Host: api.alice.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span>...</span><br></pre></td></tr></table></figure>
+
+<p>Origin字段说明<strong>本次请求来自哪个域（协议+域名+端口）</strong></p>
+<ul>
+<li>如果<code>Origin</code>指定的源，不在服务器许可范围内，服务器会返回一个正常的 HTTP 回应。但这个回应的头信息<span style='color:red;'>没有包含<code>Access-Control-Allow-Origin</code>字段</span></li>
+</ul>
+<p>浏览器发现回应中少了<code>Access-Control-Allow-Origin</code>字段，就会拒绝接收而<strong>报错</strong></p>
+<BR>
+
+<ul>
+<li>如果<code>Origin</code>指定的域名<strong>在许可范围内</strong>，服务器返回的响应，会多出几个头信息字段。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//多出的信息字段</span></span><br><span class="line">Access-Control-Allow-Origin: http:<span class="comment">//api.bob.com</span></span><br><span class="line">Access-Control-Allow-Credentials: <span class="literal">true</span></span><br><span class="line">Access-Control-Expose-Headers: FooBar</span><br><span class="line"></span><br><span class="line">Content-Type: text/html; charset=utf-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的头信息之中，有三个与 CORS 请求相关的字段，都以<code>Access-Control-</code>开头。</p>
+<p><strong>（1）<code>Access-Control-Allow-Origin</code></strong></p>
+<p>该字段是必须的。<strong>服务器端手动设置</strong>。它的值要么是请求时<code>Origin</code>字段的值，要么是一个<code>*</code>，表示接受任意域名的请求。</p>
+<p><strong>（2）<code>Access-Control-Allow-Credentials</code></strong></p>
+<p>该字段可选。它的值是一个布尔值，表示<strong>是否允许发送 Cookie</strong>。默认情况下，Cookie 不包括在 CORS 请求之中。这个值也只能设为<code>true</code>，如果服务器不要浏览器发送 Cookie，不加入该字段即可。</p>
+<ul>
+<li>允许发送Cookie时，开发者必须在 AJAX 请求中<span style='color:red'>打开<code>withCredentials</code>属性。</span></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var xhr &#x3D; new XMLHttpRequest();</span><br><span class="line">xhr.withCredentials &#x3D; true;</span><br></pre></td></tr></table></figure>
+
+<p>否则，即使服务器要求发送 Cookie，浏览器<strong>也不会发送</strong>。或者，服务器要求设置 Cookie，浏览器也不会处理。</p>
+<p><strong>（3）<code>Access-Control-Expose-Headers</code></strong></p>
+<p>该字段可选。</p>
+<p>CORS 请求时，<code>XMLHttpRequest</code>对象的<code>getResponseHeader()</code>方法只能拿到<strong>6个服务器返回的基本字段</strong>：<code>Cache-Control</code>、<code>Content-Language</code>、<code>Content-Type</code>、<code>Expires</code>、<code>Last-Modified</code>、<code>Pragma</code>。</p>
+<p>如果想<strong>拿到其他字段</strong>，就必须在<strong>响应头</strong><code>Access-Control-Expose-Headers</code>里面指定。</p>
+<p>上面的例子指定，可以返回<code>FooBar</code>字段的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">&#x27;/index&#x27;</span>,<span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//设置响应头 跨域(允许接收任意url发来的跨域请求)</span></span><br><span class="line">    res.setHeader(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>,<span class="string">&quot;*&quot;</span>)</span><br><span class="line">    <span class="comment">//设置允许xhr访问的响应头(Etag,Date)</span></span><br><span class="line">    res.setHeader(<span class="string">&#x27;Access-Control-Expose-Headers&#x27;</span>,<span class="string">&quot;ETag,Date&quot;</span>)</span><br><span class="line">    res.send(&#123;</span><br><span class="line">        msg:<span class="string">&#x27;成功&#x27;</span>,</span><br><span class="line">        status:<span class="number">200</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<center>跨域简单请求响应的服务端代码</center>
+
+<h3 id="非简单请求"><a href="#非简单请求" class="headerlink" title="非简单请求"></a>非简单请求</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%B1%87%E6%80%BB/" rel="tag"><i class="fa fa-tag"></i> 知识点汇总</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/04/21-%E6%89%8B%E5%86%99%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E7%B1%BB/" rel="prev" title="21-JS手写发布订阅类">
+      <i class="fa fa-chevron-left"></i> 21-JS手写发布订阅类
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/04/19-JavaScript%E6%A0%87%E5%87%86%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1/" rel="next" title="19-JS标准内置对象">
+      19-JS标准内置对象 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E7%9A%84%E5%90%8C%E6%BA%90%E6%94%BF%E7%AD%96"><span class="nav-text">浏览器中的同源政策</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%BA%90%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-text">同源的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%90%8C%E6%BA%90%E6%97%B6%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-text">非同源时的限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E6%BA%90-%E5%9F%9F-%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">跨源(域)通信的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSONP"><span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CORS"><span class="nav-text">CORS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8DCORS%E8%AF%B7%E6%B1%82"><span class="nav-text">两种CORS请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E5%8F%91%E9%80%81"><span class="nav-text">简单请求发送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-text">非简单请求</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="杨骁"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">杨骁</p>
+  <div class="site-description" itemprop="description">学习博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Templar136" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Templar136" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨骁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
