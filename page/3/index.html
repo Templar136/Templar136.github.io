@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/21-%E6%89%8B%E5%86%99%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E7%B1%BB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/06-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1event/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -201,7 +201,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/21-%E6%89%8B%E5%86%99%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E7%B1%BB/" class="post-title-link" itemprop="url">21-JS手写发布订阅类</a>
+            <a href="/2022/12/04/06-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1event/" class="post-title-link" itemprop="url">06-JS事件对象event</a>
         </h2>
 
         <div class="post-meta">
@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:44" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:36" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,12 +235,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="手写发布订阅类"><a href="#手写发布订阅类" class="headerlink" title="手写发布订阅类"></a>手写发布订阅类</h1><p>发布-订阅模式其实是一种<strong>对象间一对多的依赖关系</strong></p>
-<p>当一个对象的状态发生改变时，所有依赖于它的对象都将得到状态改变的通知。</p>
-<p>订阅者（Watch）<strong>把想订阅的事件的回调函数注册（Subscribe）到调度中心</strong>（Event Channel），当发布者（Publisher）发布该事件（Publish Event）到调度中心时，也就是<strong>该事件触发时</strong>，由调度中心统一<strong>执行订阅者注册到调度中心的回调函数</strong>。</p>
+          <h1 id="事件对象event"><a href="#事件对象event" class="headerlink" title="事件对象event"></a>事件对象event</h1><p>事件对象作为<strong>事件处理函数的参数</strong>，由系统自动创建，保存了与事件相关的信息(<strong>event代表事件对象的名字,可以简写为e</strong>)</p>
+<p>事件相关的信息：<strong>触发的事件类型</strong>（click，blur等），<strong>事件绑定的对象</strong>等</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//触发事件后打印event事件对象</span></span><br><span class="line">div.addEventListener(<span class="string">&quot;click&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(event);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/21-%E6%89%8B%E5%86%99%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E7%B1%BB/#more" rel="contents">
+              <a class="btn" href="/2022/12/04/06-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1event/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -264,7 +264,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/22-%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/07-BOM%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -278,7 +278,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/22-%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/" class="post-title-link" itemprop="url">22-JS事件委托</a>
+            <a href="/2022/12/04/07-BOM%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">07-BOM浏览器对象模型</a>
         </h2>
 
         <div class="post-meta">
@@ -289,7 +289,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:51" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:40" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -312,98 +312,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h1><p><strong>事件委托：将自己的事件交给别人（父级元素）来实现</strong></p>
-<p>事件委托基于事件冒泡</p>
-<h2 id="事件冒泡的一个例子"><a href="#事件冒泡的一个例子" class="headerlink" title="事件冒泡的一个例子"></a>事件冒泡的一个例子</h2><p>在事件冒泡中，子元素<strong>没有绑定click点击事件</strong>，父元素绑定了click点击事件</p>
-<p>此时点击子元素，<strong>仍然可以通过事件冒泡触发父元素的click点击事件</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/22-%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/23-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/23-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">23-JS字符串常用方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:57" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="字符串常用方法"><a href="#字符串常用方法" class="headerlink" title="字符串常用方法"></a>字符串常用方法</h1><h2 id="charAt-方法"><a href="#charAt-方法" class="headerlink" title="charAt()方法"></a>charAt()方法</h2><p><strong>charAt()</strong> 方法从一个字符串<strong>根据索引</strong>返回<strong>指定的字符</strong>。</p>
-<h2 id="includes-方法"><a href="#includes-方法" class="headerlink" title="includes()方法"></a>includes()方法</h2><p><strong><code>includes()</code></strong> 方法用于<strong>判断一个字符串是否包含在另一个字符串中</strong>，根据情况返回 true 或 false。</p>
-<p>两个参数</p>
+          <h1 id="BOM浏览器对象模型"><a href="#BOM浏览器对象模型" class="headerlink" title="BOM浏览器对象模型"></a>BOM浏览器对象模型</h1><p>BOM浏览器对象模型提供了独立于内容的、<strong>可以与浏览器窗口进行互动的对象结构</strong>。BOM由多个对象组成，其中代表浏览器窗口的<strong>Window对象是BOM的顶层对象</strong>，其他对象都是该对象的子对象</p>
 <ul>
-<li><p><code>searchString</code></p>
-<p>要在此字符串中搜索的字符串。</p>
-</li>
-<li><p><code> position</code> 可选</p>
-<p>从当前字符串的哪个索引位置开始搜寻子字符串，默认值为 <code>0</code></p>
-</li>
+<li><strong>Window对象</strong>是BOM的顶层对象</li>
 </ul>
+<h2 id="1-window对象的事件"><a href="#1-window对象的事件" class="headerlink" title="1.window对象的事件"></a>1.window对象的事件</h2><h3 id="resize事件"><a href="#resize事件" class="headerlink" title="resize事件"></a>resize事件</h3><p>当浏览器窗口大小发生变化时即会触发</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;resize&quot;,function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/23-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/2022/12/04/07-BOM%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -427,7 +344,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/24-%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/08-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -441,7 +358,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/24-%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">24-JS数组常用方法</a>
+            <a href="/2022/12/04/08-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="post-title-link" itemprop="url">08-JS深浅拷贝</a>
         </h2>
 
         <div class="post-meta">
@@ -452,7 +369,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:07:11" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:46" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -475,336 +392,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="数组常用方法"><a href="#数组常用方法" class="headerlink" title="数组常用方法"></a>数组常用方法</h1><h2 id="forEach-callback"><a href="#forEach-callback" class="headerlink" title="forEach(callback)"></a>forEach(callback)</h2><p>遍历数组，对数组每个元素执行forEach方法的回调函数</p>
-<h2 id="slice-方法"><a href="#slice-方法" class="headerlink" title="slice()方法"></a>slice()方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array.slice(begin,end)</span><br></pre></td></tr></table></figure>
-
-<p><code>slice()</code> 方法<strong>返回一个新的数组对象</strong>，</p>
-<p>这一对象是一个由 <code>begin</code> 和 <code>end</code> 决定的原数组的<strong>浅拷贝</strong>（包括 <code>begin</code>，不包括<code>end</code>）。</p>
-<p>原始数组<strong>不会被改变。</strong></p>
+          <h1 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h1><h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>例如<strong>在浅拷贝obj对象时</strong> </p>
 <ul>
-<li>end省略时，<strong>从begin开启浅拷贝后面的所有数组元素</strong></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/24-%E6%95%B0%E7%BB%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/25-js%E5%87%BD%E6%95%B0%E7%9A%84%E5%BD%A2%E5%8F%82%E4%B8%8E%E4%BC%A0%E5%85%A5%E5%AE%9E%E5%8F%82%E5%85%B3%E7%B3%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/25-js%E5%87%BD%E6%95%B0%E7%9A%84%E5%BD%A2%E5%8F%82%E4%B8%8E%E4%BC%A0%E5%85%A5%E5%AE%9E%E5%8F%82%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">25-JS形参与传入实参的关系</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:00:21" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="JS函数的形参与传入实参的关系"><a href="#JS函数的形参与传入实参的关系" class="headerlink" title="JS函数的形参与传入实参的关系"></a>JS函数的形参与传入实参的关系</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    arr.splice(<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(arr);   <span class="comment">//[1]</span></span><br><span class="line">    arr = arr.concat([<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">    arr.push(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a(num));    <span class="comment">//[1,2,3,0]</span></span><br><span class="line"><span class="built_in">console</span>.log(num);       <span class="comment">//[1]</span></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/images/Untitled/image-20211102231301965.png" alt="image-20211102231301965"></p>
-<ul>
-<li>函数中红框所示赋值语句及其之后的操作均为对<strong>函数局部变量arr</strong>的修改<ul>
-<li><code>concat</code>方法返回一个<strong>新的数组对象</strong>，执行此语句时及其之后的<strong>局部变量arr</strong>与<strong>全局变量num</strong>没有关系</li>
-</ul>
-</li>
-<li>红框所示语句之前对<strong>局部变量arr</strong>的操作均会对<strong>num全局变量</strong>造成影响</li>
-<li><strong>引用数据类型</strong>做为函数的参数传递时，实际传递的是<span style="color:red;">数据的地址引用</span></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/26-iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/26-iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/" class="post-title-link" itemprop="url">26-JS的iterator迭代器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:07:18" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="iterator迭代器"><a href="#iterator迭代器" class="headerlink" title="iterator迭代器"></a>iterator迭代器</h1><p>遍历对象的方式有两种，</p>
-<ul>
-<li>一种是通过索引进行遍历(例如数组的下标)</li>
-<li>另一种是<strong>通过迭代器进行遍历</strong></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/26-iterator%E8%BF%AD%E4%BB%A3%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/27-for%20in%E5%92%8Cfor%20of%E5%92%8CObject.keys%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/27-for%20in%E5%92%8Cfor%20of%E5%92%8CObject.keys%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">27-JS的for in|for of|Object.keys区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:07:22" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="for-in、for-of和Object-keys的区别"><a href="#for-in、for-of和Object-keys的区别" class="headerlink" title="for in、for of和Object.keys的区别"></a>for in、for of和Object.keys的区别</h1><h2 id="for-in"><a href="#for-in" class="headerlink" title="for in"></a>for in</h2><p>遍历<strong>数组的下标</strong>或者<strong>对象的键名</strong></p>
-<h2 id="for-of"><a href="#for-of" class="headerlink" title="for of"></a>for of</h2><p>使用<strong>迭代器iterator</strong>遍历对象</p>
-<p>Array、Map、Set、String是默认拥有迭代器的内置对象</p>
-<p>对于没有迭代器的对象(如Object)，需要手动添加迭代器后才能使用for of遍历</p>
-<p>for of遍历<strong>键值</strong>或者<strong>数组的元素</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/27-for%20in%E5%92%8Cfor%20of%E5%92%8CObject.keys%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/28-js%E7%BA%AF%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/28-js%E7%BA%AF%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">28-JS纯函数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:07:27" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="js纯函数"><a href="#js纯函数" class="headerlink" title="js纯函数"></a>js纯函数</h1><p>纯函数：</p>
-<ul>
-<li>函数的返回值<strong>只依赖于它的参数</strong></li>
-<li>函数没有<strong>副作用</strong><ul>
-<li>一个函数执行过程产生了<strong>外部可观察的变化</strong>称为有副作用</li>
+<li>只会<strong>完全拷贝值类型的数据(id,name)</strong> </li>
+<li>引用数据类型如<strong>数组和对象</strong>(smg)只会<strong>拷贝引用</strong>(即内存地址相同)<ul>
+<li>拷贝引用：<strong>修改拷贝后的副本也会影响原件</strong></li>
+<li>数组和对象均属于引用数据对象（数组本身也是一种对象）</li>
 </ul>
 </li>
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/28-js%E7%BA%AF%E5%87%BD%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2022/12/04/08-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -828,7 +427,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/29-es6%E7%9A%84proxy/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1prototype/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -842,7 +441,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/29-es6%E7%9A%84proxy/" class="post-title-link" itemprop="url">29-es6的proxy对象</a>
+            <a href="/2022/12/04/09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1prototype/" class="post-title-link" itemprop="url">09-JS原型对象prototype</a>
         </h2>
 
         <div class="post-meta">
@@ -853,7 +452,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:07:31" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:52" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -876,21 +475,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Proxy对象"><a href="#Proxy对象" class="headerlink" title="Proxy对象"></a>Proxy对象</h1><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN教程</a></p>
-<p><strong>Proxy</strong> 对象用于<strong>创建一个对象的代理</strong>，从而实现基本操作的<strong>拦截和自定义</strong>（如属性查找、赋值、枚举、函数调用等）。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Proxy</span>(target, handler)</span><br></pre></td></tr></table></figure>
-
+          <h1 id="原型对象prototype原型-proto-和constructor"><a href="#原型对象prototype原型-proto-和constructor" class="headerlink" title="原型对象prototype原型__proto__和constructor"></a>原型对象prototype原型<code>__proto__</code>和constructor</h1><p>先明确几个属性</p>
 <ul>
-<li><code>target</code></li>
+<li><code>__proto__</code>：称其为<strong>原型</strong>，指向对象的 原型对象（<code>构造函数.prototype</code>）<ul>
+<li>实际上<code>__proto__</code>只是起一个指向的作用（类似于指针）</li>
+<li><code>__proto__</code>是浏览器提供的，<code>javascript</code>标准<strong>没有做出规定</strong></li>
 </ul>
-<p>要使用 <code>Proxy</code> 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。</p>
-<ul>
-<li><code>handler</code></li>
+</li>
+<li><code>prototype</code>：称其为<strong>原型对象</strong>，只有<strong>构造函数</strong>才有prototype属性，<code>实例对象.prototype</code>为undefined</li>
+<li><code>constructor</code>：是prototype的一个属性，<strong>指回</strong>prototype所属的构造函数<ul>
+<li>即 <code>b.prototype.constructor</code> 指向 b</li>
 </ul>
-<p>一个通常<strong>以函数作为属性值的对象</strong>，各属性的函数分别定义了在执行各种操作时代理 <code>p</code> 的行为。</p>
+</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/29-es6%E7%9A%84proxy/#more" rel="contents">
+              <a class="btn" href="/2022/12/04/09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1prototype/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -914,7 +514,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/30-js%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0instanceof%E6%93%8D%E4%BD%9C%E7%AC%A6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/10-%E9%97%AD%E5%8C%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -928,7 +528,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/30-js%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0instanceof%E6%93%8D%E4%BD%9C%E7%AC%A6/" class="post-title-link" itemprop="url">30-JS代码实现instanceof操作符</a>
+            <a href="/2022/12/04/10-%E9%97%AD%E5%8C%85/" class="post-title-link" itemprop="url">10-JS闭包</a>
         </h2>
 
         <div class="post-meta">
@@ -939,7 +539,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:02:28" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:59" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -962,11 +562,429 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="js代码实现instanceof操作符"><a href="#js代码实现instanceof操作符" class="headerlink" title="js代码实现instanceof操作符"></a>js代码实现instanceof操作符</h1><p>instanceof 是通过原型链判断的，</p>
-<p>A instanceof B：<strong>在A的原型链中层层查找，是否有原型等于B.prototype</strong>，如果一直找到A的原型链的顶端null,仍然不等于B.prototype，那么返回false，否则返回true.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instance</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">      left=left.__proto__</span><br><span class="line">      right=right.prototype</span><br><span class="line">      <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">           <span class="keyword">if</span>(left==<span class="literal">null</span>)		<span class="comment">//原型链查找到null，返回false</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">           <span class="keyword">if</span>(left===right) 	<span class="comment">//原型链上找到B.prototype，返回true</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">           left=left.__proto__	<span class="comment">//沿着原型链层层查找</span></span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>);	<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(instance(arr,<span class="built_in">Array</span>));	<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+          <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>js<strong>变量的作用域</strong>有两种：局部变量和全局变量</p>
+<ul>
+<li>函数内部可以直接读取其外部作用域的变量(作用域链原理)</li>
+<li>而函数外部无法读取函数内部的局部变量<ul>
+<li>函数内部声明变量时，若不使用var声明而直接赋值，<span style="color:red">相当于声明了一个全局变量</span></li>
+</ul>
+</li>
+</ul>
+<p>为了在<strong>函数A</strong>外部访问<strong>函数A</strong>内部的局部变量，<strong>需要在函数A的内部再定义一个内层函数B</strong>，在<strong>内层函数B</strong>中获取<strong>函数A</strong>的局部变量，然后通过返回值等方法在外部得到这个<strong>内层函数B</strong>，这样就可以在<strong>函数A外部</strong>通过调用<strong>函数B</strong>来获取<strong>函数A内部</strong>的局部变量。</p>
+<p>对于下面的代码，通过返回值得到内层函数<code>fun()</code>后，即可在<code>fn()</code>函数外部读取它的局部变量</p>
+<ul>
+<li>闭包：<strong>一个函数</strong>和<strong>对其外部作用域的引用</strong>捆绑在一起，这个<strong>组合</strong>称为闭包。(下例中<strong>fun函数</strong>和<strong>对fn函数局部作用域的引用</strong>捆绑在一起，产生闭包)</li>
+<li>闭包可以实现<span style="color:red">在函数外部访问函数的局部作用域</span>，内层函数称为<strong>闭包函数</strong>。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/04/10-%E9%97%AD%E5%8C%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/11-this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/04/11-this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">11-this指向问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:04" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="this指向问题"><a href="#this指向问题" class="headerlink" title="this指向问题"></a>this指向问题</h1><h2 id="函数中的this指向问题"><a href="#函数中的this指向问题" class="headerlink" title="函数中的this指向问题"></a>函数中的this指向问题</h2><h3 id="1-普通函数-指向window全局对象"><a href="#1-普通函数-指向window全局对象" class="headerlink" title="1.普通函数 指向window全局对象"></a>1.普通函数 指向window全局对象</h3><p>普通函数的this指向<strong>window</strong>对象（全局对象）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;普通函数this指向&quot;</span>+<span class="built_in">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/11-this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/image-20210917184721818.png" alt="image-20210917184721818"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/04/11-this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/12-js%E7%BB%A7%E6%89%BF%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/04/12-js%E7%BB%A7%E6%89%BF%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">12-JS继承</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:10" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JS继承问题"><a href="#JS继承问题" class="headerlink" title="JS继承问题"></a>JS继承问题</h1><h2 id="1-构造函数继承（使用call-方法完成继承）"><a href="#1-构造函数继承（使用call-方法完成继承）" class="headerlink" title="1.构造函数继承（使用call()方法完成继承）"></a>1.构造函数继承（使用call()方法完成继承）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//call()的主要作用是构造函数继承属性和方法</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">uname,age,sex</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname=uname;</span><br><span class="line">            <span class="built_in">this</span>.age=age;</span><br><span class="line">            <span class="built_in">this</span>.sex=sex</span><br><span class="line">            <span class="built_in">this</span>.logname = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="built_in">this</span>.uname);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params">uname,age,sex</span>)</span>&#123;</span><br><span class="line">            <span class="comment">//通过调用父构造函数并且将Father中this的指向改为Son构造函数的this，以此实现继承</span></span><br><span class="line">            Father.call(<span class="built_in">this</span>,uname,age,sex)<span class="comment">//调用时向父构造函数传参</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> son=<span class="keyword">new</span> Son(<span class="string">&quot;xiao&quot;</span>,<span class="number">20</span>,<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(son);	<span class="comment">//son实例对象中继承了Father构造函数中的属性(uname,age,sex)</span></span><br><span class="line">        son.logname()		<span class="comment">//输出&#x27;xiao&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在子构造函数中<strong>调用父构造函数</strong></p>
+<ul>
+<li><p><strong>并使用call方法改变其this指向 <strong>为</strong>子构造函数的this指向</strong></p>
+</li>
+<li><p>同时在<strong>call方法</strong>中<strong>传递父构造函数定义的参数</strong>（需要在继承时传参给Son的实例赋值）</p>
+</li>
+<li><p>子构造函数继承父构造函数中<strong>所有的属性和方法</strong></p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/04/12-js%E7%BB%A7%E6%89%BF%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/13-eventloop_%E5%AE%8F%E4%BB%BB%E5%8A%A1_%E5%BE%AE%E4%BB%BB%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/04/13-eventloop_%E5%AE%8F%E4%BB%BB%E5%8A%A1_%E5%BE%AE%E4%BB%BB%E5%8A%A1/" class="post-title-link" itemprop="url">13-JS事件循环|宏、微任务</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:17" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="EventLoop事件循环、宏任务、微任务、JS单线程"><a href="#EventLoop事件循环、宏任务、微任务、JS单线程" class="headerlink" title="EventLoop事件循环、宏任务、微任务、JS单线程"></a>EventLoop事件循环、宏任务、微任务、JS单线程</h1><p>首先看下方代码的输出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="comment">//使用resolve()手动更改其状态为成功（即已经返回结果）</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;promise1&#x27;</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;promise2&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script end&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<center>代码段1</center>
+
+<p><img data-src="/images/13-eventloop_%E5%AE%8F%E4%BB%BB%E5%8A%A1_%E5%BE%AE%E4%BB%BB%E5%8A%A1/image-20210918131010165.png" alt="image-20210918131010165"></p>
+<center>图1</center>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/04/13-eventloop_%E5%AE%8F%E4%BB%BB%E5%8A%A1_%E5%BE%AE%E4%BB%BB%E5%8A%A1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/14-promise%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/04/14-promise%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">14-Promise对象</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:20" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="promise对象"><a href="#promise对象" class="headerlink" title="promise对象"></a>promise对象</h1><p>通过<code>13-eventloop_宏任务_微任务</code>我们得知</p>
+<ul>
+<li>虽然JavaScript是单线程的</li>
+<li>但是在js中<strong>使用异步编程是必须的</strong></li>
+</ul>
+<p>首先提出一个异步编程使用过程中可能会出现的<strong>回调地狱的问题</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/04/14-promise%E5%AF%B9%E8%B1%A1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/15-async%E5%92%8Cawait/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/04/15-async%E5%92%8Cawait/" class="post-title-link" itemprop="url">15-async和await</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:06:24" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="async和await"><a href="#async和await" class="headerlink" title="async和await"></a>async和await</h1><p><code>async </code>和<code>await</code> 关键字是最近添加到JavaScript语言里面的。它们是ECMAScript 2017 JavaScript版的一部分</p>
+<p>可以使异步代码更易于编写和阅读</p>
+<p>是异步编程的更进一步解决方案</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/04/15-async%E5%92%8Cawait/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -984,7 +1002,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1052,20 +1070,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

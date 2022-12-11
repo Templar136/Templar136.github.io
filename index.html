@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/00-JS%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/02-v-if%E5%92%8Cv-show%E5%8C%BA%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -201,7 +201,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/00-JS%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD/" class="post-title-link" itemprop="url">00-JS基本数据类型及类型判断</a>
+            <a href="/2022/12/11/02-v-if%E5%92%8Cv-show%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">02-v-if和v-show区别</a>
         </h2>
 
         <div class="post-meta">
@@ -212,7 +212,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:18:20" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:12:32" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -220,7 +220,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
                 </span>
             </span>
 
@@ -235,15 +235,100 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="JS数据类型及类型判断"><a href="#JS数据类型及类型判断" class="headerlink" title="JS数据类型及类型判断"></a>JS数据类型及类型判断</h1><p>5种<strong>简单数据类型</strong>（也称为<strong>基本数据类型</strong>）: <code>Undefined</code>、<code>Null</code>、<code>Boolean</code>、<code>Number</code>和<code>String</code></p>
-<p>1种复杂数据类型：<code>Object</code></p>
+          <h1 id="v-if和v-show的区别"><a href="#v-if和v-show的区别" class="headerlink" title="v-if和v-show的区别"></a>v-if和v-show的区别</h1><ul>
+<li><p>v-if分支结构仅当<strong>满足条件时才会渲染</strong></p>
+</li>
+<li><p>v-show无论取值<strong>都会渲染</strong>，当v-show取值为false时<strong>隐藏元素</strong></p>
+</li>
+<li><p>一般来说，<strong>v-if有更高的切换开销</strong>，而<strong>v-show有更高的初始渲染开销</strong></p>
+</li>
+</ul>
+<p>如果需要非常频繁地切换，则使用v-show较好;</p>
+<p>如果在运行时条件不太可能改变，则使用v-if 较好。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/04-Vue%E7%9A%84diff%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/11/04-Vue%E7%9A%84diff%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">04-Vue的diff算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:18:26" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue的diff算法"><a href="#Vue的diff算法" class="headerlink" title="Vue的diff算法"></a>Vue的diff算法</h1><p>由于在浏览器中直接操作DOM的代价 <strong>“较大”</strong>，所以Vue引入了<strong>虚拟DOM</strong>，虚拟DOM是对真实DOM的一种抽象描述。</p>
+<h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2><ul>
+<li><p>修改真实DOM可能会引起<strong>重绘和回流</strong>，过多的回流会影响性能</p>
+</li>
+<li><p>更改虚拟DOM<strong>不会进行重绘和回流操作</strong></p>
+</li>
+<li><p>虚拟DOM就是把真实DOM<strong>转换为Javascript代码</strong></p>
 <ul>
-<li>Object是所有对象的父类</li>
-<li><strong>引用类型</strong>又可以细分为 <code>Array Function Object</code></li>
+<li><img data-src="/images/04-Vue%E7%9A%84diff%E7%AE%97%E6%B3%95/image-20211013101156133.png" alt="image-20211013101156133"></li>
+</ul>
+</li>
+<li><p>虚拟DOM进行多次更改后，一次性比较并<u>修改真实DOM（修改发生了变化的局部DOM）</u> ,在真实DOM中进行重绘和回流，<span style='color:red;'>以此来减少频繁修改真实DOM引起的大量重绘和回流，提高性能</span></p>
+</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/00-JS%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD/#more" rel="contents">
+              <a class="btn" href="/2022/12/11/04-Vue%E7%9A%84diff%E7%AE%97%E6%B3%95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -267,7 +352,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/01-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/03-%E7%BB%84%E4%BB%B6%E7%9A%84data%E5%BF%85%E9%A1%BB%E4%B8%BA%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -281,7 +366,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/01-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">01-JS严格模式</a>
+            <a href="/2022/12/11/03-%E7%BB%84%E4%BB%B6%E7%9A%84data%E5%BF%85%E9%A1%BB%E4%B8%BA%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">03-组件data必须为函数</a>
         </h2>
 
         <div class="post-meta">
@@ -292,7 +377,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:03" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:12:47" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,7 +385,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
                 </span>
             </span>
 
@@ -315,21 +400,339 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h1><p>ES5中加入了严格模式(IE10以上开始支持)</p>
-<p>​    严格模式(strict mode)对<strong>JS语法做出了限制性规范</strong></p>
-<p>​    1.消除了JS语法的不合理不严谨之处</p>
-<p>​    2.消除了代码运行的不安全之处</p>
-<p>​    3.提高编译器效率</p>
-<p>​    4.禁用了在ECMAScript未来版本中可能会定义的语法，为未来新版本JS做好铺垫</p>
-<p>  <strong>严格模式对正常语义做出了更改</strong></p>
-<ol>
-<li>严格模式通过<strong>抛出错误</strong>来消除了一些原有<strong>静默错误</strong>。</li>
-<li>严格模式修复了一些导致 JavaScript引擎难以执行优化的缺陷：有时候，相同的代码，严格模式可以比非严格模式下<strong>运行得更快</strong>。</li>
-<li>  比如在ES6中<strong>新增的一些保留字</strong>如class、export等在ES5<strong>严格模式中不能用作变量名</strong></li>
+          <h1 id="组件的data必须为函数"><a href="#组件的data必须为函数" class="headerlink" title="组件的data必须为函数"></a>组件的data必须为函数</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">&#x27;button-counter&#x27;</span>,&#123;</span><br><span class="line">            data:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                    count:<span class="number">0</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            template:<span class="string">`&lt;div&gt;</span></span><br><span class="line"><span class="string">                        &lt;button @click=&#x27;count++&#x27;&gt;点击了&#123;&#123;count&#125;&#125;次&lt;/button&gt;</span></span><br><span class="line"><span class="string">                      &lt;/div&gt;`</span>,</span><br><span class="line">            methods:&#123;</span><br><span class="line">                add:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="built_in">this</span>.count++</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>注册组件时data为一个函数，<strong>函数的返回值为一个对象，对象中定义模板数据</strong></p>
+<p>一个组件可以有多个实例，如果data直接使用对象，则一个实例修改数据，其他实例也会一起被修改</p>
+<ul>
+<li>data为函数时，每个实例可以维护一份<strong>被返回对象的独立的拷贝</strong>，不会互相影响</li>
+</ul>
+<h1 id="根组件的data可以为对象"><a href="#根组件的data可以为对象" class="headerlink" title="根组件的data可以为对象"></a>根组件的data可以为对象</h1><p>因为<strong>根组件一般只有一个实例</strong>，无所谓多个实例互相影响</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/01-Vue%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/11/01-Vue%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" class="post-title-link" itemprop="url">01-Vue双向数据绑定</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:16:37" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue双向数据绑定"><a href="#Vue双向数据绑定" class="headerlink" title="Vue双向数据绑定"></a>Vue双向数据绑定</h1><p>vue数据双向绑定是通过<strong>数据劫持</strong>结合<strong>发布者-订阅者模式</strong>的方式来实现的</p>
+<p>输出一个Vue实例data中的数据查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">            el:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">            data:&#123;</span><br><span class="line">                obj:&#123;</span><br><span class="line">                    name:<span class="number">1</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            mounted:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="comment">//输出obj</span></span><br><span class="line">                <span class="built_in">console</span>.log(<span class="built_in">this</span>.obj);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/images/01-Vue%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/image-20210927225915544.png" alt="image-20210927225915544"></p>
+<center>图一</center>
+
+<p>图一红框的<strong>get和set方法</strong>即为 <strong>获取name属性</strong>和<strong>给name属性赋值</strong>时调用的方法</p>
+<p>Vue是通过<span style='color:red'><code>Object.defineProperty()</code></span><strong>重写对象属性的get和set方法</strong>来实现数据劫持的</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/11/01-Vue%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/07-Vue.use%E5%92%8CVue.prototype.$xx%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/11/07-Vue.use%E5%92%8CVue.prototype.$xx%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">07-Vue.use和Vue.prototype.$xx的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:14:42" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue-use和Vue-prototype-xx的区别"><a href="#Vue-use和Vue-prototype-xx的区别" class="headerlink" title="Vue.use和Vue.prototype.$xx的区别"></a>Vue.use和Vue.prototype.$xx的区别</h1><p>在开发Vue项目的过程中</p>
+<p>发现<code>Element-UI</code>组件库的一些组件在挂载时使用<code>Vue.use(&#39;组件名&#39;)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(Button)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>而<code>Element-UI</code>的<strong>message组件</strong>和<strong>axios等模块</strong></p>
+<p>在挂载时使用<code>Vue.prototype.$xxx = ’组件/模块‘</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$message = Message</span><br><span class="line"></span><br><span class="line">Vue.prototype.$http = axios</span><br></pre></td></tr></table></figure>
+
+<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/11/07-Vue.use%E5%92%8CVue.prototype.$xx%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/05-Vue%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/11/05-Vue%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">05-Vue的生命周期</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:18:52" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue的生命周期"><a href="#Vue的生命周期" class="headerlink" title="Vue的生命周期"></a>Vue的生命周期</h1><p><strong>生命周期</strong>：Vue实例<strong>从创建到销毁的过程</strong>称为Vue实例的生命周期</p>
+<p><strong>Vue实例的生命周期钩子函数</strong>：是Vue实例<strong>生命周期执行到特定时刻</strong>调用的函数，可以在生命周期<strong>特定时期进行操作</strong>。</p>
+<ul>
+<li>生命周期钩子函数的<strong>this指向本实例</strong>，钩子函数不要使用箭头函数（会导致this指向混乱）</li>
+<li>生命周期钩子函数为<strong>配置对象的属性</strong>，与data和methods等同级</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/11/05-Vue%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/06-Vue%E7%9A%84watch%E5%92%8Ccomputed%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="杨骁">
+      <meta itemprop="description" content="学习博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨骁的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/11/06-Vue%E7%9A%84watch%E5%92%8Ccomputed%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">06-Vue的watch和computed的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-11 16:03:26 / 修改时间：16:14:57" itemprop="dateCreated datePublished" datetime="2022-12-11T16:03:26+08:00">2022-12-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Vue的watch和computed的区别"><a href="#Vue的watch和computed的区别" class="headerlink" title="Vue的watch和computed的区别"></a>Vue的watch和computed的区别</h1><h2 id="计算属性computed"><a href="#计算属性computed" class="headerlink" title="计算属性computed"></a>计算属性computed</h2><ol>
+<li><strong>支持缓存</strong>，只有依赖数据发生改变，才会重新进行计算</li>
+<li><strong>不支持异步</strong>，当computed内有异步操作时无效，无法监听数据的变化</li>
+<li>computed 属性值会默认走缓存，计算属性是基于它们的响应式依赖进行缓存的，也就是基于data中声明过或者父组件传递的props中的数据通过计算得到的值</li>
+<li>应用场景：如果一个属性是由其他属性计算而来的，这个属性依赖其他属性，是一个多对一或者一对一，一般用computed</li>
+<li>如果computed属性属性值是函数，那么默认会走get方法；函数的返回值就是属性的属性值；在computed中的，属性都有一个get和一个set方法，当数据变化时，调用set方法。</li>
 </ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/01-%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+              <a class="btn" href="/2022/12/11/06-Vue%E7%9A%84watch%E5%92%8Ccomputed%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -353,7 +756,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/02-%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/04-%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -367,7 +770,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/02-%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-title-link" itemprop="url">02-JS原型链</a>
+            <a href="/2022/12/11/04-%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/" class="post-title-link" itemprop="url">04-解构赋值</a>
         </h2>
 
         <div class="post-meta">
@@ -378,7 +781,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:10" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-11 11:03:26 / 修改时间：16:07:31" itemprop="dateCreated datePublished" datetime="2022-12-11T11:03:26+08:00">2022-12-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -386,7 +789,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                  <a href="/categories/es6/" itemprop="url" rel="index"><span itemprop="name">es6</span></a>
                 </span>
             </span>
 
@@ -401,13 +804,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h1><p>JavaScript 常被描述为一种<strong>基于原型的语言 (prototype-based language)<strong>——每个对象拥有一个</strong>原型</strong>，对象以其原型为模板、从原型继承方法和属性。原型对象也可能拥有原型，并从中继承方法和属性，一层一层、以此类推。这种关系常被称为<strong>原型链 (prototype chain)</strong></p>
-<ul>
-<li>对象从其**构造函数的原型对象中(原型)**继承属性和方法</li>
-</ul>
+          <h1 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h1><h2 id="数组结构"><a href="#数组结构" class="headerlink" title="数组结构"></a>数组结构</h2><p>变量数与数组长度相等</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数组解构</span></span><br><span class="line">        <span class="keyword">let</span> arr=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">        <span class="comment">//前面的let关键字代表这些变量用let关键字声明</span></span><br><span class="line">        <span class="keyword">let</span> [a,b,c]=arr;    <span class="comment">//左侧的[]中填入变量名  右侧为解构的数组</span></span><br><span class="line">        <span class="built_in">console</span>.log(a);     <span class="comment">//数组值被一 一对应赋值给左侧的变量</span></span><br><span class="line">        <span class="built_in">console</span>.log(b);</span><br><span class="line">        <span class="built_in">console</span>.log(c);</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/02-%E5%8E%9F%E5%9E%8B%E9%93%BE/#more" rel="contents">
+              <a class="btn" href="/2022/12/11/04-%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -431,7 +832,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/03-DOM%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/02-es6%E6%96%B0%E5%A2%9E%E7%B1%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -445,7 +846,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/03-DOM%E6%96%87%E6%A1%A3%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">03-DOM文档对象模型</a>
+            <a href="/2022/12/11/02-es6%E6%96%B0%E5%A2%9E%E7%B1%BB/" class="post-title-link" itemprop="url">02-es6新增类</a>
         </h2>
 
         <div class="post-meta">
@@ -456,7 +857,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：11:13:14" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-11 11:03:26 / 修改时间：16:06:22" itemprop="dateCreated datePublished" datetime="2022-12-11T11:03:26+08:00">2022-12-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -464,7 +865,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                  <a href="/categories/es6/" itemprop="url" rel="index"><span itemprop="name">es6</span></a>
                 </span>
             </span>
 
@@ -479,101 +880,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="DOM文档对象模型"><a href="#DOM文档对象模型" class="headerlink" title="DOM文档对象模型"></a>DOM文档对象模型</h1><p>DOM文档对象模型是用来<strong>呈现</strong>以及<strong>与任意 HTML 或 XML文档交互的API</strong>。DOM 是载入到浏览器中的文档模型，以<strong>节点树的形式</strong>来表现文档，每个节点代表文档的构成部分（例如:页面元素、字符串或注释等等）。</p>
-<p>DOM中的节点组织为<strong>节点树</strong></p>
-<p>DOM的<strong>顶层对象为 document</strong></p>
-<p>DOM中的元素分为三种</p>
-<ul>
-<li>文本节点</li>
-<li>元素节点</li>
-<li>属性节点</li>
-</ul>
-<p>可以获取文档对象模型中的节点进行操作（对html中的标签进行操作）</p>
-<ul>
-<li>创建节点</li>
-<li>删除节点</li>
-<li>添加事件绑定等</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/04-%E6%99%AE%E9%80%9A%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%92%8CaddEventListener%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/04-%E6%99%AE%E9%80%9A%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%92%8CaddEventListener%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">04-JS两种事件绑定区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:22" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="普通事件绑定和addEventListener事件绑定的区别"><a href="#普通事件绑定和addEventListener事件绑定的区别" class="headerlink" title="普通事件绑定和addEventListener事件绑定的区别"></a>普通事件绑定和addEventListener事件绑定的区别</h1><ul>
-<li><p>普通事件绑定指 <code>&#39;element&#39;.onclick = function()&#123;&#125;</code>等事件</p>
-</li>
-<li><p>addEventListener事件绑定指 <code>‘element’.addEventListener(&#39;click&#39;,function()&#123;&#125;)</code></p>
-</li>
-</ul>
-<br>
-
-<p>普通事件绑定<strong>不能绑定多个相同事件</strong>，后面的会覆盖前面的</p>
-<p>addEventListener<strong>可以绑定多个相同事件</strong>，触发时<strong>多个事件会依次执行</strong></p>
+          <h1 id="ES6新增类"><a href="#ES6新增类" class="headerlink" title="ES6新增类"></a>ES6新增类</h1><h2 id="创建类"><a href="#创建类" class="headerlink" title="创建类"></a>创建类</h2><p>ES6之前，JavaScript中没有类的概念</p>
+<p>在ES5中使用构造函数近似实现类的功能</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/04-%E6%99%AE%E9%80%9A%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%92%8CaddEventListener%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
+              <a class="btn" href="/2022/12/11/02-es6%E6%96%B0%E5%A2%9E%E7%B1%BB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -597,7 +908,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/05-%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7%E5%92%8C%E5%86%92%E6%B3%A1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/11/01-var%E5%92%8Clet%E5%92%8Cconst%E5%8C%BA%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.jpg">
@@ -611,7 +922,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/04/05-%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7%E5%92%8C%E5%86%92%E6%B3%A1/" class="post-title-link" itemprop="url">05-JS事件捕获和冒泡</a>
+            <a href="/2022/12/11/01-var%E5%92%8Clet%E5%92%8Cconst%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">01-var/let/const区别</a>
         </h2>
 
         <div class="post-meta">
@@ -622,7 +933,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:27" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
+              <time title="创建时间：2022-12-11 11:03:26 / 修改时间：16:05:21" itemprop="dateCreated datePublished" datetime="2022-12-11T11:03:26+08:00">2022-12-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -630,7 +941,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
+                  <a href="/categories/es6/" itemprop="url" rel="index"><span itemprop="name">es6</span></a>
                 </span>
             </span>
 
@@ -645,341 +956,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="事件捕获和冒泡"><a href="#事件捕获和冒泡" class="headerlink" title="事件捕获和冒泡"></a>事件捕获和冒泡</h1><p>使用<strong>addEventListener进行事件绑定</strong>时，<strong>第三个参数</strong>设置为：</p>
+          <h1 id="var和let和const区别"><a href="#var和let和const区别" class="headerlink" title="var和let和const区别"></a>var和let和const区别</h1><h2 id="var"><a href="#var" class="headerlink" title="var"></a>var</h2><p>var 声明变量 <strong>没有块级作用域</strong> 存在<strong>变量提升</strong>(将<strong>声明</strong>提升至函数或代码段顶部) 值可更改</p>
+<h2 id="let-es6新增"><a href="#let-es6新增" class="headerlink" title="let es6新增"></a>let es6新增</h2><p>let 声明变量 <strong>有块级作用域</strong> <strong>不存在变量提升</strong>(只能先声明再使用) 值可更改</p>
+<h2 id="const-es6新增"><a href="#const-es6新增" class="headerlink" title="const  es6新增"></a>const  es6新增</h2><p>const 声明<strong>常量</strong> <strong>有块级作用域</strong> <strong>不存在变量提升</strong>(只能先声明再使用) 值不可更改</p>
+<p><strong>值不可更改</strong>(地址不可更改)：</p>
 <ul>
-<li>true 事件捕获阶段进行事件绑定</li>
-<li>false 事件冒泡阶段进行事件绑定（默认值）</li>
+<li>基本数据类型不可更改 </li>
+<li><strong>引用数据类型可以修改内部数据结构</strong>(但不能直接修改整体引用数据，会导致地址变化)</li>
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/12/04/05-%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7%E5%92%8C%E5%86%92%E6%B3%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/06-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1event/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/06-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1event/" class="post-title-link" itemprop="url">06-JS事件对象event</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:36" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="事件对象event"><a href="#事件对象event" class="headerlink" title="事件对象event"></a>事件对象event</h1><p>事件对象作为<strong>事件处理函数的参数</strong>，由系统自动创建，保存了与事件相关的信息(<strong>event代表事件对象的名字,可以简写为e</strong>)</p>
-<p>事件相关的信息：<strong>触发的事件类型</strong>（click，blur等），<strong>事件绑定的对象</strong>等</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//触发事件后打印event事件对象</span></span><br><span class="line">div.addEventListener(<span class="string">&quot;click&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(event);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/06-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1event/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/07-BOM%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/07-BOM%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">07-BOM浏览器对象模型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:40" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="BOM浏览器对象模型"><a href="#BOM浏览器对象模型" class="headerlink" title="BOM浏览器对象模型"></a>BOM浏览器对象模型</h1><p>BOM浏览器对象模型提供了独立于内容的、<strong>可以与浏览器窗口进行互动的对象结构</strong>。BOM由多个对象组成，其中代表浏览器窗口的<strong>Window对象是BOM的顶层对象</strong>，其他对象都是该对象的子对象</p>
-<ul>
-<li><strong>Window对象</strong>是BOM的顶层对象</li>
-</ul>
-<h2 id="1-window对象的事件"><a href="#1-window对象的事件" class="headerlink" title="1.window对象的事件"></a>1.window对象的事件</h2><h3 id="resize事件"><a href="#resize事件" class="headerlink" title="resize事件"></a>resize事件</h3><p>当浏览器窗口大小发生变化时即会触发</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;resize&quot;,function()&#123;&#125;)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/07-BOM%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/08-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/08-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="post-title-link" itemprop="url">08-JS深浅拷贝</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:46" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h1><h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>例如<strong>在浅拷贝obj对象时</strong> </p>
-<ul>
-<li>只会<strong>完全拷贝值类型的数据(id,name)</strong> </li>
-<li>引用数据类型如<strong>数组和对象</strong>(smg)只会<strong>拷贝引用</strong>(即内存地址相同)<ul>
-<li>拷贝引用：<strong>修改拷贝后的副本也会影响原件</strong></li>
-<li>数组和对象均属于引用数据对象（数组本身也是一种对象）</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/08-%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/04/09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1prototype/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="杨骁">
-      <meta itemprop="description" content="学习博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨骁的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/04/09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1prototype/" class="post-title-link" itemprop="url">09-JS原型对象prototype</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-12-04 11:03:26 / 修改时间：12:05:52" itemprop="dateCreated datePublished" datetime="2022-12-04T11:03:26+08:00">2022-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javaScript/" itemprop="url" rel="index"><span itemprop="name">javaScript</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="原型对象prototype原型-proto-和constructor"><a href="#原型对象prototype原型-proto-和constructor" class="headerlink" title="原型对象prototype原型__proto__和constructor"></a>原型对象prototype原型<code>__proto__</code>和constructor</h1><p>先明确几个属性</p>
-<ul>
-<li><code>__proto__</code>：称其为<strong>原型</strong>，指向对象的 原型对象（<code>构造函数.prototype</code>）<ul>
-<li>实际上<code>__proto__</code>只是起一个指向的作用（类似于指针）</li>
-<li><code>__proto__</code>是浏览器提供的，<code>javascript</code>标准<strong>没有做出规定</strong></li>
-</ul>
-</li>
-<li><code>prototype</code>：称其为<strong>原型对象</strong>，只有<strong>构造函数</strong>才有prototype属性，<code>实例对象.prototype</code>为undefined</li>
-<li><code>constructor</code>：是prototype的一个属性，<strong>指回</strong>prototype所属的构造函数<ul>
-<li>即 <code>b.prototype.constructor</code> 指向 b</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/04/09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1prototype/#more" rel="contents">
+              <a class="btn" href="/2022/12/11/01-var%E5%92%8Clet%E5%92%8Cconst%E5%8C%BA%E5%88%AB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1002,7 +989,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1070,20 +1057,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
